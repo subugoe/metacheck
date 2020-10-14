@@ -1,0 +1,101 @@
+---
+output: blastula::blastula_email
+params:
+  dois: !r c("10.1007/s10111-020-00626-z", "10.1007/s10444-020-09763-5", "mm")
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(purrr)
+library(gt)
+```
+
+Hi,
+
+Thank you for using the HOAD compliance checker. Here's the compliance report.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+cr <- hybridmdchecker::get_cr_md(dois = params$dois)
+```
+
+### Indexing status in Crossref
+
+```{r, echo=FALSE}
+cr_missing <- !setequal(tolower(params$dois), tolower(cr$doi))
+```
+
+```{r not_indexed_in_crossref, eval=cr_missing, echo=FALSE, results = 'asis'}
+  glue::glue("
+ Crossref indexes metadata for **{length(unique(cr$doi))}** out of  **{ length(unique(params$dois))}** DOIs. **We could not retrieve metadata from Crossref for the following DOIs:**
+ 
+ ")
+ gluedown::md_bullet(params$dois[!tolower(params$dois) %in% tolower(cr$doi)])
+```
+
+```{r, echo=FALSE}
+cr_missing <- setequal(tolower(params$dois), tolower(cr$doi))
+```
+
+```{r indexed_in_crossref, eval=cr_missing, echo=FALSE, results = 'asis'}
+glue::glue("All DOIs have metadata in Crossref")
+```
+
+```{r, echo=FALSE}
+has_cr <- nrow(cr) > 0
+```
+
+```{r, eval=has_cr, echo=FALSE, results="asis"}
+glue::glue("### Non-compliant CC licenses in Crossref metadata
+           
+We have found some issues while checking the compliance of Crossref metadata relative to open content licensing. 
+           
+Please find details in the following table: ")
+# check compliance
+   compliant_with_license <- hybridmdchecker::license_val(cr)
+   # get non-compliant records
+   non_compliant_dois <-
+     cr$doi[!tolower(cr$doi) %in% tolower(compliant_with_license$doi)]
+   # determine why
+   out <- if (!is.null(non_compliant_dois))
+     purrr::map_df(non_compliant_dois, function(x) {
+       dplyr::filter(cr, doi %in% non_compliant_dois) %>%
+         hybridmdchecker::license_report()
+     })
+   out %>%
+      mutate(link = glue::glue("[{doi}]({paste0('https://api.crossref.org/works/', doi)})"),
+             link = map(link, gt::md)) %>% 
+      select(link, reason) %>%
+   gt::gt(rowname_col = NULL) %>%
+        tab_header(
+    title = md("**Non-compliant CC licenses**"),
+    subtitle = md("DOIs are linked to Crossref API metadata")
+  ) %>%
+      gt::cols_label(link = "Article",
+                     reason = "Metadata issue") %>%
+      gt::tab_style(
+    style = cell_text(color = "black", weight = "bold"),
+    locations = list(
+      cells_column_labels(everything())
+    )) %>%
+      tab_style(
+    style = cell_borders(
+      sides = "top",
+      color = "black",
+      weight = px(2)
+    ),
+    locations = cells_body(
+      columns = everything()
+    )
+  ) %>%
+   tab_options(
+    column_labels.border.top.color = "white",
+    column_labels.border.top.width = px(3),
+    column_labels.border.bottom.color = "black",
+    table_body.hlines.color = "white",
+    table.border.bottom.color = "white",
+    table.border.bottom.width = px(3)
+      )
+```
+
+Cheers!

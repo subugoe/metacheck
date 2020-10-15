@@ -13,7 +13,7 @@ library(gt)
 
 Hi,
 
-Thank you for using the HOAD compliance checker. Here's the compliance report.
+Thank you for using the HOAD compliance checker. Here's our report.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 cr <- hybridmdchecker::get_cr_md(dois = params$dois)
@@ -27,11 +27,18 @@ cr_missing <- !setequal(tolower(params$dois), tolower(cr$doi))
 
 ```{r not_indexed_in_crossref, eval=cr_missing, echo=FALSE, results = 'asis'}
   glue::glue("
- Crossref indexes metadata for **{length(unique(cr$doi))}** out of  **{ length(unique(params$dois))}** DOIs. **We could not retrieve metadata from Crossref for the following DOIs:**
+ Crossref indexes metadata for **{length(unique(cr$doi))}** out of  **{ length(unique(params$dois))}** DOIs. **We could not retrieve Crossref metadata Crossref for the following DOIs:**
  
  ")
  gluedown::md_bullet(params$dois[!tolower(params$dois) %in% tolower(cr$doi)])
 ```
+
+### Compliance overview
+
+```{r}
+
+```
+
 
 ```{r, echo=FALSE}
 cr_missing <- setequal(tolower(params$dois), tolower(cr$doi))
@@ -48,7 +55,7 @@ has_cr <- nrow(cr) > 0
 ```{r, eval=has_cr, echo=FALSE, results="asis"}
 glue::glue("### Non-compliant CC licenses in Crossref metadata
            
-We have found some issues while checking the compliance of Crossref metadata relative to open content licensing. 
+We have found some issues while checking Crossref metadata relative to open content licensing. 
            
 Please find details in the following table: ")
 # check compliance

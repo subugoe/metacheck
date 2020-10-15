@@ -2,20 +2,7 @@
 % Please edit documentation in R/cr_md_fetch.R
 \name{license_val}
 \alias{license_val}
-\title{check compliance
-
-compliant_with_license <- license_val(cr)get non-compliant records
-
-non_compliant_dois <-
-dois\link{!tolower(dois) \%in\% tolower(compliant_with_license$doi)}determine why
-
-if (!is.null(non_compliant_dois))
-purrr::map_df(non_compliant_dois, function(x) {
-dplyr::filter(cr, doi \%in\% non_compliant_dois) \%>\%
-license_report()
-})
-}
-#' License checker}
+\title{License checker}
 \usage{
 license_val(cr)
 }
@@ -24,18 +11,7 @@ license_val(cr)
 API with \code{rcrossref:.cr_works()}}
 }
 \description{
-check compliance
-
-compliant_with_license <- license_val(cr)get non-compliant records
-
-non_compliant_dois <-
-dois\link{!tolower(dois) \%in\% tolower(compliant_with_license$doi)}determine why
-
-if (!is.null(non_compliant_dois))
-purrr::map_df(non_compliant_dois, function(x) {
-dplyr::filter(cr, doi \%in\% non_compliant_dois) \%>\%
-license_report()
-})
-}
-#' License checker
+Retrieves records from Crossref metadata where
+the version of record (vor), i.e. publisher version
+is provided under a Creative Commons license without delay.
 }

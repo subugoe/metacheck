@@ -2,7 +2,7 @@
 % Please edit documentation in R/cr_md_fetch.R
 \name{license_report}
 \alias{license_report}
-\title{Obtain faulty DOIs}
+\title{Obtain records with non-compliant license information}
 \usage{
 license_report(cr)
 }
@@ -11,5 +11,10 @@ license_report(cr)
 Crossref API with \code{rcrossref:.cr_works()}}
 }
 \description{
-Obtain faulty DOIs
+In case license metadata do not comply, what are the reasons:
+\itemize{
+\item Did the publisher provide license metadata for the article?
+\item Is the article provided under a CC license?
+\item Did the CC license apply immediatley after publication?
+}
 }

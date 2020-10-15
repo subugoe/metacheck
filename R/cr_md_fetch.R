@@ -3,33 +3,21 @@
 #' @param dois character vector with DOIs
 #'
 #' @importFrom rcrossref cr_works
-#' @importFrom dplyr `%>%` select mutate filter
-#' @importFrom purrr map_df
 #'
 #' @export
 get_cr_md <- function(dois) {
   rcrossref::cr_works(dois)[["data"]]
 }
+#' License checker
 #'
-#'   # check compliance
-#'   compliant_with_license <- license_val(cr)
-#'   # get non-compliant records
-#'   non_compliant_dois <-
-#'     dois[!tolower(dois) %in% tolower(compliant_with_license$doi)]
-#'   # determine why
-#'   if (!is.null(non_compliant_dois))
-#'     purrr::map_df(non_compliant_dois, function(x) {
-#'       dplyr::filter(cr, doi %in% non_compliant_dois) %>%
-#'         license_report()
-#'     })
-#' }
-
-#' #' License checker
+#' Retrieves records from Crossref metadata where
+#' the version of record (vor), i.e. publisher version
+#' is provided under a Creative Commons license without delay.
 #'
 #' @param cr tibble with Crossref metadata retrieved from
 #'   API with `rcrossref:.cr_works()`
-#' @import dplyr
 #' @importFrom tidyr unnest
+#' @importFrom dplyr `%>%` select mutate filter
 #'
 #' @export
 #'
@@ -43,12 +31,20 @@ license_val <- function(cr) {
         # has CC license
         grepl("creativecommons", URL),
         # valid without delay
-        delay.in.days == 0,)
+        delay.in.days == 0)
+  return(license_df)
 }
-#' Obtain faulty DOIs
+#' Obtain records with non-compliant license information
+#'
+#' @description In case license metadata do not comply, what are the reasons:
+#'   - Did the publisher provide license metadata for the article?
+#'   - Is the article provided under a CC license?
+#'   - Did the CC license apply immediatley after publication?
 #'
 #' @param cr tibble with non-compliant license metadata retrieved from the
 #'   Crossref API with `rcrossref:.cr_works()`
+#' @importFrom tidyr unnest
+#' @importFrom dplyr `%>%` select filter
 #'
 #' @export
 license_report <- function(cr) {
@@ -75,3 +71,28 @@ license_report <- function(cr) {
   out$reason <- reason
   return(out)
 }
+#' Normalise license info from Crossref
+#'
+#' @param cr tibble with non-compliant license metadata retrieved from the
+#'   Crossref API with `rcrossref:.cr_works()`
+#' @importFrom dplyr `%>%` select filter
+#'
+#' @export
+license_normalise <- function(cr) {
+ license_val(cr) %>%
+    mutate(license = URL) %>%
+    mutate(license = gsub(".*creativecommons.org/licenses/", "cc-", license)) %>%
+    mutate(license = gsub("/3.0*", "", license)) %>%
+    mutate(license = gsub("/4.0", "", license)) %>%
+    mutate(license = gsub("/2.0*", "", license)) %>%
+    mutate(license = gsub("/uk/legalcode", "", license)) %>%
+    mutate(license = gsub("/igo", "", license)) %>%
+    mutate(license = gsub("/legalcode", "", license)) %>%
+    mutate(license = toupper(license)) %>%
+    mutate(license = gsub("CC-BY-NCND", "CC-BY-NC-ND", license)) %>%
+    mutate(license = gsub("/", "", license)) %>%
+    mutate(license = forcats::fct_lump(license, n = 5)) %>%
+    mutate(license = tolower(license))
+}
+
+

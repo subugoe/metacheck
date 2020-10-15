@@ -16,4 +16,8 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
     rcrossref,
-    dplyr
+    dplyr,
+    purrr,
+    tidyr,
+    gt,
+    blastula

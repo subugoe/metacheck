@@ -91,7 +91,6 @@ license_normalise <- function(cr) {
     mutate(license = toupper(license)) %>%
     mutate(license = gsub("CC-BY-NCND", "CC-BY-NC-ND", license)) %>%
     mutate(license = gsub("/", "", license)) %>%
-    mutate(license = forcats::fct_lump(license, n = 5)) %>%
     mutate(license = tolower(license))
 }
 

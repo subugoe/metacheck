@@ -9,6 +9,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(purrr)
 library(gt)
+library(hybridmdchecker)
 ```
 
 Hi,
@@ -27,16 +28,10 @@ cr_missing <- !setequal(tolower(params$dois), tolower(cr$doi))
 
 ```{r not_indexed_in_crossref, eval=cr_missing, echo=FALSE, results = 'asis'}
   glue::glue("
- Crossref indexes metadata for **{length(unique(cr$doi))}** out of  **{ length(unique(params$dois))}** DOIs. **We could not retrieve Crossref metadata Crossref for the following DOIs:**
+ We found that Crossref indexes **{length(unique(cr$doi))}** out of  **{ length(unique(params$dois))}** articles. **The following DOIS were not registered with Crossref:**
  
  ")
  gluedown::md_bullet(params$dois[!tolower(params$dois) %in% tolower(cr$doi)])
-```
-
-### Compliance overview
-
-```{r}
-
 ```
 
 
@@ -48,16 +43,19 @@ cr_missing <- setequal(tolower(params$dois), tolower(cr$doi))
 glue::glue("All DOIs have metadata in Crossref")
 ```
 
+### Compliance overview
+
+```{r, echo=FALSE}
+tt <- gather_ind_table(cr)
+ind_table_to_gt(tt)
+```
+
+
 ```{r, echo=FALSE}
 has_cr <- nrow(cr) > 0
 ```
 
 ```{r, eval=has_cr, echo=FALSE, results="asis"}
-glue::glue("### Non-compliant CC licenses in Crossref metadata
-           
-We have found some issues while checking Crossref metadata relative to open content licensing. 
-           
-Please find details in the following table: ")
 # check compliance
    compliant_with_license <- hybridmdchecker::license_val(cr)
    # get non-compliant records
@@ -69,40 +67,21 @@ Please find details in the following table: ")
        dplyr::filter(cr, doi %in% non_compliant_dois) %>%
          hybridmdchecker::license_report()
      })
-   out %>%
+
+out_tt <- out %>%
       mutate(link = glue::glue("[{doi}]({paste0('https://api.crossref.org/works/', doi)})"),
-             link = map(link, gt::md)) %>% 
-      select(link, reason) %>%
-   gt::gt(rowname_col = NULL) %>%
-        tab_header(
-    title = md("**Non-compliant CC licenses**"),
-    subtitle = md("DOIs are linked to Crossref API metadata")
-  ) %>%
-      gt::cols_label(link = "Article",
-                     reason = "Metadata issue") %>%
-      gt::tab_style(
-    style = cell_text(color = "black", weight = "bold"),
-    locations = list(
-      cells_column_labels(everything())
-    )) %>%
-      tab_style(
-    style = cell_borders(
-      sides = "top",
-      color = "black",
-      weight = px(2)
-    ),
-    locations = cells_body(
-      columns = everything()
-    )
-  ) %>%
-   tab_options(
-    column_labels.border.top.color = "white",
-    column_labels.border.top.width = px(3),
-    column_labels.border.bottom.color = "black",
-    table_body.hlines.color = "white",
-    table.border.bottom.color = "white",
-    table.border.bottom.width = px(3)
-      )
+             link = glue::glue("{link} *({reason})*")) %>% 
+      select(link, reason) 
+
+glue::glue("### CC license issues in Crossref metadata
+           
+We have found some issues while checking Crossref metadata relative to open content licensing.
+
+{gluedown::md_bullet(out_tt$link)}
+
+")
 ```
 
+
 Cheers!
+

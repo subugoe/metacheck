@@ -2,7 +2,7 @@
 #'
 #' @param cr
 #'
-#' @importFrom dplyr `%>%` group_by summarise mutate filter arrange
+#' @importFrom dplyr `%>%` group_by summarise mutate filter arrange desc n_distinct
 #'
 #' @export
 cr_license_ind <- function(cr) {
@@ -35,7 +35,7 @@ cr_tdm_ind <- function(cr) {
 #' @importFrom tidyr pivot_longer
 #' @importFrom dplyr `%>%` group_by summarise mutate
 #' @export
-cr_md_ind <- function(cr, .group = NULL) {
+cr_md_ind <- function(cr, .group) {
   cr %>%
     group_by({{ .group }}) %>%
     summarise(
@@ -50,7 +50,7 @@ cr_md_ind <- function(cr, .group = NULL) {
 #' Create compliance overview table
 #'
 #' @param cr
-#'
+#' @importFrom dplyr `%>%` group_by summarise mutate filter arrange n_distinct bind_rows
 #' @export
 gather_ind_table <- function(cr) {
   # get indicators
@@ -65,10 +65,12 @@ gather_ind_table <- function(cr) {
 }
 #' GT representation of compliance overview table
 #'
+#' @import gt
 #' @param ind_table tibble compliance overview table
 #'
+#' @export
 ind_table_to_gt <- function(ind_table) {
-  gt::gt(groupname_col = "ind_group") %>%
+  gt::gt(ind_table, groupname_col = "ind_group") %>%
     gt::cols_label(
       type = "",
       articles = "Articles",

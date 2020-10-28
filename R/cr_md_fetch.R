@@ -66,7 +66,7 @@ license_report <- function(cr) {
     # Do publication and license date match?
   } else {
     reason <-
-      "Date of publication and Creative Commons license does not match"
+      "Difference between publication date and the CC license's start_date, suggesting delayed OA publication"
   }
   out$reason <- reason
   return(out)

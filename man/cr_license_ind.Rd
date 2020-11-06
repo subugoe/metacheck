@@ -7,7 +7,7 @@
 cr_license_ind(cr)
 }
 \arguments{
-\item{cr}{}
+\item{cr}{crossref metadata}
 }
 \description{
 License overview

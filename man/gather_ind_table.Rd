@@ -6,6 +6,9 @@
 \usage{
 gather_ind_table(cr)
 }
+\arguments{
+\item{cr}{crossref metadata}
+}
 \description{
 Create compliance overview table
 }

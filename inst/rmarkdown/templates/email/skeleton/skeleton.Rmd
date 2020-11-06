@@ -12,7 +12,7 @@ library(gt)
 library(hybridmdchecker)
 ```
 
-Hi,
+Hi Michaela,
 
 Thank you for using the HOAD compliance checker. Here's our report.
 
@@ -40,22 +40,26 @@ cr_missing <- setequal(tolower(params$dois), tolower(cr$doi))
 ```
 
 ```{r indexed_in_crossref, eval=cr_missing, echo=FALSE, results = 'asis'}
-glue::glue("All DOIs have metadata in Crossref")
+glue::glue("All {length(unique(params$dois))} DOIs have metadata in Crossref")
 ```
 
 ### Compliance overview
 
 ```{r, echo=FALSE}
 tt <- gather_ind_table(cr)
-ind_table_to_gt(tt)
 ```
 
 
 ```{r, echo=FALSE}
-has_cr <- nrow(cr) > 0
+has_license <- nrow(tt[tt$ind_group == "CC licenses",]) > 0
 ```
 
-```{r, eval=has_cr, echo=FALSE, results="asis"}
+```{r, echo=FALSE, results='asis', eval = 'has_license'}
+ind_table_to_gt(tt)
+```
+
+
+```{r, eval=has_license, echo=FALSE}
 # check compliance
    compliant_with_license <- hybridmdchecker::license_val(cr)
    # get non-compliant records
@@ -63,25 +67,34 @@ has_cr <- nrow(cr) > 0
      cr$doi[!tolower(cr$doi) %in% tolower(compliant_with_license$doi)]
    # determine why
    out <- if (!is.null(non_compliant_dois))
-     purrr::map_df(non_compliant_dois, function(x) {
-       dplyr::filter(cr, doi %in% non_compliant_dois) %>%
-         hybridmdchecker::license_report()
-     })
+  purrr::map_df(non_compliant_dois, function(x) {
+    cr[cr$doi == x,] %>%
+      hybridmdchecker::license_report()
+  })
+# export
+non_compliant <- cr %>%
+  select(doi, container.title, publisher, issn) %>%
+  filter(doi %in% non_compliant_dois) %>%
+  left_join(out, by = "doi") %>%
+  mutate(reason = ifelse(is.na(reason), "No license metadata available", reason))
 
-out_tt <- out %>%
-      mutate(link = glue::glue("[{doi}]({paste0('https://api.crossref.org/works/', doi)})"),
-             link = glue::glue("{link} *({reason})*")) %>% 
-      select(link, reason) 
-
-glue::glue("### CC license issues in Crossref metadata
-           
-We have found some issues while checking Crossref metadata relative to open content licensing.
-
-{gluedown::md_bullet(out_tt$link)}
-
-")
+compliant_df <- cr %>%
+   license_normalise() %>%
+ # select(doi, container.title, publisher, issn) %>%
+  inner_join(cr, by = "doi") %>%
+   select(doi, container.title, publisher, issn, cc_normalised = license.x)
+license_df <- bind_rows(compliant_df, non_compliant) %>%
+   mutate(api_link = paste0("https://api.crossref.org/works/", doi)) %>%
+   arrange(publisher)
+writexl::write_xlsx(license_df, "license_df.xlsx")
 ```
 
+Please find attached an article-level compliance report. The Excel spreadsheet contains some basic Crossref metadata including Creative Commons license. 
+
+The attached spreadsheet also includes information about articles with a non-compliant open content license. 
+
+**We strongly recommend to report licensing issues to the publisher to ensure that open access articles are discoverable.**
 
 Cheers!
 
+Najko

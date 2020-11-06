@@ -1,6 +1,6 @@
 #' License overview
 #'
-#' @param cr
+#' @param cr crossref metadata
 #'
 #' @importFrom dplyr `%>%` group_by summarise mutate filter arrange desc n_distinct
 #'
@@ -14,7 +14,7 @@ cr_license_ind <- function(cr) {
 }
 #' TDM overview
 #'
-#' @param cr
+#' @param cr crossref metadata
 #'
 #' @importFrom dplyr `%>%` group_by summarise mutate filter
 #' @importFrom tidyr unnest
@@ -30,7 +30,7 @@ cr_tdm_ind <- function(cr) {
 }
 #' Other types of relevant metadata
 #'
-#' @param cr
+#' @param cr crossref metadata
 #'
 #' @importFrom tidyr pivot_longer
 #' @importFrom dplyr `%>%` group_by summarise mutate
@@ -49,7 +49,7 @@ cr_md_ind <- function(cr, .group) {
 }
 #' Create compliance overview table
 #'
-#' @param cr
+#' @param cr crossref metadata
 #' @importFrom dplyr `%>%` group_by summarise mutate filter arrange n_distinct bind_rows
 #' @export
 gather_ind_table <- function(cr) {
@@ -60,7 +60,7 @@ gather_ind_table <- function(cr) {
   # bind together
   bind_rows(license_ind, tdm_ind, md_other) %>%
     mutate(all = n_distinct(cr$doi))%>%
-    mutate(prop = articles / all) %>%
+    mutate(prop = articles / all * 100) %>%
     select(-all)
 }
 #' GT representation of compliance overview table
@@ -91,17 +91,24 @@ ind_table_to_gt <- function(ind_table) {
     cols_width(
       vars(type) ~ px(125)
     ) %>%
-    fmt_percent(
+    fmt_number(
       columns = vars(prop),
-      decimals = 0) %>%
+      decimals = 0,
+      pattern = "{x}%") %>%
     cols_align(align = "right",
                columns = vars(articles, prop)) %>%
     data_color(columns =vars(articles, prop),
                colors = scales::col_numeric(
                  # custom defined values - notice that order matters!
-                 palette = c("#fcde9c","#faa476","#f0746e","#e34f6f","#dc3977","#b9257a","#7c1d6f"),
+                 palette = rev(c("#39b185","#9ccb86","#e9e29c","#eeb479","#e88471","#cf597e")),
                  domain = NULL
                )) %>%
+    tab_footnote(
+      cells_body(
+        columns = vars(type),
+        rows = ind_group == "Others"
+      ),
+      footnote = "Metadata reporting can be subject to availability, e.g. an article was published without an abstract.") %>%
     tab_options(
       row_group.border.top.width = px(3),
       row_group.border.top.color = "black",
@@ -116,3 +123,59 @@ ind_table_to_gt <- function(ind_table) {
     ) %>%
     tab_source_note(md("**Table**: Overview: Crossref metadata compliance check"))
 }
+#' Reactable represenation of metadata indicators
+#'
+#' Inspired from <https://glin.github.io/reactable/articles/building-twitter-followers.html>
+#'
+#' @import reactable
+#'
+#' @param ind_table tibble compliance overview table
+#' @param fill_col fill color for bar charts (hex code)
+#'
+#' @export
+react_ind_table <- function(ind_table, fill_col = "#fc5185") {
+  reactable::reactable(
+    data = ind_table,
+    columns = list(
+      type = colDef(html = TRUE,
+        name = "",
+        style = list(fontFamily = "monospace", whiteSpace = "pre")
+      ),
+      articles = colDef(html = TRUE,
+        name = "Articles",
+        defaultSortOrder = "desc",
+        format = colFormat(separators = TRUE),
+        style = list(fontFamily = "monospace", whiteSpace = "pre")
+      ),
+      prop = colDef(html = TRUE,
+        name = "Share",
+        defaultSortOrder = "desc",
+        # Render the bar charts using a custom cell render function
+        cell = function(value) {
+          value <- paste0(format(round(value * 100, 1), nsmall = 1), "%")
+          # Fix width here to align single and double-digit percentages
+          value <- format(value, width = 5, justify = "right")
+          react_bar_chart(value, width = value, fill = fill_col, background = "#e1e1e1")
+        },
+        align = "left",
+        style = list(fontFamily = "monospace", whiteSpace = "pre")
+      )
+    ),
+    compact = FALSE
+  )
+}
+
+#' React bar chart helper
+#'
+#' From <https://glin.github.io/reactable/articles/building-twitter-followers.html>
+#'
+#' @importFrom htmltools div
+#'
+#' @noRd
+react_bar_chart <- function(label, width = "100%", height = "14px", fill = "#00bfc4", background = NULL) {
+  bar <- htmltools::div(style = list(background = fill, width = width, height = height))
+  chart <- htmltools::div(style = list(flexGrow = 1, marginLeft = "6px", background = background), bar)
+  htmltools::div(style = list(display = "flex", alignItems = "center"), label, chart)
+}
+
+

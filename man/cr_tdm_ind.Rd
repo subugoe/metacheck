@@ -7,7 +7,7 @@
 cr_tdm_ind(cr)
 }
 \arguments{
-\item{cr}{}
+\item{cr}{crossref metadata}
 }
 \description{
 TDM overview

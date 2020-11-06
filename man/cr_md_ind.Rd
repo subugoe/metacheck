@@ -7,7 +7,7 @@
 cr_md_ind(cr, .group)
 }
 \arguments{
-\item{cr}{}
+\item{cr}{crossref metadata}
 }
 \description{
 Other types of relevant metadata

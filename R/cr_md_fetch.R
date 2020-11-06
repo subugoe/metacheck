@@ -54,7 +54,7 @@ license_report <- function(cr) {
   # Are license metadata available?
   out <- tibble::tibble(doi = unique(faulty_case$doi))
   if (!any(faulty_case[["content.version"]] == "vor")) {
-    reason <- "No license metadata for version of records"
+    reason <- "No license metadata available for published version (version of record)"
     # Is version of record published under an CC license
   } else if (nrow(filter(
     faulty_case,

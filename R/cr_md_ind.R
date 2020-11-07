@@ -97,18 +97,12 @@ ind_table_to_gt <- function(ind_table) {
       pattern = "{x}%") %>%
     cols_align(align = "right",
                columns = vars(articles, prop)) %>%
-    data_color(columns =vars(articles, prop),
-               colors = scales::col_numeric(
-                 # custom defined values - notice that order matters!
-                 palette = rev(c("#39b185","#9ccb86","#e9e29c","#eeb479","#e88471","#cf597e")),
-                 domain = NULL
-               )) %>%
     tab_footnote(
       cells_body(
         columns = vars(type),
         rows = ind_group == "Others"
       ),
-      footnote = "Metadata reporting can be subject to availability, e.g. an article was published without an abstract.") %>%
+      footnote = "Not all of these fields are available for every article.") %>%
     tab_options(
       row_group.border.top.width = px(3),
       row_group.border.top.color = "black",
@@ -121,7 +115,7 @@ ind_table_to_gt <- function(ind_table) {
       column_labels.border.bottom.color = "black",
       column_labels.border.bottom.width = px(2)
     ) %>%
-    tab_source_note(md("**Table**: Overview: Crossref metadata compliance check"))
+    tab_source_note(md("For more information about fields, see"))
 }
 #' Reactable represenation of metadata indicators
 #'

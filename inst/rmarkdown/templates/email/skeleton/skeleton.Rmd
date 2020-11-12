@@ -8,7 +8,7 @@ params:
 knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(purrr)
-library(gt)
+library(tidyr)
 library(hybridmdchecker)
 ```
 
@@ -61,12 +61,22 @@ ind_table_to_gt(tt)
 
 ```{r, eval=has_license, echo=FALSE}
 # check compliance
-   compliant_with_license <- hybridmdchecker::license_val(cr)
-   # get non-compliant records
-   non_compliant_dois <-
+compliant_with_license <- cr %>%
+  hybridmdchecker::license_normalise() %>%
+  inner_join(cr, by = "doi") %>%
+  select(doi, container.title, publisher, issn, issued_year, cc_normalised = license.x)
+```
+
+```{r, echo=FALSE}
+has_non_compliant_dois <-  nrow(cr$doi[!tolower(cr$doi) %in% tolower(compliant_with_license$doi)]) > 0
+```
+
+```{r, echo=FALSE, eval=has_non_compliant_dois}
+# get non-compliant records
+non_compliant_dois <-
      cr$doi[!tolower(cr$doi) %in% tolower(compliant_with_license$doi)]
    # determine why
-   out <- if (!is.null(non_compliant_dois))
+out <- if(!is.null(non_compliant_dois))
   purrr::map_df(non_compliant_dois, function(x) {
     cr[cr$doi == x,] %>%
       hybridmdchecker::license_report()
@@ -77,24 +87,46 @@ non_compliant <- cr %>%
   filter(doi %in% non_compliant_dois) %>%
   left_join(out, by = "doi") %>%
   mutate(reason = ifelse(is.na(reason), "No license metadata available", reason))
-
-compliant_df <- cr %>%
-   license_normalise() %>%
- # select(doi, container.title, publisher, issn) %>%
-  inner_join(cr, by = "doi") %>%
-   select(doi, container.title, publisher, issn, cc_normalised = license.x)
-license_df <- bind_rows(compliant_df, non_compliant) %>%
-   mutate(api_link = paste0("https://api.crossref.org/works/", doi)) %>%
-   arrange(publisher)
-writexl::write_xlsx(license_df, "license_df.xlsx")
 ```
 
-Please find attached an article-level compliance report. The Excel spreadsheet contains some basic Crossref metadata including Creative Commons license. 
+```{r, echo=FALSE}
+has_funder <- "funder" %in% names(cr)
+```
 
-The attached spreadsheet also includes information about articles with a non-compliant open content license. 
+```{r, eval=has_funder, echo=FALSE}
+# tdm data
+funder_df <- cr %>% 
+  select(doi, container.title, publisher, issn, issued_year, funder) %>% 
+  unnest(funder) %>%
+  rename(fundref_doi = DOI) %>%
+  mutate(api_link = paste0("https://api.crossref.org/works/", doi)) 
+```
 
-**We strongly recommend to report licensing issues to the publisher to ensure that open access articles are discoverable.**
+```{r export, eval=has_license, echo=FALSE}
+if(!is.null(non_compliant)) {
+  license_df <- bind_rows(compliant_with_license, non_compliant)
+} else {
+  license_df <- compliant_with_license
+} 
+license_df <- license_df %>%
+  mutate(api_link = paste0("https://api.crossref.org/works/", doi)) %>%
+  arrange(publisher)
 
+if(!is.null(funder_df)) {
+  export_report <- list(cc_license =license_df, funder_overview = funder_df)
+  } else {
+  export_report <- list(cc_license =license_df)
+  }
+writexl::write_xlsx(export_report, "license_df.xlsx")
+```
+
+
+Please find attached an article-level compliance report. This Excel spreadsheet contains some Crossref metadata including Creative Commons license and detailed funder information, if applicable. 
+
+```{r echo=FALSE, results = 'asis'}
+glue::glue("**We found {nrow(non_compliant)} publications with non-compliant license metadata. We strongly recommend to report licensing issues to the publisher to ensure that open access articles are discoverable.**")
+```
+  
 Cheers!
 
 Najko

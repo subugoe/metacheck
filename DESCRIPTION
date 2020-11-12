@@ -20,6 +20,8 @@ Imports:
     purrr,
     tidyr,
     gt,
-    blastula
+    blastula,
+    stringi,
+    lubridate
 Depends: 
     R (>= 2.10)

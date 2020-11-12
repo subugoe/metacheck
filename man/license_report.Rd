@@ -15,6 +15,6 @@ In case license metadata do not comply, what are the reasons:
 \itemize{
 \item Did the publisher provide license metadata for the article?
 \item Is the article provided under a CC license?
-\item Did the CC license apply immediatley after publication?
+\item Did the CC license apply immediately after publication?
 }
 }

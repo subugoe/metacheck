@@ -61,7 +61,8 @@ gather_ind_table <- function(cr) {
   bind_rows(license_ind, tdm_ind, md_other) %>%
     mutate(all = n_distinct(cr$doi))%>%
     mutate(prop = articles / all * 100) %>%
-    select(-all)
+    select(-all) %>%
+    mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#00bfc4")))
 }
 #' GT representation of compliance overview table
 #'
@@ -97,6 +98,8 @@ ind_table_to_gt <- function(ind_table) {
       pattern = "{x}%") %>%
     cols_align(align = "right",
                columns = vars(articles, prop)) %>%
+    cols_align(align = "left",
+               columns = vars(prop_bar)) %>%
     tab_footnote(
       cells_body(
         columns = vars(type),

@@ -6,7 +6,15 @@
 #'
 #' @export
 get_cr_md <- function(dois) {
-  rcrossref::cr_works(dois)[["data"]]
+  tt <- rcrossref::cr_works(dois)[["data"]]
+  if(!is.null(tt)) {
+    out <- tt %>%
+    mutate(issued = lubridate::parse_date_time(issued, c("y", "ymd", "ym"))) %>%
+      mutate(issued_year = lubridate::year(issued))
+  } else {
+   out <- NULL
+  }
+  out
 }
 #' License checker
 #'
@@ -39,7 +47,7 @@ license_val <- function(cr) {
 #' @description In case license metadata do not comply, what are the reasons:
 #'   - Did the publisher provide license metadata for the article?
 #'   - Is the article provided under a CC license?
-#'   - Did the CC license apply immediatley after publication?
+#'   - Did the CC license apply immediately after publication?
 #'
 #' @param cr tibble with non-compliant license metadata retrieved from the
 #'   Crossref API with `rcrossref:.cr_works()`
@@ -93,5 +101,3 @@ license_normalise <- function(cr) {
     mutate(license = gsub("/", "", license)) %>%
     mutate(license = tolower(license))
 }
-
-

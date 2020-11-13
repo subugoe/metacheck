@@ -22,6 +22,7 @@ Imports:
     gt,
     blastula,
     stringi,
-    lubridate
+    lubridate,
+    tidyselect
 Depends: 
     R (>= 2.10)

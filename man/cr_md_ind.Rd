@@ -8,6 +8,8 @@ cr_md_ind(cr, .group)
 }
 \arguments{
 \item{cr}{crossref metadata}
+
+\item{.group}{group by variable, like publisher}
 }
 \description{
 Other types of relevant metadata

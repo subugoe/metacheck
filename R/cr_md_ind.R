@@ -31,6 +31,7 @@ cr_tdm_ind <- function(cr) {
 #' Other types of relevant metadata
 #'
 #' @param cr crossref metadata
+#' @param .group group by variable, like publisher
 #'
 #' @importFrom tidyr pivot_longer
 #' @importFrom dplyr `%>%` group_by summarise mutate
@@ -71,17 +72,11 @@ gather_ind_table <- function(cr) {
 #'
 #' @export
 ind_table_to_gt <- function(ind_table) {
-  gt::gt(ind_table, groupname_col = "ind_group") %>%
+  gt::gt(ind_table) %>%
     gt::cols_label(
-      type = "",
-      articles = "Articles",
+      name = "",
+      value = "Articles",
       prop = "Share") %>%
-    tab_stubhead("type") %>%
-    tab_style(
-      style = cell_text(color = "black", weight = "bold"),
-      locations = list(
-        cells_row_groups())
-    ) %>%
     tab_style(
       style = cell_text(color = "black", weight = "bold"),
       locations = list(
@@ -90,20 +85,20 @@ ind_table_to_gt <- function(ind_table) {
       )
     ) %>%
     cols_width(
-      vars(type) ~ px(125)
+      vars(name) ~ px(125)
     ) %>%
     fmt_number(
       columns = vars(prop),
       decimals = 0,
       pattern = "{x}%") %>%
     cols_align(align = "right",
-               columns = vars(articles, prop)) %>%
+               columns = vars(value, prop)) %>%
     cols_align(align = "left",
                columns = vars(prop_bar)) %>%
     tab_footnote(
       cells_body(
-        columns = vars(type),
-        rows = ind_group == "Others"
+        columns = vars(name),
+        rows = grepl("CC", name)
       ),
       footnote = "Not all of these fields are available for every article.") %>%
     tab_options(

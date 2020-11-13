@@ -6,47 +6,58 @@
 #'
 #' @param cr crossref metadata using [get_cr_md()]
 #'
-#' @importFrom dplyr `%>%` bind_rows filter mutate anti_join distinct left_join
-#' @importFrom lubridate ymd year
+#' @importFrom dplyr `%>%` bind_rows bind_cols filter mutate anti_join distinct left_join
 #'
 #' @export
 license_check <- function(cr) {
-  # extract license md
-  license_df <- get_license_md(cr)
-  # validation steps
-  # compliant, i.e cc version-of-record without delay
-  compliant_cc <- get_compliant_cc(license_df)
-  # cc, but not explicitly attached to version-of-record
-  vor_issue_df <- vor_issue(license_df, compliant_cc$doi)
-  # bring those together
-  by_df <- bind_rows(compliant_cc, vor_issue_df)
-  delayed_df <- license_df %>%
-    filter(!doi %in% by_df$doi,!is.na(cc_norm) &
-             delay.in.days > 0) %>%
-    mutate(check_result = "Difference between publication date and the CC license's start_date suggests delayed OA provision")
-  # add them to checked records
-  by_delayed_df <- bind_rows(by_df, delayed_df)
-  # No CC
-  miss_df <- anti_join(license_df, by_delayed_df, by = "doi") %>%
-    mutate(check_result = "No Creative Commons license found")
-  # bring it altogether
-  license_all_df <- miss_df %>%
-    distinct(doi, cc_norm, check_result) %>%
-    bind_rows(by_delayed_df) %>%
-    select(
-      1:3,
-      license_url = URL,
-      content_version = content.version,
-      license_date = date,
-      delay_in_days = delay.in.days,
-      content_version = content.version
+  if (!"license" %in% colnames(cr)) {
+    out_template <- tibble::tibble(
+      cc_norm = NA,
+      check_result = "No Creative Commons license found",
+      license_url = NA,
+      content_version = NA,
+      license_date = NA,
+      delay_in_days = NA,
     )
-  # add some more crossref metadata
-  cr %>%
-    select(doi, container_title = container.title, publisher, issued) %>%
-    mutate(issued = lubridate::ymd(issued),
-           issued_year = lubridate::year(issued)) %>%
-    left_join(license_all_df, by = "doi")
+    out <- bind_cols(doi = cr$doi, out_template)
+  } else {
+    # extract license md
+    license_df <- get_license_md(cr)
+    # validation steps
+    # compliant, i.e cc version-of-record without delay
+    compliant_cc <- get_compliant_cc(license_df)
+    # cc, but not explicitly attached to version-of-record
+    vor_issue_df <- vor_issue(license_df, compliant_cc$doi)
+    # bring those together
+    by_df <- bind_rows(compliant_cc, vor_issue_df)
+    delayed_df <- license_df %>%
+      filter(!doi %in% by_df$doi, !is.na(cc_norm) &
+               delay.in.days > 0) %>%
+      mutate(check_result = "Difference between publication date and the CC license's start_date suggests delayed OA provision")
+    # add them to checked records
+    by_delayed_df <- bind_rows(by_df, delayed_df)
+    # No CC
+    miss_df <- anti_join(license_df, by_delayed_df, by = "doi") %>%
+      mutate(check_result = "No Creative Commons license found")
+    # bring it altogether
+    license_all_df <- miss_df %>%
+      distinct(doi, cc_norm, check_result) %>%
+      bind_rows(by_delayed_df) %>%
+      select(
+        doi,
+        cc_norm,
+        check_result,
+        license_url = URL,
+        content_version = content.version,
+        license_date = date,
+        delay_in_days = delay.in.days
+      )
+    # add some more crossref metadata
+    out <- cr %>%
+      select(doi, container_title = container.title, publisher, issued, issued_year) %>%
+      left_join(license_all_df, by = "doi")
+  }
+  return(out)
 }
 #' Extract license info from Crossref metadata
 #'

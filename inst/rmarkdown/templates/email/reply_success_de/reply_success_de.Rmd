@@ -1,0 +1,56 @@
+---
+output: blastula::blastula_email
+params: 
+  dois: NULL
+  cr_overview: FALSE
+  cr_license: FALSE
+  cr_tdm: FALSE
+  cr_funder: FALSE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(purrr)
+library(tidyr)
+```
+
+Hallo,
+
+vielen Dank, dass Sie den HOAD Compliance Checker nutzen, um die Auffindbarkeit von Open-Access-Artikeln automatisch zu überprüfen. 
+
+Hier ist unser Bericht:
+
+### Indexierungsstatus in Crossref
+
+```{r, echo=FALSE}
+cr_missing <- !setequal(tolower(params$dois), tolower(cr$doi))
+```
+
+```{r not_indexed_in_crossref, eval=cr_missing, echo=FALSE, results = 'asis'}
+  glue::glue("
+  **{length(unique(cr$doi))}** von **{ length(unique(params$dois))}** DOIs sind in Crossref indexiert.
+  **Die folgenden DOIs sind nicht bei Crossref registriert:
+ 
+ ")
+ gluedown::md_bullet(params$dois[!tolower(params$dois) %in% tolower(params$cr_overview$doi)])
+```
+
+
+```{r, echo=FALSE}
+cr_missing <- setequal(tolower(params$dois), tolower(cr$doi))
+```
+
+```{r indexed_in_crossref, eval=cr_missing, echo=FALSE, results = 'asis'}
+glue::glue("Für sämtliche {length(unique(params$dois))} DOIs konnten Crossref Metadaten bezogen werden")
+```
+
+### Überblick: Crossref-Metadaten
+
+```{r}
+
+```
+
+
+
+

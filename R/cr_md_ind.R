@@ -75,17 +75,20 @@ ind_table_to_gt <- function(ind_table) {
   gt::gt(ind_table) %>%
     gt::cols_label(
       name = "",
-      value = "Articles",
-      prop = "Share") %>%
+      value = "Artikel",
+      prop = "Anteil",
+      prop_bar = "") %>%
     tab_style(
       style = cell_text(color = "black", weight = "bold"),
       locations = list(
-        cells_row_groups(),
         cells_column_labels(everything())
       )
     ) %>%
     cols_width(
-      vars(name) ~ px(125)
+      vars(name) ~ px(150)
+    ) %>%
+    cols_width(
+      vars(prop_bar) ~ px(100)
     ) %>%
     fmt_number(
       columns = vars(prop),
@@ -95,12 +98,6 @@ ind_table_to_gt <- function(ind_table) {
                columns = vars(value, prop)) %>%
     cols_align(align = "left",
                columns = vars(prop_bar)) %>%
-    tab_footnote(
-      cells_body(
-        columns = vars(name),
-        rows = grepl("CC", name)
-      ),
-      footnote = "Not all of these fields are available for every article.") %>%
     tab_options(
       row_group.border.top.width = px(3),
       row_group.border.top.color = "black",
@@ -112,9 +109,21 @@ ind_table_to_gt <- function(ind_table) {
       table.border.bottom.width = px(3),
       column_labels.border.bottom.color = "black",
       column_labels.border.bottom.width = px(2)
-    ) %>%
-    tab_source_note(md("For more information about fields, see"))
+    )
 }
+#' Embed HTML Bar Charts in gt
+#'
+#' <https://themockup.blog/posts/2020-10-31-embedding-custom-features-in-gt-tables/>
+#'
+#' @noRd
+bar_chart <- function(value, color = "red"){
+
+  glue::glue("<span style=\"display: inline-block; direction: ltr; border-radius: 4px; padding-right: 2px; background-color: {color}; color: {color}; width: {value}%\"> &nbsp; </span>") %>%
+    as.character() %>%
+    gt::html()
+}
+
+
 #' Reactable represenation of metadata indicators
 #'
 #' Inspired from <https://glin.github.io/reactable/articles/building-twitter-followers.html>

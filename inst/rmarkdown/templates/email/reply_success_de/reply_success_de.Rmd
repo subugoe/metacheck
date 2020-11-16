@@ -2,17 +2,18 @@
 output: blastula::blastula_email
 params: 
   dois: NULL
-  cr_overview: FALSE
-  cr_license: FALSE
-  cr_tdm: FALSE
-  cr_funder: FALSE
+  cr_overview: NULL
+  cr_license: NULL
+  cr_tdm: NULL
+  cr_funder: NULL
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(dplyr)
 library(purrr)
 library(tidyr)
+library(hybridmdchecker)
 ```
 
 Hallo,
@@ -23,34 +24,122 @@ Hier ist unser Bericht:
 
 ### Indexierungsstatus in Crossref
 
-```{r, echo=FALSE}
-cr_missing <- !setequal(tolower(params$dois), tolower(cr$doi))
+```{r}
+cr_missing <- !setequal(tolower(params$dois), tolower(params$cr_overview$doi))
 ```
 
-```{r not_indexed_in_crossref, eval=cr_missing, echo=FALSE, results = 'asis'}
+```{r not_indexed_in_crossref, eval=cr_missing, results = 'asis'}
   glue::glue("
   **{length(unique(cr$doi))}** von **{ length(unique(params$dois))}** DOIs sind in Crossref indexiert.
-  **Die folgenden DOIs sind nicht bei Crossref registriert:
- 
+  Die folgenden DOIs sind **nicht** bei Crossref registriert:
+  
  ")
  gluedown::md_bullet(params$dois[!tolower(params$dois) %in% tolower(params$cr_overview$doi)])
 ```
 
 
-```{r, echo=FALSE}
-cr_missing <- setequal(tolower(params$dois), tolower(cr$doi))
+```{r}
+cr_missing <- setequal(tolower(params$dois), tolower(params$cr_overview$doi))
 ```
 
-```{r indexed_in_crossref, eval=cr_missing, echo=FALSE, results = 'asis'}
-glue::glue("Für sämtliche {length(unique(params$dois))} DOIs konnten Crossref Metadaten bezogen werden")
+```{r indexed_in_crossref, eval=cr_missing, results = 'asis'}
+glue::glue("Für sämtliche {length(unique(params$dois))} DOIs sind Crossref Metadaten vorhanden.")
 ```
 
 ### Überblick: Crossref-Metadaten
 
-```{r}
-
+```{r, echo=FALSE}
+params$cr_overview %>%
+  count(`CC License` = length(which(has_cc)),
+        `Compliant CC` = length(which(has_compliant_cc)),
+        `TDM Support` = length(which(has_tdm_links)),
+        `Funder info` = length(which(has_funder_info)),
+        `ORCID` = length(which(has_orcid)),
+        `Open Abstracts`  = length(which(has_open_abstract)),
+        `Open Citations` = length(which(has_open_refs))
+        ) %>% 
+  tidyr::pivot_longer(!n) %>%
+  mutate(prop = value / n * 100) %>%
+  select(-n) %>%
+  # html table
+  mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#00A4A7"))) %>%
+  ind_table_to_gt()  
 ```
 
 
+### Creative-Commons-Lizenzen
+
+#### Überblick Lizenzbedingungen
+
+```{r}
+my_df$cc_license_check %>% 
+  count(cc_norm, name = "value") %>% 
+  mutate(prop = value /sum(value) * 100) %>% 
+  rename(name = cc_norm) %>%
+  mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#F3A9BB"))) %>%
+  ind_table_to_gt()
+```
+
+#### Ergebnis Compliance Check
+
+```{r}
+my_df$cc_license_check %>% 
+  count(check_result, name = "value") %>% 
+  mutate(prop = value /sum(value) * 100) %>% 
+  rename(name = check_result) %>%
+  mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#A0A5A9"))) %>%
+  ind_table_to_gt()
+```
+
+Im beigefügten Excel-Spreadsheet dokumentiert die Mappe **CC-Lizenzen** je Artikel das Ergebnis der Überprüfung.
+
+```{r, eval=!is.null(params$cr_tdm), results = 'asis'}
+glue::glue(
+  "### Text and Data Mining (TDM)
+  #### Formatüberblick (sortiert nach Häufigkeit)"
+)
+my_df$tdm %>% 
+  count(content.type, name = "value") %>% 
+  mutate(prop = value /sum(value) * 100) %>% 
+  rename(name = content.type) %>%
+  mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#9B0056"))) %>%
+  arrange(desc(value)) %>%
+  ind_table_to_gt()
+```
+
+```{r, eval=!is.null(params$cr_tdm), results = 'asis'}
+glue::glue(
+  " 
+  Die prozentualen Anteile beziehen sich ausschließlich auf Artikel, für die TDM-Informationen vorhanden sind. Bitte beachten Sie zudem, dass Verlage mehr als ein Format anbieten können.
+  
+  Im beigefügten Excel-Spreadsheet dokumentiert die Mappe **TDM** die Crossref-Metadaten über Möglichkeiten für das Text und Data Mining je Artikel"
+)
+```
+
+
+```{r, eval=!is.null(params$cr_funder), results = 'asis'}
+glue::glue(
+  "### Förderinformationen 
+  Bei **{length(unique(params$cr_funder$doi))}** Publikationen verzeichnet Crossref mindestens eine Forschungsförderung. Das *Funding Acknowledgements* von **{length(unique(unlist(my_df$funder_info[my_df$funder_info$name == 'Deutsche Forschungsgemeinschaft', 'doi'])))}** Artikeln verweist auf die **Deutsche Forschungsgemeinschaft (DFG)**.
+  
+  Im beigefügten Excel-Spreadsheet dokumentiert die Mappe **Förderinformationen** Crossref-Metadaten über das *Funding Acknowledgement* je Artikel"
+)
+```
+
+```{r export}
+excel_spreadsheet <- list(`Übersicht` = params$cr_overview, 
+                          `CC-Lizenzen` = params$cr_license)
+if(!is.null(params$cr_tdm)) {
+ excel_spreadsheet[["TDM"]] <- params$cr_tdm
+} 
+if(!is.null(params$cr_funder)) {
+ excel_spreadsheet[["Förderinformationen"]] <- params$cr_funder
+} 
+writexl::write_xlsx(excel_spreadsheet, paste0(tempdir(), "/license_df.xlsx"))
+```
+
+Bei Fragen und Anregungen stehen wir Ihnen gerne zur Verfügung.
+
+Viele Grüße
 
 

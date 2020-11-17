@@ -1,4 +1,3 @@
-
 #' Get compliance overview
 #'
 #' @param cr crossref metadata using [get_cr_md()]

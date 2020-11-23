@@ -5,6 +5,8 @@ runtime: shiny
 ---
 
 ```{r global, include=FALSE}
+library(shiny)
+library(shinyvalidate)
 ```
 
 
@@ -29,4 +31,26 @@ textInput(
   label = "List of Digital Object Identifiers:",
   placeholder  = "10.1080/0020739950260202"
 )
+```
+
+
+```{r}
+iv <- InputValidator$new()
+iv$add_rule("email", sv_required())
+iv$add_rule("email",
+  sv_regex(
+    "\\<[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\>",
+    "Please provide a valid email",
+    invert = TRUE
+  )
+)
+iv$add_rule("dois", sv_required())
+iv$add_rule("dois",
+  sv_regex(
+    "/^10.\\d{4,9}/[-._;()/:A-Z0-9]+$/i",
+    "Please provide a valid DOI",
+    invert = TRUE
+  )
+)
+iv$enable()
 ```

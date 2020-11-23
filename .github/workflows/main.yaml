@@ -63,6 +63,18 @@ jobs:
           tags: ${{ github.sha }}
           add_git_labels: true
           push: ${{ github.event_name != 'pull_request' }}
+      - name: Log in to Azure
+        uses: azure/login@v1.1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Deploy to Azure Webapps
+        run: |
+          muggle::az_webapp_config_muggle(
+            name = "metacheck",
+            plan = "hoad",
+            resource_group = "hoad",
+            subscription = "f0dd3a37-0a4e-4e7f-9c9b-cb9f60146edc"
+          )
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/muggleme'
         uses: maxheld83/ghpages@github-token

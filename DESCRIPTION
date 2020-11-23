@@ -45,9 +45,11 @@ Imports:
 Suggests:
     testthat,
     subugoetheme,
-    shinycaas
+    shinycaas,
+    AzureAppService
 URL: https://subugoe.github.io/metacheck, https://github.com/subugoe/metacheck
 BugReports: https://github.com/subugoe/metacheck/issues
 Remotes:
     subugoe/subugoetheme@1.0.0,
-    subugoe/shinycaas@31684600b286d5da5639a430a4b83a04de36bd34
+    subugoe/shinycaas@31684600b286d5da5639a430a4b83a04de36bd34,
+    subugoe/AzureAppService

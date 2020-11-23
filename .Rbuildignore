@@ -1,4 +1,13 @@
-^hybridmdchecker\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
-^LICENSE\.md$
+^codecov\.yml$
+^docs$
+^pkgdown$
+^vignettes$
+Dockerfile
+.dockerignore
+^\.github$
+.vscode
+.code-workspace
+^archive$
 ^data-raw$

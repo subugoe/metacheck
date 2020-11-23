@@ -1,13 +1,27 @@
 Package: metacheck
 Title: Send emails reporting Crossref metadata compliance.
 Version: 0.0.0.9000
-Authors@R: 
-    c(person(given = "Najko",
-             family = "Jahn",
-             role = c("aut", "cre"),
-             email = "najko.jahn@sub.uni-goettingen.de",
-             comment = c(ORCID = "0000-0001-5105-1463")),
-      person(family = "Najko Jahn"))
+Authors@R:
+    c(
+      person(
+        given = "Najko",
+        family = "Jahn",
+        role = c("aut", "cre"),
+        email = "najko.jahn@gmail.com",
+        comment = c(ORCID = "0000-0001-5105-1463")
+      ),
+      person(
+        given = "Maximilian",
+        family = "Held",
+        role = c("aut"),
+        email = "info@maxheld.de",
+        comment = c(ORCID = "0000-0002-4703-5388")
+      ),
+      person(
+        given = "Göttingen State and University Library",
+        role = c("cph", "fnd")
+      )
+    )
 Description: Check Crossref metadata compliance for hybrid OA.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -23,6 +37,17 @@ Imports:
     blastula,
     stringi,
     lubridate,
-    tidyselect
-Depends: 
-    R (>= 2.10)
+    tidyselect,
+    shiny,
+    htmltools,
+    reactable,
+    flexdashboard
+Suggests:
+    testthat,
+    subugoetheme,
+    shinycaas
+URL: https://subugoe.github.io/metacheck, https://github.com/subugoe/metacheck
+BugReports: https://github.com/subugoe/metacheck/issues
+Remotes:
+    subugoe/subugoetheme@1.0.0,
+    subugoe/shinycaas@31684600b286d5da5639a430a4b83a04de36bd34

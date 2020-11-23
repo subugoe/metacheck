@@ -1,0 +1,70 @@
+on: push
+
+jobs:
+  CICD:
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        shell: Rscript {0}
+    container:
+      # update muggle here and in Dockerfile
+      image: subugoe/muggle-buildtime-onbuild:9ee02c2d9b32cab07681288de9995dc3d4124e4d
+    env:
+      MUGGLE_PKG_NAME: ${{ github.event.repository.name }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache R Packages
+        uses: actions/cache@v2
+        with:
+          # only cache the user library
+          path: ".github/library"
+          key: ${{ job.container.image }}-${{ hashFiles('DESCRIPTION') }}
+      - name: Install System Dependencies
+        run: muggle::install_sysdeps()
+      - name: Install R Dependencies
+        env:
+          # see builder.Dockerfile for explanation, this resets after this step
+          R_LIBS_SITE: $R_LIBS_RUNTIME_GH
+        run: remotes::install_deps(dependencies = TRUE)
+      - name: Check
+        # TODO error out on all but note again https://github.com/subugoe/hoad/issues/194
+        run: devtools::check(error_on = "error")
+      - name: Build Package Website
+        run: |
+          pkgdown::build_site(override = list(new_process = FALSE))
+      - name: Build Buildtime Image
+        uses: docker/build-push-action@v1
+        with:
+          repository: ${{ github.repository }}/${{ env.MUGGLE_PKG_NAME }}-buildtime
+          target: buildtime
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          # this will set "latest" if master as per https://github.com/docker/build-push-action
+          tag_with_ref: true
+          # we're relying on long shas only to keep things easy
+          tag_with_sha: false
+          tags: ${{ github.sha }}
+          add_git_labels: true
+          push: ${{ github.event_name != 'pull_request' }}
+      - name: Build Runtime Image
+        uses: docker/build-push-action@v1
+        with:
+          repository: ${{ github.repository }}/${{ env.MUGGLE_PKG_NAME }}-runtime
+          target: runtime
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          # this will set "latest" if master as per https://github.com/docker/build-push-action
+          tag_with_ref: true
+          # we're relying on long shas only to keep things easy
+          tag_with_sha: false
+          tags: ${{ github.sha }}
+          add_git_labels: true
+          push: ${{ github.event_name != 'pull_request' }}
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/muggleme'
+        uses: maxheld83/ghpages@github-token
+        env:
+          BUILD_DIR: docs

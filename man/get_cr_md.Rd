@@ -4,10 +4,13 @@
 \alias{get_cr_md}
 \title{Get Crossref metadata from API}
 \usage{
-get_cr_md(dois)
+get_cr_md(dois, .progress = "text")
 }
 \arguments{
 \item{dois}{character vector with DOIs}
+
+\item{.progress}{show progress bar, use "none" if no progress should be
+displayed}
 }
 \description{
 Get Crossref metadata from API

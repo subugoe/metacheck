@@ -1,12 +1,14 @@
 #' Get Crossref metadata from API
 #'
 #' @param dois character vector with DOIs
+#' @param .progress show progress bar, use "none" if no progress should be
+#'   displayed
 #'
 #' @importFrom rcrossref cr_works
 #'
 #' @export
-get_cr_md <- function(dois) {
-  tt <- rcrossref::cr_works(dois)[["data"]]
+get_cr_md <- function(dois, .progress = "text") {
+  tt <- rcrossref::cr_works(dois = dois, .progress = .progress)[["data"]]
   if(!is.null(tt)) {
     out <- tt %>%
     mutate(issued = lubridate::parse_date_time(issued, c("y", "ymd", "ym"))) %>%

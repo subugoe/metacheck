@@ -7,6 +7,9 @@
 #'
 #' @export
 cr_compliance_overview <- function(cr) {
+  # remove potential duplicated
+  cr <- cr %>%
+    distinct()
   cc_df <- license_check(cr)
 
   tdm_df <- cr_tdm_df(cr)

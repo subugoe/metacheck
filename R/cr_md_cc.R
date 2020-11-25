@@ -55,7 +55,8 @@ license_check <- function(cr) {
     # add some more crossref metadata
     out <- cr %>%
       select(doi, container_title = container.title, publisher, issn, issued, issued_year) %>%
-      left_join(license_all_df, by = "doi")
+      left_join(license_all_df, by = "doi") %>%
+      distinct()
   }
   return(out)
 }

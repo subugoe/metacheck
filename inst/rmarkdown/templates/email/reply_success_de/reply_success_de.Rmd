@@ -18,9 +18,9 @@ library(hybridmdchecker)
 
 Hallo,
 
-vielen Dank, dass Sie den HOAD Compliance Checker nutzen, um die Auffindbarkeit von Open-Access-Artikeln automatisch zu überprüfen. 
+vielen Dank, dass Sie den Open-Access-Metadaten-Schnelltest nutzen.
 
-Hier ist unser Bericht:
+Hier ist der Bericht der automatischen Überprüfung:
 
 ### Indexierungsstatus in Crossref
 
@@ -91,7 +91,7 @@ my_df$cc_license_check %>%
   ind_table_to_gt()
 ```
 
-Im beigefügten Excel-Spreadsheet dokumentiert die Mappe **CC-Lizenzen** je Artikel das Ergebnis der Überprüfung.
+Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **CC-Lizenzen** je Artikel das Ergebnis der Überprüfung.
 
 ```{r, eval=!is.null(params$cr_tdm), results = 'asis'}
 glue::glue(
@@ -112,7 +112,7 @@ glue::glue(
   " 
   Die prozentualen Anteile beziehen sich ausschließlich auf Artikel, für die TDM-Informationen vorhanden sind. Bitte beachten Sie zudem, dass Verlage mehr als ein Format anbieten können.
   
-  Im beigefügten Excel-Spreadsheet dokumentiert die Mappe **TDM** die Crossref-Metadaten über Möglichkeiten für das Text und Data Mining je Artikel"
+  Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **TDM** die Crossref-Metadaten über Möglichkeiten für das Text und Data Mining je Artikel"
 )
 ```
 
@@ -122,7 +122,7 @@ glue::glue(
   "### Förderinformationen 
   Bei **{length(unique(params$cr_funder$doi))}** Publikationen verzeichnet Crossref mindestens eine Forschungsförderung. Das *Funding Acknowledgements* von **{length(unique(unlist(my_df$funder_info[my_df$funder_info$name == 'Deutsche Forschungsgemeinschaft', 'doi'])))}** Artikeln verweist auf die **Deutsche Forschungsgemeinschaft (DFG)**.
   
-  Im beigefügten Excel-Spreadsheet dokumentiert die Mappe **Förderinformationen** Crossref-Metadaten über das *Funding Acknowledgement* je Artikel"
+  Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **Förderinformationen** das *Funding Acknowledgement* je Artikel lt. Crossref."
 )
 ```
 
@@ -137,6 +137,8 @@ if(!is.null(params$cr_funder)) {
 } 
 writexl::write_xlsx(excel_spreadsheet, paste0(tempdir(), "/license_df.xlsx"))
 ```
+
+Falls Sie weitere Informationen benötigen, wie das Ergebnis des Schnelltests zu interpretieren ist, schauen Sie bitte unter  nach. 
 
 Bei Fragen und Anregungen stehen wir Ihnen gerne zur Verfügung.
 

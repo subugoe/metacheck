@@ -8,7 +8,7 @@ jobs:
         shell: Rscript {0}
     container:
       # update muggle here and in Dockerfile
-      image: subugoe/muggle-buildtime-onbuild:9ee02c2d9b32cab07681288de9995dc3d4124e4d
+      image: subugoe/muggle-buildtime-onbuild:f7fb6146d8712c4bffb024f4d4f40c40ffab5598
     env:
       MUGGLE_PKG_NAME: ${{ github.event.repository.name }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -69,8 +69,16 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Deploy to Azure Webapps
         run: |
-          AzureAppService:::az_webapp_create(
-            plan = "hoad"
+          shinycaas::az_webapp(
+            plan = "hoad",
+            deployment_container_image_name = paste0(
+              "docker.pkg.github.com/subugoe/metacheck/metacheck-runtime", 
+              ":",
+              Sys.getenv("GITHUB_SHA")
+            ),
+            docker_registry_server_url = "https://docker.pkg.github.com",
+            docker_registry_server_user = "maxheld83",
+            docker_registry_server_password = Sys.getenv("GH_PAT_PKG")
           )
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/muggleme'

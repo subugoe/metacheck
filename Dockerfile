@@ -1,4 +1,4 @@
-ARG MUGGLE_TAG=9ee02c2d9b32cab07681288de9995dc3d4124e4d
+ARG MUGGLE_TAG=f7fb6146d8712c4bffb024f4d4f40c40ffab5598
 FROM subugoe/muggle-buildtime-onbuild:${MUGGLE_TAG} as buildtime
 FROM subugoe/muggle-runtime-onbuild:${MUGGLE_TAG} as runtime
-CMD shinycaas::az_webapp_shiny_opts(); metacheck::runMetacheck()
+CMD shinycaas::shiny_opts_az(); metacheck::runMetacheck()

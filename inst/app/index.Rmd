@@ -1,6 +1,8 @@
 ---
 title: "Metacheck input"
-output: flexdashboard::flex_dashboard
+output: 
+  flexdashboard::flex_dashboard:
+    css: !expr subugoetheme::pkgdown_template()$assets$css
 runtime: shiny
 ---
 

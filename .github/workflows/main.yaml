@@ -80,6 +80,8 @@ jobs:
             docker_registry_server_user = "maxheld83",
             docker_registry_server_password = Sys.getenv("GH_PAT_PKG")
           )
+        env:
+          GH_PAT_PKG: ${{ secrets.GH_PAT_PKG }}
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/muggleme'
         uses: maxheld83/ghpages@github-token

@@ -1,0 +1,9 @@
+**
+!/R/**
+!/R/data/**
+!/inst/**
+!/.github/library/***
+!/DESCRIPTION
+!/NAMESPACE
+!/LICENSE.md
+!/.Rbuildignore

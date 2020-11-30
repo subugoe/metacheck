@@ -1,0 +1,14 @@
+url: https://subugoe.github.io/metacheck/
+authors:
+  Najko Jahn:
+    href: https://www.sub.uni-goettingen.de/kontakt/personen-a-z/personendetails/person/najko-jahn/
+  Maximilian Held:
+    href: https://www.maxheld.de
+  Göttingen State and University Library:
+    href: https://www.sub.uni-goettingen.de/
+template:
+  package: subugoetheme
+home:
+  links:
+  - text: Read project description
+    href: https://www.sub.uni-goettingen.de/en/projects-research/project-details/projekt/hybrid-oa-dashboards/

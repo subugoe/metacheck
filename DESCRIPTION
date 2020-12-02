@@ -42,7 +42,9 @@ Imports:
     htmltools,
     reactable,
     flexdashboard,
-    shinyvalidate
+    shinyvalidate,
+    base64enc,
+    gh
 Suggests:
     testthat,
     subugoetheme,

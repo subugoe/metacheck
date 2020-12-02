@@ -15,6 +15,8 @@ cr_compliance_overview <- function(cr) {
   tdm_df <- cr_tdm_df(cr)
   funder_df <- cr_funder_df(cr)
   orcid_df <- cr_has_orcid(cr)
+  open_apc_df <- open_apc_get(open_apc_collections()$open_apc_collection) %>%
+    filter(doi %in% cr$doi)
   cr_overview <- cr %>%
     mutate(has_cc = doi %in% filter(cc_df, !is.na(cc_norm))$doi,
            has_compliant_cc = doi %in% filter(cc_df, check_result == "All fine!")$doi,
@@ -31,7 +33,7 @@ cr_compliance_overview <- function(cr) {
   if(!"has_open_refs" %in% colnames(cr_overview)) {
     cr_overview$has_open_refs <- FALSE
   }
-  list(cr_overview = cr_overview, cc_license_check = cc_df, tdm = tdm_df, funder_info = funder_df)
+  list(cr_overview = cr_overview, cc_license_check = cc_df, tdm = tdm_df, funder_info = funder_df, open_apc_info = open_apc_df )
 }
 #' Check for ORCIDs
 #'

@@ -6,6 +6,7 @@ params:
   cr_license: NULL
   cr_tdm: NULL
   cr_funder: NULL
+  open_apc: NULL
 ---
 
 ```{r setup, include=FALSE}
@@ -126,6 +127,32 @@ glue::glue(
 )
 ```
 
+```{r null_open_apc, eval=nrow(params$open_apc) == 0, results='asis'}
+glue::glue("### Kostentransparenz
+  
+  **Kein** Artikel, der beim Open-Access-Metadaten-Schnelltest untersucht wurde, ist bei der Open APC registriert.
+  Bitte tragen Sie zur Kostentransparenz des Open-Access-Publizieren bei und
+  melden Sie institutionell geförderte Open-Access-Artikel der Open APC Initiative. 
+  
+  Mehr Infos zu Open APC: <https://github.com/OpenAPC/openapc-de/wiki/Handreichung-Dateneingabe>
+ ")
+```
+
+```{r missin_open_apc, eval=!setequal(tolower(params$dois), tolower(params$open_apc$doi)) && nrow(params$open_apc) > 0, results='asis'}
+glue::glue("### Kostentransparenz
+  
+  {nrow(params$open_apc[params$open_apc$doi %in% params$dois,])} Artikel, die beim Open-Access-Metadaten-Schnelltest untersucht wurden, sind nicht bei der Open APC Initiative registriert.
+  Bitte tragen Sie zur Kostentransparent des Open-Access-Publizieren bei und
+  melden Sie insitutionell geförderte Artikel der Open APC Initiative. 
+  
+  Mehr Infos zu Open APC: <https://github.com/OpenAPC/openapc-de/wiki/Handreichung-Dateneingabe>
+ ")
+```
+
+```{r, in_open_apc, eval = nrow(params$open_apc) != 0, results='asis'}
+glue::glue("Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **Open APC** Artikel, die bereits durch die Open APC erfasst wurden")
+```
+
 ```{r export}
 excel_spreadsheet <- list(`Übersicht` = params$cr_overview, 
                           `CC-Lizenzen` = params$cr_license)
@@ -135,6 +162,13 @@ if(!is.null(params$cr_tdm)) {
 if(!is.null(params$cr_funder)) {
  excel_spreadsheet[["Förderinformationen"]] <- params$cr_funder
 } 
+if(!is.null(params$cr_funder)) {
+ excel_spreadsheet[["Förderinformationen"]] <- params$cr_funder
+} 
+if(nrow(params$open_apc) != 0) {
+   excel_spreadsheet[["Open APC"]] <- params$open_apc
+}
+
 writexl::write_xlsx(excel_spreadsheet, paste0(tempdir(), "/license_df.xlsx"))
 ```
 

@@ -6,14 +6,15 @@ cr <- get_cr_md(tu_dois)
 # compliance check
 my_df <- cr_compliance_overview(cr)
 email <- blastula::compose_email(
-  header = "Hybrid OA CC license compliance report",
+  header = "Open-Access-Metadaten-Schnelltest",
   body = blastula::render_email("inst/rmarkdown/templates/email/reply_success_de/reply_success_de.Rmd",
                                 render_options = list(params = list(
                                   dois = tu_dois,
                                   cr_overview = my_df$cr_overview,
                                   cr_license=my_df$cc_license_check,
                                   cr_tdm=my_df$tdm,
-                                  cr_funder=my_df$funder_info)))$html_html,
+                                  cr_funder=my_df$funder_info,
+                                  open_apc = my_df$open_apc_info)))$html_html,
   footer = blastula::md(c(
     "Email sent on ", format(Sys.time(), "%a %b %d %X %Y"), "."
   ))

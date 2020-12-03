@@ -2,38 +2,6 @@
 title: "Beispiel E-Mail (Deutsch)"
 ---
 
-<style>
-.shiny-app-frame {
-  margin-top: 50px;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-}
-.shiny-app-frame iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-/* must be hidden otherwise it gets overlaid over the app */
-footer{
-  visibility: hidden
-}
-.page-header{
-  visibility: hidden
-}
-</style>
-
-
-<!-- TODO this needs to be updated manually, until https://github.com/subugoe/hoad/issues/180 -->
-
-<div class="shiny-app-frame">
-<iframe id="2343078" src="https://oa-schnelltest-beispiele.netlify.app/">
-<p>Ihr Browser kann leider keine eingebetteten Frames anzeigen:
-Sie können die eingebettete Seite über den folgenden Verweis aufrufen: 
-<a href="https://oa-schnelltest-beispiele.netlify.app/">https://oa-schnelltest-beispiele.netlify.app/</a>
-</p>
-</iframe>
-</div>
-
+```{r echo=FALSE}
+shinycaas::include_app2("https://oa-schnelltest-beispiele.netlify.app/")
+```

@@ -15,7 +15,15 @@ navbar:
   components:
     support:
       text: Support
-      href: support.html
+      menu:
+      - text: Frequently Asked Questions (Coming Soon)
+      - text: Other Support 
+        href: support.html
+    examples:
+      text: Examples
+      menu:
+      - text: German Example Email (TU Berlin) 
+        href: articles/german.html
 development:
   version_label: info
   version_tooltip: "Alpha Release"

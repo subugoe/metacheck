@@ -12,7 +12,7 @@
   </p>
   <p>
     <a class="btn btn-success btn-lg" href="articles/german.html" role="button">
-      Check out an Example E-Mail.
+      Check out an example email.
     </a>
     <a class="btn btn-primary btn-lg" href="https://subugoe.github.io/hoad/newsletter.html" role="button">
       Sign up to the newsletter (german)

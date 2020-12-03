@@ -2,6 +2,11 @@
 title: "Beispiel E-Mail (Deutsch)"
 ---
 
-```{r echo=FALSE}
-shinycaas::include_app2("https://rpubs.com/najko/antwort-schnelltest")
+<div class="alert alert-info" role="alert">
+  <strong>Demnächst mit interaktiver Vorschau.</strong>
+  Das hier ist nur ein Bildschirmfoto.
+</div>
+
+```{r echo=FALSE, out.width="100%"}
+knitr::include_graphics("german/german.png")
 ```

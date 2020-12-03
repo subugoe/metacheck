@@ -165,7 +165,7 @@ if(!is.null(params$cr_funder)) {
 if(!is.null(params$cr_funder)) {
  excel_spreadsheet[["Förderinformationen"]] <- params$cr_funder
 } 
-if(!is.null(params$open_apc)) {
+if(nrow(params$open_apc) > 0) {
    excel_spreadsheet[["Open APC"]] <- params$open_apc
 }
 

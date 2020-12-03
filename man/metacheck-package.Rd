@@ -4,9 +4,10 @@
 \name{metacheck-package}
 \alias{metacheck}
 \alias{metacheck-package}
-\title{metacheck: Send emails reporting Crossref metadata compliance.}
+\title{metacheck: Crossref Metadata Compliance}
 \description{
-Check Crossref metadata compliance for hybrid OA.
+Automatically check metadata compliance for hybrid open access (OA).
+    Includes a webapp to send compliance reports by email.
 }
 \seealso{
 Useful links:

@@ -11,8 +11,8 @@
     Automatically check metadata compliance for hybrid open access transformation contracts.
   </p>
   <p>
-    <a class="btn btn-success btn-lg" href="/" role="button">
-      Coming soon.
+    <a class="btn btn-success btn-lg" href="articles/german.html" role="button">
+      Check out an Example E-Mail.
     </a>
     <a class="btn btn-primary btn-lg" href="https://subugoe.github.io/hoad/newsletter.html" role="button">
       Sign up to the newsletter (german)

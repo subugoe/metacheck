@@ -23,7 +23,7 @@ cr_compliance_overview <- function(cr) {
            has_tdm_links = doi %in% tdm_df$doi,
            has_funder_info = doi %in% funder_df$doi,
            has_orcid = doi %in% orcid_df$doi,
-           has_open_abstract = unlist(across(any_of("abstract"), ~ is.na(.x))),
+           has_open_abstract = unlist(across(any_of("abstract"), ~ !is.na(.x))),
            has_open_refs = unlist(across(any_of("reference"), ~ sapply(.x, is.data.frame)))
     ) %>%
     select(doi, container_title = container.title, publisher, issued, issued_year, contains("has_"))

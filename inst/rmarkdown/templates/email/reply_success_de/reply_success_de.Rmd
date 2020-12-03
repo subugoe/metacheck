@@ -127,7 +127,7 @@ glue::glue(
 )
 ```
 
-```{r null_open_apc, eval=nrow(params$open_apc) == 0, results='asis'}
+```{r null_open_apc, eval=is.null(params$open_apc), results='asis'}
 glue::glue("### Kostentransparenz
   
   **Sämtliche Artikel**, der beim Open-Access-Metadaten-Schnelltest untersucht wurden, **sind nicht bei der Open APC Initiative registriert**.
@@ -165,7 +165,7 @@ if(!is.null(params$cr_funder)) {
 if(!is.null(params$cr_funder)) {
  excel_spreadsheet[["Förderinformationen"]] <- params$cr_funder
 } 
-if(nrow(params$open_apc) != 0) {
+if(!is.null(params$open_apc)) {
    excel_spreadsheet[["Open APC"]] <- params$open_apc
 }
 

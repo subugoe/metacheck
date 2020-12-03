@@ -1,6 +1,6 @@
 tu_dois <- readLines("data-raw/tu_dois.txt")
 # get data
-cr <- get_cr_md(tu_dois)
+cr <- get_cr_md(tu_dois,.progress = "text")
 # cr <- get_cr_md("10.1016/j.joi.2016.08.002", "10.3153/jfhs15007")
 # cr_test <-get_cr_md(c("10.3153/jfhs15007", "10.3153/jfhs15008"))
 # compliance check
@@ -9,7 +9,7 @@ email <- blastula::compose_email(
   header = "Open-Access-Metadaten-Schnelltest",
   body = blastula::render_email("inst/rmarkdown/templates/email/reply_success_de/reply_success_de.Rmd",
                                 render_options = list(params = list(
-                                  dois = tu_dois,
+                                  dois = tolower(tu_dois),
                                   cr_overview = my_df$cr_overview,
                                   cr_license=my_df$cc_license_check,
                                   cr_tdm=my_df$tdm,

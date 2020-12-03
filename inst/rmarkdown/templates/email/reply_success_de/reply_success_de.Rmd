@@ -31,7 +31,7 @@ cr_missing <- !setequal(tolower(params$dois), tolower(params$cr_overview$doi))
 
 ```{r not_indexed_in_crossref, eval=cr_missing, results = 'asis'}
   glue::glue("
-  **{length(unique(cr$doi))}** von **{ length(unique(params$dois))}** DOIs sind in Crossref indexiert.
+  **{length(unique(tolower(cr$doi)))}** von **{length(unique(tolower(params$dois)))}** DOIs sind in Crossref indexiert.
   Die folgenden DOIs sind **nicht** bei Crossref registriert:
   
  ")
@@ -130,7 +130,7 @@ glue::glue(
 ```{r null_open_apc, eval=nrow(params$open_apc) == 0, results='asis'}
 glue::glue("### Kostentransparenz
   
-  **Kein** Artikel, der beim Open-Access-Metadaten-Schnelltest untersucht wurde, ist bei der Open APC registriert.
+  **Sämtliche Artikel**, der beim Open-Access-Metadaten-Schnelltest untersucht wurden, **sind nicht bei der Open APC Initiative registriert**.
   Bitte tragen Sie zur Kostentransparenz des Open-Access-Publizieren bei und
   melden Sie institutionell geförderte Open-Access-Artikel der Open APC Initiative. 
   

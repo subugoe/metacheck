@@ -1,0 +1,27 @@
+# Receiving Support
+
+## Troubleshooting your Compliance Report
+
+To receive support for interpreting your compliance report, please write to [`metacheck-support@sub.uni-goettingen.de`](mailto:metacheck-support@sub-uni-goettingen.de).
+
+<div class="alert alert-warning" role="alert">
+  **Do not send private or sensitive information to this address.**
+  Support is staffed by volunteers, including helpers who are not employed by the University of Göttingen.
+  Expect that your message may be circulated widely.
+</div>
+
+This email is backed by a mailing list hosted at [GWDG mbH Göttingen](http://gwdg.de), the IT service provider of the University of Göttingen.
+Learn more about their processing of your data by reading the [GWDG's privacy notice](https://www.gwdg.de/privacy-notice).
+
+<div class="alert alert-info" role="alert">
+  <strong>German-speakers welcome.</strong>
+  Support is offered in both english and german.
+</div>
+
+We're always looking for volunteers with metadata experience to help users.
+Write us and we'll add you to the list.
+
+
+## Technical Support
+
+If you have found a technical issue with the software, please file an [issue on GitHub](https://github.com/subugoe/metacheck).

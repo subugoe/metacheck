@@ -11,6 +11,11 @@ home:
   links:
   - text: Read project description
     href: https://www.sub.uni-goettingen.de/en/projects-research/project-details/projekt/hybrid-oa-dashboards/
+navbar:
+  components:
+    support:
+      text: Support
+      href: support.html
 development:
   version_label: info
   version_tooltip: "Alpha Release"

@@ -127,31 +127,20 @@ glue::glue(
 )
 ```
 
-```{r null_open_apc, eval=is.null(params$open_apc), results='asis'}
-glue::glue("### Kostentransparenz
+```{r null_open_apc, eval=nrow(params$open_apc) == 0, results='asis'}
+glue::glue("### weitere Anforderungen
   
-  **Sämtliche Artikel**, der beim Open-Access-Metadaten-Schnelltest untersucht wurden, **sind nicht bei der Open APC Initiative registriert**.
-  Bitte tragen Sie zur Kostentransparenz des Open-Access-Publizieren bei und
-  melden Sie institutionell geförderte Open-Access-Artikel der Open APC Initiative. 
-  
-  Mehr Infos zu Open APC: <https://github.com/OpenAPC/openapc-de/wiki/Handreichung-Dateneingabe>
+  **Sämtliche Artikel**, die beim Open-Access-Metadaten-Schnelltest untersucht wurden, **sind nicht bei der Open APC Initiative registriert**.
  ")
 ```
 
-```{r missin_open_apc, eval=!setequal(tolower(params$dois), tolower(params$open_apc$doi)) && nrow(params$open_apc) > 0, results='asis'}
-glue::glue("### Kostentransparenz
+```{r missin_open_apc, eval=nrow(params$open_apc) != 0, results='asis'}
+glue::glue("### weitere Anforderungen
   
-  {nrow(params$open_apc[params$open_apc$doi %in% params$dois,])} Artikel, die beim Open-Access-Metadaten-Schnelltest untersucht wurden, sind nicht bei der Open APC Initiative registriert.
-  Bitte tragen Sie zur Kostentransparent des Open-Access-Publizieren bei und
-  melden Sie insitutionell geförderte Artikel der Open APC Initiative. 
-  
-  Mehr Infos zu Open APC: <https://github.com/OpenAPC/openapc-de/wiki/Handreichung-Dateneingabe>
+  {nrow(params$open_apc[params$open_apc$doi %in% params$dois,])} Artikel, die beim Open-Access-Metadaten-Schnelltest untersucht wurden, sind nicht bei der Open APC Initiative registriert. Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **Open APC** Artikel, die erfasst wurden
  ")
 ```
 
-```{r, in_open_apc, eval = nrow(params$open_apc) != 0, results='asis'}
-glue::glue("Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **Open APC** Artikel, die bereits durch die Open APC erfasst wurden")
-```
 
 ```{r export}
 excel_spreadsheet <- list(`Übersicht` = params$cr_overview, 

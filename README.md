@@ -8,20 +8,20 @@
 <div class="jumbotron">
   <h1>Open Access Metadata Compliance Checker</h1>
   <p>
-    Automatically check metadata compliance for hybrid open access transformation contracts.
+    Automatically check metadata compliance for funded open access articles.
   </p>
   <p>
     <a class="btn btn-success btn-lg" href="articles/german.html" role="button">
-      Check out an example email.
+      Check out an example email report.
     </a>
     <a class="btn btn-primary btn-lg" href="https://subugoe.github.io/hoad/newsletter.html" role="button">
-      Sign up to the newsletter (german)
+      Sign up to the newsletter (German)
     </a>
   </p>
 </div>
 
 <div class="alert alert-info" role="alert">
-  <strong>During the alpha release, only german data is supported.</strong>
+  <strong>During the alpha release, only German libraries and funder are supported.</strong>
   Stay tuned for an internationalised version.
 </div>
 
@@ -31,23 +31,22 @@
 Open access grants and transformation contracts with publishers increasingly require licensing metadata.
 </p>
 
-<div class="panel panel-default">
-  <div class="panel-heading" style="linkcolor:white;">
-  [DFG](https://www.dfg.de) [Open Access Publication Funding](https://www.dfg.de/en/research_funding/programmes/infrastructure/lis/funding_opportunities/open_access_publication_funding/index.html) (Starting 2021):
-  </div>
-  <div class="panel-body">
-  > "Funded institutions must generally agree to make publication metadata (including the cost data for the overall costs of publications) openly accessible via an infrastructure proposed by the DFG. "
-  </div>
-  <div class="panel-footer">
-  [Guidelines and Supplementary Instructions](https://www.dfg.de/formulare/12_21/12_21_en.pdf), page 5
-  </div>
-</div>
+General metadata recommendations:
+
+- [ESAC Guidelines for Transformative Agreements](https://esac-initiative.org/about/transformative-agreements/guidelines-for-transformative-agreements/)
+- [Crossref: Recommended journal metadata]( https://www.crossref.org/get-started/content-registration/journal-metadata/)
+
+In the first phase, we support metadata guidelines outlined in the following funding streams and transformative agreements:
+
+- [DFG-Förderprogramm: "Open-Access-Publikationskosten"](https://www.dfg.de/foerderung/programme/infrastruktur/lis/lis_foerderangebote/open_access_publikationskosten/)
+- [DEAL: Wiley](https://esac-initiative.org/about/transformative-agreements/agreement-registry/wiley2019deal/)
+- [DEAL: Springer Nature](https://esac-initiative.org/about/transformative-agreements/agreement-registry/sn2020deal/)
 
 
 ## Supporting Libraries and OA Funders
 
 <p class="lead">
-The compliance checker helps libraries and other funders of open access publications professionalise their metadata monitoring.
+The compliance checker helps libraries and funders of open access publications streamline their metadata monitoring.
 </p>
 
 <ul class="media-list row">
@@ -57,7 +56,7 @@ The compliance checker helps libraries and other funders of open access publicat
   </div>
   <div class="media-body">
   <h4 class="media-heading">Become Metadata Compliant</h4>
-  Independently verify that your publications are compliant with the metadata requirements of funding agencies.
+  Independently verify that your publications are compliant with the metadata requirements of library consortia and funding agencies.
   </div>
   </li>
   <li class="media col-sm-6">
@@ -113,6 +112,10 @@ The compliance checker helps libraries and other funders of open access publicat
   </li>
 </ul>
 
+## Data Sources
+
+- [Crossref REST API (Metadata Plus)](https://github.com/CrossRef/rest-api-doc)
+- [Open APC Initiative](https://openapc.net/)
 
 ## Technical Implementation
 
@@ -124,4 +127,6 @@ The package includes:
 - a parametrised rmarkdown compliance report
 - a webapp to send e-mail reports
 
-The package relies on metadata from the crossref API.
+## Funding acknowledgement
+
+This scholarly communication analytics services is supported by the [Deutsche Forschungsgemeinschaft](https://gepris.dfg.de/gepris/projekt/416115939).

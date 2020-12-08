@@ -49,10 +49,13 @@ Suggests:
     testthat,
     subugoetheme,
     shinycaas,
-    rmarkdown
+    rmarkdown,
+    bench (>= 1.1.1)
 URL: https://subugoe.github.io/metacheck, https://github.com/subugoe/metacheck
 BugReports: https://github.com/subugoe/metacheck/issues
 Remotes:
     subugoe/subugoetheme@1.1.1,
     subugoe/shinycaas@1.0.0,
+    subugoe/rcrossref@51d036808c1dc1f46cf1bad1b136e97ad213e162
     rstudio/shinyvalidate
+Config/testthat/edition: 3

@@ -12,6 +12,9 @@ jobs:
     env:
       MUGGLE_PKG_NAME: ${{ github.event.repository.name }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      crossref_plus: ${{ secrets.CR_MD_PLUS_TOKEN }}
+      # TODO commiter email here https://github.com/subugoe/metar/issues/110
+      crossref_email: held@sub.uni-goettingen.de
     steps:
       - uses: actions/checkout@v2
       - name: Cache R Packages

@@ -114,6 +114,8 @@ The compliance checker helps libraries and funders of open access publications s
 
 ## Data Sources
 
+<!-- TODO this should be replaced by proper metadata in pkgdown sidebar https://github.com/subugoe/metacheck/issues/39 -->
+
 - [Crossref REST API (Metadata Plus)](https://github.com/CrossRef/rest-api-doc)
 - [Open APC Initiative](https://openapc.net/)
 
@@ -128,5 +130,7 @@ The package includes:
 - a webapp to send e-mail reports
 
 ## Funding acknowledgement
+
+<!-- TODO this should be replaced by proper metadata in pkgdown sidebar https://github.com/subugoe/metacheck/issues/39 -->
 
 This scholarly communication analytics services is supported by the [Deutsche Forschungsgemeinschaft](https://gepris.dfg.de/gepris/projekt/416115939).

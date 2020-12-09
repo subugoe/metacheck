@@ -20,6 +20,18 @@ Authors@R:
       person(
         given = "Göttingen State and University Library",
         role = c("cph", "fnd")
+      ),
+      person(
+        given = "German Research Foundation",
+        role = c("spn")
+      ),
+      person(
+        given = "Crossref",
+        role = c("dtc")
+      ),
+      person(
+        given = "OpenAPC Initiative",
+        role = c("dtc")
       )
     )
 Description: 

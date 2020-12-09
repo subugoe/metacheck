@@ -18,41 +18,26 @@ Column
 ### Registration
 
 ```{r}
+biblids::doiEntryUI(id = "dois")
 textInput(
-  inputId = "email", 
+  inputId = "email",
   label  = "Email Address:",
   placeholder = "jane.doe@uni-foo.edu"
 )
-textInput(
-  inputId  = "ror",
-  label = "Research Organisation Registry (ROR) Identifier:",
-  placeholder = '0371t1780'
-)
-textInput(
-  inputId  = "dois",
-  label = "List of Digital Object Identifiers:",
-  placeholder  = "10.1080/0020739950260202"
+shiny::actionButton(
+  label = "Create Compliance Report",
+  inputId = "create"
 )
 ```
 
 
 ```{r}
+is_valid_email <- function(x) {
+  grepl("^\\s*[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\s*$", as.character(x), ignore.case=TRUE)
+}
 iv <- InputValidator$new()
 iv$add_rule("email", sv_required())
-iv$add_rule("email",
-  sv_regex(
-    "\\<[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\>",
-    "Please provide a valid email",
-    invert = TRUE
-  )
-)
-iv$add_rule("dois", sv_required())
-iv$add_rule("dois",
-  sv_regex(
-    "/^10.\\d{4,9}/[-._;()/:A-Z0-9]+$/i",
-    "Please provide a valid DOI",
-    invert = TRUE
-  )
-)
+iv$add_rule("email", ~ if (!is_valid_email(.)) "Please provide a valid email")
 iv$enable()
+dois <- biblids::doiEntryServer(id = "dois")
 ```

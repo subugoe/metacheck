@@ -17,7 +17,7 @@ Hi Michaela,
 Thank you for using the HOAD compliance checker. Here's our report.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-cr <- hybridmdchecker::get_cr_md(dois = params$dois)
+cr <- metacheck::get_cr_md(dois = params$dois)
 ```
 
 ### Indexing status in Crossref
@@ -62,7 +62,7 @@ ind_table_to_gt(tt)
 ```{r, eval=has_license, echo=FALSE}
 # check compliance
 compliant_with_license <- cr %>%
-  hybridmdchecker::license_normalise() %>%
+  metacheck::license_normalise() %>%
   inner_join(cr, by = "doi") %>%
   select(doi, container.title, publisher, issn, issued_year, cc_normalised = license.x)
 ```
@@ -79,7 +79,7 @@ non_compliant_dois <-
 out <- if(!is.null(non_compliant_dois))
   purrr::map_df(non_compliant_dois, function(x) {
     cr[cr$doi == x,] %>%
-      hybridmdchecker::license_report()
+      metacheck::license_report()
   })
 # export
 non_compliant <- cr %>%

@@ -57,7 +57,10 @@ Imports:
     reactable,
     flexdashboard,
     shinyvalidate,
-    biblids
+    biblids,
+    magrittr,
+    writexl,
+    checkmate
 Suggests:
     testthat,
     subugoetheme,

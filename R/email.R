@@ -1,0 +1,49 @@
+#' Send out email
+#' @param dois Character vector of DOIs
+#' @export
+render_email <- function(dois = readLines(system.file("data-raw/tu_dois.txt", package = "metacheck"))[1:10]) {
+  cr <- get_cr_md(dois)
+  my_df <- cr_compliance_overview(cr)
+  email <- blastula::compose_email(
+    header = "Hybrid OA CC license compliance report",
+    body = blastula::render_email(
+      input = system.file(
+        "rmarkdown/templates/email/reply_success_de/reply_success_de.Rmd",
+        package = "metacheck"
+      ),
+      render_options = list(
+        params = list(
+          dois = dois,
+          cr_overview = my_df$cr_overview,
+          cr_license = my_df$cc_license_check,
+          cr_tdm = my_df$tdm,
+          cr_funder = my_df$funder_info
+        )
+      )
+    )$html_html,
+    footer = blastula::md(c(
+      "Email sent on ", format(Sys.time(), "%a %b %d %X %Y"), "."
+    ))
+  )
+  email
+}
+
+#' Send out email
+#' @inheritParams blastula::smtp_send
+#' @export
+send_email <- function(to = "held@sub.uni-goettingen.de", email) {
+  blastula::smtp_send(
+    email = email,
+    subject = "HOAD Compliance Check Ergebnis",
+    cc = "metacheck-support@sub.uni-goettingen.de",
+    from = "najko.jahn@gmail.com",
+    to = to,
+    credentials = blastula::creds_envvar(
+      user = "7dd3848a47e310558c101fefb4d8edc5",
+      host = "in-v3.mailjet.com",
+      port = 587,
+      use_ssl = TRUE,
+      pass_envvar = "MAILJET_SMTP_PASSWORD"
+    )
+  )
+}

@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(dplyr)
 library(purrr)
 library(tidyr)
-library(hybridmdchecker)
+library(metacheck)
 ```
 
 Hallo,
@@ -143,5 +143,3 @@ Falls Sie weitere Informationen benötigen, wie das Ergebnis des Schnelltests zu
 Bei Fragen und Anregungen stehen wir Ihnen gerne zur Verfügung.
 
 Viele Grüße
-
-

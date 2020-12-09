@@ -1,7 +1,7 @@
 #' Send out email
 #' @param dois Character vector of DOIs
 #' @export
-render_email <- function(dois = readLines(system.file("data-raw/tu_dois.txt", package = "metacheck"))[1:10]) {
+render_email <- function(dois) {
   cr <- get_cr_md(dois)
   my_df <- cr_compliance_overview(cr)
   email <- blastula::compose_email(
@@ -31,7 +31,7 @@ render_email <- function(dois = readLines(system.file("data-raw/tu_dois.txt", pa
 #' Send out email
 #' @inheritParams blastula::smtp_send
 #' @export
-send_email <- function(to = "held@sub.uni-goettingen.de", email) {
+send_email <- function(to, email) {
   blastula::smtp_send(
     email = email,
     subject = "HOAD Compliance Check Ergebnis",

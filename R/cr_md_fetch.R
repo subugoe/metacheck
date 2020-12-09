@@ -8,6 +8,7 @@
 #'
 #' @export
 get_cr_md <- function(dois, .progress = "text") {
+  checkmate::assert_character(dois, any.missing = FALSE, unique = TRUE)
   tt <- rcrossref::cr_works(dois = dois, .progress = .progress)[["data"]]
   if (!is.null(tt)) {
     out <- tt %>%

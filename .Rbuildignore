@@ -11,3 +11,5 @@ Dockerfile
 .code-workspace
 ^archive$
 ^data-raw$
+.azure/
+LICENSE.md

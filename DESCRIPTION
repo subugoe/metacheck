@@ -66,7 +66,7 @@ Suggests:
     subugoetheme,
     shinycaas,
     rmarkdown,
-    bench (>= 1.1.1)
+    bench
 URL: https://subugoe.github.io/metacheck, https://github.com/subugoe/metacheck
 BugReports: https://github.com/subugoe/metacheck/issues
 Remotes:

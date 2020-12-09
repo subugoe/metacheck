@@ -4,7 +4,7 @@
 \alias{send_email}
 \title{Send out email}
 \usage{
-send_email(to = "held@sub.uni-goettingen.de", email)
+send_email(to, email)
 }
 \arguments{
 \item{to}{A vector of email addresses serving as primary recipients for the

@@ -4,9 +4,7 @@
 \alias{render_email}
 \title{Send out email}
 \usage{
-render_email(
-  dois = readLines(system.file("data-raw/tu_dois.txt", package = "metacheck"))[1:10]
-)
+render_email(dois)
 }
 \arguments{
 \item{dois}{Character vector of DOIs}

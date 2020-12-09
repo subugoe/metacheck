@@ -25,7 +25,7 @@ textInput(
   placeholder = "jane.doe@uni-foo.edu"
 )
 shiny::actionButton(
-  label = "Create Compliance Report",
+  label = "Email Compliance Report",
   inputId = "create"
 )
 ```
@@ -40,4 +40,10 @@ iv$add_rule("email", sv_required())
 iv$add_rule("email", ~ if (!is_valid_email(.)) "Please provide a valid email")
 iv$enable()
 dois <- biblids::doiEntryServer(id = "dois")
+observeEvent(input$create, {
+  send_email(
+    to = input$email,
+    email = render_email(dois = dois())
+  )
+})
 ```

@@ -10,4 +10,9 @@ test_that("email can be send", {
     email = blastula::prepare_test_message(),
     cc = NULL
   )
+  send_email(
+    to = "info@maxheld.de",
+    email = render_email(dois = tu_dois()[0:10]),
+    cc = NULL
+  )
 })

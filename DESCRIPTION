@@ -60,7 +60,8 @@ Imports:
     biblids,
     magrittr,
     writexl,
-    checkmate
+    checkmate,
+    readr
 Suggests:
     testthat,
     subugoetheme,

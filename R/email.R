@@ -31,11 +31,11 @@ render_email <- function(dois) {
 #' Send out email
 #' @inheritParams blastula::smtp_send
 #' @export
-send_email <- function(to, email) {
+send_email <- function(to, email, cc = "metacheck-support@sub.uni-goettingen.de") {
   blastula::smtp_send(
     email = email,
     subject = "HOAD Compliance Check Ergebnis",
-    cc = "metacheck-support@sub.uni-goettingen.de",
+    cc = cc,
     from = "najko.jahn@gmail.com",
     to = to,
     credentials = blastula::creds_envvar(

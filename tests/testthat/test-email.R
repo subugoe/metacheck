@@ -4,6 +4,10 @@ test_that("email can be rendered", {
 })
 
 test_that("email can be send", {
-  skip_if_not(Sys.getenv("GITHUB_ACTIONS") == "true")
-  send_email(to = "info@maxheld.de", email = blastula::prepare_test_message())
+  skip_if(Sys.getenv("MAILJET_SMTP_PASSWORD") == "")
+  send_email(
+    to = "info@maxheld.de",
+    email = blastula::prepare_test_message(),
+    cc = NULL
+  )
 })

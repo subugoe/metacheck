@@ -61,7 +61,8 @@ Imports:
     magrittr,
     writexl,
     checkmate,
-    readr
+    readr,
+    gluedown
 Suggests:
     testthat,
     subugoetheme,

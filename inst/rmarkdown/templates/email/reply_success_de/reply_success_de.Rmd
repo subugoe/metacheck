@@ -6,6 +6,7 @@ params:
   cr_license: NULL
   cr_tdm: NULL
   cr_funder: NULL
+  session_id: NULL
 ---
 
 ```{r setup, include=FALSE}
@@ -135,7 +136,10 @@ if(!is.null(params$cr_tdm)) {
 if(!is.null(params$cr_funder)) {
  excel_spreadsheet[["Förderinformationen"]] <- params$cr_funder
 } 
-writexl::write_xlsx(excel_spreadsheet, paste0(tempdir(), "/license_df.xlsx"))
+writexl::write_xlsx(
+  x = excel_spreadsheet,
+  path = xlsx_path(params$session_id)
+)
 ```
 
 Falls Sie weitere Informationen benötigen, wie das Ergebnis des Schnelltests zu interpretieren ist, schauen Sie bitte unter  nach. 

@@ -32,6 +32,7 @@ shiny::actionButton(
 
 
 ```{r}
+session_id <- as.character(floor(runif(1) * 1e20))
 is_valid_email <- function(x) {
   grepl("^\\s*[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\s*$", as.character(x), ignore.case=TRUE)
 }
@@ -43,7 +44,7 @@ dois <- biblids::doiEntryServer(id = "dois")
 observeEvent(input$create, {
   send_email(
     to = input$email,
-    email = render_email(dois = dois())
+    email = render_email(dois = dois(), session_id = session_id)
   )
 })
 ```

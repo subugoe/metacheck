@@ -5,7 +5,7 @@ render_email <- function(dois) {
   cr <- get_cr_md(dois)
   my_df <- cr_compliance_overview(cr)
   email <- blastula::compose_email(
-    header = "Hybrid OA CC license compliance report",
+    header = "MetacheckHybrid OA CC license compliance report",
     body = blastula::render_email(
       input = system.file(
         "rmarkdown/templates/email/reply_success_de/reply_success_de.Rmd",
@@ -36,7 +36,7 @@ send_email <- function(to, email, cc = "metacheck-support@sub.uni-goettingen.de"
     email = email,
     subject = "HOAD Compliance Check Ergebnis",
     cc = cc,
-    from = "najko.jahn@gmail.com",
+    from = "metacheck-support@sub.uni-goettingen.de",
     to = to,
     credentials = blastula::creds_envvar(
       user = "7dd3848a47e310558c101fefb4d8edc5",

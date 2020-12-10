@@ -12,39 +12,61 @@ library(shinyvalidate)
 ```
 
 
-Column
+Inputs {.sidebar}
 -----------------------------------------------------------------------
-
-### Registration
 
 ```{r}
 biblids::doiEntryUI(id = "dois")
+actionButton(
+  label = "Create Compliance Report",
+  inputId = "create",
+  width = "100%"
+)
 textInput(
   inputId = "email",
   label  = "Email Address:",
   placeholder = "jane.doe@uni-foo.edu"
 )
-shiny::actionButton(
-  label = "Email Compliance Report",
-  inputId = "create"
+actionButton(
+  label = "Send Compliance Report",
+  inputId = "send",
+  width = "100%"
 )
 ```
 
-
 ```{r}
+# used to disambiguate excel file names
 session_id <- as.character(floor(runif(1) * 1e20))
-is_valid_email <- function(x) {
-  grepl("^\\s*[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\s*$", as.character(x), ignore.case=TRUE)
-}
+
+# get dois
+dois <- biblids::doiEntryServer(id = "dois")
+
+# email
 iv <- InputValidator$new()
 iv$add_rule("email", sv_required())
 iv$add_rule("email", ~ if (!is_valid_email(.)) "Please provide a valid email")
 iv$enable()
-dois <- biblids::doiEntryServer(id = "dois")
-observeEvent(input$create, {
-  send_email(
-    to = input$email,
-    email = render_email(dois = dois(), session_id = session_id)
-  )
+
+html_email <- eventReactive(input$create, {
+  if (length(dois()) > 1) {
+    render_email(dois = dois(), session_id = session_id)$html_html
+  }
 })
+output$draft <- renderUI(html_email())
+
+observeEvent(input$send, {
+  if (length(dois() > 1 & iv$is_valid())) {
+    send_email(
+      to = input$email,
+      email = render_email(dois = dois(), session_id = session_id)
+    )
+  }
+})
+```
+
+Results
+-----------------------------------------------------------------------
+
+```{r}
+shiny::uiOutput("draft")
 ```

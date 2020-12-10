@@ -1,0 +1,7 @@
+---
+title: "Beispiel E-Mail (Deutsch)"
+---
+
+```{r echo=FALSE}
+shinycaas::include_app2("https://oa-schnelltest-beispiele.netlify.app/")
+```

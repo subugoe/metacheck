@@ -1,5 +1,5 @@
 Package: metacheck
-Title: Send emails reporting Crossref metadata compliance.
+Title: Crossref Metadata Compliance
 Version: 0.0.0.9000
 Authors@R:
     c(
@@ -20,9 +20,23 @@ Authors@R:
       person(
         given = "Göttingen State and University Library",
         role = c("cph", "fnd")
+      ),
+      person(
+        given = "German Research Foundation",
+        role = c("spn")
+      ),
+      person(
+        given = "Crossref",
+        role = c("dtc")
+      ),
+      person(
+        given = "OpenAPC Initiative",
+        role = c("dtc")
       )
     )
-Description: Check Crossref metadata compliance for hybrid OA.
+Description: 
+    Automatically check metadata compliance for hybrid open access (OA).
+    Includes a webapp to send compliance reports by email.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -44,14 +58,26 @@ Imports:
     flexdashboard,
     shinyvalidate,
     base64enc,
-    gh
+    gh,
+    biblids,
+    magrittr,
+    writexl,
+    checkmate,
+    readr,
+    gluedown,
+    tibble
 Suggests:
     testthat,
     subugoetheme,
-    shinycaas
+    shinycaas,
+    rmarkdown,
+    bench
 URL: https://subugoe.github.io/metacheck, https://github.com/subugoe/metacheck
 BugReports: https://github.com/subugoe/metacheck/issues
 Remotes:
     subugoe/subugoetheme@1.1.1,
     subugoe/shinycaas@1.0.0,
-    rstudio/shinyvalidate
+    subugoe/rcrossref@51d036808c1dc1f46cf1bad1b136e97ad213e162,
+    rstudio/shinyvalidate,
+    subugoe/biblids@36bbb077226fd252c1a7b90dcc5249e61a21394d
+Config/testthat/edition: 3

@@ -12,6 +12,10 @@ jobs:
     env:
       MUGGLE_PKG_NAME: ${{ github.event.repository.name }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      crossref_plus: ${{ secrets.CR_MD_PLUS_TOKEN }}
+      MAILJET_SMTP_PASSWORD: ${{ secrets.MAILJET_SMTP_PASSWORD}}
+      # TODO commiter email here https://github.com/subugoe/metar/issues/110
+      crossref_email: held@sub.uni-goettingen.de
     steps:
       - uses: actions/checkout@v2
       - name: Cache R Packages
@@ -64,10 +68,12 @@ jobs:
           add_git_labels: true
           push: ${{ github.event_name != 'pull_request' }}
       - name: Log in to Azure
+        if: github.ref == 'refs/heads/main'
         uses: azure/login@v1.1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Deploy to Azure Webapps
+        if: github.ref == 'refs/heads/main'
         run: |
           shinycaas::az_webapp(
             plan = "hoad",
@@ -83,7 +89,7 @@ jobs:
         env:
           GH_PAT_PKG: ${{ secrets.GH_PAT_PKG }}
       - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/muggleme'
+        if: github.ref == 'refs/heads/main'
         uses: maxheld83/ghpages@github-token
         env:
           BUILD_DIR: docs

@@ -78,6 +78,6 @@ Remotes:
     subugoe/subugoetheme@1.1.1,
     subugoe/shinycaas@1.0.0,
     subugoe/rcrossref@51d036808c1dc1f46cf1bad1b136e97ad213e162,
-    rstudio/shinyvalidate,
+    rstudio/shinyvalidate@420aec079dbd2c0e12bf8350f4452d105a9cc45c,
     subugoe/biblids@36bbb077226fd252c1a7b90dcc5249e61a21394d
 Config/testthat/edition: 3

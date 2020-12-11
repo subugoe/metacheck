@@ -9,6 +9,11 @@ runtime: shiny
 ```{r global, include=FALSE}
 library(shiny)
 library(shinyvalidate)
+library(future)
+library(promises)
+library(future.callr)
+library(metacheck)
+html_email <- reactiveVal(value = render_email(dois = unique(tu_dois())))
 ```
 
 
@@ -35,6 +40,8 @@ actionButton(
 ```
 
 ```{r}
+plan(callr)
+
 # used to disambiguate excel file names
 session_id <- as.character(floor(runif(1) * 1e20))
 
@@ -47,18 +54,31 @@ iv$add_rule("email", sv_required())
 iv$add_rule("email", ~ if (!is_valid_email(.)) "Please provide a valid email")
 iv$enable()
 
-html_email <- eventReactive(input$create, {
-  if (length(dois()) > 1) {
-    render_email(dois = dois(), session_id = session_id)$html_html
-  }
+observeEvent(input$create, {
+  myFuture <- future({
+    if (length(dois()) > 1) {
+     render_email(
+       dois = dois(),
+       session_id = session_id)$html_html
+    }
+  })
+  then(
+    myFuture,
+    onFulfilled = function(value) {
+      html_email <<- value
+    },
+    onRejected = NULL
+  )
+  return(NULL)
 })
+
 output$draft <- renderUI(html_email())
 
 observeEvent(input$send, {
   if (length(dois() > 1 & iv$is_valid())) {
     send_email(
       to = input$email,
-      email = render_email(dois = dois(), session_id = session_id)
+      email = html_email()
     )
   }
 })

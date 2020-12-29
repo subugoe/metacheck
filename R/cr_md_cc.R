@@ -5,7 +5,6 @@
 #'   provided for the version-of-record without delay indicated by the license date.
 #'
 #' @param cr crossref metadata using [get_cr_md()]
-#'
 #' @importFrom dplyr `%>%` bind_rows bind_cols filter mutate anti_join distinct left_join
 #'
 #' @export
@@ -26,23 +25,20 @@ license_check <- function(cr) {
     # validation steps
     # compliant, i.e cc version-of-record without delay
     compliant_cc <- get_compliant_cc(license_df)
+    # vor has cc, but time lag between issued and license date
+    delayed_df <- get_delayed_license(license_df)
+    vor_df <- bind_rows(compliant_cc, delayed_df)
     # cc, but not explicitly attached to version-of-record
-    vor_issue_df <- vor_issue(license_df, compliant_cc$doi)
+    vor_issue_df <- vor_issue(license_df, vor_df$doi)
     # bring those together
-    by_df <- bind_rows(compliant_cc, vor_issue_df)
-    delayed_df <- license_df %>%
-      filter(!doi %in% by_df$doi, !is.na(cc_norm) &
-               delay.in.days > 0) %>%
-      mutate(check_result = "Difference between publication date and the CC license's start_date suggests delayed OA provision")
-    # add them to checked records
-    by_delayed_df <- bind_rows(by_df, delayed_df)
+    by_df <- bind_rows(vor_df, vor_issue_df)
     # No CC
-    miss_df <- anti_join(license_df, by_delayed_df, by = "doi") %>%
+    miss_df <- anti_join(license_df, by_df, by = "doi") %>%
       mutate(check_result = "No Creative Commons license found")
     # bring it altogether
     license_all_df <- miss_df %>%
       distinct(doi, cc_norm, check_result) %>%
-      bind_rows(by_delayed_df) %>%
+      bind_rows(by_df) %>%
       select(
         doi,
         cc_norm,
@@ -117,4 +113,19 @@ vor_issue <- function(license_df, compliant_dois) {
            !doi %in% compliant_dois
     ) %>%
     mutate(check_result = "No Creative Commons license metadata found for version of record")
+}
+#' Extract records with license delay
+#'
+#' @details Obtain records with CC license where license start_date
+#'   and earliest publication date for the version of records
+#'   differs, suggesting delayed CC license provision.
+#' @param license_df normalized license metadata from [license_df()]
+#'
+#' @importFrom dplyr `%>%` mutate filter
+#' @export
+get_delayed_license <- function(license_df) {
+  license_df %>%
+    filter(content.version == "vor", !is.na(cc_norm) &
+             delay.in.days > 0) %>%
+    mutate(check_result = "Difference between publication date and the CC license's start_date suggests delayed OA provision")
 }

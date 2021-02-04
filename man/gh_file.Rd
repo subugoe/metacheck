@@ -23,16 +23,37 @@ gh_file(
 \item{url}{the URL of the file to download via API, of the form
 `github.com/:owner/:repo/blob/:path}
 
-\item{ref}{the reference of a commit: a branch name, tag, or commit SHA}
-
 \item{owner, repo, path, ref}{alternate way to specify the file.  These will
 override values in \code{url}}
 
 \item{to_disk, destfile}{write file to disk (default=TRUE)?  If so, use the
 name in \code{destfile}, or the original filename by default}
 
-\item{.token, .api_url, .method, .limit, .send_headers}{arguments passed on to
-\link[gh:gh]{gh::gh}}
+\item{.token}{Authentication token. Defaults to \code{GITHUB_PAT} or
+\code{GITHUB_TOKEN} environment variables, in this order if any is set.
+See \code{\link[gh:gh_token]{gh_token()}} if you need more flexibility, e.g. different tokens
+for different GitHub Enterprise deployments.}
+
+\item{.api_url}{Github API url (default: \url{https://api.github.com}). Used
+if \code{endpoint} just contains a path. Defaults to \code{GITHUB_API_URL}
+environment variable if set.}
+
+\item{.method}{HTTP method to use if not explicitly supplied in the
+\code{endpoint}.}
+
+\item{.limit}{Number of records to return. This can be used
+instead of manual pagination. By default it is \code{NULL},
+which means that the defaults of the GitHub API are used.
+You can set it to a number to request more (or less)
+records, and also to \code{Inf} to request all records.
+Note, that if you request many records, then multiple GitHub
+API calls are used to get them, and this can take a potentially
+long time.}
+
+\item{.send_headers}{Named character vector of header field values
+(except \code{Authorization}, which is handled via \code{.token}). This can be
+used to override or augment the default \code{User-Agent} header:
+\code{"https://github.com/r-lib/gh"}.}
 }
 \value{
 Either the local path of the downloaded file (default), or a raw

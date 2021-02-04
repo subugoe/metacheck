@@ -60,15 +60,13 @@ license_check <- function(cr) {
   }
   return(out)
 }
+
 #' Extract license info from Crossref metadata
-#'
-#' @param cr crossref metadata using [get_cr_md()]
-#'
+#' @inheritParams license_check
 #' @importFrom dplyr `%>%` mutate filter
 #' @importFrom tidyr unnest
 #' @importFrom stringi stri_extract
 #' @export
-#'
 get_license_md <- function(cr) {
   cr %>%
     select(doi, license) %>%
@@ -77,13 +75,14 @@ get_license_md <- function(cr) {
              gsub("/", "", .)
     )
 }
+
 #' Extract records with compliant CC license metadata
 #'
 #' @details In order to be compliant,
 #'   CC license has to apply to version of record and must be valid
 #'   without delay.
 #'
-#' @param license_df normalized license metadata from [license_df()]
+#' @param license_df normalized license metadata from [license_check()]
 #'
 #' @importFrom dplyr `%>%` mutate filter
 #' @export
@@ -97,13 +96,14 @@ get_compliant_cc <- function(license_df) {
       delay.in.days == 0) %>%
     mutate(check_result = "All fine!")
 }
+
 #' Extract records with CC license not applied to version of records
 #'
 #' @details In order to be compliant,
 #'   CC license has to apply to version of record and must be valid
 #'   without delay.
 #'
-#' @param license_df normalized license metadata from [license_df()]
+#' @inheritParams get_compliant_cc
 #' @param compliant_dois DOIs representing records with valid CC info
 #'
 #' @importFrom dplyr `%>%` mutate filter

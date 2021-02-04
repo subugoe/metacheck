@@ -34,6 +34,7 @@ render_email <- function(dois, session_id = NULL) {
 
 #' Add attachment to email
 #' @inheritParams blastula::add_attachment
+#' @inheritParams render_email
 #' @export
 add_attachment_xlsx <- function(email, session_id = NULL) {
   blastula::add_attachment(

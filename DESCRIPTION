@@ -73,7 +73,9 @@ Imports:
     readr,
     gluedown,
     tibble,
-    rmarkdown
+    rmarkdown,
+    glue,
+    fs
 Suggests:
     testthat,
     subugoetheme,

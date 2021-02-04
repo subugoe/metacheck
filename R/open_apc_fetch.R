@@ -59,13 +59,11 @@ open_apc_collections <- function() {
 #'
 #' @param url the URL of the file to download via API, of the form
 #'   `github.com/:owner/:repo/blob/:path
-#' @param ref the reference of a commit: a branch name, tag, or commit SHA
 #' @param owner,repo,path,ref alternate way to specify the file.  These will
 #'   override values in `url`
 #' @param to_disk,destfile write file to disk (default=TRUE)?  If so, use the
 #'   name in `destfile`, or the original filename by default
-#' @param .token,.api_url,.method,.limit,.send_headers arguments passed on to
-#'   [gh::gh]
+#' @inheritParams gh::gh
 #' @importFrom gh gh
 #' @importFrom stringi stri_match_all_regex
 #' @importFrom purrr %||% keep

@@ -24,6 +24,7 @@ Useful links:
 Authors:
 \itemize{
   \item Maximilian Held \email{info@maxheld.de} (\href{https://orcid.org/0000-0002-4703-5388}{ORCID})
+  \item Henrieke Walter \email{henrieke.walter@sub.uni-goettingen.de} (\href{https://orcid.org/0000-0003-3313-7364}{ORCID})
 }
 
 Other contributors:

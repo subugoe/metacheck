@@ -44,7 +44,7 @@ Authors@R:
 Description: 
     Automatically check metadata compliance for hybrid open access (OA).
     Includes a webapp to send compliance reports by email.
-License: MIT + file LICENSE
+License: AGPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

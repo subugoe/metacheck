@@ -13,3 +13,4 @@ Dockerfile
 ^data-raw$
 .azure/
 LICENSE.md
+^LICENSE\.md$

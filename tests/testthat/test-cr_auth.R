@@ -8,11 +8,11 @@ test_that("crossref metadata is enabled", {
 test_that("crossref metadata plus is faster", {
   skip("Test does not work; times are often the same.")
   with_mdplus <- bench::bench_time(
-    rcrossref::cr_agency(sample_dois[1:10], .progress = "text")
+    rcrossref::cr_agency(tu_dois[1:10], .progress = "text")
   )["real"]
   withr::local_envvar(.new = c("crossref_plus" = ""))
   without_mdplus <- bench::bench_time(
-    rcrossref::cr_agency(sample_dois[1:10], .progress = "text")
+    rcrossref::cr_agency(tu_dois[1:10], .progress = "text")
   )["real"]
   expect_lte(with_mdplus, without_mdplus)
 })

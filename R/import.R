@@ -1,9 +1,8 @@
 #' Get Crossref metadata from API
 #'
 #' @param dois character vector with DOIs
-#' @param .progress show progress bar, use "none" if no progress should be
-#'   displayed
-#'
+#' @param .progress
+#' show progress bar, use "none" if no progress should be displayed
 #' @family ETL import
 #' @export
 get_cr_md <- function(dois, .progress = "text") {

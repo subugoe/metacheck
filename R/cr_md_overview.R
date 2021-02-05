@@ -1,10 +1,7 @@
 #' Get compliance overview
 #'
 #' @param cr crossref metadata using [get_cr_md()]
-#'
-#' @importFrom dplyr `%>%` filter select across one_of
-#' @importFrom tidyselect matches
-#'
+#' @family transform
 #' @export
 cr_compliance_overview <- function(cr) {
   # remove potential duplicated
@@ -36,11 +33,11 @@ cr_compliance_overview <- function(cr) {
   list(cr_overview = cr_overview, cc_license_check = cc_df, tdm = tdm_df, funder_info = funder_df, open_apc_info = open_apc_df )
 }
 
-
 #' Check for ORCIDs
 #'
 #' @inheritParams cr_compliance_overview
-#' @importFrom purrr map
+#' @family transform
+#' @export
 cr_has_orcid <- function(cr) {
   cr %>%
     select(doi, author) %>%

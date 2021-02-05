@@ -1,10 +1,7 @@
 #' Get funder list from Crossref metadata
 #'
 #' @param cr crossref metadata using [get_cr_md()]
-#'
-#' @importFrom dplyr `%>%` filter select rename
-#' @importFrom tidyr unnest
-#'
+#' @family transform
 #' @export
 cr_funder_df <- function(cr) {
   if (!"funder" %in% colnames(cr)) {

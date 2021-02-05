@@ -20,8 +20,7 @@ gh_file(
 )
 }
 \arguments{
-\item{url}{the URL of the file to download via API, of the form
-`github.com/:owner/:repo/blob/:path}
+\item{url}{the URL of the file to download via API, of the form `github.com/:owner/:repo/blob/:path}
 
 \item{owner, repo, path, ref}{alternate way to specify the file.  These will
 override values in \code{url}}
@@ -56,13 +55,13 @@ used to override or augment the default \code{User-Agent} header:
 \code{"https://github.com/r-lib/gh"}.}
 }
 \value{
-Either the local path of the downloaded file (default), or a raw
-vector
+Either the local path of the downloaded file (default), or a raw vector
 }
 \description{
-This avoids the 1MB limit of the content API and uses \link[gh:gh]{gh::gh} to deal with
-authorization and such.  See https://developer.github.com/v3/git/blobs/
+This avoids the 1MB limit of the content API and uses \link[gh:gh]{gh::gh} to deal with authorization and such.
+See https://developer.github.com/v3/git/blobs/
 }
 \author{
 Noam Ross
 }
+\concept{import}

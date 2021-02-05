@@ -7,11 +7,27 @@
 license_val(cr)
 }
 \arguments{
-\item{cr}{tibble with Crossref metadata retrieved from
-API with \code{rcrossref:.cr_works()}}
+\item{cr}{tibble with Crossref metadata retrieved from API with \code{rcrossref:.cr_works()}}
 }
 \description{
-Retrieves records from Crossref metadata where
-the version of record (vor), i.e. publisher version
-is provided under a Creative Commons license without delay.
+Retrieves records from Crossref metadata where the version of record (vor), i.e. publisher version is provided under a Creative Commons license without delay.
 }
+\seealso{
+Other transform: 
+\code{\link{cr_compliance_overview}()},
+\code{\link{cr_funder_df}()},
+\code{\link{cr_has_orcid}()},
+\code{\link{cr_license_ind}()},
+\code{\link{cr_md_ind}()},
+\code{\link{cr_tdm_df}()},
+\code{\link{cr_tdm_ind}()},
+\code{\link{get_compliant_cc}()},
+\code{\link{get_license_md}()},
+\code{\link{license_check}()},
+\code{\link{license_normalise}()},
+\code{\link{license_report}()},
+\code{\link{open_apc_get_}()},
+\code{\link{open_apc_get}()},
+\code{\link{vor_issue}()}
+}
+\concept{transform}

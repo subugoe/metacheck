@@ -10,10 +10,24 @@ get_compliant_cc(license_df)
 \item{license_df}{normalized license metadata from \code{\link[=license_check]{license_check()}}}
 }
 \description{
-Extract records with compliant CC license metadata
+In order to be compliant, CC license has to apply to version of record and must be valid without delay.
 }
-\details{
-In order to be compliant,
-CC license has to apply to version of record and must be valid
-without delay.
+\seealso{
+Other transform: 
+\code{\link{cr_compliance_overview}()},
+\code{\link{cr_funder_df}()},
+\code{\link{cr_has_orcid}()},
+\code{\link{cr_license_ind}()},
+\code{\link{cr_md_ind}()},
+\code{\link{cr_tdm_df}()},
+\code{\link{cr_tdm_ind}()},
+\code{\link{get_license_md}()},
+\code{\link{license_check}()},
+\code{\link{license_normalise}()},
+\code{\link{license_report}()},
+\code{\link{license_val}()},
+\code{\link{open_apc_get_}()},
+\code{\link{open_apc_get}()},
+\code{\link{vor_issue}()}
 }
+\concept{transform}

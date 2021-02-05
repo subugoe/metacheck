@@ -12,5 +12,11 @@ react_ind_table(ind_table, fill_col = "#fc5185")
 \item{fill_col}{fill color for bar charts (hex code)}
 }
 \description{
-Inspired from \url{https://glin.github.io/reactable/articles/building-twitter-followers.html}
+Reactable represenation of metadata indicators
 }
+\seealso{
+Other visualize: 
+\code{\link{gather_ind_table}()},
+\code{\link{ind_table_to_gt}()}
+}
+\concept{visualize}

@@ -12,3 +12,22 @@ cr_has_orcid(cr)
 \description{
 Check for ORCIDs
 }
+\seealso{
+Other transform: 
+\code{\link{cr_compliance_overview}()},
+\code{\link{cr_funder_df}()},
+\code{\link{cr_license_ind}()},
+\code{\link{cr_md_ind}()},
+\code{\link{cr_tdm_df}()},
+\code{\link{cr_tdm_ind}()},
+\code{\link{get_compliant_cc}()},
+\code{\link{get_license_md}()},
+\code{\link{license_check}()},
+\code{\link{license_normalise}()},
+\code{\link{license_report}()},
+\code{\link{license_val}()},
+\code{\link{open_apc_get_}()},
+\code{\link{open_apc_get}()},
+\code{\link{vor_issue}()}
+}
+\concept{transform}

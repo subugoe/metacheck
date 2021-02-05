@@ -8,13 +8,30 @@ open_apc_get(open_apc_cols = NULL)
 }
 \arguments{
 \item{open_apc_cols}{character vector representing Open APC collections.
-See \code{open_apc_collections()} for an overview.}
+See \code{\link[=open_apc_collections]{open_apc_collections()}} for an overview.}
 }
 \value{
-Tibble with article-level subset of Open APC dataset including
-collection.
+Tibble with article-level subset of Open APC dataset including collection.
 }
 \description{
-Open APC shares several csv files via GitHub, which contain data about
-institutional spending for open access articles.
+Open APC shares several csv files via GitHub, which contain data about institutional spending for open access articles.
 }
+\seealso{
+Other transform: 
+\code{\link{cr_compliance_overview}()},
+\code{\link{cr_funder_df}()},
+\code{\link{cr_has_orcid}()},
+\code{\link{cr_license_ind}()},
+\code{\link{cr_md_ind}()},
+\code{\link{cr_tdm_df}()},
+\code{\link{cr_tdm_ind}()},
+\code{\link{get_compliant_cc}()},
+\code{\link{get_license_md}()},
+\code{\link{license_check}()},
+\code{\link{license_normalise}()},
+\code{\link{license_report}()},
+\code{\link{license_val}()},
+\code{\link{open_apc_get_}()},
+\code{\link{vor_issue}()}
+}
+\concept{transform}

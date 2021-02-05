@@ -1,10 +1,7 @@
 #' Get text-mining links from Crossref metadata
 #'
 #' @param cr crossref metadata using [get_cr_md()]
-#'
-#' @importFrom dplyr `%>%` filter select
-#' @importFrom tidyr unnest
-#'
+#' @family transform
 #' @export
 cr_tdm_df <- function(cr) {
   if("link" %in% colnames(cr)) {

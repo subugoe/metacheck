@@ -1,16 +1,11 @@
 #' License checker
 #'
-#' Retrieves records from Crossref metadata where
-#' the version of record (vor), i.e. publisher version
-#' is provided under a Creative Commons license without delay.
+#' Retrieves records from Crossref metadata where the version of record (vor), i.e. publisher version is provided under a Creative Commons license without delay.
 #'
-#' @param cr tibble with Crossref metadata retrieved from
-#'   API with `rcrossref:.cr_works()`
-#' @importFrom tidyr unnest
-#' @importFrom dplyr `%>%` select mutate filter
-#'
+#' @param cr 
+#' tibble with Crossref metadata retrieved from API with `rcrossref:.cr_works()`
+#' @family transform
 #' @export
-#'
 license_val <- function(cr) {
   if (!is.null(cr))
     license_df <- cr %>%
@@ -27,15 +22,13 @@ license_val <- function(cr) {
 #' Obtain records with non-compliant license information
 #'
 #' @description In case license metadata do not comply, what are the reasons:
-#'   - Did the publisher provide license metadata for the article?
-#'   - Is the article provided under a CC license?
-#'   - Did the CC license apply immediately after publication?
+#' - Did the publisher provide license metadata for the article?
+#' - Is the article provided under a CC license?
+#' - Did the CC license apply immediately after publication?
 #'
-#' @param cr tibble with non-compliant license metadata retrieved from the
-#'   Crossref API with `rcrossref:.cr_works()`
-#' @importFrom tidyr unnest
-#' @importFrom dplyr `%>%` select filter
-#'
+#' @param cr 
+#' tibble with non-compliant license metadata retrieved from the Crossref API with `rcrossref:.cr_works()`
+#' @family transform
 #' @export
 license_report <- function(cr) {
   faulty_case <- cr %>%
@@ -63,10 +56,8 @@ license_report <- function(cr) {
 }
 #' Normalise license info from Crossref
 #'
-#' @param cr tibble with non-compliant license metadata retrieved from the
-#'   Crossref API with `rcrossref:.cr_works()`
-#' @importFrom dplyr `%>%` select filter
-#'
+#' @inheritParams license_report
+#' @family transform
 #' @export
 license_normalise <- function(cr) {
  license_val(cr) %>%

@@ -9,8 +9,7 @@ get_cr_md(dois, .progress = "text")
 \arguments{
 \item{dois}{character vector with DOIs}
 
-\item{.progress}{show progress bar, use "none" if no progress should be
-displayed}
+\item{.progress}{show progress bar, use "none" if no progress should be displayed}
 }
 \description{
 Get Crossref metadata from API

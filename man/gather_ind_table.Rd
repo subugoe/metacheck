@@ -12,3 +12,9 @@ gather_ind_table(cr)
 \description{
 Create compliance overview table
 }
+\seealso{
+Other visualize: 
+\code{\link{ind_table_to_gt}()},
+\code{\link{react_ind_table}()}
+}
+\concept{visualize}

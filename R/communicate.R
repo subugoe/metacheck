@@ -1,6 +1,3 @@
-#' @keywords internal
-"_PACKAGE"
-
 #' Start web application
 #' @inheritDotParams rmarkdown::run
 #' @inherit rmarkdown::run

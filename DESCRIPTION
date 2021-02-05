@@ -58,7 +58,6 @@ Imports:
     blastula,
     stringi,
     lubridate,
-    tidyselect,
     shiny,
     htmltools,
     reactable,

@@ -12,3 +12,9 @@ ind_table_to_gt(ind_table)
 \description{
 GT representation of compliance overview table
 }
+\seealso{
+Other visualize: 
+\code{\link{gather_ind_table}()},
+\code{\link{react_ind_table}()}
+}
+\concept{visualize}

@@ -71,7 +71,8 @@ Suggests:
     subugoetheme,
     shinycaas,
     rmarkdown,
-    bench
+    bench,
+    knitr
 URL: https://subugoe.github.io/metacheck, https://github.com/subugoe/metacheck
 BugReports: https://github.com/subugoe/metacheck/issues
 Remotes:
@@ -81,3 +82,4 @@ Remotes:
     rstudio/shinyvalidate@420aec079dbd2c0e12bf8350f4452d105a9cc45c,
     subugoe/biblids@d44010e7d0b7d2eef016ef33a05d29e67417dfe6
 Config/testthat/edition: 3
+VignetteBuilder: knitr

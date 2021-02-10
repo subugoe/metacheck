@@ -7,21 +7,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  echo = FALSE,
-  comment = "#>"
-)
-```
-
-```{r setup}
-library(metacheck)
-library(tidyverse)
-tu_dois <- readr::read_lines(file = system.file("extdata", "tu_dois.txt", package = "metacheck"))
-cr <- get_cr_md(unique(tu_dois))
-my_df <- cr_compliance_overview(cr)
-```
 
 ## Überblick 
 
@@ -62,25 +47,7 @@ Untersucht wurden:
 
 [^1]: berechnet je Artikel
 
-Beispieltabelle:
 
-```{r}
-my_df$cr_overview %>%
-  count(`CC License` = length(which(has_cc)),
-        `Compliant CC` = length(which(has_compliant_cc)),
-        `TDM Support` = length(which(has_tdm_links)),
-        `Funder info` = length(which(has_funder_info)),
-        `ORCID` = length(which(has_orcid)),
-        `Open Abstracts`  = length(which(has_open_abstract)),
-        `Open Citations` = length(which(has_open_refs))
-        ) %>% 
-  tidyr::pivot_longer(!n) %>%
-  mutate(prop = value / n * 100) %>%
-  select(-n) %>%
-  # html table
-  mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#00A4A7"))) %>%
-  ind_table_to_gt()  
-```
 
 ### Überblick Lizenzbedingungen
 
@@ -89,17 +56,6 @@ Offene Lizenzen sind wesentlich, um den Zugang und die Nachnutzung von Open-Acce
 CC-BY ist sowohl in den DEAL-Verträgen als auch bei der DFG der präferierte Lizenztyp.
 
 Die tabellarische Übersicht zeigt die Häufigkeit von CC-Varianten an. `NA` bedeutet, dass keine Lizeninformation in den Crossref-Metadaten verfügbar ist.
-
-```{r}
-my_df$cc_license_check %>% 
-  count(cc_norm, name = "value") %>% 
-  mutate(prop = value /sum(value) * 100) %>% 
-  rename(name = cc_norm) %>%
-  mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#F3A9BB"))) %>%
-  ind_table_to_gt()
-```
-
-
 
 
 ### Ergebnis Compliance Check
@@ -111,16 +67,6 @@ Die Tabelle zeigt die Anzahl und den Anteil regelkonformer CC-Lizenzinformatione
 
 Wir haben festgestellt, dass Verlage zwar häufig CC-Lizenzen in den Crossref-Metadaten verzeichnen, allerdings nur unvollständig beschreiben. Dies kann Auswirkungen auf die automatisierte Auffindbarkeit und Datenanalysen von OA-Artikeln haben. Bei Problemen empfehlen wir daher, mit dem Verlag in Kontakt zu treten.
 
-Beispieltabelle:
-
-```{r}
-my_df$cc_license_check %>% 
-  count(check_result, name = "value") %>% 
-  mutate(prop = value /sum(value) * 100) %>% 
-  rename(name = check_result) %>%
-  mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#A0A5A9"))) %>%
-  ind_table_to_gt()
-```
 
 Mehr Hintergrundinformationen zur Überprüfung von Lizenzinformationen in Crossref im Kontext von OA-Transformationsverträgen:
 
@@ -130,15 +76,6 @@ Michaela Voigt, "DEAL Open-Access-Option optimal nutzen — ein Bibliothekspraxi
 
 Der nächste Abschnitt bietet einen Überlick, welche Dateiformate, ausgedrückt als [MIME Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types), für das Text- und Data-Mining (TDM) unterstützt werden. Grundsätzlich kann je Artikel mehr als ein Format angeboten werden. Es wird empfohlen, neben PDF-Dateien auch strukturierte XML-Volltexte verfügbar zu machen. 
 
-```{r}
-my_df$tdm %>% 
-  count(content.type, name = "value") %>% 
-  mutate(prop = value /sum(value) * 100) %>% 
-  rename(name = content.type) %>%
-  mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#9B0056"))) %>%
-  arrange(desc(value)) %>%
-  ind_table_to_gt()
-```
 Die prozentualen Anteile beziehen sich ausschließlich auf Artikel, für die TDM-Informationen vorhanden sind. Bitte beachten Sie zudem, dass Verlage mehr als ein Format anbieten können.
 
 

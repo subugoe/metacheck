@@ -49,16 +49,26 @@ iv$enable()
 
 html_email <- eventReactive(input$create, {
   if (length(dois()) > 1) {
-    render_email(dois = dois(), session_id = session_id)$html_html
+    withProgress(
+      expr = {
+        render_email(dois = dois(), session_id = session_id)$html_html
+      },
+      message = "Generating report..."
+    )
   }
 })
 output$draft <- renderUI(html_email())
 
 observeEvent(input$send, {
   if (length(dois() > 1 & iv$is_valid())) {
-    send_email(
-      to = input$email,
-      email = render_email(dois = dois(), session_id = session_id)
+    withProgress(
+      expr = {
+        send_email(
+          to = input$email,
+          email = render_email(dois = dois(), session_id = session_id)
+        )
+      },
+      message = "Generating report and sending e-mail. You can close this window."
     )
   }
 })

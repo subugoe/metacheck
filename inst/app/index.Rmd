@@ -63,7 +63,7 @@ observeEvent(input$send, {
   if (length(dois() > 1 & iv$is_valid())) {
     withProgress(
       expr = {
-        send_email(
+        smtp_send_metacheck(
           to = input$email,
           email = render_email(dois = dois(), session_id = session_id)
         )

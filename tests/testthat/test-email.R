@@ -5,10 +5,12 @@ test_that("email can be rendered", {
 
 test_that("email can be send", {
   skip_if_not_smtp_auth()
+  # recommended by https://stackoverflow.com/questions/1368163/is-there-a-standard-domain-for-testing-throwaway-email
+  throwaway <- "whatever@mailinator.com"
   expect_message({
     smtp_send_metacheck(
       email = blastula::prepare_test_message(),
-      to = "held@sub.uni-goettingen.de",
+      to = throwaway,
       subject = "Test email",
       cc = NULL,
     )
@@ -17,7 +19,7 @@ test_that("email can be send", {
     withr::local_envvar(.new = c("MAILJET_SMTP_PASSWORD" = "zap"))
     smtp_send_metacheck(
       email = blastula::prepare_test_message(),
-      to = "held@sub.uni-goettingen.de",
+      to = throwaway,
       subject = "Bad test email",
       cc = NULL
     )

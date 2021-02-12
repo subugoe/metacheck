@@ -63,7 +63,8 @@ Imports:
     writexl,
     checkmate,
     gluedown,
-    tibble
+    tibble,
+    readr
 Suggests:
     testthat,
     subugoetheme,

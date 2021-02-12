@@ -32,7 +32,7 @@ cr_compliance_overview <- function(cr) {
   if(!"has_open_refs" %in% colnames(cr_overview)) {
     cr_overview$has_open_refs <- FALSE
   }
-  list(cr_overview = cr_overview, cc_license_check = cc_df, tdm = tdm_df, funder_info = funder_df, open_apc_info = open_apc_df )
+  list(cr_overview = cr_overview, cc_license_check = cc_df, tdm = tdm_df, funder_info = funder_df)
 }
 #' Check for ORCIDs
 #'

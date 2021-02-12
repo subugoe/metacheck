@@ -54,8 +54,6 @@ Imports:
     lubridate,
     tidyselect,
     shiny,
-    htmltools,
-    reactable,
     flexdashboard,
     shinyvalidate,
     base64enc,

@@ -6,7 +6,6 @@ params:
   cr_license: NULL
   cr_tdm: NULL
   cr_funder: NULL
-  open_apc: NULL
   session_id: NULL
 ---
 
@@ -128,20 +127,6 @@ glue::glue(
 )
 ```
 
-```{r null_open_apc, eval=nrow(params$open_apc) == 0, results='asis'}
-glue::glue("### weitere Anforderungen
-  
-  **Sämtliche Artikel**, die beim Open-Access-Metadaten-Schnelltest untersucht wurden, **sind nicht bei der Open APC Initiative registriert**.
- ")
-```
-
-```{r missin_open_apc, eval=nrow(params$open_apc) != 0, results='asis'}
-glue::glue("### weitere Anforderungen
-  
-  {nrow(params$open_apc[params$open_apc$doi %in% params$dois,])} Artikel, die beim Open-Access-Metadaten-Schnelltest untersucht wurden, sind nicht bei der Open APC Initiative registriert. Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **Open APC** Artikel, die erfasst wurden
- ")
-```
-
 
 ```{r export}
 excel_spreadsheet <- list(`Übersicht` = params$cr_overview, 
@@ -152,9 +137,6 @@ if(!is.null(params$cr_tdm)) {
 if(!is.null(params$cr_funder)) {
  excel_spreadsheet[["Förderinformationen"]] <- params$cr_funder
 } 
-if(nrow(params$open_apc) > 0) {
-   excel_spreadsheet[["Open APC"]] <- params$open_apc
-}
 
 writexl::write_xlsx(
   x = excel_spreadsheet,

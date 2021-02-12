@@ -15,8 +15,7 @@ cr_compliance_overview <- function(cr) {
   tdm_df <- cr_tdm_df(cr)
   funder_df <- cr_funder_df(cr)
   orcid_df <- cr_has_orcid(cr)
-  open_apc_df <- open_apc_get(open_apc_collections()$open_apc_collection) %>%
-    filter(doi %in% cr$doi)
+
   cr_overview <- cr %>%
     mutate(has_cc = doi %in% filter(cc_df, !is.na(cc_norm))$doi,
            has_compliant_cc = doi %in% filter(cc_df, check_result == "All fine!")$doi,

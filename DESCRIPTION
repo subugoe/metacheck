@@ -58,13 +58,10 @@ Imports:
     reactable,
     flexdashboard,
     shinyvalidate,
-    base64enc,
-    gh,
     biblids,
     magrittr,
     writexl,
     checkmate,
-    readr,
     gluedown,
     tibble
 Suggests:

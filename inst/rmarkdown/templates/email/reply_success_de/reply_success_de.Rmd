@@ -26,46 +26,28 @@ Hier ist der Bericht der automatischen Überprüfung:
 
 ### Indexierungsstatus in Crossref
 
-```{r}
-cr_missing <- !setequal(tolower(params$dois), tolower(params$cr_overview$doi))
-```
-
-```{r not_indexed_in_crossref, eval=cr_missing, results = 'asis'}
-  glue::glue("
-  **{length(unique(tolower(cr$doi)))}** von **{length(unique(tolower(params$dois)))}** DOIs sind in Crossref indexiert.
-  Die folgenden DOIs sind **nicht** bei Crossref registriert:
-  
- ")
- gluedown::md_bullet(params$dois[!tolower(params$dois) %in% tolower(params$cr_overview$doi)])
-```
-
-
-```{r}
-cr_missing <- setequal(tolower(params$dois), tolower(params$cr_overview$doi))
-```
-
-```{r indexed_in_crossref, eval=cr_missing, results = 'asis'}
-glue::glue("Für sämtliche {length(unique(params$dois))} DOIs sind Crossref Metadaten vorhanden.")
+```{r crossref_indexing, results='asis'}
+indexing_status(dois = params$dois, .md = params$cr_overview)
 ```
 
 ### Überblick: Crossref-Metadaten
 
 ```{r, echo=FALSE}
-params$cr_overview %>%
-  count(`CC License` = length(which(has_cc)),
-        `Compliant CC` = length(which(has_compliant_cc)),
-        `TDM Support` = length(which(has_tdm_links)),
-        `Funder info` = length(which(has_funder_info)),
-        `ORCID` = length(which(has_orcid)),
-        `Open Abstracts`  = length(which(has_open_abstract)),
-        `Open Citations` = length(which(has_open_refs))
-        ) %>% 
-  tidyr::pivot_longer(!n) %>%
-  mutate(prop = value / n * 100) %>%
-  select(-n) %>%
-  # html table
-  mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#00A4A7"))) %>%
-  ind_table_to_gt()  
+# params$cr_overview %>%
+#   count(`CC License` = length(which(has_cc)),
+#         `Compliant CC` = length(which(has_compliant_cc)),
+#         `TDM Support` = length(which(has_tdm_links)),
+#         `Funder info` = length(which(has_funder_info)),
+#         `ORCID` = length(which(has_orcid)),
+#         `Open Abstracts`  = length(which(has_open_abstract)),
+#         `Open Citations` = length(which(has_open_refs))
+#         ) %>% 
+#   tidyr::pivot_longer(!n) %>%
+#   mutate(prop = value / n * 100) %>%
+#   select(-n) %>%
+#   # html table
+#   mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#00A4A7"))) %>%
+#   ind_table_to_gt()  
 ```
 
 
@@ -144,7 +126,7 @@ glue::glue("### weitere Anforderungen
 
 
 ```{r export}
-excel_spreadsheet <- list(`Übersicht` = params$cr_overview, 
+excel_spreadsheet <- list(`Übersicht` = params$cr_overview$cr_overview, 
                           `CC-Lizenzen` = params$cr_license)
 if(!is.null(params$cr_tdm)) {
  excel_spreadsheet[["TDM"]] <- params$cr_tdm

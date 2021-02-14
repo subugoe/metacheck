@@ -58,7 +58,7 @@ metrics_overview <- function(.md = NULL, .gt = TRUE, .color = "#00A4A7") {
   tidyr::pivot_longer(!n) %>%
   dplyr::mutate(prop = value / n * 100) %>%
   dplyr::select(-n)
-  if(.gt != TRUE)
+  if(.gt == FALSE)
     return(out)
   else
     out %>%

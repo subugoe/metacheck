@@ -2,6 +2,8 @@
 
 export("%>%")
 export(add_attachment_xlsx)
+export(cc_compliance_metrics)
+export(cc_metrics)
 export(cr_compliance_overview)
 export(cr_funder_df)
 export(cr_license_ind)

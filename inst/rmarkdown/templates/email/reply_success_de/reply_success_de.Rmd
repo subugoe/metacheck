@@ -32,7 +32,7 @@ indexing_status(dois = params$dois, .md = params$cr_overview)
 
 ### Überblick: Crossref-Metadaten
 
-```{r, echo=FALSE}
+```{r metrics_overview}
 metrics_overview(params$cr_overview)
 ```
 
@@ -41,24 +41,14 @@ metrics_overview(params$cr_overview)
 
 #### Überblick Lizenzbedingungen
 
-```{r}
-my_df$cc_license_check %>% 
-  count(cc_norm, name = "value") %>% 
-  mutate(prop = value /sum(value) * 100) %>% 
-  rename(name = cc_norm) %>%
-  mutate(prop_bar = map(prop, ~bar_chart(value = .x, .color = "#F3A9BB"))) %>%
-  ind_table_to_gt()
+```{r cc_metrics}
+cc_metrics(params$cr_overview)
 ```
 
 #### Ergebnis Compliance Check
 
 ```{r}
-my_df$cc_license_check %>% 
-  count(check_result, name = "value") %>% 
-  mutate(prop = value /sum(value) * 100) %>% 
-  rename(name = check_result) %>%
-  mutate(prop_bar = map(prop, ~bar_chart(value = .x, .color = "#A0A5A9"))) %>%
-  ind_table_to_gt()
+cc_compliance_metrics(params$cr_overview)
 ```
 
 Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **CC-Lizenzen** je Artikel das Ergebnis der Überprüfung.

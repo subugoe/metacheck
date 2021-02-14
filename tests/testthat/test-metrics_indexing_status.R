@@ -26,3 +26,37 @@ test_that("metrics_overview works", {
 test_that("metrics_overview is reported", {
   expect_is(metrics_overview(out), "gt_tbl")
 })
+
+# cc compliance
+
+test_that("cc_metrics works", {
+  a <- cc_metrics(out, .gt = FALSE)
+
+  # dimensions and type
+  expect_equal(ncol(a), 3)
+  expect_s3_class(a, "data.frame")
+
+  expect_error(metrics_overview())
+  expect_error(metrics_overview("kdkd"))
+})
+
+test_that("cc_metrics are reported", {
+  expect_is(metrics_overview(out), "gt_tbl")
+})
+
+test_that("cc_compliance_metrics works", {
+  a <- cc_metrics(out, .gt = FALSE)
+
+  # dimensions and type
+  expect_equal(ncol(a), 3)
+  expect_s3_class(a, "data.frame")
+
+  expect_error(metrics_overview())
+  expect_error(metrics_overview("kdkd"))
+})
+
+test_that("cc_compliance_metrics are reported", {
+  expect_is(metrics_overview(out), "gt_tbl")
+})
+
+

@@ -5,3 +5,9 @@ test_that("metadata can be retrieved", {
     style = "json2"
   )
 })
+
+test_that("Unsuccesful Crossref API metadata fetch",
+          {
+            testthat::expect_null(get_cr_md(dois = "ldld"))
+            testthat::expect_null(get_cr_md(dois = c("dkdkd", "kdkdkdk")))
+          })

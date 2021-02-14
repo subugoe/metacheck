@@ -33,21 +33,7 @@ indexing_status(dois = params$dois, .md = params$cr_overview)
 ### Überblick: Crossref-Metadaten
 
 ```{r, echo=FALSE}
-# params$cr_overview %>%
-#   count(`CC License` = length(which(has_cc)),
-#         `Compliant CC` = length(which(has_compliant_cc)),
-#         `TDM Support` = length(which(has_tdm_links)),
-#         `Funder info` = length(which(has_funder_info)),
-#         `ORCID` = length(which(has_orcid)),
-#         `Open Abstracts`  = length(which(has_open_abstract)),
-#         `Open Citations` = length(which(has_open_refs))
-#         ) %>% 
-#   tidyr::pivot_longer(!n) %>%
-#   mutate(prop = value / n * 100) %>%
-#   select(-n) %>%
-#   # html table
-#   mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#00A4A7"))) %>%
-#   ind_table_to_gt()  
+metrics_overview(params$cr_overview)
 ```
 
 
@@ -60,7 +46,7 @@ my_df$cc_license_check %>%
   count(cc_norm, name = "value") %>% 
   mutate(prop = value /sum(value) * 100) %>% 
   rename(name = cc_norm) %>%
-  mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#F3A9BB"))) %>%
+  mutate(prop_bar = map(prop, ~bar_chart(value = .x, .color = "#F3A9BB"))) %>%
   ind_table_to_gt()
 ```
 
@@ -71,7 +57,7 @@ my_df$cc_license_check %>%
   count(check_result, name = "value") %>% 
   mutate(prop = value /sum(value) * 100) %>% 
   rename(name = check_result) %>%
-  mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#A0A5A9"))) %>%
+  mutate(prop_bar = map(prop, ~bar_chart(value = .x, .color = "#A0A5A9"))) %>%
   ind_table_to_gt()
 ```
 
@@ -86,7 +72,7 @@ my_df$tdm %>%
   count(content.type, name = "value") %>% 
   mutate(prop = value /sum(value) * 100) %>% 
   rename(name = content.type) %>%
-  mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#9B0056"))) %>%
+  mutate(prop_bar = map(prop, ~bar_chart(value = .x, .color = "#9B0056"))) %>%
   arrange(desc(value)) %>%
   ind_table_to_gt()
 ```

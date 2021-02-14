@@ -3,7 +3,7 @@
 #' Check the extent to which DOIs are available through Crossref
 #'
 #' @param dois character vector, submitted DOIs
-#' @param md list, returned from [cr_compliance_overview()]
+#' @param .md list, returned from [cr_compliance_overview()]
 #' @importFrom glue glue
 #'
 #' @export

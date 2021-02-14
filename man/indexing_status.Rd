@@ -9,7 +9,7 @@ indexing_status(dois = NULL, .md = NULL)
 \arguments{
 \item{dois}{character vector, submitted DOIs}
 
-\item{md}{list, returned from \code{\link[=cr_compliance_overview]{cr_compliance_overview()}}}
+\item{.md}{list, returned from \code{\link[=cr_compliance_overview]{cr_compliance_overview()}}}
 }
 \description{
 Check the extent to which DOIs are available through Crossref

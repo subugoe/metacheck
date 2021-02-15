@@ -53,28 +53,22 @@ cc_compliance_metrics(params$cr_overview)
 
 Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **CC-Lizenzen** je Artikel das Ergebnis der Überprüfung.
 
-```{r, eval=!is.null(params$cr_tdm), results = 'asis'}
-glue::glue(
-  "### Text and Data Mining (TDM)
-  #### Formatüberblick (sortiert nach Häufigkeit)"
-)
-my_df$tdm %>% 
-  count(content.type, name = "value") %>% 
-  mutate(prop = value /sum(value) * 100) %>% 
-  rename(name = content.type) %>%
-  mutate(prop_bar = map(prop, ~bar_chart(value = .x, .color = "#9B0056"))) %>%
-  arrange(desc(value)) %>%
-  ind_table_to_gt()
+### Text and Data Mining (TDM)
+
+```{r}
+tdm_metrics(params$cr_overview)
 ```
 
-```{r, eval=!is.null(params$cr_tdm), results = 'asis'}
-glue::glue(
-  " 
-  Die prozentualen Anteile beziehen sich ausschließlich auf Artikel, für die TDM-Informationen vorhanden sind. Bitte beachten Sie zudem, dass Verlage mehr als ein Format anbieten können.
-  
-  Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **TDM** die Crossref-Metadaten über Möglichkeiten für das Text und Data Mining je Artikel"
-)
-```
+Die Tabelle bietet einen Überblick, welche Dateiformate,
+ausgedrückt als [MIME
+Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types),
+für das Text- und Data-Mining (TDM) unterstützt werden. Grundsätzlich
+kann je Artikel mehr als ein Format über das Crossref-Metadatenprofil
+angeboten werden.
+
+Der prozentuale Anteil bezieht sich auf sämtliche in Crossref-indexierte Artikel.
+
+Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **TDM** die Crossref-Metadaten über Möglichkeiten für das Text und Data Mining je Artikel.
 
 
 ```{r, eval=!is.null(params$cr_funder), results = 'asis'}

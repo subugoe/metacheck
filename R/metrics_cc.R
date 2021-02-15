@@ -9,7 +9,7 @@
 #' @export
 cc_metrics <- function(.md = NULL, .gt = TRUE,  .color = "#F3A9BB") {
   if(is.null(.md) || !"cc_license_check" %in% names(.md))
-    stop("No compliance overview data provided, get data using cr_compliance_overview()")
+    stop("No CC compliance data provided, get data using cr_compliance_overview()")
   else
     out <- .md$cc_license_check %>%
       dplyr::count(cc_norm, name = "value") %>%

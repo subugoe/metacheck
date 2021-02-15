@@ -11,14 +11,14 @@ cr_funder_df <- function(cr) {
     out <- NULL
   } else {
     out <- cr %>%
-      select(doi,
+      dplyr::select(doi,
              container_title = container.title,
              publisher,
              issued,
              issued_year,
              funder) %>%
-      unnest(funder) %>%
-      rename(fundref_doi = DOI, doi_asserted_by = doi.asserted.by)
+      tidyr::unnest(c(funder), keep_empty = TRUE) %>%
+      dplyr::rename(fundref_doi = DOI, doi_asserted_by = doi.asserted.by)
   }
   out
 }

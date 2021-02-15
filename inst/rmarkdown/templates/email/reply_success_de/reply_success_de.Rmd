@@ -47,7 +47,7 @@ cc_metrics(params$cr_overview)
 
 #### Ergebnis Compliance Check
 
-```{r}
+```{r cc_compliance}
 cc_compliance_metrics(params$cr_overview)
 ```
 
@@ -55,7 +55,7 @@ Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **CC-Lizenzen** je Arti
 
 ### Text and Data Mining (TDM)
 
-```{r}
+```{r tdm_metrics}
 tdm_metrics(params$cr_overview)
 ```
 
@@ -70,29 +70,18 @@ Der prozentuale Anteil bezieht sich auf sämtliche in Crossref-indexierte Artike
 
 Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **TDM** die Crossref-Metadaten über Möglichkeiten für das Text und Data Mining je Artikel.
 
+### Förderinformationen 
 
-```{r, eval=!is.null(params$cr_funder), results = 'asis'}
-glue::glue(
-  "### Förderinformationen 
-  Bei **{length(unique(params$cr_funder$doi))}** Publikationen verzeichnet Crossref mindestens eine Forschungsförderung. Das *Funding Acknowledgements* von **{length(unique(unlist(my_df$funder_info[my_df$funder_info$name == 'Deutsche Forschungsgemeinschaft', 'doi'])))}** Artikeln verweist auf die **Deutsche Forschungsgemeinschaft (DFG)**.
-  
-  Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **Förderinformationen** das *Funding Acknowledgement* je Artikel lt. Crossref."
-)
+```{r funder_metrics}
+funder_metrics(params$cr_overview)
 ```
 
-```{r null_open_apc, eval=nrow(params$open_apc) == 0, results='asis'}
-glue::glue("### weitere Anforderungen
-  
-  **Sämtliche Artikel**, die beim Open-Access-Metadaten-Schnelltest untersucht wurden, **sind nicht bei der Open APC Initiative registriert**.
- ")
-```
+Die Tabelle gibt einen Überblick, über die häufigsten Förderer je Artikel lt. Crossref-Metadaten. 
 
-```{r missin_open_apc, eval=nrow(params$open_apc) != 0, results='asis'}
-glue::glue("### weitere Anforderungen
-  
-  {nrow(params$open_apc[params$open_apc$doi %in% params$dois,])} Artikel, die beim Open-Access-Metadaten-Schnelltest untersucht wurden, sind nicht bei der Open APC Initiative registriert. Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **Open APC** Artikel, die erfasst wurden
- ")
-```
+Der prozentuale Anteil bezieht sich auf sämtliche in Crossref-indexierte Artikel.
+
+Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **Förderinformationen** das *Funding Acknowledgement* je Artikel lt. Crossref.
+
 
 
 ```{r export}

@@ -103,7 +103,7 @@ ind_table_to_gt <- function(ind_table, prop = NULL, .color = NULL) {
     cols_align(align = "right",
                columns = vars(value, prop)) %>%
     cols_align(align = "left",
-               columns = vars(prop_bar)) %>%
+               columns = vars(name, prop_bar)) %>%
     tab_options(
       row_group.border.top.width = px(3),
       row_group.border.top.color = "black",

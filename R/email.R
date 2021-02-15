@@ -16,10 +16,6 @@ render_email <- function(dois, session_id = NULL) {
         params = list(
           dois = dois,
           cr_overview = my_df,
-          cr_license = my_df$cc_license_check,
-          cr_tdm = my_df$tdm,
-          cr_funder = my_df$funder_info,
-          open_apc = my_df$open_apc_info,
           session_id = session_id
         )
       )
@@ -67,4 +63,27 @@ send_email <- function(to, email, cc = "metacheck-support@sub.uni-goettingen.de"
 #' @inheritParams render_email
 xlsx_path <- function(session_id = NULL) {
   fs::path_temp(paste0(session_id, "-license_df.xlsx"))
+}
+
+#' Make Spreadsheet attachment
+#'
+#' @param .md list, returned from [cr_compliance_overview()]
+#' @param session_id link spreadsheet to R session
+#'
+#' @importFrom writexl write_xlsx
+#' @export
+md_data_attachment <- function(.md = NULL, session_id = NULL) {
+  if(is.null(.md))
+    stop("No Crossref Data")
+  excel_spreadsheet <- list(`Übersicht` = .md$cr_overview,
+                            `CC-Lizenzen` = .md$cc_license_check)
+  if (!is.null(.md$cr_tdm)) {
+    excel_spreadsheet[["TDM"]] <- .md$tdm
+  }
+  if (!is.null(.md$cr_funder)) {
+    excel_spreadsheet[["Förderinformationen"]] <- .md$funder_info
+  }
+  # write_out
+  writexl::write_xlsx(x = excel_spreadsheet,
+                      path = xlsx_path(session_id))
 }

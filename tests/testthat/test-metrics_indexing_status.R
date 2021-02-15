@@ -59,4 +59,21 @@ test_that("cc_compliance_metrics are reported", {
   expect_is(metrics_overview(out), "gt_tbl")
 })
 
+## tdm compliance
+
+test_that("tdm works", {
+  a <- cc_metrics(out, .gt = FALSE)
+
+  # dimensions and type
+  expect_equal(ncol(a), 3)
+  expect_s3_class(a, "data.frame")
+
+  expect_error(metrics_overview())
+  expect_error(metrics_overview("kdkd"))
+})
+
+test_that("tdm are reported", {
+  expect_is(metrics_overview(out), "gt_tbl")
+})
+
 

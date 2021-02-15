@@ -4,12 +4,14 @@
 \alias{md_data_attachment}
 \title{Make Spreadsheet attachment}
 \usage{
-md_data_attachment(.md = NULL, session_id = NULL)
+md_data_attachment(.md = NULL, session_id = NULL, dois = NULL)
 }
 \arguments{
 \item{.md}{list, returned from \code{\link[=cr_compliance_overview]{cr_compliance_overview()}}}
 
 \item{session_id}{link spreadsheet to R session}
+
+\item{dois}{character, submitted dois}
 }
 \description{
 Make Spreadsheet attachment

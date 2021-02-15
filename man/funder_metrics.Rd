@@ -4,7 +4,7 @@
 \alias{funder_metrics}
 \title{Funder metrics}
 \usage{
-funder_metrics(.md = NULL, .gt = TRUE, .color = "#009999")
+funder_metrics(.md = NULL, .gt = TRUE, .color = "#000099")
 }
 \arguments{
 \item{.md}{list, returned from \code{\link[=cr_compliance_overview]{cr_compliance_overview()}}}

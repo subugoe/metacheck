@@ -82,5 +82,5 @@ Bei Fragen und Anregungen stehen wir Ihnen gerne zur Verfügung.
 Viele Grüße
 
 ```{r export}
-md_data_attachment(params$cr_overview, session_id = params$session_id)
+md_data_attachment(params$cr_overview, session_id = params$session_id, dois = params$dois)
 ```

@@ -68,11 +68,12 @@ xlsx_path <- function(session_id = NULL) {
 #' Make Spreadsheet attachment
 #'
 #' @param .md list, returned from [cr_compliance_overview()]
+#' @param dois character, submitted dois
 #' @param session_id link spreadsheet to R session
 #'
 #' @importFrom writexl write_xlsx
 #' @export
-md_data_attachment <- function(.md = NULL, session_id = NULL) {
+md_data_attachment <- function(.md = NULL, session_id = NULL, dois = NULL) {
   if(is.null(.md))
     stop("No Crossref Data")
   excel_spreadsheet <- list(`Übersicht` = .md$cr_overview,
@@ -83,6 +84,10 @@ md_data_attachment <- function(.md = NULL, session_id = NULL) {
   if (!is.null(.md$cr_funder)) {
     excel_spreadsheet[["Förderinformationen"]] <- .md$funder_info
   }
+  if (!length(tolower(dois) %in% tolower(.md$cr_overview$doi)) > 0)
+    excel_spreadsheet[["Nicht-indexierte DOIs"]] <- tibble::tibble(
+      mutate(missing_dois = !tolower(dois) %in% tolower(.md$cr_overview$doi))
+    )
   # write_out
   writexl::write_xlsx(x = excel_spreadsheet,
                       path = xlsx_path(session_id))

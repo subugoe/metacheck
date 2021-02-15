@@ -57,8 +57,8 @@ tdm_metrics <- function(.md = NULL, .gt = TRUE,  .color = "#9B0056") {
 #' Missing records with TDM info
 #' @noRd
 miss_tdm <- function(.md = NULL) {
-  my_df$cr_overview %>%
-    filter(!doi %in% my_df$tdm$doi) %>%
+  .md$cr_overview %>%
+    filter(!doi %in% .md$tdm$doi) %>%
     distinct(doi) %>%
     nrow()
 }

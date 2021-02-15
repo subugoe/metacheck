@@ -61,10 +61,7 @@ metrics_overview <- function(.md = NULL, .gt = TRUE, .color = "#00A4A7") {
   if(.gt == FALSE)
     return(out)
   else
-    out %>%
-      # html table
-      dplyr::mutate(prop_bar = map(prop, ~bar_chart(value = .x, .color = .color))) %>%
-      ind_table_to_gt()
+    ind_table_to_gt(out, prop = prop, .color = .color)
 }
 
 #' Embed HTML Bar Charts in gt

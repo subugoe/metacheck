@@ -18,9 +18,7 @@ cc_metrics <- function(.md = NULL, .gt = TRUE,  .color = "#F3A9BB") {
   if(.gt == FALSE)
     out
   else
-    out %>%
-      dplyr::mutate(prop_bar = map(prop, ~bar_chart(value = .x, .color = .color))) %>%
-      ind_table_to_gt()
+    ind_table_to_gt(out, prop = prop, .color = .color)
 }
 
 #' CC compliance metrics overview
@@ -45,7 +43,5 @@ cc_compliance_metrics <- function(.md = NULL, .gt = TRUE,  .color = "#A0A5A9") {
   if(.gt == FALSE)
     out
   else
-    out %>%
-      dplyr::mutate(prop_bar = map(prop, ~bar_chart(value = .x, .color = .color))) %>%
-      ind_table_to_gt()
+    ind_table_to_gt(out, prop = prop, .color = .color)
 }

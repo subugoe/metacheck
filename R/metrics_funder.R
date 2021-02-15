@@ -41,7 +41,7 @@
 funder_metrics <-
   function(.md = NULL,
            .gt = TRUE,
-           .color = "#009999") {
+           .color = "#000099") {
     if (is.null(.md) || !"funder_info" %in% names(.md))
       stop("No funder data available, get data using cr_compliance_overview()")
     else

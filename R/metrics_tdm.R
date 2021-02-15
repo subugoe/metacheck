@@ -35,7 +35,6 @@
 #' # as tibble
 #' tdm_metrics(out, .gt = FALSE)
 #' }
-<<<<<<< HEAD
 tdm_metrics <- function(.md = NULL, .gt = TRUE,  .color = "#9B0056") {
   if(is.null(.md) || !c("tdm", "cr_overview") %in% names(.md))
     stop("No TDM data available, get data using cr_compliance_overview()")

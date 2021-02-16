@@ -30,6 +30,7 @@ render_email <- function(dois, session_id = NULL) {
 
 #' Add attachment to email
 #' @inheritParams blastula::add_attachment
+#' @inheritParams render_email
 #' @export
 add_attachment_xlsx <- function(email, session_id = NULL) {
   blastula::add_attachment(
@@ -74,10 +75,13 @@ xlsx_path <- function(session_id = NULL) {
 #' @importFrom writexl write_xlsx
 #' @export
 md_data_attachment <- function(.md = NULL, session_id = NULL, dois = NULL) {
-  if(is.null(.md))
+  if (is.null(.md)) {
     stop("No Crossref Data")
-  excel_spreadsheet <- list(`Übersicht` = .md$cr_overview,
-                            `CC-Lizenzen` = .md$cc_license_check)
+  }
+  excel_spreadsheet <- list(
+    `Übersicht` = .md$cr_overview,
+    `CC-Lizenzen` = .md$cc_license_check
+  )
   if (!is.null(.md$cr_tdm)) {
     excel_spreadsheet[["TDM"]] <- .md$tdm
   }

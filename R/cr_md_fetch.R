@@ -36,3 +36,4 @@ has_cr_md <- function(doi) {
 #' @param dois [biblids::doi()]
 #' @noRd
 have_cr_md <- function(dois) purrr::map_lgl(dois, has_cr_md)
+

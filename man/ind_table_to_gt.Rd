@@ -12,8 +12,4 @@ ind_table_to_gt(ind_table, prop = NULL, .color = NULL)
 \description{
 GT representation of compliance overview table
 }
-\seealso{
-Other visualize: 
-\code{\link{gather_ind_table}()}
-}
 \concept{visualize}

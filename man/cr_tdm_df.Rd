@@ -17,9 +17,6 @@ Other transform:
 \code{\link{cr_compliance_overview}()},
 \code{\link{cr_funder_df}()},
 \code{\link{cr_has_orcid}()},
-\code{\link{cr_license_ind}()},
-\code{\link{cr_md_ind}()},
-\code{\link{cr_tdm_ind}()},
 \code{\link{get_license_md}()},
 \code{\link{license_check}()},
 \code{\link{vor_issue}()}

@@ -1,0 +1,99 @@
+---
+title: "Methode"
+subtitle: "Überblick Open-Access-Metadaten-Schnelltest"
+author: "Najko Jahn"
+pkgdown:
+    as_is:true
+bibliography: metacheck.bib
+---
+
+
+## Überblick
+
+Umfangreiche Metadaten sichern die Auffindbarkeit und Nachnutzung von
+Open-Access-Artikeln. 
+Aus diesem Grunde ist die Überprüfung der Metadaten ein wesentlicher Workflow-Bestandteil beim Umgang mit Open-Access-Publikationskosten und Transformationsverträgen.
+
+Der Open-Access-Metadaten-Schnelltest ermöglicht die automatische Überprüfung der Metadatenqualität von Open-Access-Zeitschriftenartikeln.
+Er richtet sich in erster Linie an Bibliotheken und wissenschaftlicheInformationseinrichtungen, die Open-Access-Publikationskosten etwa im Rahmen eines Publikationsfonds oder eines Transformationsvertrags verwalten.
+
+Im Mittelpunkt der Überprüfung des  Open-Access-Metadaten-Schnelltests stehen die Metadaten der DOI-Registrierungsagentur Crossref, welche von den meisten wissenschaftlichen Verlagen als Metadatenservice genutzt wird. 
+Daher greifen vielfältige Forschungsvorhaben, Discovery- und Data-Analytics-Serivces auf die Crossref-Datendienste zu, um Open-Access-Artikel zu finden und nachzunutzen.
+
+## Testergebnisse
+
+Das Testergebnis des Open-Access-Metadaten-Schnelltest wird per Email
+verschickt und beinhaltet folgende Ergebnisse:
+
+### Indexierungsstatus in Crossref
+
+Der Abschnitt fasst zusammen, für welche DOIs keine Metadaten in Crossref verfügbar sind. 
+Es kann vielfältige Ursachen haben, warum eine DOI nicht in Crossref indexiert ist:
+
+- DOI ist syntaktisch fehlerhaft.
+- DOI ist vom Verlag bereits registriert, der Artikel ist jedoch nochnicht publiziert.
+- DOI wurde nicht bei Crossref, sondern bei einer anderen Agentur registriert.
+
+### Crossref-Metadaten
+
+Der Abschnitt zeigt einen tabellarischen Überblick der Testergebnisse.
+Es werden absolute und relative Häufigkeiten dargestellt.
+
+Untersucht wurden:
+
+- Verfügbarkeit von Creative-Commons-Lizenzen (CC License)
+- Verfügbarkeit von regelkonformen CC-Lizenzen (Compliant CC)
+- Unterstützung von Versionen für das Text- und Data-Mining (TDM) (TDM Support)
+- Vorhandensein von Förderinformationen (Funder info)
+- Verknüpfung zwischen Publikationen und ORCID
+- Unterstützung weitere offener Metadaten ([Open Abstracts](https://i4oa.org/) und [Open Citations](https://i4oc.org/))
+
+### Lizenzbedingungen
+
+Offene Lizenzen sind wesentlich, um den Zugang und die Nachnutzung von Open-Access-Artikeln unter bestimmten Bedingungen zu regeln. 
+Einschlägig sind die Creative-Commons-Lizenzen (CC-Lizenzen) (siehe Überblick des
+[Bundesministeriums für Bildung und Forschung](https://www.bildung-forschung.digital/de/lizenzvertrag-und-offene-lizenzen-2650.html)).
+
+Die tabellarische Übersicht zeigt die Häufigkeit von CC-Varianten an. 
+CC-BY ist sowohl in den DEAL-Verträgen als auch beim DFG-Programm Open-Access-Publikationskosten der präferierte Lizenztyp.
+`NA` bedeutet, dass keine Lizeninformation in den Crossref-Metadaten
+verfügbar ist.
+
+### Ergebnis Compliance Check
+
+Die Tabelle zeigt die Anzahl und den Anteil **regelkonformer CC-Lizenzinformationen** laut dem HOAD-Algorithmus. 
+Eine Lizenzinformation ist genau dann regelkonform, wenn
+
+- es sich um eine Creative-Commons-Standardlizenz handelt,
+- die CC-Lizenz sich auf die Verlagsversion, die sogenannte "version-of-record" bezieht,
+- und die CC-Lizenz mit Erscheinen ohne zeitlichen Verzug gültig ist (Ausschluss von delayed OA)
+
+Wir haben festgestellt, dass Verlage zwar immer häufiger CC-Lizenzen in den Crossref-Metadaten verzeichnen, einige allerdings die Lizenzinformation nur unvollständig beschreiben. 
+Dies kann Auswirkungen auf die automatisierte Auffindbarkeit und Datenanalysen von OA-Artikeln haben. 
+
+**Bei Problemen
+empfehlen wir daher, mit dem Verlag in Kontakt zu treten.**
+
+<!-- TODO below link is redundant, an appropriate CSL should take care of this -->
+Mehr Hintergrundinformationen zur Überprüfung von Lizenzinformationen in
+Crossref im Kontext von OA-Transformationsverträgen finden Sie bei @Voigt_2020 ([link](https://libreas.eu/ausgabe38/voigt/)).
+
+
+### Text and Data Mining (TDM)
+
+Der nächste Abschnitt bietet einen Überblick, welche Dateiformate,
+ausgedrückt als [MIME Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types), für das Text- und Data-Mining (TDM) unterstützt werden. 
+Grundsätzlich kann je Artikel mehr als ein Format angeboten werden. 
+Es wird empfohlen, dass Verlage neben PDF-Dateien auch strukturierte XML-Volltexte verfügbar machen, um die automatisierte Nachnutzung zu erleichtern.
+
+Die prozentualen Anteile in der Tabelle beziehen sich ausschließlich auf Artikel, für die TDM-Informationen vorhanden sind. 
+Bitte beachten Sie zudem, dass Verlage mehr als ein Format anbieten können.
+
+### Förderinformationen
+
+Es gibt ein großes Interesse, den Förderkontext von OA-Artikeln zu
+erheben. 
+Einige, aber nicht alle Verlage nutzen Crossref, um den Förderinformationen zu teilen. 
+Der OA-Metadatenschnelltest zeigt an, bei wie vielem Publikationen Crossref mindestens eine Forschungsförderung verzeichnet, und bei wie vielen Artikeln die DFG vermerkt ist.
+
+### Literatur

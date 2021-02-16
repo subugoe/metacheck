@@ -5,6 +5,7 @@ author: "Najko Jahn"
 pkgdown:
     as_is:true
 bibliography: metacheck.bib
+csl: apa.csl
 ---
 
 
@@ -12,18 +13,17 @@ bibliography: metacheck.bib
 
 Umfangreiche Metadaten sichern die Auffindbarkeit und Nachnutzung von
 Open-Access-Artikeln. 
-Aus diesem Grunde ist die Überprüfung der Metadaten ein wesentlicher Workflow-Bestandteil beim Umgang mit Open-Access-Publikationskosten und Transformationsverträgen.
+Aus diesem Grunde ist die Überprüfung der Metadaten ein wesentlicher Workflow-Bestandteil beim Umgang mit Open-Access-Publikationskosten und Transformationsverträgen [@Geschuhn_2017; @Marques_2019].
 
 Der Open-Access-Metadaten-Schnelltest ermöglicht die automatische Überprüfung der Metadatenqualität von Open-Access-Zeitschriftenartikeln.
-Er richtet sich in erster Linie an Bibliotheken und wissenschaftlicheInformationseinrichtungen, die Open-Access-Publikationskosten etwa im Rahmen eines Publikationsfonds oder eines Transformationsvertrags verwalten.
+Er richtet sich in erster Linie an Bibliotheken und wissenschaftliche Informationseinrichtungen, die Open-Access-Publikationskosten etwa im Rahmen eines Publikationsfonds oder eines Transformationsvertrags verwalten.
 
-Im Mittelpunkt der Überprüfung des  Open-Access-Metadaten-Schnelltests stehen die Metadaten der DOI-Registrierungsagentur Crossref, welche von den meisten wissenschaftlichen Verlagen als Metadatenservice genutzt wird. 
-Daher greifen vielfältige Forschungsvorhaben, Discovery- und Data-Analytics-Serivces auf die Crossref-Datendienste zu, um Open-Access-Artikel zu finden und nachzunutzen.
+Im Mittelpunkt der Überprüfung des Open-Access-Metadaten-Schnelltests stehen die Metadaten der DOI-Registrierungsagentur Crossref, welche von den meisten wissenschaftlichen Verlagen als Metadatenservice genutzt wird. 
+Daher greifen vielfältige Forschungsvorhaben, Discovery- und Data-Analytics-Services auf die Crossref-Datendienste zu, um Open-Access-Artikel zu finden und nachzunutzen [@Hendricks_2020].
 
 ## Testergebnisse
 
-Das Testergebnis des Open-Access-Metadaten-Schnelltest wird per Email
-verschickt und beinhaltet folgende Ergebnisse:
+Das Testergebnis des Open-Access-Metadaten-Schnelltest wird per Email verschickt und beinhaltet folgende Ergebnisse:
 
 ### Indexierungsstatus in Crossref
 
@@ -44,7 +44,7 @@ Untersucht wurden:
 - Verfügbarkeit von Creative-Commons-Lizenzen (CC License)
 - Verfügbarkeit von regelkonformen CC-Lizenzen (Compliant CC)
 - Unterstützung von Versionen für das Text- und Data-Mining (TDM) (TDM Support)
-- Vorhandensein von Förderinformationen (Funder info)
+- Verknüpfung zwischen Publikationen und Förderinformationen (Funder info)
 - Verknüpfung zwischen Publikationen und ORCID
 - Unterstützung weitere offener Metadaten ([Open Abstracts](https://i4oa.org/) und [Open Citations](https://i4oc.org/))
 
@@ -55,7 +55,7 @@ Einschlägig sind die Creative-Commons-Lizenzen (CC-Lizenzen) (siehe Überblick 
 [Bundesministeriums für Bildung und Forschung](https://www.bildung-forschung.digital/de/lizenzvertrag-und-offene-lizenzen-2650.html)).
 
 Die tabellarische Übersicht zeigt die Häufigkeit von CC-Varianten an. 
-CC-BY ist sowohl in den DEAL-Verträgen als auch beim DFG-Programm Open-Access-Publikationskosten der präferierte Lizenztyp.
+CC-BY ist sowohl in den [DEAL-Verträgen](https://www.projekt-deal.de/) als auch beim [DFG-Programm Open-Access-Publikationskosten](https://www.dfg.de/foerderung/programme/infrastruktur/lis/lis_foerderangebote/open_access_publikationskosten/index.html) der präferierte Lizenztyp.
 `NA` bedeutet, dass keine Lizeninformation in den Crossref-Metadaten
 verfügbar ist.
 
@@ -76,7 +76,7 @@ empfehlen wir daher, mit dem Verlag in Kontakt zu treten.**
 
 <!-- TODO below link is redundant, an appropriate CSL should take care of this -->
 Mehr Hintergrundinformationen zur Überprüfung von Lizenzinformationen in
-Crossref im Kontext von OA-Transformationsverträgen finden Sie bei @Voigt_2020 ([link](https://libreas.eu/ausgabe38/voigt/)).
+Crossref im Kontext von OA-Transformationsverträgen finden Sie bei @Voigt_2020.
 
 
 ### Text and Data Mining (TDM)
@@ -86,8 +86,7 @@ ausgedrückt als [MIME Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/B
 Grundsätzlich kann je Artikel mehr als ein Format angeboten werden. 
 Es wird empfohlen, dass Verlage neben PDF-Dateien auch strukturierte XML-Volltexte verfügbar machen, um die automatisierte Nachnutzung zu erleichtern.
 
-Die prozentualen Anteile in der Tabelle beziehen sich ausschließlich auf Artikel, für die TDM-Informationen vorhanden sind. 
-Bitte beachten Sie zudem, dass Verlage mehr als ein Format anbieten können.
+Die prozentualen Anteile in der Tabelle beziehen sich auf alle getesteten Artikel mit Crossref-Metadaten. 
 
 ### Förderinformationen
 

@@ -7,7 +7,7 @@
 vor_issue(license_df, compliant_dois)
 }
 \arguments{
-\item{license_df}{normalized license metadata from \code{\link[=license_df]{license_df()}}}
+\item{license_df}{normalized license metadata from \code{\link[=get_license_md]{get_license_md()}}}
 
 \item{compliant_dois}{DOIs representing records with valid CC info}
 }

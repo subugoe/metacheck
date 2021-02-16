@@ -7,7 +7,7 @@
 get_delayed_license(license_df)
 }
 \arguments{
-\item{license_df}{normalized license metadata from \code{\link[=license_df]{license_df()}}}
+\item{license_df}{normalized license metadata from \code{\link[=get_license_md]{get_license_md()}}}
 }
 \description{
 Extract records with license delay

@@ -67,7 +67,8 @@ Imports:
     readr,
     gluedown,
     tibble,
-    rlang
+    rlang,
+    shinyjs
 Suggests:
     testthat,
     subugoetheme,
@@ -80,6 +81,6 @@ Remotes:
     subugoe/subugoetheme@1.1.1,
     subugoe/shinycaas@1.0.0,
     subugoe/rcrossref@51d036808c1dc1f46cf1bad1b136e97ad213e162,
-    rstudio/shinyvalidate@420aec079dbd2c0e12bf8350f4452d105a9cc45c,
+    rstudio/shinyvalidate@2688f6eb485ad2602e3a5ed70d4c07449b2bc422,
     subugoe/biblids@d44010e7d0b7d2eef016ef33a05d29e67417dfe6
 Config/testthat/edition: 3

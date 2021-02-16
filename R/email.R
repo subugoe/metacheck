@@ -105,3 +105,85 @@ has_creds_envvar <- function() Sys.getenv("MAILJET_SMTP_PASSWORD") != ""
 skip_if_not_smtp_auth <- function() {
   ifelse(has_creds_envvar(), invisible(TRUE), skip("No SMTP auth available."))
 }
+
+
+# Email module ====
+
+#' Email Report through a Shiny Module
+#' @family communicate
+#' @keywords internal
+#' @name emailReport
+NULL
+
+#' @describeIn emailReport Test app
+#' @export
+emailReport <- function() {
+  ui <- shiny::fluidPage(emailReportUI(id = "test"))
+  server <- function(input, output, session) {
+    emailReportServer(id = "test")
+  }
+  shiny::shinyApp(ui, server)
+}
+
+#' @describeIn emailReport Module UI
+#' @inheritParams shiny::NS
+#' @inheritParams shiny::textInput
+#' @inheritDotParams shiny::actionButton
+#' @export
+emailReportUI <- function(id, width = "100%", ...) {
+  ns <- shiny::NS(id)
+  shiny::tagList(
+    shiny::textInput(
+      inputId = ns("recipient"),
+      label = "Email Address:",
+      placeholder = "jane.doe@example.com",
+      width = width
+    ),
+    shinyjs::disabled(
+      shiny::actionButton(
+        label = "Send Compliance Report",
+        inputId = ns("send"),
+        icon = shiny::icon("paper-plane"),
+        width = width,
+        ...
+      )
+    )
+  )
+}
+
+#' @describeIn emailReport Module server
+#' @export
+emailReportServer <- function(id, dois, email = blastula::prepare_test_message()) {
+  shiny::moduleServer(
+    id,
+    module = function(input, output, session) {
+      # input validation
+      iv <- shinyvalidate::InputValidator$new()
+      iv$add_rule("recipient", shinyvalidate::sv_required())
+      iv$add_rule(
+        "recipient",
+        ~ if (!is_valid_email(.)) "Please provide a valid email"
+      )
+      iv$enable()
+      observe({
+        shinyjs::toggleState("send", iv$is_valid() && shiny::isTruthy(dois()))
+      })
+      observeEvent(input$send, {
+        if (iv$is_valid()) {
+          withProgress(
+            expr = {
+              smtp_send_metacheck(
+                to = input$recipient,
+                email = email
+              )
+            },
+            message = paste0(
+              "Sending e-mail. ",
+              "You can close this window."
+            )
+          )
+        }
+      })
+    }
+  )
+}

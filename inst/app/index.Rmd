@@ -8,7 +8,6 @@ runtime: shiny
 
 ```{r global, include=FALSE}
 library(shiny)
-library(shinyvalidate)
 ```
 
 
@@ -16,62 +15,44 @@ Inputs {.sidebar}
 -----------------------------------------------------------------------
 
 ```{r}
+shinyjs::useShinyjs(rmd = TRUE)
 biblids::doiEntryUI(id = "dois")
-actionButton(
-  label = "Create Compliance Report",
-  inputId = "create",
-  width = "100%"
+shinyjs::disabled(
+  actionButton(
+    label = "Preview Compliance Report",
+    inputId = "preview",
+    width = "100%"
+  )
 )
-textInput(
-  inputId = "email",
-  label  = "Email Address:",
-  placeholder = "jane.doe@uni-foo.edu"
-)
-actionButton(
-  label = "Send Compliance Report",
-  inputId = "send",
-  width = "100%"
-)
+emailReportUI(id = "send")
 ```
 
 ```{r}
-# used to disambiguate excel file names
-session_id <- as.character(floor(runif(1) * 1e20))
-
 # get dois
 dois <- biblids::doiEntryServer(id = "dois")
 
-# email
-iv <- InputValidator$new()
-iv$add_rule("email", sv_required())
-iv$add_rule("email", ~ if (!is_valid_email(.)) "Please provide a valid email")
-iv$enable()
-
-html_email <- eventReactive(input$create, {
-  if (length(dois()) > 1) {
-    withProgress(
+# used to disambiguate excel file names
+session_id <- as.character(floor(runif(1) * 1e20))
+report <- reactive({
+  withProgress(
       expr = {
-        render_email(dois = dois(), session_id = session_id)$html_html
+        render_email(dois = dois(), session_id = session_id)
       },
       message = "Generating report..."
     )
-  }
+  render_email(dois = dois(), session_id = session_id)
 })
-output$draft <- renderUI(html_email())
 
-observeEvent(input$send, {
-  if (length(dois() > 1 & iv$is_valid())) {
-    withProgress(
-      expr = {
-        smtp_send_metacheck(
-          to = input$email,
-          email = render_email(dois = dois(), session_id = session_id)
-        )
-      },
-      message = "Generating report and sending e-mail. You can close this window."
-    )
-  }
+# preview
+observe({
+  shinyjs::toggleState("preview", shiny::req(dois()))
 })
+observeEvent(input$preview, {
+  output$draft <- renderUI(report()$html_html)
+})
+
+# email
+emailReportServer(id = "send", dois = dois, email = report())
 ```
 
 Results

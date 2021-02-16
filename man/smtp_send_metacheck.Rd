@@ -76,5 +76,9 @@ instead.}
 \description{
 Send out email
 }
+\seealso{
+Other communicate: 
+\code{\link{emailReport}()}
+}
 \concept{communicate}
 \keyword{internal}

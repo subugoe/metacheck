@@ -4,6 +4,7 @@ subtitle: "Überblick Open-Access-Metadaten-Schnelltest"
 author: "Najko Jahn"
 pkgdown:
     as_is:true
+bibliography: metacheck.bib
 ---
 
 
@@ -73,12 +74,10 @@ Dies kann Auswirkungen auf die automatisierte Auffindbarkeit und Datenanalysen v
 **Bei Problemen
 empfehlen wir daher, mit dem Verlag in Kontakt zu treten.**
 
+<!-- TODO below link is redundant, an appropriate CSL should take care of this -->
 Mehr Hintergrundinformationen zur Überprüfung von Lizenzinformationen in
-Crossref im Kontext von OA-Transformationsverträgen:
+Crossref im Kontext von OA-Transformationsverträgen finden Sie bei @Voigt_2020 ([link](https://libreas.eu/ausgabe38/voigt/)).
 
-Michaela Voigt, "DEAL Open-Access-Option optimal nutzen --- ein
-Bibliothekspraxisbericht". LIBREAS. Library Ideas, 38 (2020).
-<https://libreas.eu/ausgabe38/voigt/>
 
 ### Text and Data Mining (TDM)
 
@@ -96,3 +95,5 @@ Es gibt ein großes Interesse, den Förderkontext von OA-Artikeln zu
 erheben. 
 Einige, aber nicht alle Verlage nutzen Crossref, um den Förderinformationen zu teilen. 
 Der OA-Metadatenschnelltest zeigt an, bei wie vielem Publikationen Crossref mindestens eine Forschungsförderung verzeichnet, und bei wie vielen Artikeln die DFG vermerkt ist.
+
+### Literatur

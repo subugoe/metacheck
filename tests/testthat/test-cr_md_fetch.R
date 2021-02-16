@@ -5,3 +5,8 @@ test_that("metadata can be retrieved", {
     style = "json2"
   )
 })
+
+
+test_that("returns NULL if no metadata was retrieved", {
+  expect_null(get_cr_md("10.1000/foo"))
+})

@@ -10,7 +10,7 @@
 get_cr_md <- function(dois, .progress = "text") {
   checkmate::assert_character(dois, any.missing = FALSE, unique = TRUE)
   tt <- rcrossref::cr_works(dois = dois, .progress = .progress)[["data"]]
-  if (!is.null(tt)) {
+  if (nrow(tt) > 0) {
     out <- tt %>%
     mutate(issued = lubridate::parse_date_time(issued, c("y", "ymd", "ym"))) %>%
       mutate(issued_year = lubridate::year(issued))

@@ -56,15 +56,13 @@ Imports:
     shiny,
     flexdashboard,
     shinyvalidate,
-    base64enc,
-    gh,
     biblids,
     magrittr,
     writexl,
     checkmate,
-    readr,
     gluedown,
-    tibble
+    tibble,
+    readr
 Suggests:
     testthat,
     subugoetheme,

@@ -19,7 +19,6 @@ render_email <- function(dois, session_id = NULL) {
           cr_license = my_df$cc_license_check,
           cr_tdm = my_df$tdm,
           cr_funder = my_df$funder_info,
-          open_apc = my_df$open_apc_info,
           session_id = session_id
         )
       )

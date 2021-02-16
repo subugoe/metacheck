@@ -68,16 +68,16 @@ gather_ind_table <- function(cr) {
 #' GT representation of compliance overview table
 #'
 #' @import gt
-#' @importFrom dplyr mutate
 #' @param ind_table tibble metrics overview table
 #' @param prop percentage column
 #' @param .color character, hex color code for styling HTML proportional bar chart
 #'
-#'
 #' @export
 ind_table_to_gt <- function(ind_table, prop = NULL, .color = NULL) {
   ind_table %>%
-    mutate(prop_bar = map(prop, ~ bar_chart(value = .x, .color = .color))) %>%
+    dplyr::mutate(
+      prop_bar = map(prop, ~ bar_chart(value = .x, .color = .color))
+    ) %>%
     gt::gt() %>%
     gt::cols_label(
       name = "",
@@ -117,18 +117,21 @@ ind_table_to_gt <- function(ind_table, prop = NULL, .color = NULL) {
       column_labels.border.bottom.width = px(2)
     )
 }
+
 #' Embed HTML Bar Charts in gt
 #'
 #' <https://themockup.blog/posts/2020-10-31-embedding-custom-features-in-gt-tables/>
 #'
 #' @noRd
 bar_chart <- function(value, .color = "red"){
-
-  glue::glue("<span style=\"display: inline-block; direction: ltr; border-radius: 4px; padding-right: 2px; background-color: {.color}; color: {.color}; width: {value}%\"> &nbsp; </span>") %>%
+  glue::glue(
+    "<span style=\"display: inline-block; direction: ltr; border-radius: 4px; ",
+    "padding-right: 2px; background-color: {.color}; color: {.color}; ",
+    "width: {value}%\"> &nbsp; </span>"
+  ) %>%
     as.character() %>%
     gt::html()
 }
-
 
 #' Reactable represenation of metadata indicators
 #'
@@ -184,5 +187,3 @@ react_bar_chart <- function(label, width = "100%", height = "14px", fill = "#00b
   chart <- htmltools::div(style = list(flexGrow = 1, marginLeft = "6px", background = background), bar)
   htmltools::div(style = list(display = "flex", alignItems = "center"), label, chart)
 }
-
-

@@ -9,6 +9,8 @@ add_attachment_xlsx(email, session_id = NULL)
 \arguments{
 \item{email}{The email message object, as created by the \code{\link[blastula:compose_email]{compose_email()}}
 function. The object's class is \code{email_message}.}
+
+\item{session_id}{Character vector to identify current shiny session}
 }
 \description{
 Add attachment to email

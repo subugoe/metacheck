@@ -18,12 +18,10 @@ as tibble. Default .gt = TRUE.}
 Presents funders linked to publications in Crossref metadata
 }
 \details{
-Publishers can share more than one funder link per record using
-Crossref metadata. This function applies full counting, where the
-funder is counted onced per article.
+Publishers can share more than one funder link per record using Crossref metadata.
+This function applies full counting, where the funder is counted onced per article.
 Relative number is calculated by the number of checked articles.
-Articles without funder information are tagged as
-"No funder links found".
+Articles without funder information are tagged as "No funder links found".
 }
 \examples{
 \dontrun{

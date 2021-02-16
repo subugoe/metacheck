@@ -79,7 +79,7 @@ get_license_md <- function(cr) {
 #'   CC license has to apply to version of record and must be valid
 #'   without delay.
 #'
-#' @param license_df normalized license metadata from [license_df()]
+#' @param license_df normalized license metadata from [get_license_md()]
 #'
 #' @importFrom dplyr `%>%` mutate filter
 #' @export
@@ -99,7 +99,7 @@ get_compliant_cc <- function(license_df) {
 #'   CC license has to apply to version of record and must be valid
 #'   without delay.
 #'
-#' @param license_df normalized license metadata from [license_df()]
+#' @param license_df normalized license metadata from [get_license_md()]
 #' @param compliant_dois DOIs representing records with valid CC info
 #'
 #' @importFrom dplyr `%>%` mutate filter
@@ -119,7 +119,7 @@ vor_issue <- function(license_df, compliant_dois) {
 #' @details Obtain records with CC license where license start_date
 #'   and earliest publication date for the version of records
 #'   differs, suggesting delayed CC license provision.
-#' @param license_df normalized license metadata from [license_df()]
+#' @param license_df normalized license metadata from [get_license_md()]
 #'
 #' @importFrom dplyr `%>%` mutate filter
 #' @export

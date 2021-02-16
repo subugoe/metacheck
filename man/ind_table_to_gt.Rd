@@ -4,10 +4,14 @@
 \alias{ind_table_to_gt}
 \title{GT representation of compliance overview table}
 \usage{
-ind_table_to_gt(ind_table)
+ind_table_to_gt(ind_table, prop = NULL, .color = NULL)
 }
 \arguments{
-\item{ind_table}{tibble compliance overview table}
+\item{ind_table}{tibble metrics overview table}
+
+\item{prop}{percentage column}
+
+\item{.color}{character, hex color code for styling HTML proportional bar chart}
 }
 \description{
 GT representation of compliance overview table

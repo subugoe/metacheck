@@ -15,10 +15,7 @@ render_email <- function(dois, session_id = NULL) {
       render_options = list(
         params = list(
           dois = dois,
-          cr_overview = my_df$cr_overview,
-          cr_license = my_df$cc_license_check,
-          cr_tdm = my_df$tdm,
-          cr_funder = my_df$funder_info,
+          cr_overview = my_df,
           session_id = session_id
         )
       )
@@ -33,6 +30,7 @@ render_email <- function(dois, session_id = NULL) {
 
 #' Add attachment to email
 #' @inheritParams blastula::add_attachment
+#' @inheritParams render_email
 #' @export
 add_attachment_xlsx <- function(email, session_id = NULL) {
   blastula::add_attachment(
@@ -66,4 +64,35 @@ send_email <- function(to, email, cc = "metacheck-support@sub.uni-goettingen.de"
 #' @inheritParams render_email
 xlsx_path <- function(session_id = NULL) {
   fs::path_temp(paste0(session_id, "-license_df.xlsx"))
+}
+
+#' Make Spreadsheet attachment
+#'
+#' @param .md list, returned from [cr_compliance_overview()]
+#' @param dois character, submitted dois
+#' @param session_id link spreadsheet to R session
+#'
+#' @importFrom writexl write_xlsx
+#' @export
+md_data_attachment <- function(.md = NULL, session_id = NULL, dois = NULL) {
+  if (is.null(.md)) {
+    stop("No Crossref Data")
+  }
+  excel_spreadsheet <- list(
+    `Übersicht` = .md$cr_overview,
+    `CC-Lizenzen` = .md$cc_license_check
+  )
+  if (!is.null(.md$cr_tdm)) {
+    excel_spreadsheet[["TDM"]] <- .md$tdm
+  }
+  if (!is.null(.md$cr_funder)) {
+    excel_spreadsheet[["Förderinformationen"]] <- .md$funder_info
+  }
+  if (!length(tolower(dois) %in% tolower(.md$cr_overview$doi)) > 0)
+    excel_spreadsheet[["Nicht-indexierte DOIs"]] <- tibble::tibble(
+      mutate(missing_dois = !tolower(dois) %in% tolower(.md$cr_overview$doi))
+    )
+  # write_out
+  writexl::write_xlsx(x = excel_spreadsheet,
+                      path = xlsx_path(session_id))
 }

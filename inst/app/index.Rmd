@@ -41,6 +41,29 @@ session_id <- as.character(floor(runif(1) * 1e20))
 # get dois
 dois <- biblids::doiEntryServer(id = "dois")
 
+dois2 <- reactive({
+  with_cr_md <- have_cr_md(dois())
+  if (sum(with_cr_md) < 3) {
+    shiny::showNotification(
+      ui = c(
+        "Please provide at least 2 DOIs that can be found on crossref."
+      ),
+      type = "error"
+    )
+    return(NULL)
+  } else if (any(!with_cr_md)) {
+    shiny::showNotification(
+      ui = c(
+        "Omitted some DOIs for which no metadata on Crossref could be found."
+      ),
+      type = "warning"
+    )
+    return(dois()[with_cr_md])
+  } else {
+    dois()
+  }
+})
+
 # email
 iv <- InputValidator$new()
 iv$add_rule("email", sv_required())
@@ -48,10 +71,11 @@ iv$add_rule("email", ~ if (!is_valid_email(.)) "Please provide a valid email")
 iv$enable()
 
 html_email <- eventReactive(input$create, {
-  if (length(dois()) > 1) {
+  print(dois2())
+  if (isTruthy(dois2())) {
     withProgress(
       expr = {
-        render_email(dois = dois(), session_id = session_id)$html_html
+        render_email(dois = dois2(), session_id = session_id)$html_html
       },
       message = "Generating report..."
     )
@@ -60,12 +84,12 @@ html_email <- eventReactive(input$create, {
 output$draft <- renderUI(html_email())
 
 observeEvent(input$send, {
-  if (length(dois() > 1 & iv$is_valid())) {
+  if (isTruthy(dois2())) {
     withProgress(
       expr = {
         send_email(
           to = input$email,
-          email = render_email(dois = dois(), session_id = session_id)
+          email <- render_email(dois = dois2(), session_id = session_id)
         )
       },
       message = "Generating report and sending e-mail. You can close this window."

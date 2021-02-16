@@ -6,7 +6,7 @@ test_that("metadata can be retrieved", {
   )
 })
 
-
-test_that("returns NULL if no metadata was retrieved", {
-  expect_null(get_cr_md("10.1000/foo"))
+test_that("DOIs not on CR are identified", {
+  expect_true(has_cr_md("10.5194/wes-2019-70"))
+  expect_equal(has_cr_md("10.1000/foo"), FALSE)
 })

@@ -10,5 +10,5 @@ cr_tdm_df(cr)
 \item{cr}{crossref metadata using \code{\link[=get_cr_md]{get_cr_md()}}}
 }
 \description{
-Get text-mining links from Crossref metadata
+Unnest TDM information for version-of-records from Crossref metadata
 }

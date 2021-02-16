@@ -34,8 +34,10 @@ cr_compliance_overview <- function(cr) {
   }
   list(cr_overview = cr_overview, cc_license_check = cc_df, tdm = tdm_df, funder_info = funder_df)
 }
+
 #' Check for ORCIDs
 #'
+#' @inheritParams cr_compliance_overview
 #' @importFrom purrr map
 cr_has_orcid <- function(cr) {
   cr %>%

@@ -6,6 +6,9 @@
 \usage{
 cr_has_orcid(cr)
 }
+\arguments{
+\item{cr}{crossref metadata using \code{\link[=get_cr_md]{get_cr_md()}}}
+}
 \description{
 Check for ORCIDs
 }

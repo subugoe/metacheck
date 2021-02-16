@@ -33,6 +33,7 @@ Authors@R:
 Description: 
     Automatically check metadata compliance for hybrid open access (OA).
     Includes a webapp to send compliance reports by email.
+Depends: R (>= 4.0.0)
 License: MIT
 Language: en
 Encoding: UTF-8
@@ -56,15 +57,20 @@ Imports:
     magrittr,
     writexl,
     checkmate,
-    gluedown,
+    readr,
     tibble,
-    readr
+    glue,
+    gluedown,
+    forcats,
+    fs,
+    rlang
 Suggests:
     testthat,
     subugoetheme,
     shinycaas,
     rmarkdown,
-    bench
+    bench,
+    withr
 URL: https://subugoe.github.io/metacheck, https://github.com/subugoe/metacheck
 BugReports: https://github.com/subugoe/metacheck/issues
 Remotes:

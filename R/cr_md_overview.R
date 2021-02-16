@@ -1,10 +1,7 @@
 #' Get compliance overview
 #'
 #' @param cr crossref metadata using [get_cr_md()]
-#'
-#' @importFrom dplyr `%>%` filter select across one_of
-#' @importFrom tidyselect matches
-#'
+#' @family transform
 #' @export
 cr_compliance_overview <- function(cr) {
   # remove potential duplicated
@@ -38,7 +35,8 @@ cr_compliance_overview <- function(cr) {
 #' Check for ORCIDs
 #'
 #' @inheritParams cr_compliance_overview
-#' @importFrom purrr map
+#' @family transform
+#' @export
 cr_has_orcid <- function(cr) {
   cr %>%
     select(doi, author) %>%

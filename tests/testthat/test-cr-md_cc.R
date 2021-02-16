@@ -13,7 +13,7 @@ test_that("license md checker works (Delayed licenses)",
             my_df <- get_cr_md(delayed_sample)
             out <- license_check(my_df)
             # correct classes
-            expect_is(out, "tbl_df")
+            checkmate::expect_tibble(out)
             # correct validation
             expect_match(
               unique(out$check_result),

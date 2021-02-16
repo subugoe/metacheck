@@ -67,6 +67,7 @@ Imports:
     readr,
     tibble,
     glue,
+    gluedown,
     forcats
 Suggests:
     testthat,

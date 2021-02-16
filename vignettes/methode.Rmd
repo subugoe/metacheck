@@ -74,7 +74,6 @@ Dies kann Auswirkungen auf die automatisierte Auffindbarkeit und Datenanalysen v
 **Bei Problemen
 empfehlen wir daher, mit dem Verlag in Kontakt zu treten.**
 
-<!-- TODO below link is redundant, an appropriate CSL should take care of this -->
 Mehr Hintergrundinformationen zur Überprüfung von Lizenzinformationen in
 Crossref im Kontext von OA-Transformationsverträgen finden Sie bei @Voigt_2020.
 

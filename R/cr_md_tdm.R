@@ -3,13 +3,10 @@
 #' Unnest TDM information for version-of-records from Crossref metadata
 #'
 #' @param cr crossref metadata using [get_cr_md()]
-#'
-#' @importFrom dplyr filter select
-#' @importFrom tidyr unnest
-#'
+#' @family transform
 #' @export
 cr_tdm_df <- function(cr) {
-  if("link" %in% colnames(cr)) {
+  if ("link" %in% colnames(cr)) {
   out <- cr %>%
     select(doi, container_title = container.title, publisher, issued, issued_year, link) %>%
     unnest(cols = "link")  %>%

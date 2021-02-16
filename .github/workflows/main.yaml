@@ -32,8 +32,7 @@ jobs:
           R_LIBS_SITE: $R_LIBS_RUNTIME_GH
         run: remotes::install_deps(dependencies = TRUE)
       - name: Check
-        # TODO error out on all but note again https://github.com/subugoe/hoad/issues/194
-        run: devtools::check(error_on = "error")
+        run: devtools::check(error_on = "warning")
       - name: Build Package Website
         run: |
           muggle::build_site2(override = list(new_process = FALSE))

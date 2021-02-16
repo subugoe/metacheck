@@ -6,9 +6,6 @@
 \usage{
 get_compliant_cc(license_df)
 }
-\arguments{
-\item{license_df}{normalized license metadata from \code{\link[=get_license_md]{get_license_md()}}}
-}
 \description{
 Extract records with compliant CC license metadata
 }

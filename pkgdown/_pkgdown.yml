@@ -20,6 +20,35 @@ home:
   links:
   - text: Read project description
     href: https://www.sub.uni-goettingen.de/en/projects-research/project-details/projekt/hybrid-oa-dashboards/
+reference:
+- title: Data
+  desc: Data objects and queries
+- contents:
+  - has_concept("doi")
+- title: Import
+  desc: Read in data
+- contents:
+  - has_concept("import")
+- title: Tidy
+  desc: Normalize data
+- contents:
+  - has_concept("tidy")
+- title: Transform
+  desc: Detect licenses etc.
+- contents:
+  - has_concept("transform")
+- title: Visualise
+  desc: Tables and plots
+- contents:
+  - has_concept("visualise")
+- title: Model
+  desc: Nothing yet
+- contents:
+  - has_concept("model")
+- title: Communicate
+  desc: Shiny app and rmarkdown
+- contents:
+  - has_concept("communicate")
 navbar:
   components:
     support:

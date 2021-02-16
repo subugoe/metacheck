@@ -14,3 +14,8 @@ render_email(dois, session_id = NULL)
 \description{
 Render email
 }
+\seealso{
+Other communicate: 
+\code{\link{send_email}()}
+}
+\concept{communicate}

@@ -1,9 +1,7 @@
 #' License overview
 #'
 #' @param cr crossref metadata
-#'
-#' @importFrom dplyr `%>%` group_by summarise mutate filter arrange desc n_distinct
-#'
+#' @family transform
 #' @export
 cr_license_ind <- function(cr) {
   license_normalise(cr) %>%
@@ -12,12 +10,11 @@ cr_license_ind <- function(cr) {
     arrange(desc(articles)) %>%
     mutate(ind_group = "CC licenses")
 }
+
 #' TDM overview
 #'
 #' @param cr crossref metadata
-#'
-#' @importFrom dplyr `%>%` group_by summarise mutate filter
-#' @importFrom tidyr unnest
+#' @family transform
 #' @export
 cr_tdm_ind <- function(cr) {
   cr %>%
@@ -28,13 +25,12 @@ cr_tdm_ind <- function(cr) {
     summarise(articles = n_distinct(doi)) %>%
     mutate(ind_group = "TDM")
 }
+
 #' Other types of relevant metadata
 #'
 #' @param cr crossref metadata
 #' @param .group group by variable, like publisher
-#'
-#' @importFrom tidyr pivot_longer
-#' @importFrom dplyr `%>%` group_by summarise mutate
+#' @family transform
 #' @export
 cr_md_ind <- function(cr, .group) {
   cr %>%
@@ -48,10 +44,11 @@ cr_md_ind <- function(cr, .group) {
     tidyr::pivot_longer(1:4, names_to = "type", values_to = "articles") %>%
     mutate(ind_group = "Others")
 }
+
 #' Create compliance overview table
 #'
 #' @param cr crossref metadata
-#' @importFrom dplyr `%>%` group_by summarise mutate filter arrange n_distinct bind_rows
+#' @family visualize
 #' @export
 gather_ind_table <- function(cr) {
   # get indicators
@@ -63,15 +60,13 @@ gather_ind_table <- function(cr) {
     mutate(all = n_distinct(cr$doi))%>%
     mutate(prop = articles / all * 100) %>%
     select(-all) %>%
-    mutate(prop_bar = map(prop, ~bar_chart(value = .x, color = "#00bfc4")))
+    mutate(prop_bar = purrr::map(prop, ~bar_chart(value = .x, color = "#00bfc4")))
 }
+
 #' GT representation of compliance overview table
 #'
-#' @import gt
-#' @param ind_table tibble metrics overview table
-#' @param prop percentage column
-#' @param .color character, hex color code for styling HTML proportional bar chart
-#'
+#' @param ind_table tibble compliance overview table
+#' @family visualize
 #' @export
 ind_table_to_gt <- function(ind_table, prop = NULL, .color = NULL) {
   ind_table %>%
@@ -87,34 +82,34 @@ ind_table_to_gt <- function(ind_table, prop = NULL, .color = NULL) {
     gt::tab_style(
       style = gt::cell_text(color = "black", weight = "bold"),
       locations = list(
-        cells_column_labels(everything())
+        gt::cells_column_labels(everything())
       )
     ) %>%
-    cols_width(
-      vars(name) ~ px(150)
+    gt::cols_width(
+      vars(name) ~ gt::px(150)
     ) %>%
-    cols_width(
-      vars(prop_bar) ~ px(100)
+    gt::cols_width(
+      vars(prop_bar) ~ gt::px(100)
     ) %>%
-    fmt_number(
+    gt::fmt_number(
       columns = vars(prop),
       decimals = 0,
       pattern = "{x}%") %>%
-    cols_align(align = "right",
+    gt::cols_align(align = "right",
                columns = vars(value, prop)) %>%
-    cols_align(align = "left",
-               columns = vars(name, prop_bar)) %>%
-    tab_options(
-      row_group.border.top.width = px(3),
+    gt::cols_align(align = "left",
+               columns = vars(prop_bar)) %>%
+    gt::tab_options(
+      row_group.border.top.width = gt::px(3),
       row_group.border.top.color = "black",
       row_group.border.bottom.color = "black",
       table_body.hlines.color = "white",
       table.border.top.color = "white",
-      table.border.top.width = px(3),
+      table.border.top.width = gt::px(3),
       table.border.bottom.color = "white",
-      table.border.bottom.width = px(3),
+      table.border.bottom.width = gt::px(3),
       column_labels.border.bottom.color = "black",
-      column_labels.border.bottom.width = px(2)
+      column_labels.border.bottom.width = gt::px(2)
     )
 }
 

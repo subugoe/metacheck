@@ -1,6 +1,6 @@
 Package: metacheck
 Title: Crossref Metadata Compliance
-Version: 0.1.0
+Version: 0.1.0.9000
 Authors@R:
     c(
       person(
@@ -16,6 +16,13 @@ Authors@R:
         role = c("aut"),
         email = "info@maxheld.de",
         comment = c(ORCID = "0000-0002-4703-5388")
+      ),
+      person(
+        given = "Henrieke",
+        family = "Walter",
+        role = c("aut"),
+        email = "henrieke.walter@sub.uni-goettingen.de",
+        comment = c(ORCID = "0000-0003-3313-7364")
       ),
       person(
         given = "Göttingen State and University Library",
@@ -34,7 +41,7 @@ Description:
     Automatically check metadata compliance for hybrid open access (OA).
     Includes a webapp to send compliance reports by email.
 Depends: R (>= 4.0.0)
-License: MIT
+License: AGPL (>= 3)
 Language: en
 Encoding: UTF-8
 LazyData: true
@@ -49,7 +56,6 @@ Imports:
     blastula,
     stringi,
     lubridate,
-    tidyselect,
     shiny,
     flexdashboard,
     shinyvalidate,
@@ -63,7 +69,8 @@ Imports:
     gluedown,
     forcats,
     fs,
-    rlang
+    rlang,
+    rmarkdown
 Suggests:
     testthat,
     subugoetheme,

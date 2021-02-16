@@ -1,6 +1,7 @@
 #' Render email
 #' @param dois Character vector of DOIs
 #' @param session_id Character vector to identify current shiny session
+#' @family communicate
 #' @export
 render_email <- function(dois, session_id = NULL) {
   cr <- get_cr_md(dois)
@@ -29,9 +30,8 @@ render_email <- function(dois, session_id = NULL) {
 }
 
 #' Add attachment to email
-#' @inheritParams blastula::add_attachment
 #' @inheritParams render_email
-#' @export
+#' @noRd
 add_attachment_xlsx <- function(email, session_id = NULL) {
   blastula::add_attachment(
     email = email,
@@ -42,6 +42,7 @@ add_attachment_xlsx <- function(email, session_id = NULL) {
 
 #' Send out email
 #' @inheritParams blastula::smtp_send
+#' @family communicate
 #' @export
 send_email <- function(to, email, cc = "metacheck-support@sub.uni-goettingen.de") {
   blastula::smtp_send(
@@ -62,6 +63,7 @@ send_email <- function(to, email, cc = "metacheck-support@sub.uni-goettingen.de"
 
 #' Temp path to write xlsx to
 #' @inheritParams render_email
+#' @noRd
 xlsx_path <- function(session_id = NULL) {
   fs::path_temp(paste0(session_id, "-license_df.xlsx"))
 }

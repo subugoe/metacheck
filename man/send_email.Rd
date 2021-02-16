@@ -27,3 +27,8 @@ email address (e.g., \code{c("Joe Public" = "joe_public@example.com")}).}
 \description{
 Send out email
 }
+\seealso{
+Other communicate: 
+\code{\link{render_email}()}
+}
+\concept{communicate}

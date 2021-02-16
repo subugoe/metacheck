@@ -10,10 +10,19 @@ license_check(cr)
 \item{cr}{crossref metadata using \code{\link[=get_cr_md]{get_cr_md()}}}
 }
 \description{
-Extract and validate Crossref license metadata
-}
-\details{
 Workflow to check for compliant open content license metadata in Crossref.
-License metadata is considered as compliant, if a Creative Commons license is
-provided for the version-of-record without delay indicated by the license date.
+License metadata is considered as compliant, if a Creative Commons license is provided for the version-of-record without delay indicated by the license date.
 }
+\seealso{
+Other transform: 
+\code{\link{cr_compliance_overview}()},
+\code{\link{cr_funder_df}()},
+\code{\link{cr_has_orcid}()},
+\code{\link{cr_license_ind}()},
+\code{\link{cr_md_ind}()},
+\code{\link{cr_tdm_df}()},
+\code{\link{cr_tdm_ind}()},
+\code{\link{get_license_md}()},
+\code{\link{vor_issue}()}
+}
+\concept{transform}

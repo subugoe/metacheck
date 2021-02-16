@@ -1,12 +1,10 @@
 #' Extract and validate Crossref license metadata
 #'
-#' @details Workflow to check for compliant open content license metadata in Crossref.
-#'   License metadata is considered as compliant, if a Creative Commons license is
-#'   provided for the version-of-record without delay indicated by the license date.
+#' Workflow to check for compliant open content license metadata in Crossref.
+#' License metadata is considered as compliant, if a Creative Commons license is provided for the version-of-record without delay indicated by the license date.
 #'
 #' @param cr crossref metadata using [get_cr_md()]
-#' @importFrom dplyr `%>%` bind_rows bind_cols filter mutate anti_join distinct left_join
-#'
+#' @family transform
 #' @export
 license_check <- function(cr) {
   if (!"license" %in% colnames(cr)) {
@@ -16,7 +14,7 @@ license_check <- function(cr) {
       license_url = NA,
       content_version = NA,
       license_date = NA,
-      delay_in_days = NA,
+      delay_in_days = NA
     )
     out <- bind_cols(doi = cr$doi, out_template)
   } else {
@@ -56,53 +54,43 @@ license_check <- function(cr) {
   }
   return(out)
 }
+
 #' Extract license info from Crossref metadata
-#'
-#' @param cr crossref metadata using [get_cr_md()]
-#'
-#' @importFrom dplyr `%>%` mutate filter
-#' @importFrom tidyr unnest
-#' @importFrom stringi stri_extract
+#' @inheritParams license_check
+#' @family transform
 #' @export
-#'
 get_license_md <- function(cr) {
   cr %>%
     select(doi, license) %>%
     unnest(c(license), keep_empty = TRUE) %>%
+    filter(content.version == "vor") %>%
     mutate(cc_norm = stringi::stri_extract(URL, regex = "by.*?/") %>%
              gsub("/", "", .)
     )
 }
+
 #' Extract records with compliant CC license metadata
 #'
 #' @details In order to be compliant,
 #'   CC license has to apply to version of record and must be valid
 #'   without delay.
 #'
-#' @param license_df normalized license metadata from [get_license_md()]
-#'
-#' @importFrom dplyr `%>%` mutate filter
-#' @export
 get_compliant_cc <- function(license_df) {
   license_df %>%
     filter(# applies to version of record
-      content.version == "vor",
       # has CC license
       !is.na(cc_norm),
       # valid without delay
       delay.in.days == 0) %>%
     mutate(check_result = "All fine!")
 }
+
 #' Extract records with CC license not applied to version of records
 #'
-#' @details In order to be compliant,
-#'   CC license has to apply to version of record and must be valid
-#'   without delay.
-#'
-#' @param license_df normalized license metadata from [get_license_md()]
+#' In order to be compliant, CC license has to apply to version of record and must be valid without delay.
+#' @inheritParams get_compliant_cc
 #' @param compliant_dois DOIs representing records with valid CC info
-#'
-#' @importFrom dplyr `%>%` mutate filter
+#' @family transform
 #' @export
 vor_issue <- function(license_df, compliant_dois) {
   license_df %>%

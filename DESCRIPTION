@@ -28,10 +28,6 @@ Authors@R:
       person(
         given = "Crossref",
         role = c("dtc")
-      ),
-      person(
-        given = "OpenAPC Initiative",
-        role = c("dtc")
       )
     )
 Description: 

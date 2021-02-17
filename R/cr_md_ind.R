@@ -1,10 +1,7 @@
 #' GT representation of compliance overview table
 #'
-#' @param ind_table tibble compliance metrics table
-#' @param .name indicator
-#' @param .value number of articles per indicator
-#' @param .prop percentage of articles per indicator
-#'
+#' @param ind_table tibble compliance overview table
+#' @param .color table styling
 #' @family visualize
 #' @export
 ind_table_to_gt <- function(ind_table, .color = NULL) {

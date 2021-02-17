@@ -7,13 +7,9 @@
 ind_table_to_gt(ind_table, .color = NULL)
 }
 \arguments{
-\item{ind_table}{tibble compliance metrics table}
+\item{ind_table}{tibble compliance overview table}
 
-\item{.name}{indicator}
-
-\item{.value}{number of articles per indicator}
-
-\item{.prop}{percentage of articles per indicator}
+\item{.color}{table styling}
 }
 \description{
 GT representation of compliance overview table

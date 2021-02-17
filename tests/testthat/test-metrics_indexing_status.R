@@ -30,34 +30,34 @@ test_that("metrics_overview is reported", {
 # cc compliance
 
 test_that("cc_metrics works", {
-  a <- cc_metrics(out, .gt = FALSE)
+  a <- cc_metrics(out$cc_license_check)
 
   # dimensions and type
   expect_equal(ncol(a), 3)
   expect_s3_class(a, "data.frame")
 
-  expect_error(metrics_overview())
-  expect_error(metrics_overview("kdkd"))
+  expect_error(cc_metrics())
+  expect_error(cc_metrics("kdkd"))
 })
 
-test_that("cc_metrics are reported", {
-  expect_is(metrics_overview(out), "gt_tbl")
-})
+# test_that("cc_metrics are reported", {
+#   expect_is(cc_metrics(out), "gt_tbl")
+# })
 
 test_that("cc_compliance_metrics works", {
-  a <- cc_metrics(out, .gt = FALSE)
+  a <- cc_compliance_metrics(out$cc_license_check)
 
   # dimensions and type
   expect_equal(ncol(a), 3)
   expect_s3_class(a, "data.frame")
 
-  expect_error(metrics_overview())
-  expect_error(metrics_overview("kdkd"))
+  expect_error(cc_compliance_metrics())
+  expect_error(cc_compliance_metrics("kdkd"))
 })
 
-test_that("cc_compliance_metrics are reported", {
-  expect_is(metrics_overview(out), "gt_tbl")
-})
+#test_that("cc_compliance_metrics are reported", {
+#  expect_is(cc_metrics(out$cc_license_check), "gt_tbl")
+#})
 
 ## tdm compliance
 

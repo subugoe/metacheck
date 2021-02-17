@@ -4,10 +4,16 @@
 \alias{ind_table_to_gt}
 \title{GT representation of compliance overview table}
 \usage{
-ind_table_to_gt(ind_table, prop = NULL, .color = NULL)
+ind_table_to_gt(ind_table, .color = NULL)
 }
 \arguments{
-\item{ind_table}{tibble compliance overview table}
+\item{ind_table}{tibble compliance metrics table}
+
+\item{.name}{indicator}
+
+\item{.value}{number of articles per indicator}
+
+\item{.prop}{percentage of articles per indicator}
 }
 \description{
 GT representation of compliance overview table

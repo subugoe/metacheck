@@ -2,24 +2,18 @@
 #'
 #' Presents normalised CC licence variants like BY (absolute and relative)
 #'
-#' @inheritParams metrics_overview
-#'
+#' @param cc_license_check tibble, result from [license_check()]
 #' @export
-cc_metrics <- function(.md = NULL, .gt = TRUE,  .color = "#F3A9BB") {
-  if (is.null(.md) || !"cc_license_check" %in% names(.md)) {
+cc_metrics <- function(cc_license_check = NULL) {
+  #, .gt = TRUE,  .color = "#F3A9BB") {
+  if (is.null(cc_license_check)) {
     rlang::abort(
-      "No CC compliance data provided, get data using cr_compliance_overview()"
+      "No CC compliance data provided, get data using license_check()"
     )
   }
-  out <- .md$cc_license_check %>%
+  cc_license_check %>%
     dplyr::count(cc_norm, name = "value") %>%
-    dplyr::mutate(prop = value / sum(value) * 100) %>%
-    dplyr::rename(name = cc_norm)
-  if (.gt == FALSE) {
-    out
-  } else {
-    ind_table_to_gt(out, prop = prop, .color = .color)
-  }
+    dplyr::mutate(prop = value / sum(value) * 100)
 }
 
 #' CC compliance metrics overview
@@ -28,24 +22,15 @@ cc_metrics <- function(.md = NULL, .gt = TRUE,  .color = "#F3A9BB") {
 #'
 #' @seealso [license_check()]
 #'
-#' @inheritParams metrics_overview
-#'
-#' @importFrom dplyr count mutate rename
+#' @inheritParams cc_metrics
 #'
 #' @export
-cc_compliance_metrics <- function(.md = NULL, .gt = TRUE,  .color = "#A0A5A9") {
-  if (is.null(.md) || !"cc_license_check" %in% names(.md)) {
-    rlang::abort(
-      "No compliance overview data provided, get data using cr_compliance_overview()"
-    )
+cc_compliance_metrics <- function(cc_license_check = NULL) {
+  #.gt = TRUE,  .color = "#A0A5A9") {
+  if (is.null(cc_license_check)) {
+    rlang::abort("No compliance overview data provided, get data using license_check()")
   }
-  out <- .md$cc_license_check %>%
-    dplyr::count(check_result, name = "value") %>%
-    dplyr::mutate(prop = value / sum(value) * 100) %>%
-    dplyr::rename(name = check_result)
-  if (.gt == FALSE) {
-    out
-  } else {
-    ind_table_to_gt(out, prop = prop, .color = .color)
-  }
+  cc_license_check %>%
+    dplyr::count(indicator = check_result, name = "value") %>%
+    dplyr::mutate(prop = value / sum(value) * 100)
 }

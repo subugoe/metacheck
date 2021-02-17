@@ -4,15 +4,10 @@
 \alias{cc_compliance_metrics}
 \title{CC compliance metrics overview}
 \usage{
-cc_compliance_metrics(.md = NULL, .gt = TRUE, .color = "#A0A5A9")
+cc_compliance_metrics(cc_license_check = NULL)
 }
 \arguments{
-\item{.md}{list, returned from \code{\link[=cr_compliance_overview]{cr_compliance_overview()}}}
-
-\item{.gt}{logical, should results be represented as styled html tables or
-as tibble. Default .gt = TRUE.}
-
-\item{.color}{character, hex color code for styling HTML proportional bar chart}
+\item{cc_license_check}{tibble, result from \code{\link[=license_check]{license_check()}}}
 }
 \description{
 Presents the result of the CC compliance check (absolute and relative)

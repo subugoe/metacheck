@@ -1,16 +1,20 @@
 #' GT representation of compliance overview table
 #'
-#' @param ind_table tibble compliance overview table
+#' @param ind_table tibble compliance metrics table
+#' @param .name indicator
+#' @param .value number of articles per indicator
+#' @param .prop percentage of articles per indicator
+#'
 #' @family visualize
 #' @export
-ind_table_to_gt <- function(ind_table, prop = NULL, .color = NULL) {
+ind_table_to_gt <- function(ind_table, .color = NULL) {
   ind_table %>%
     dplyr::mutate(
-      prop_bar = map(prop, ~ bar_chart(value = .x, .color = .color))
+      prop_bar = purrr::map(prop, ~ bar_chart(value = .x, .color = .color))
     ) %>%
     gt::gt() %>%
     gt::cols_label(
-      name = "",
+      indicator = "",
       value = "Artikel",
       prop = "Anteil",
       prop_bar = "") %>%
@@ -21,7 +25,7 @@ ind_table_to_gt <- function(ind_table, prop = NULL, .color = NULL) {
       )
     ) %>%
     gt::cols_width(
-      vars(name) ~ gt::px(150)
+      vars(indicator) ~ gt::px(150)
     ) %>%
     gt::cols_width(
       vars(prop_bar) ~ gt::px(100)
@@ -33,7 +37,7 @@ ind_table_to_gt <- function(ind_table, prop = NULL, .color = NULL) {
     gt::cols_align(align = "right",
                columns = vars(value, prop)) %>%
     gt::cols_align(align = "left",
-               columns = vars(prop_bar)) %>%
+               columns = vars(indicator, prop_bar)) %>%
     gt::tab_options(
       row_group.border.top.width = gt::px(3),
       row_group.border.top.color = "black",

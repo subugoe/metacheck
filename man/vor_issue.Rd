@@ -7,6 +7,8 @@
 vor_issue(license_df, compliant_dois)
 }
 \arguments{
+\item{license_df}{data frame with licenses}
+
 \item{compliant_dois}{DOIs representing records with valid CC info}
 }
 \description{

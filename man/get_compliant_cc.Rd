@@ -6,6 +6,9 @@
 \usage{
 get_compliant_cc(license_df)
 }
+\arguments{
+\item{license_df}{data frame with licenses}
+}
 \description{
 Extract records with compliant CC license metadata
 }

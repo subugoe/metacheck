@@ -6,22 +6,24 @@ test_that("email can be rendered", {
 })
 
 test_that("email can be send", {
-  skip_if(
-    Sys.getenv("MAILJET_SMTP_PASSWORD") == "",
-    message = "Mailjet credentials not available."
-  )
-  testthat::skip_if_not(
-    Sys.getenv("GITHUB_REF" == "refs/heads/main"),
-    message = "Testing email only on main."
-  )
-  send_email(
-    to = "held@sub.uni-goettingen.de",
-    email = blastula::prepare_test_message(),
-    cc = NULL
-  )
-  send_email(
-    to = "held@sub.uni-goettingen.de",
-    email = render_email(dois = tu_dois()[0:10]),
-    cc = NULL
-  )
+  skip_if_not_smtp_auth()
+  # recommended by https://stackoverflow.com/questions/1368163/is-there-a-standard-domain-for-testing-throwaway-email
+  throwaway <- "whatever@mailinator.com"
+  expect_message({
+    smtp_send_metacheck(
+      email = blastula::prepare_test_message(),
+      to = throwaway,
+      subject = "Test email",
+      cc = NULL,
+    )
+  })
+  expect_error({
+    withr::local_envvar(.new = c("MAILJET_SMTP_PASSWORD" = "zap"))
+    smtp_send_metacheck(
+      email = blastula::prepare_test_message(),
+      to = throwaway,
+      subject = "Bad test email",
+      cc = NULL
+    )
+  })
 })

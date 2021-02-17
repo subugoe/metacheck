@@ -8,6 +8,8 @@ ind_table_to_gt(ind_table, prop = NULL, .color = NULL)
 }
 \arguments{
 \item{ind_table}{tibble compliance overview table}
+
+\item{prop, .color}{table styling}
 }
 \description{
 GT representation of compliance overview table

@@ -187,38 +187,52 @@ emailReportServer <- function(id, dois, email = blastula::prepare_test_message()
 
 #' Make Spreadsheet attachment
 #'
-#' @param .md list, returned from [cr_compliance_overview()]
+#' @param my_df compliance data from [cr_compliance_overview()]
 #' @param dois character, submitted dois
 #' @param session_id link spreadsheet to R session
 #'
 #' @importFrom writexl write_xlsx
 #' @export
-md_data_attachment <- function(.md = NULL, session_id = NULL, dois = NULL) {
-  if (is.null(.md)) {
-    stop("No Crossref Data")
+md_data_attachment <-
+  function(my_df = NULL,
+           dois = NULL,
+           session_id = NULL) {
+    is_compliance_overview_list(my_df)
+    is_doi_string(dois)
+
+    excel_spreadsheet <- list(`Overview` = my_df$cr_overview,
+                              `CC-Licenses` = my_df$cc_license_check)
+    if (!is.null(my_df$tdm)) {
+      excel_spreadsheet[["TDM"]] <- my_df$tdm
+    }
+    if (!is.null(my_df$funder_info)) {
+      excel_spreadsheet[["Funders"]] <- my_df$funder_info
+    }
+    if (setequal(tolower(dois), tolower(my_df$cr_overview$doi)) == FALSE)
+      excel_spreadsheet[["Discarded DOIs"]] <- tibble::tibble(
+      discarded_dois = dois[!tolower(dois) %in% tolower(out$cr_overview$doi)]
+      )
+    # write_out
+    writexl::write_xlsx(x = excel_spreadsheet,
+                        path = xlsx_path(session_id))
   }
-  excel_spreadsheet <- list(
-    `Uebersicht` = .md$cr_overview,
-    `CC-Lizenzen` = .md$cc_license_check
-  )
-  if (!is.null(.md$cr_tdm)) {
-    excel_spreadsheet[["TDM"]] <- .md$tdm
-  }
-  if (!is.null(.md$cr_funder)) {
-    excel_spreadsheet[["F\U00F6oerderinformationen"]] <- .md$funder_info
-  }
-  if (!length(tolower(dois) %in% tolower(.md$cr_overview$doi)) > 0)
-    excel_spreadsheet[["Nicht-indexierte DOIs"]] <- tibble::tibble(
-      mutate(missing_dois = !tolower(dois) %in% tolower(.md$cr_overview$doi))
-    )
-  # write_out
-  writexl::write_xlsx(x = excel_spreadsheet,
-                      path = xlsx_path(session_id))
-}
 
 #' Temp path to write xlsx to
 #' @inheritParams render_email
 #' @noRd
 xlsx_path <- function(session_id = NULL) {
   fs::path_temp(paste0(session_id, "-license_df.xlsx"))
+}
+
+#' Data is available
+#' @noRd
+is_compliance_overview_list <- function(x) {
+  assertthat::assert_that(x %has_name% c("cr_overview", "cc_license_check"),
+                          msg = "No Compliance Data to attach, compliance data from [cr_compliance_overview()]"
+  )}
+#' DOIs
+#' @noRd
+is_doi_string <- function(x) {
+  assertthat::assert_that(is.character(x),
+                          msg = "No DOI character vector")
 }

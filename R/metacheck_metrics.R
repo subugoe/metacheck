@@ -24,7 +24,7 @@ indexing_status <- function(dois = NULL, .md = NULL) {
 #' @noRd
 msg_all_dois_found <- function(dois = dois) {
   glue::glue(
-    "Für alle DOIs (n={length(unique(dois))}) sind Crossref Metadaten vorhanden."
+    "F\U00FCr alle DOIs (n={length(unique(dois))}) sind Crossref Metadaten vorhanden."
   )
 }
 

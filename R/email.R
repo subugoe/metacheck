@@ -81,14 +81,14 @@ md_data_attachment <- function(.md = NULL, session_id = NULL, dois = NULL) {
     stop("No Crossref Data")
   }
   excel_spreadsheet <- list(
-    `Übersicht` = .md$cr_overview,
+    `Uebersicht` = .md$cr_overview,
     `CC-Lizenzen` = .md$cc_license_check
   )
   if (!is.null(.md$cr_tdm)) {
     excel_spreadsheet[["TDM"]] <- .md$tdm
   }
   if (!is.null(.md$cr_funder)) {
-    excel_spreadsheet[["Förderinformationen"]] <- .md$funder_info
+    excel_spreadsheet[["F\U00F6oerderinformationen"]] <- .md$funder_info
   }
   if (!length(tolower(dois) %in% tolower(.md$cr_overview$doi)) > 0)
     excel_spreadsheet[["Nicht-indexierte DOIs"]] <- tibble::tibble(

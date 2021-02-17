@@ -66,6 +66,7 @@ gather_ind_table <- function(cr) {
 #' GT representation of compliance overview table
 #'
 #' @param ind_table tibble compliance overview table
+#' @param prop,.color table styling
 #' @family visualize
 #' @export
 ind_table_to_gt <- function(ind_table, prop = NULL, .color = NULL) {

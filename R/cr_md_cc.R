@@ -74,6 +74,7 @@ get_license_md <- function(cr) {
 #' @details In order to be compliant,
 #'   CC license has to apply to version of record and must be valid
 #'   without delay.
+#' @param license_df data frame with licenses
 #'
 get_compliant_cc <- function(license_df) {
   license_df %>%

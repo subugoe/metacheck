@@ -12,3 +12,19 @@ cc_metrics(cc_license_check = NULL)
 \description{
 Presents normalised CC licence variants like BY (absolute and relative)
 }
+\examples{
+\dontrun{
+my_dois <- c("10.5194/wes-2019-70", "10.1038/s41598-020-57429-5",
+  "10.3389/fmech.2019.00073", "10.1038/s41598-020-62245-y",
+  "10.1109/JLT.2019.2961931")
+
+# Workflow:
+# First, obtain metadata from Crossref API
+req <- get_cr_md(my_dois)
+
+# Then, check article-level compliance
+
+# Obtain CC variants metrics
+cc_metrics(out$> out$cc_license_check)
+}
+}

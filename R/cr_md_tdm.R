@@ -9,8 +9,8 @@ cr_tdm_df <- function(cr) {
   if ("link" %in% colnames(cr)) {
   out <- cr %>%
     select(doi, container_title = container.title, publisher, issued, issued_year, link) %>%
-    unnest(cols = "link")  %>%
-    filter(content.version == "vor", intended.application == "text-mining")
+    unnest(cols = "link", keep_empty = TRUE)
+    # filter(content.version == "vor", intended.application == "text-mining")
   } else {
     out <- NULL
   }

@@ -7,7 +7,7 @@
 ind_table_to_gt(ind_table, .color = NULL)
 }
 \arguments{
-\item{ind_table}{tibble compliance overview table}
+\item{ind_table}{tibble compliance metrics overview}
 
 \item{.color}{table styling}
 }

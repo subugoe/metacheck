@@ -1,13 +1,14 @@
 #' GT representation of compliance overview table
 #'
-#' @param ind_table tibble compliance overview table
+#' @param ind_table tibble compliance metrics overview
 #' @param .color table styling
 #' @family visualize
 #' @export
 ind_table_to_gt <- function(ind_table, .color = NULL) {
+  is_ind_table(ind_table)
   ind_table %>%
     dplyr::mutate(
-      prop_bar = purrr::map(prop, ~ bar_chart(value = .x, .color = .color))
+      prop_bar = purrr::map(.data$prop, ~ bar_chart(value = .x, .color = .color))
     ) %>%
     gt::gt() %>%
     gt::cols_label(
@@ -25,7 +26,7 @@ ind_table_to_gt <- function(ind_table, .color = NULL) {
       vars(indicator) ~ gt::px(150)
     ) %>%
     gt::cols_width(
-      vars(prop_bar) ~ gt::px(100)
+      vars(.data$prop_bar) ~ gt::px(100)
     ) %>%
     gt::fmt_number(
       columns = vars(prop),
@@ -63,3 +64,11 @@ bar_chart <- function(value, .color = "red"){
     as.character() %>%
     gt::html()
 }
+
+#' Follows metrics skeleton
+#' @noRd
+is_ind_table <- function(x) {
+  assertthat::assert_that(x %has_name% metrics_skeleton(),
+                          msg = "Compliance metrics must be a tibble with three columns: indicator, value, prop.")
+}
+

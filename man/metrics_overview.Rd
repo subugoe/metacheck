@@ -4,15 +4,10 @@
 \alias{metrics_overview}
 \title{Metacheck metrics overview}
 \usage{
-metrics_overview(.md = NULL, .gt = TRUE, .color = "#00A4A7")
+metrics_overview(cr_overview = NULL)
 }
 \arguments{
-\item{.md}{list, returned from \code{\link[=cr_compliance_overview]{cr_compliance_overview()}}}
-
-\item{.gt}{logical, should results be represented as styled html tables or
-as tibble. Default .gt = TRUE.}
-
-\item{.color}{character, hex color code for styling HTML proportional bar chart}
+\item{cr_overview}{tibble obtained with \code{\link[=cr_compliance_overview]{cr_compliance_overview()}}}
 }
 \description{
 Presents the metacheck core compliance measures
@@ -38,15 +33,11 @@ my_dois <- c("10.5194/wes-2019-70", "10.1038/s41598-020-57429-5",
 
 # Workflow:
 # First, obtain metadata from Crossref API
-req <- get_cr_md(test_dois)
+req <- get_cr_md(my_dois)
 
 # Then, check article-level compliance
 
 # Finally, obtain compliance metrics overview
 metrics_overview(out)
-# change bar chart color
-metrics_overview(out, .color = "green")
-# as tibble
-metrics_overview(out, .gt = FALSE)
 }
 }

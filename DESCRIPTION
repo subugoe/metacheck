@@ -70,7 +70,8 @@ Imports:
     forcats,
     fs,
     rlang,
-    rmarkdown
+    rmarkdown,
+    assertthat
 Suggests:
     testthat,
     subugoetheme,

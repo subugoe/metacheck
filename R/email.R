@@ -200,20 +200,12 @@ md_data_attachment <-
     is_compliance_overview_list(my_df)
     is_doi_string(dois)
 
-    excel_spreadsheet <- list(`Overview` = my_df$cr_overview,
-                              `CC-Licenses` = my_df$cc_license_check)
-    if (!is.null(my_df$tdm)) {
-      excel_spreadsheet[["TDM"]] <- my_df$tdm
-    }
-    if (!is.null(my_df$funder_info)) {
-      excel_spreadsheet[["Funders"]] <- my_df$funder_info
-    }
     if (setequal(tolower(dois), tolower(my_df$cr_overview$doi)) == FALSE)
-      excel_spreadsheet[["Discarded DOIs"]] <- tibble::tibble(
+      my_df[["discarded_dois"]] <- tibble::tibble(
       discarded_dois = dois[!tolower(dois) %in% tolower(out$cr_overview$doi)]
       )
     # write_out
-    writexl::write_xlsx(x = excel_spreadsheet,
+    writexl::write_xlsx(x = my_df,
                         path = xlsx_path(session_id))
   }
 

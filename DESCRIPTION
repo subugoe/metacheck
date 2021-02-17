@@ -71,12 +71,12 @@ Imports:
     fs,
     rlang,
     rmarkdown,
-    assertthat
+    assertthat,
+    shinyjs
 Suggests:
     testthat,
     subugoetheme,
     shinycaas,
-    rmarkdown,
     bench,
     withr
 URL: https://subugoe.github.io/metacheck, https://github.com/subugoe/metacheck
@@ -85,6 +85,6 @@ Remotes:
     subugoe/subugoetheme@1.1.1,
     subugoe/shinycaas@1.0.0,
     subugoe/rcrossref@51d036808c1dc1f46cf1bad1b136e97ad213e162,
-    rstudio/shinyvalidate@420aec079dbd2c0e12bf8350f4452d105a9cc45c,
+    rstudio/shinyvalidate@2688f6eb485ad2602e3a5ed70d4c07449b2bc422,
     subugoe/biblids@e7517c4a3d9a424616adca3282abd30fa994f713
 Config/testthat/edition: 3

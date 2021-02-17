@@ -26,7 +26,7 @@ ind_table_to_gt <- function(ind_table, .color = NULL) {
       vars(indicator) ~ gt::px(150)
     ) %>%
     gt::cols_width(
-      vars(.data$prop_bar) ~ gt::px(100)
+      vars(prop_bar) ~ gt::px(100)
     ) %>%
     gt::fmt_number(
       columns = vars(prop),

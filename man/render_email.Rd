@@ -16,6 +16,7 @@ Render email
 }
 \seealso{
 Other communicate: 
-\code{\link{send_email}()}
+\code{\link{emailReport}()},
+\code{\link{smtp_send_metacheck}()}
 }
 \concept{communicate}

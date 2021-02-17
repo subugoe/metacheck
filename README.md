@@ -11,8 +11,8 @@
     Automatically check metadata compliance for funded open access articles.
   </p>
   <p>
-    <a class="btn btn-success btn-lg" href="articles/german.html" role="button">
-      Check out an example email report.
+    <a class="btn btn-success btn-lg" href="articles/app.html" role="button">
+      Try out the alpha
     </a>
     <a class="btn btn-primary btn-lg" href="https://subugoe.github.io/hoad/newsletter.html" role="button">
       Sign up to the newsletter (German)

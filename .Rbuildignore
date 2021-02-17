@@ -14,3 +14,4 @@ Dockerfile
 .azure/
 ^LICENSE\.md$
 ^vignettes/
+.radian_history

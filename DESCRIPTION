@@ -71,7 +71,6 @@ Imports:
     fs,
     rlang,
     rmarkdown,
-    tibble,
     shinyjs
 Suggests:
     testthat,

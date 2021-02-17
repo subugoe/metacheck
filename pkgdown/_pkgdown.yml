@@ -63,5 +63,5 @@ navbar:
       - text: German Example Email (TU Berlin) 
         href: articles/german.html
 development:
-  version_label: info
+  version_label: danger
   version_tooltip: "Alpha Release"

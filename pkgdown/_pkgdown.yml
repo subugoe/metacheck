@@ -50,11 +50,24 @@ reference:
 - contents:
   - has_concept("communicate")
 navbar:
+  structure:
+    left:  [home, reference, app, examples]
+    right: [support, github]
   components:
+    app:
+      text: "App"
+      icon: "fa fa-tachometer"
+      href: articles/app.html
     support:
       text: Support
       menu:
+      - text: "German"
+      - text: "Methode"
+        href: articles/methode.html
+      - text: ----
+      - text: "English"
       - text: Frequently Asked Questions (Coming Soon)
+        href: #
       - text: Other Support 
         href: support.html
     examples:
@@ -62,6 +75,7 @@ navbar:
       menu:
       - text: German Example Email (TU Berlin) 
         href: articles/german.html
+    articles: ~
 development:
   version_label: danger
   version_tooltip: "Alpha Release"

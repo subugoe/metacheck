@@ -202,7 +202,7 @@ md_data_attachment <-
 
     if (setequal(tolower(dois), tolower(my_df$cr_overview$doi)) == FALSE)
       my_df[["discarded_dois"]] <- tibble::tibble(
-      discarded_dois = dois[!tolower(dois) %in% tolower(out$cr_overview$doi)]
+      discarded_dois = dois[!tolower(dois) %in% tolower(my_df$cr_overview$doi)]
       )
     # write_out
     writexl::write_xlsx(x = my_df,

@@ -32,7 +32,7 @@ funder_metrics <- function(funder_info = NULL) {
 
   if(length(unique(funder_info$name)) > 5) {
     out <- funder_info %>%
-    mutate(name = ifelse(is.na(.data$name), "No Funding Info", .data$name)) %>%
+    mutate(name = ifelse(is.na(.data$name), "No funding info", .data$name)) %>%
     mutate(name = forcats::fct_lump_n(.data$name, 5, other_level = "Other funders")) %>%
     mutate(name = forcats::fct_infreq(.data$name)) %>%
     mutate(name = forcats::fct_relevel(.data$name, "Other funders", after = Inf)) %>%

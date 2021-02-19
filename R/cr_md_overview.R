@@ -9,7 +9,10 @@ cr_compliance_overview <- function(cr) {
     distinct()
   cc_df <- license_check(cr)
 
-  tdm_df <- cr_tdm_df(cr)
+  tdm_df <- cr_tdm_df(cr) %>%
+    # just compliant TDM info
+    filter(.data$content.version == "vor",
+           .data$intended.application == "text-mining")
   funder_df <- cr_funder_df(cr)
   orcid_df <- cr_has_orcid(cr)
 

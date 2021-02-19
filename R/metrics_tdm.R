@@ -31,8 +31,7 @@
 tdm_metrics <- function(tdm = NULL) {
   is_cr_tdm_df(tdm)
   compliant_tdm <- tdm %>%
-    filter(.data$content.version == "vor",
-           .data$intended.application == "text-mining")
+    filter(is_tdm_compliant == TRUE)
 
   non_compliant_tdm <- tdm[!tdm$doi %in% compliant_tdm$doi,]
 

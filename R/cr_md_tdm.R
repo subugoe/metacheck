@@ -7,10 +7,24 @@
 #' @export
 cr_tdm_df <- function(cr) {
   if ("link" %in% colnames(cr)) {
-  out <- cr %>%
-    select(doi, container_title = container.title, publisher, issued, issued_year, link) %>%
-    unnest(cols = "link", keep_empty = TRUE)
-    # filter(content.version == "vor", intended.application == "text-mining")
+    out <- cr %>%
+      select(
+        .data$doi,
+        container_title = .data$container.title,
+        .data$publisher,
+        .data$issued,
+        .data$issued_year,
+        .data$link
+      ) %>%
+      unnest(cols = "link", keep_empty = TRUE) %>%
+      mutate(
+        is_tdm_compliant = ifelse(
+          .data$content.version == "vor" &
+            .data$intended.application == "text-mining",
+          TRUE,
+          FALSE
+        )
+      )
   } else {
     out <- NULL
   }

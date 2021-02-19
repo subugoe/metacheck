@@ -9,10 +9,9 @@ cr_compliance_overview <- function(cr) {
     distinct()
   cc_df <- license_check(cr)
 
-  tdm_df <- cr_tdm_df(cr) %>%
-    # just compliant TDM info
-    filter(.data$content.version == "vor",
-           .data$intended.application == "text-mining")
+  tdm_df <- cr_tdm_df(cr)
+  compliant_tdm <- filter(tdm_df,
+                          is_tdm_compliant == TRUE)
   funder_df <- cr_funder_df(cr)
   orcid_df <- cr_has_orcid(cr)
 
@@ -22,7 +21,7 @@ cr_compliance_overview <- function(cr) {
         filter(cc_df, !is.na(.data$cc_norm))$doi,
       has_compliant_cc = .data$doi %in%
         filter(cc_df, .data$check_result == "All fine!")$doi,
-      has_tdm_links = .data$doi %in% tdm_df$doi,
+      has_tdm_links = .data$doi %in% compliant_tdm$doi,
       has_funder_info = unlist(across(
         any_of("funder"), ~ sapply(.x, empty_list)
       )),
@@ -65,7 +64,7 @@ cr_has_orcid <- function(cr) {
     mutate(has_orcid = sapply(
       purrr::map(.data$author, "ORCID"), is.character)
       ) %>%
-    filter(has_orcid == TRUE)
+    filter(.data$has_orcid == TRUE)
 }
 
 #' test if list is not empty

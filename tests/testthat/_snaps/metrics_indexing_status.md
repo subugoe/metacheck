@@ -4,5 +4,9 @@
 
 ---
 
-    **5** von **6** DOIs sind in Crossref indexiert.Die folgenden DOIs sind **nicht** bei Crossref registriert:* bbl
+    **5** von **6** DOIs sind in Crossref indexiert.
+    
+    Die folgenden DOIs sind **nicht** bei Crossref registriert:
+    
+    * bbl
 

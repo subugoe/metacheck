@@ -32,10 +32,16 @@ msg_all_dois_found <- function(dois = dois) {
 #'
 #' @noRd
 msg_dois_missing <-  function(dois, .md) {
-  glue::glue(
-    "**{length(unique(tolower(.md$cr_overview$doi)))}** von **{length(unique(tolower(dois)))}** DOIs sind in Crossref indexiert.",
-    "Die folgenden DOIs sind **nicht** bei Crossref registriert:",
-    "* {glue::glue_collapse(dois[!tolower(dois) %in% tolower(.md$cr_overview$doi)], sep = '\n* ')}",
-    sep = "\n"
+  # nolint start
+  out <- glue::glue(
+    "
+**{length(unique(tolower(.md$cr_overview$doi)))}** von **{length(unique(tolower(dois)))}** DOIs sind in Crossref indexiert.
+
+Die folgenden DOIs sind **nicht** bei Crossref registriert:
+
+* {glue::glue_collapse(dois[!tolower(dois) %in% tolower(.md$cr_overview$doi)], sep = '\n* ')}
+ "
   )
+  # nolint end
+  out
 }

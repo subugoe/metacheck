@@ -12,7 +12,8 @@ vor_issue(license_df, compliant_dois)
 \item{compliant_dois}{DOIs representing records with valid CC info}
 }
 \description{
-In order to be compliant, CC license has to apply to version of record and must be valid without delay.
+In order to be compliant, CC license has to apply to version of
+record and must be valid without delay.
 }
 \seealso{
 Other transform: 

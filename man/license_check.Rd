@@ -11,7 +11,9 @@ license_check(cr)
 }
 \description{
 Workflow to check for compliant open content license metadata in Crossref.
-License metadata is considered as compliant, if a Creative Commons license is provided for the version-of-record without delay indicated by the license date.
+License metadata is considered as compliant, if a Creative Commons
+license is provided for the version-of-record without delay indicated
+by the license date.
 }
 \seealso{
 Other transform: 

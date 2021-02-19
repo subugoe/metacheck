@@ -2,7 +2,7 @@
 % Please edit documentation in R/cr_md_cc.R
 \name{get_license_md}
 \alias{get_license_md}
-\title{Extract license info from Crossref metadata}
+\title{Extract and normalize license info from Crossref metadata}
 \usage{
 get_license_md(cr)
 }
@@ -10,7 +10,7 @@ get_license_md(cr)
 \item{cr}{crossref metadata using \code{\link[=get_cr_md]{get_cr_md()}}}
 }
 \description{
-Extract license info from Crossref metadata
+Extract and normalize license info from Crossref metadata
 }
 \seealso{
 Other transform: 

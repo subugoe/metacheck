@@ -1,7 +1,9 @@
 #' Extract and validate Crossref license metadata
 #'
 #' Workflow to check for compliant open content license metadata in Crossref.
-#' License metadata is considered as compliant, if a Creative Commons license is provided for the version-of-record without delay indicated by the license date.
+#' License metadata is considered as compliant, if a Creative Commons
+#' license is provided for the version-of-record without delay indicated
+#' by the license date.
 #'
 #' @param cr crossref metadata using [get_cr_md()]
 #' @family transform
@@ -30,43 +32,43 @@ license_check <- function(cr) {
     vor_issue_df <- vor_issue(license_df, vor_df$doi)
     # bring those together
     by_df <- bind_rows(vor_df, vor_issue_df)
-    # No CC
-    miss_df <- anti_join(license_df, by_df, by = "doi") %>%
-      mutate(check_result = "No Creative Commons license found")
-    # bring it altogether
-    license_all_df <- miss_df %>%
-      distinct(doi, cc_norm, check_result) %>%
-      bind_rows(by_df) %>%
-      select(
-        doi,
-        cc_norm,
-        check_result,
-        license_url = URL,
-        content_version = content.version,
-        license_date = date,
-        delay_in_days = delay.in.days
+    miss_df <- anti_join(cr, by_df, by = "doi") %>%
+      mutate(check_result = "No Creative Commons license found") %>%
+      select(.data$doi, .data$check_result)
+    license_all_df <- bind_rows(by_df, miss_df) %>%
+      rename(
+        license_url = .data$URL,
+        content_version = .data$content.version,
+        license_date = .data$date,
+        delay_in_days = .data$delay.in.days
       )
     # add some more crossref metadata
     out <- cr %>%
-      select(doi, container_title = container.title, publisher, issn, issued, issued_year) %>%
+      select(one_of(
+        "doi",
+        "container.title",
+        "publisher",
+        "issued",
+        "issued_year"
+      )) %>%
       left_join(license_all_df, by = "doi") %>%
       distinct()
   }
   return(out)
 }
 
-#' Extract license info from Crossref metadata
+#' Extract and normalize license info from Crossref metadata
 #' @inheritParams license_check
 #' @family transform
 #' @export
 get_license_md <- function(cr) {
-  cr %>%
-    select(doi, license) %>%
+  if ("license" %in% colnames(cr))
+    cr %>%
+    select(.data$doi, .data$license) %>%
     unnest(c(license), keep_empty = TRUE) %>%
-    filter(content.version == "vor") %>%
-    mutate(cc_norm = stringi::stri_extract(URL, regex = "by.*?/") %>%
+    mutate(cc_norm = stringi::stri_extract(.data$URL, regex = "by.*?/") %>%
              gsub("/", "", .)
-    )
+           )
 }
 
 #' Extract records with compliant CC license metadata
@@ -79,29 +81,32 @@ get_license_md <- function(cr) {
 get_compliant_cc <- function(license_df) {
   license_df %>%
     filter(# applies to version of record
-      # has CC license
-      !is.na(cc_norm),
+      .data$content.version == "vor",
       # valid without delay
-      delay.in.days == 0) %>%
+      .data$delay.in.days == 0) %>%
     mutate(check_result = "All fine!")
 }
 
 #' Extract records with CC license not applied to version of records
 #'
-#' In order to be compliant, CC license has to apply to version of record and must be valid without delay.
+#' In order to be compliant, CC license has to apply to version of
+#' record and must be valid without delay.
+#'
 #' @inheritParams get_compliant_cc
 #' @param compliant_dois DOIs representing records with valid CC info
 #' @family transform
 #' @export
 vor_issue <- function(license_df, compliant_dois) {
   license_df %>%
-    filter(content.version != "vor",
-           delay.in.days == 0,
-           # has CC license
-           !is.na(cc_norm),
-           !doi %in% compliant_dois
+    filter(
+      .data$content.version != "vor",
+      .data$delay.in.days == 0,
+      # has CC license
+      !is.na(.data$cc_norm),!.data$doi %in% compliant_dois
     ) %>%
-    mutate(check_result = "No Creative Commons license metadata found for version of record")
+    mutate(check_result =
+             "No Creative Commons license metadata found for version of record"
+    )
 }
 #' Extract records with license delay
 #'
@@ -114,7 +119,9 @@ vor_issue <- function(license_df, compliant_dois) {
 #' @export
 get_delayed_license <- function(license_df) {
   license_df %>%
-    filter(content.version == "vor", !is.na(cc_norm) &
-             delay.in.days > 0) %>%
-    mutate(check_result = "Difference between publication date and the CC license's start_date suggests delayed OA provision")
+    filter(.data$content.version == "vor", !is.na(.data$cc_norm) &
+             .data$delay.in.days > 0) %>%
+    mutate(check_result =
+             "Difference between publication date and the CC license's start_date suggests delayed OA provision"
+    )
 }

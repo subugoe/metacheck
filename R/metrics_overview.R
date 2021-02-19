@@ -12,13 +12,9 @@
 #' - Metadata records with [Open Abstracts](https://i4oa.org/)
 #' - Metadata records with [Open Citations](https://i4oc.org/)
 #'
-#' @param .md list, returned from [cr_compliance_overview()]
-#' @param .gt logical, should results be represented as styled html tables or
-#'   as tibble. Default .gt = TRUE.
-#' @param .color character, hex color code for styling HTML proportional bar chart
-#'
+#' @param cr_overview tibble obtained with [cr_compliance_overview()]
+
 #' @importFrom tidyr pivot_longer
-#' @importFrom dplyr mutate select count
 #'
 #' @export
 #'
@@ -30,49 +26,35 @@
 #'
 #' # Workflow:
 #' # First, obtain metadata from Crossref API
-#' req <- get_cr_md(test_dois)
+#' req <- get_cr_md(my_dois)
 #'
 #' # Then, check article-level compliance
-#  out <- cr_compliance_overview(req)
+#  out <- cr_compliance_overview(my_dois)
 #'
 #' # Finally, obtain compliance metrics overview
 #' metrics_overview(out)
-#' # change bar chart color
-#' metrics_overview(out, .color = "green")
-#' # as tibble
-#' metrics_overview(out, .gt = FALSE)
 #' }
-metrics_overview <- function(.md = NULL, .gt = TRUE, .color = "#00A4A7") {
-  if(is.null(.md) || !"cr_overview" %in% names(.md))
-    stop("No compliance overview data provided, get data using cr_compliance_overview()")
-  else
-  out <- .md$cr_overview %>%
-    dplyr::count(`CC License` = length(which(has_cc)),
-        `Compliant CC` = length(which(has_compliant_cc)),
-        `TDM Support` = length(which(has_tdm_links)),
-        `Funder info` = length(which(has_funder_info)),
-        `ORCID` = length(which(has_orcid)),
-        `Open Abstracts`  = length(which(has_open_abstract)),
-        `Open Citations` = length(which(has_open_refs))
-        ) %>%
-  tidyr::pivot_longer(!n) %>%
-  dplyr::mutate(prop = value / n * 100) %>%
-  dplyr::select(-n)
-  if(.gt == FALSE)
-    return(out)
-  else
-    ind_table_to_gt(out, prop = prop, .color = .color)
+metrics_overview <- function(cr_overview = NULL) {
+  is_cr_overview_df(cr_overview)
+
+  cr_overview %>%
+    dplyr::count(
+      `CC License` = length(which(.data$has_cc)),
+      `Compliant CC` = length(which(.data$has_compliant_cc)),
+      `TDM Support` = length(which(.data$has_tdm_links)),
+      `Funder info` = length(which(.data$has_funder_info)),
+      `ORCID` = length(which(.data$has_orcid)),
+      `Open Abstracts`  = length(which(.data$has_open_abstract)),
+      `Open Citations` = length(which(.data$has_open_refs))
+    ) %>%
+    tidyr::pivot_longer(!n) %>%
+    dplyr::mutate(prop = .data$value / n * 100) %>%
+    dplyr::select(indicator = .data$name, .data$value, .data$prop)
 }
 
-#' Embed HTML Bar Charts in gt
-#'
-#' <https://themockup.blog/posts/2020-10-31-embedding-custom-features-in-gt-tables/>
-#'
+#' Check if overview data is provided
 #' @noRd
-bar_chart <- function(value, .color = "red"){
-
-  glue::glue("<span style=\"display: inline-block; direction: ltr; border-radius: 4px; padding-right: 2px; background-color: {.color}; color: {.color}; width: {value}%\"> &nbsp; </span>") %>%
-    as.character() %>%
-    gt::html()
+is_cr_overview_df <- function(x) {
+  assertthat::assert_that(x %has_name% overview_df_skeleton(),
+                          msg = "No compliance measures are provided, get data using cr_compliance_overview()")
 }
-

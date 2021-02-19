@@ -71,6 +71,7 @@ Imports:
     fs,
     rlang,
     rmarkdown,
+    assertthat,
     shinyjs
 Suggests:
     testthat,

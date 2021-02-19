@@ -4,18 +4,29 @@
 \alias{cc_compliance_metrics}
 \title{CC compliance metrics overview}
 \usage{
-cc_compliance_metrics(.md = NULL, .gt = TRUE, .color = "#A0A5A9")
+cc_compliance_metrics(cc_license_check = NULL)
 }
 \arguments{
-\item{.md}{list, returned from \code{\link[=cr_compliance_overview]{cr_compliance_overview()}}}
-
-\item{.gt}{logical, should results be represented as styled html tables or
-as tibble. Default .gt = TRUE.}
-
-\item{.color}{character, hex color code for styling HTML proportional bar chart}
+\item{cc_license_check}{tibble, result from \code{\link[=license_check]{license_check()}}}
 }
 \description{
 Presents the result of the CC compliance check (absolute and relative)
+}
+\examples{
+\dontrun{
+my_dois <- c("10.5194/wes-2019-70", "10.1038/s41598-020-57429-5",
+  "10.3389/fmech.2019.00073", "10.1038/s41598-020-62245-y",
+  "10.1109/JLT.2019.2961931")
+
+# Workflow:
+# First, obtain metadata from Crossref API
+req <- get_cr_md(my_dois)
+
+# Then, check article-level compliance
+
+# Obtain CC compliance check resutls metrics
+cc_compliance_metrics(out$cc_license_check)
+}
 }
 \seealso{
 \code{\link[=license_check]{license_check()}}

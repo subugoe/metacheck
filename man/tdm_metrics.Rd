@@ -4,15 +4,10 @@
 \alias{tdm_metrics}
 \title{TDM MIME-Type metrics}
 \usage{
-tdm_metrics(.md = NULL, .gt = TRUE, .color = "#9B0056")
+tdm_metrics(tdm = NULL)
 }
 \arguments{
-\item{.md}{list, returned from \code{\link[=cr_compliance_overview]{cr_compliance_overview()}}}
-
-\item{.gt}{logical, should results be represented as styled html tables or
-as tibble. Default .gt = TRUE.}
-
-\item{.color}{character, hex color code for styling HTML proportional bar chart}
+\item{tdm}{tibble obtained with \code{\link[=cr_tdm_df]{cr_tdm_df()}} or \code{\link[=cr_compliance_overview]{cr_compliance_overview()}}}
 }
 \description{
 Presents MIME-Types for full-text versions of version-of-records.
@@ -34,15 +29,11 @@ my_dois <- c("10.5194/wes-2019-70", "10.1038/s41598-020-57429-5",
 
 # Workflow:
 # First, obtain metadata from Crossref API
-req <- get_cr_md(test_dois)
+req <- get_cr_md(my_dois)
 
 # Then, check article-level compliance
 
 # Finally, obtain TDM metrics overview
-tdm_metrics(out)
-# change bar chart color
-tdm_metrics(out, .color = "green")
-# as tibble
-tdm_metrics(out, .gt = FALSE)
+tdm_metrics(out$tdm)
 }
 }

@@ -7,8 +7,7 @@
 #' Relative number is calculated by the number of checked articles.
 #' Articles without funder information are tagged as "No funder links found".
 #'
-#' @inheritParams metrics_overview
-#'
+#' @param funder_info tibble obtained with [cr_funder_df()] or [cr_compliance_overview()]
 #' @export
 #'
 #' @examples \dontrun{
@@ -19,42 +18,45 @@
 #'
 #' # Workflow:
 #' # First, obtain metadata from Crossref API
-#' req <- get_cr_md(test_dois)
+#' req <- get_cr_md(my_dois)
 #'
 #' # Then, check article-level compliance
 #  out <- cr_compliance_overview(req)
 #'
-#' # Finally, obtain funder metrics overview
-#' funder_metrics(out)
-#' # change bar chart color
-#' funder_metrics(out, .color = "green")
-#' # as tibble
-#' funder_metrics(out, .gt = FALSE)
+#' # Obtain funder metrics overview
+#' funder_metrics(out$funder_info)
 #' }
-funder_metrics <- function(.md = NULL, .gt = TRUE, .color = "#000099") {
-  if (is.null(.md) || !"funder_info" %in% names(.md)) {
-    stop("No funder data available, get data using cr_compliance_overview()")
-  }
-  out <-  .md$funder_info %>%
-    mutate(name = ifelse(is.na(name), "No Funding Info", name)) %>%
-    mutate(name = forcats::fct_lump_n(name, 5, other_level = "Other funders")) %>%
-    mutate(name = forcats::fct_infreq(name)) %>%
-    mutate(name = forcats::fct_relevel(name, "Other funders", after = Inf)) %>%
-    mutate(name = forcats::fct_relevel(name, "No Funding Info", after = Inf)) %>%
-    group_by(name) %>%
-    summarise(value = n_distinct(doi)) %>%
+funder_metrics <- function(funder_info = NULL) {
+  is_cr_funder_df(funder_info)
+
+
+  if(length(unique(funder_info$name)) > 5) {
+    out <- funder_info %>%
+    mutate(name = ifelse(is.na(.data$name), "No Funding Info", .data$name)) %>%
+    mutate(name = forcats::fct_lump_n(.data$name, 5, other_level = "Other funders")) %>%
+    mutate(name = forcats::fct_infreq(.data$name)) %>%
+    mutate(name = forcats::fct_relevel(.data$name, "Other funders", after = Inf)) %>%
+    mutate(name = forcats::fct_relevel(.data$name, "No funding info", after = Inf)) %>%
+    group_by(indicator = .data$name) %>%
+    summarise(value = n_distinct(.data$doi)) %>%
     dplyr::ungroup() %>%
-    mutate(prop = value / length(unique(.md$cr_overview$doi)) * 100)
-  if (.gt) {
-    out <- ind_table_to_gt(out, prop = prop, .color = .color) %>%
-      gt::tab_style(
-        style = list(
-          gt::cell_text(weight = "bold")
-        ),
-        locations = gt::cells_body(
-          rows = name == "Deutsche Forschungsgemeinschaft"
-        )
-      )
+    mutate(prop = .data$value / length(unique(funder_info$doi)) * 100)
+  } else {
+    out <-funder_info %>%
+      mutate(name = ifelse(is.na(.data$name), "No funding info", .data$name)) %>%
+      mutate(name = forcats::fct_infreq(.data$name)) %>%
+      mutate(name = forcats::fct_relevel(.data$name, "No funding info", after = Inf)) %>%
+      group_by(indicator = .data$name) %>%
+      summarise(value = n_distinct(.data$doi)) %>%
+      dplyr::ungroup() %>%
+      mutate(prop = .data$value / length(unique(funder_info$doi)) * 100)
   }
-  out
+  return(out)
+}
+
+#' Check if funder compliance data is provided
+#' @noRd
+is_cr_funder_df <- function(x) {
+  assertthat::assert_that(x %has_name% funder_df_skeleton(),
+                          msg = "No funder compliance data provided, get data using cr_funder_df() or cr_compliance_overview()")
 }

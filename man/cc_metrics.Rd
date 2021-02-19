@@ -4,16 +4,27 @@
 \alias{cc_metrics}
 \title{CC license variants metrics overview}
 \usage{
-cc_metrics(.md = NULL, .gt = TRUE, .color = "#F3A9BB")
+cc_metrics(cc_license_check = NULL)
 }
 \arguments{
-\item{.md}{list, returned from \code{\link[=cr_compliance_overview]{cr_compliance_overview()}}}
-
-\item{.gt}{logical, should results be represented as styled html tables or
-as tibble. Default .gt = TRUE.}
-
-\item{.color}{character, hex color code for styling HTML proportional bar chart}
+\item{cc_license_check}{tibble, result from \code{\link[=license_check]{license_check()}}}
 }
 \description{
 Presents normalised CC licence variants like BY (absolute and relative)
+}
+\examples{
+\dontrun{
+my_dois <- c("10.5194/wes-2019-70", "10.1038/s41598-020-57429-5",
+  "10.3389/fmech.2019.00073", "10.1038/s41598-020-62245-y",
+  "10.1109/JLT.2019.2961931")
+
+# Workflow:
+# First, obtain metadata from Crossref API
+req <- get_cr_md(my_dois)
+
+# Then, check article-level compliance
+
+# Obtain CC variants metrics
+cc_metrics(out$> out$cc_license_check)
+}
 }

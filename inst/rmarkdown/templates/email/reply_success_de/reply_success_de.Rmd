@@ -26,7 +26,8 @@ indexing_status(dois = params$dois, .md = params$cr_overview)
 ### Überblick: Crossref-Metadaten
 
 ```{r metrics_overview}
-metrics_overview(params$cr_overview)
+metrics_overview(params$cr_overview$cr_overview) %>%
+   ind_table_to_gt(.color = "#00A4A7")
 ```
 
 
@@ -35,13 +36,15 @@ metrics_overview(params$cr_overview)
 #### Überblick Lizenzbedingungen
 
 ```{r cc_metrics}
-cc_metrics(params$cr_overview)
+cc_metrics(params$cr_overview$cc_license_check) %>%
+  ind_table_to_gt(.color =  "#F3A9BB")
 ```
 
 #### Ergebnis Compliance Check
 
 ```{r cc_compliance}
-cc_compliance_metrics(params$cr_overview)
+cc_compliance_metrics(params$cr_overview$cc_license_check) %>%
+  ind_table_to_gt(.color = "#A0A5A9")
 ```
 
 Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **CC-Lizenzen** je Artikel das Ergebnis der Überprüfung.
@@ -49,7 +52,8 @@ Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **CC-Lizenzen** je Arti
 ### Text and Data Mining (TDM)
 
 ```{r tdm_metrics}
-tdm_metrics(params$cr_overview)
+tdm_metrics(params$cr_overview$tdm) %>%
+  ind_table_to_gt(.color =  "#9B0056")
 ```
 
 Die Tabelle bietet einen Überblick, welche Dateiformate,
@@ -65,8 +69,9 @@ Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **TDM** die Crossref-Me
 
 ### Förderinformationen 
 
-```{r funder_metrics}
-funder_metrics(params$cr_overview)
+```{r funder_info}
+funder_metrics(params$cr_overview$funder_info) %>%
+  ind_table_to_gt(.color = "#000099")
 ```
 
 Die Tabelle gibt einen Überblick, über die häufigsten Förderer je Artikel lt. Crossref-Metadaten. 

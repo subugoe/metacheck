@@ -9,10 +9,7 @@
 #' Articles without compliant TDM information are tagged as
 #' "No TDM links for version-of-records".
 #'
-#' @inheritParams metrics_overview
-#'
-#' @importFrom dplyr mutate rename group_by summarise arrange desc bind_rows
-#'
+#' @param tdm tibble obtained with [cr_tdm_df()] or [cr_compliance_overview()]
 #' @export
 #'
 #' @examples \dontrun{
@@ -23,42 +20,40 @@
 #'
 #' # Workflow:
 #' # First, obtain metadata from Crossref API
-#' req <- get_cr_md(test_dois)
+#' req <- get_cr_md(my_dois)
 #'
 #' # Then, check article-level compliance
 #  out <- cr_compliance_overview(req)
 #'
 #' # Finally, obtain TDM metrics overview
-#' tdm_metrics(out)
-#' # change bar chart color
-#' tdm_metrics(out, .color = "green")
-#' # as tibble
-#' tdm_metrics(out, .gt = FALSE)
+#' tdm_metrics(out$tdm)
 #' }
-tdm_metrics <- function(.md = NULL, .gt = TRUE,  .color = "#9B0056") {
-  if(is.null(.md) || !"tdm" %in% names(.md))
-    stop("No TDM data available, get data using cr_compliance_overview()")
-  else
-  out <- .md$tdm %>%
-    group_by(content.type) %>%
-    summarise(value = n_distinct(doi)) %>%
-    arrange(desc(value)) %>%
-    bind_rows(tibble::tibble(
-      content.type = "No TDM links for version-of-records", value = miss_tdm(.md))
-      ) %>%
-    mutate(prop = value / length(unique(.md$cr_overview$doi)) * 100) %>%
-    rename(name = content.type)
-  if(.gt == FALSE)
-    out
-  else
-    ind_table_to_gt(out, prop = prop, .color = .color)
+tdm_metrics <- function(tdm = NULL) {
+  is_cr_tdm_df(tdm)
+  compliant_tdm <- tdm %>%
+    filter(.data$content.version == "vor",
+           .data$intended.application == "text-mining")
+
+  non_compliant_tdm <- tdm[!tdm$doi %in% compliant_tdm$doi,]
+
+  compliant_tdm %>%
+    group_by(indicator = .data$content.type) %>%
+    summarise(value = n_distinct(.data$doi)) %>%
+    bind_rows(miss_tdm(non_compliant_tdm)) %>%
+    mutate(prop = .data$value / length(unique(tdm$doi)) * 100)
 }
 
 #' Missing records with TDM info
 #' @noRd
-miss_tdm <- function(.md = NULL) {
-  .md$cr_overview %>%
-    filter(!doi %in% .md$tdm$doi) %>%
-    distinct(doi) %>%
-    nrow()
+miss_tdm <- function(non_compliant_tdm = NULL) {
+  non_compliant_tdm %>%
+    summarize(value = n_distinct(.data$doi)) %>%
+    mutate(indicator = "No TDM links for version-of-records")
+}
+
+#' Check if TDM compliance data is provided
+#' @noRd
+is_cr_tdm_df <- function(x) {
+  assertthat::assert_that(x %has_name% tdm_df_skeleton(),
+                          msg = "No TDM compliance data provided, get data using cr_tdm_df() or cr_compliance_overview()")
 }

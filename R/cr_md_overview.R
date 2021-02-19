@@ -14,22 +14,41 @@ cr_compliance_overview <- function(cr) {
   orcid_df <- cr_has_orcid(cr)
 
   cr_overview <- cr %>%
-    mutate(has_cc = doi %in% filter(cc_df, !is.na(cc_norm))$doi,
-           has_compliant_cc = doi %in% filter(cc_df, check_result == "All fine!")$doi,
-           has_tdm_links = doi %in% tdm_df$doi,
-           has_funder_info = doi %in% funder_df$doi,
-           has_orcid = doi %in% orcid_df$doi,
-           has_open_abstract = unlist(across(any_of("abstract"), ~ !is.na(.x))),
-           has_open_refs = unlist(across(any_of("reference"), ~ sapply(.x, is.data.frame)))
+    mutate(
+      has_cc = .data$doi %in%
+        filter(cc_df, !is.na(.data$cc_norm))$doi,
+      has_compliant_cc = .data$doi %in%
+        filter(cc_df, .data$check_result == "All fine!")$doi,
+      has_tdm_links = .data$doi %in% tdm_df$doi,
+      has_funder_info = unlist(across(
+        any_of("funder"), ~ sapply(.x, empty_list)
+      )),
+      has_orcid = .data$doi %in% orcid_df$doi,
+      has_open_abstract = unlist(across(any_of("abstract"), ~ !is.na(.x))),
+      has_open_refs = unlist(across(
+        any_of("reference"), ~ sapply(.x, empty_list)
+      ))
     ) %>%
-    select(doi, container_title = container.title, publisher, issued, issued_year, contains("has_"))
-  if(!"has_open_abstract" %in% colnames(cr_overview)) {
+    select(
+      .data$doi,
+      container_title = .data$container.title,
+      .data$publisher,
+      .data$issued,
+      .data$issued_year,
+      contains("has_")
+    )
+  if (!"has_open_abstract" %in% colnames(cr_overview)) {
     cr_overview$has_open_abstract <- FALSE
   }
-  if(!"has_open_refs" %in% colnames(cr_overview)) {
+  if (!"has_open_refs" %in% colnames(cr_overview)) {
     cr_overview$has_open_refs <- FALSE
   }
-  list(cr_overview = cr_overview, cc_license_check = cc_df, tdm = tdm_df, funder_info = funder_df)
+  list(
+    cr_overview = cr_overview,
+    cc_license_check = cc_df,
+    tdm = tdm_df,
+    funder_info = funder_df
+  )
 }
 
 #' Check for ORCIDs
@@ -39,7 +58,15 @@ cr_compliance_overview <- function(cr) {
 #' @export
 cr_has_orcid <- function(cr) {
   cr %>%
-    select(doi, author) %>%
-    mutate(has_orcid = sapply(purrr::map(author, "ORCID"), is.character)) %>%
+    select(.data$doi, .data$author) %>%
+    mutate(has_orcid = sapply(
+      purrr::map(.data$author, "ORCID"), is.character)
+      ) %>%
     filter(has_orcid == TRUE)
+}
+
+#' test if list is not empty
+#' @noRd
+empty_list <- function(x) {
+  length(x) > 0
 }

@@ -136,6 +136,9 @@ emailReportUI <- function(id, width = "100%", ...) {
       placeholder = "jane.doe@example.com",
       width = width
     ),
+    shiny::p(
+      "Emails are sent via the Mailjet SMTP relay service."
+    ),
     shinyjs::disabled(
       shiny::actionButton(
         label = "Send Compliance Report",
@@ -163,21 +166,25 @@ emailReportServer <- function(id, dois, email = blastula::prepare_test_message()
       )
       iv$enable()
       observe({
-        shinyjs::toggleState("send", iv$is_valid() && shiny::isTruthy(dois()))
+        shinyjs::toggleState("send", iv$is_valid())
       })
       observeEvent(input$send, {
         if (iv$is_valid()) {
-          withProgress(
-            expr = {
-              smtp_send_metacheck(
-                to = input$recipient,
-                email = email
-              )
-            },
-            message = paste0(
-              "Sending e-mail. ",
-              "You can close this window."
-            )
+          showModal(modalDialog(
+            title = "You have succesfully send your DOIs",
+            glue::glue(
+              "An automated report will be send to your email ",
+              "within the next 15 minutes. ",
+              "Please check your SPAM folder. ",
+              "If your have not received your email after an hour, ",
+              "please contact us."
+            ),
+            easyClose = TRUE,
+            footer = NULL
+          ))
+          smtp_send_metacheck(
+            to = input$recipient,
+            email = email
           )
         }
       })

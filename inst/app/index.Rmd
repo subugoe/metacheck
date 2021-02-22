@@ -12,19 +12,9 @@ library(metacheck)
 ```
 
 
-Inputs {.sidebar}
------------------------------------------------------------------------
-
 ```{r}
 shinyjs::useShinyjs(rmd = TRUE)
 biblids::doiEntryUI(id = "dois")
-shinyjs::disabled(
-  actionButton(
-    label = "Preview Compliance Report",
-    inputId = "preview",
-    width = "100%"
-  )
-)
 emailReportUI(id = "send")
 ```
 
@@ -61,28 +51,11 @@ dois2 <- reactive({
 
 report <- reactive({
   withProgress(
-      expr = {
-        render_email(dois = isolate(dois2()), session_id = session_id)
-      },
+      expr = render_email(dois = dois2(), session_id = session_id),
       message = "Generating report..."
     )
 })
 
-# preview
-observe({
-  shinyjs::toggleState("preview", shiny::req(dois2()))
-})
-observeEvent(input$preview, {
-  output$draft <- renderUI(report()$html_html)
-})
-
 # email
 emailReportServer(id = "send", dois = dois2, email = report())
-```
-
-Results
------------------------------------------------------------------------
-
-```{r}
-shiny::uiOutput("draft")
 ```

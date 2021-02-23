@@ -23,7 +23,8 @@ test_that("license md checker works (vor)",
            vor_sample <- c(
              "10.36900/suburban.v8i1/2.559",
              "10.3389/fpsyg.2020.00097",
-             "10.1109/access.2020.2977087"
+             "10.1109/access.2020.2977087",
+             "10.1103/physrevlett.125.063601"
            )
            my_df <- get_cr_md(vor_sample)
            out <- license_check(my_df)
@@ -31,7 +32,7 @@ test_that("license md checker works (vor)",
            checkmate::expect_tibble(out)
 
            # correct dimensions
-           expect_equal(nrow(out), 3)
+           expect_equal(nrow(out), 4)
 
            # correct validation
            checkmate::checkString(unlist(
@@ -42,5 +43,8 @@ test_that("license md checker works (vor)",
              "All fine!")
            checkmate::checkString(unlist(
              out[out$doi == "10.1109/access.2020.2977087", "check_result"]),
+             "No Creative Commons license found")
+           checkmate::checkString(unlist(
+             out[out$doi == "10.1103/physrevlett.125.063601", "check_result"]),
              "No Creative Commons license found")
          })

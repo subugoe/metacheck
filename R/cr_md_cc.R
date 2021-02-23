@@ -80,7 +80,10 @@ get_license_md <- function(cr) {
 #'
 get_compliant_cc <- function(license_df) {
   license_df %>%
-    filter(# applies to version of record
+    filter(
+      # is cc
+      !is.na(.data$cc_norm),
+      # applies to version of record
       .data$content.version == "vor",
       # valid without delay
       .data$delay.in.days == 0) %>%

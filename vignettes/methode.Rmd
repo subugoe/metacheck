@@ -16,19 +16,22 @@ Open-Access-Artikeln.
 Aus diesem Grunde ist die Überprüfung der Metadaten ein wesentlicher Workflow-Bestandteil beim Umgang mit Open-Access-Publikationskosten und Transformationsverträgen [@Geschuhn_2017; @Marques_2019].
 
 Der Open-Access-Metadaten-Schnelltest ermöglicht die automatische Überprüfung der Metadatenqualität von Open-Access-Zeitschriftenartikeln.
-Er richtet sich in erster Linie an Bibliotheken und wissenschaftliche Informationseinrichtungen. Im Mittelpunkt der Überprüfung des Open-Access-Metadaten-Schnelltests stehen die Metadaten der DOI-Registrierungsagentur Crossref, welche von den meisten wissenschaftlichen Verlagen als Metadatenservice genutzt wird [@Hendricks_2020].
+Er richtet sich in erster Linie an Bibliotheken und wissenschaftliche Informationseinrichtungen, die Open-Access-Artikel verwalten. 
 
-## Testergebnisse
+Im Mittelpunkt der Überprüfung des Open-Access-Metadaten-Schnelltests stehen die Metadaten der DOI-Registrierungsagentur [Crossref](https://www.crossref.org/), welche von den meisten wissenschaftlichen Verlagen verwendet wird [@Hendricks_2020]. 
+Crossref-Metadatenservices werden umfangreich in Forschung und Praxis zum Auffinden von Open-Access-Artikeln genutzt, z.B. durch den Open-Access-Discovery-Service Unpaywall [@Piwowar_2018].
+
+Der Open-Access-Metadaten-Schnelltest nutzt [Crossref Metadata Plus](https://www.crossref.org/services/metadata-retrieval/metadata-plus/). Ein Rahmenvertrag sichert einen priorisierten und hochperformanten Zugang zu den Crossref-Schnittstellen.
+
+## Testergebnis
 
 Das Testergebnis des Open-Access-Metadaten-Schnelltest wird per Email verschickt und beinhaltet folgende Ergebnisse:
 
-### Indexierungsstatus in Crossref
 
-Der Abschnitt zeigt die Anzahl der DOIs mit Metadaten in Crossref.
+### Überblick: Crossref-Metadaten
 
-### Crossref-Metadaten
-
-Der Abschnitt zeigt einen tabellarischen Überblick der Testergebnisse.
+Der Abschnitt zeigt einen tabellarischen Überblick der Überprüfung. 
+Nur Publikationen mit Metadaten in Crossref werden berücksichtigt.
 Es werden absolute und relative Häufigkeiten dargestellt.
 
 Untersucht wurden:
@@ -40,17 +43,21 @@ Untersucht wurden:
 - Verknüpfung zwischen Publikationen und ORCID
 - Unterstützung weitere offener Metadaten ([Open Abstracts](https://i4oa.org/) und [Open Citations](https://i4oc.org/))
 
-### Lizenzbedingungen
+### Creative-Commons-Lizenzen
 
 Offene Lizenzen sind wesentlich, um den Zugang und die Nachnutzung von Open-Access-Artikeln unter bestimmten Bedingungen zu regeln. 
 Einschlägig sind die Creative-Commons-Lizenzen (CC-Lizenzen) (siehe Überblick des
 [Bundesministeriums für Bildung und Forschung](https://www.bildung-forschung.digital/de/lizenzvertrag-und-offene-lizenzen-2650.html)).
 
+Der Open-Access-Metadaten-Schnelltest normalisiert die Varianten der Creative-Commons-Lizenzen und untersucht, ob Creative-Commons-Lizenzen in den Metadaten regelkonform erfasst sind.
+
+#### Lizenzbedingungen
+
 Die tabellarische Übersicht zeigt die Häufigkeit von CC-Varianten an. 
 CC-BY ist sowohl in den [DEAL-Verträgen](https://www.projekt-deal.de/) als auch beim [DFG-Programm Open-Access-Publikationskosten](https://www.dfg.de/foerderung/programme/infrastruktur/lis/lis_foerderangebote/open_access_publikationskosten/index.html) der präferierte Lizenztyp.
 `NA` bedeutet, dass keine Lizeninformation in den Crossref-Metadaten verfügbar ist.
 
-### Ergebnis Compliance Check
+#### Ergebnis Compliance Check
 
 Die Tabelle zeigt die Anzahl und den Anteil **regelkonformer CC-Lizenzinformationen** laut dem HOAD-Algorithmus. 
 Eine Lizenzinformation ist genau dann regelkonform, wenn
@@ -60,7 +67,7 @@ Eine Lizenzinformation ist genau dann regelkonform, wenn
 - und die CC-Lizenz mit Erscheinen ohne zeitlichen Verzug gültig ist (Ausschluss von delayed OA)
 
 Wir haben festgestellt, dass Verlage zwar immer häufiger CC-Lizenzen in den Crossref-Metadaten verzeichnen, einige allerdings die Lizenzinformation nur unvollständig beschreiben. 
-Dies kann Auswirkungen auf die automatisierte Auffindbarkeit und Datenanalysen von OA-Artikeln haben. 
+Dies kann Auswirkungen auf die automatisierte Auffindbarkeit von Open-Access-Artikeln haben. 
 
 **Bei Problemen empfehlen wir daher, mit dem Verlag in Kontakt zu treten.**
 
@@ -71,15 +78,26 @@ Mehr Hintergrundinformationen zur Überprüfung von Lizenzinformationen in Cross
 Der nächste Abschnitt bietet einen Überblick, welche Dateiformate,
 ausgedrückt als [MIME Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types), für das Text- und Data-Mining (TDM) unterstützt werden. 
 Grundsätzlich kann je Artikel mehr als ein Format angeboten werden. 
-Es wird empfohlen, dass Verlage neben PDF-Dateien auch strukturierte XML-Volltexte verfügbar machen, um die automatisierte Nachnutzung zu erleichtern.
+Wir empfehlen, dass Verlage neben PDF-Dateien auch strukturierte XML-Volltexte verfügbar machen, um die automatisierte Nachnutzung zu erleichtern.
 
 Die prozentualen Anteile in der Tabelle beziehen sich auf alle getesteten Artikel mit Crossref-Metadaten. 
 
 ### Förderinformationen
 
-Es gibt ein großes Interesse, den Förderkontext von OA-Artikeln zu
+Es gibt ein großes Interesse, den Förderkontext von Open-Access-Artikeln zu
 erheben. 
 Einige, aber nicht alle Verlage nutzen Crossref, um den Förderinformationen zu teilen. 
-Der OA-Metadatenschnelltest zeigt an, bei wie vielem Publikationen Crossref mindestens eine Forschungsförderung verzeichnet, und bei wie vielen Artikeln die DFG vermerkt ist.
+Der Open-Access-Metadaten-Schnelltest zeigt an, bei wie vielem Publikationen Crossref mindestens eine Forschungsförderung verzeichnet, und bei wie vielen Artikeln die DFG vermerkt ist.
 
-### Literatur
+Bitte beachten Sie, dass aufgrund der unvollständigen Abdeckung Crossref (noch) nicht geeignet ist für umfangreiche Analysen des Förderkontexts von Publikationen.
+
+## Datenanhang
+
+Beigefügt zur Email befindet sich ein Excel-Spreadsheet mit Metadaten auf Artikelebene für weitere Analysen. Es umfasst folgende Datenblätter:
+
+- `cr_overview`: Überblick  
+- `cc_license_check`: Detailauswertung Lizenzüberprüfung
+- `tdm`: Detailauswertung Volltextlinks und TDM
+- `funder_info`: Förderinformationen lt. Crossref
+
+## Literatur

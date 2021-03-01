@@ -16,7 +16,7 @@ Hallo,
 vielen Dank, dass Sie den Open-Access-Metadaten-Schnelltest nutzen.
 
 Hier ist der Bericht der automatischen Überprüfung. 
-Er bezieht sich auf `r length(unique(params$cr_overview$cr_overview$doi))` Publikationen, für die Metadaten in Crossref indexiert sind.
+Er bezieht sich auf `r length(unique(params$cr_overview$cr_overview$doi))` Publikationen, für die Crossref Metadaten indexiert. 
 
 ### Überblick: Crossref-Metadaten
 
@@ -24,7 +24,6 @@ Er bezieht sich auf `r length(unique(params$cr_overview$cr_overview$doi))` Publi
 metrics_overview(params$cr_overview$cr_overview) %>%
    ind_table_to_gt(.color = "#00A4A7")
 ```
-
 
 ### Creative-Commons-Lizenzen
 
@@ -42,8 +41,6 @@ cc_compliance_metrics(params$cr_overview$cc_license_check) %>%
   ind_table_to_gt(.color = "#A0A5A9")
 ```
 
-Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **CC-Lizenzen** je Artikel das Ergebnis der Überprüfung.
-
 ### Text and Data Mining (TDM)
 
 ```{r tdm_metrics}
@@ -58,9 +55,8 @@ für das Text- und Data-Mining (TDM) unterstützt werden. Grundsätzlich
 kann je Artikel mehr als ein Format über das Crossref-Metadatenprofil
 angeboten werden.
 
-Der prozentuale Anteil bezieht sich auf sämtliche in Crossref-indexierte Artikel.
+Der prozentuale Anteil bezieht sich auf die Anzahl der überprüften Artikel mit Crossref-Metadaten.
 
-Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **TDM** die Crossref-Metadaten über Möglichkeiten für das Text und Data Mining je Artikel.
 
 ### Förderinformationen 
 
@@ -70,12 +66,19 @@ funder_metrics(params$cr_overview$funder_info) %>%
 ```
 
 Die Tabelle gibt einen Überblick, über die häufigsten Förderer je Artikel lt. Crossref-Metadaten. 
+Grundsätzlich können mehrere Förderer je Artikel vermerkt sein.
+Der prozentuale Anteil bezieht sich auf die Anzahl der überprüften Artikel mit Crossref-Metadaten.
 
-Der prozentuale Anteil bezieht sich auf sämtliche in Crossref-indexierte Artikel.
+### Datenanhang 
 
-Im beigefügten Excel-Spreadsheet dokumentiert das Blatt **Förderinformationen** das *Funding Acknowledgement* je Artikel lt. Crossref.
+Beigefügt finden Sie ein Excel-Spreadsheet mit Metadaten auf Artikelebene für weitere Analysen. Es umfasst folgende Datenblätter:
 
-Falls Sie weitere Informationen benötigen, wie das Ergebnis des Schnelltests zu interpretieren ist, finden Sie auf unserer [Webseite](https://subugoe.github.io/metacheck/articles/methode.html). 
+- `cr_overview`: Überblick  
+- `cc_license_check`: Detailauswertung Lizenzüberprüfung
+- `tdm`: Detailauswertung Volltextlinks und TDM
+- `funder_info`: Förderinformationen lt. Crossref
+
+Weitere Informationen, wie das Ergebnis des Schnelltests zu interpretieren ist, finden Sie auf unserer [Webseite](https://subugoe.github.io/metacheck/articles/methode.html). 
 
 Bei Fragen und Anregungen stehen wir Ihnen gerne unter metacheck-support@sub.uni-goettingen.de zur Verfügung.
 

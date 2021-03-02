@@ -14,4 +14,8 @@ get_cr_md(dois, .progress = "text")
 \description{
 Get Crossref metadata from API
 }
+\seealso{
+Other ETL import: 
+\code{\link{tabulate_metacheckable}()}
+}
 \concept{ETL import}

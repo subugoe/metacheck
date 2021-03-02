@@ -1,5 +1,6 @@
 ---
 output: blastula::blastula_email
+title: Metacheck Bericht
 params: 
   dois: NULL
   cr_overview: NULL

@@ -1,8 +1,10 @@
 test_that("crossref metadata is enabled", {
   # could not capture with header response from rcrossref,
   # so result must be inspected manually in logs
-  rcrossref::cr_abstract('10.1109/TASC.2010.2088091', verbose = TRUE)
-  expect_equal(1, 1)
+  skip("Too noisy.")
+  expect_success(
+    rcrossref::cr_abstract("10.1109/TASC.2010.2088091", verbose = TRUE)
+  )
 })
 
 test_that("metacheck declares polite user agent", {

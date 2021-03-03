@@ -21,6 +21,6 @@ Get Crossref metadata from API
 }
 \seealso{
 Other import: 
-\code{\link{tabulate_metacheckable}()}
+\code{\link{pretest}}
 }
 \concept{import}

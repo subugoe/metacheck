@@ -27,6 +27,8 @@ dframe <- tabulate_metacheckable(params$dois)
 metacheck:::report_metacheckable(dframe)
 ```
 
+Weitere Informationen zu den oben stehenden Kriterien finden Sie in der [Dokumentation](https://subugoe.github.io/metacheck/reference/index.html) (gegenwärtig nur auf englisch).
+
 Der folgende Bericht bezieht sich daher auf die verbleibenden **`r sum(is_metacheckable(params$doi), na.rm = TRUE)`** DOIs.
 
 

@@ -8,19 +8,24 @@ render_email <- function(dois, session_id = NULL) {
   my_df <- cr_compliance_overview(cr)
   email <- blastula::compose_email(
     header = "metacheck: Open Access Metadata Compliance Checker",
-    body = blastula::render_email(
-      input = system.file(
-        "rmarkdown/templates/email/reply_success_de/reply_success_de.Rmd",
-        package = "metacheck"
-      ),
-      render_options = list(
-        params = list(
-          dois = dois,
-          cr_overview = my_df,
-          session_id = session_id
+    # suppression is dangerous hack-fix for
+    # https://github.com/subugoe/metacheck/issues/138
+    # otherwise, tests are illegibly noisy
+    body = suppressWarnings(
+      blastula::render_email(
+        input = system.file(
+          "rmarkdown/templates/email/reply_success_de/reply_success_de.Rmd",
+          package = "metacheck"
+        ),
+        render_options = list(
+          params = list(
+            dois = dois,
+            cr_overview = my_df,
+            session_id = session_id
+          )
         )
-      )
-    )$html_html,
+      )$html_html
+    ),
     footer = blastula::md(c(
       "Email sent on ", format(Sys.time(), "%a %b %d %X %Y"), "."
     ))

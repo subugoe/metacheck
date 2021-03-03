@@ -1,11 +1,11 @@
 #' Get Crossref metadata from API
 #'
 #' @param dois character vector with DOIs
-#' @param .progress
-#' show progress bar, use "none" if no progress should be displayed
+#' @inheritParams rcrossref::cr_works
 #' @family ETL import
 #' @export
-get_cr_md <- function(dois, .progress = "text") {
+get_cr_md <- function(dois,
+                      .progress = ifelse(interactive(), "text", "none")) {
   # TODO this can be replaced by class validation
   # TODO not sure where the best place for the unique assertion is
   checkmate::assert_character(dois, any.missing = FALSE, unique = TRUE)

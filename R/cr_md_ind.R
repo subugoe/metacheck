@@ -71,4 +71,3 @@ is_ind_table <- function(x) {
   assertthat::assert_that(x %has_name% metrics_skeleton(),
                           msg = "Compliance metrics must be a tibble with three columns: indicator, value, prop.")
 }
-

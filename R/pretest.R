@@ -37,7 +37,10 @@
 #'     using [biblids::is_doi_resolvable()].
 #' 1. `from_cr`
 #'     whether remaining DOIs have been deposited by the Crossref
-#'     registration agency.
+#'     registration agency (per doi.org).
+#' #' 1. `from_cr_cr`
+#'     whether remaining DOIs have been deposited by the Crossref
+#'     registration agency (per Crossref).
 #'
 #' `NA` can indicate that the test:
 #'  - was not applicable, because a previous predicate was `FALSE`
@@ -60,7 +63,8 @@ tabulate_metacheckable <- function(x, ...) {
     `within_limits` = lazily(is_in_limit, ...)(x, `unique`),
     `doi_org_found` = lazily(biblids::is_doi_found)(x, `within_limits`),
     `resolvable` = lazily(biblids::is_doi_resolvable)(x, `doi_org_found`),
-    `from_cr` = lazily(biblids::is_doi_from_ra, "Crossref")(x, `resolvable`)
+    `from_cr` = lazily(biblids::is_doi_from_ra, "Crossref")(x, `resolvable`),
+    `from_cr_cr` = lazily(is_doi_from_ra_cr, "Crossref")(x, `from_cr`)
   )
 }
 
@@ -139,6 +143,23 @@ n_total <- function(x) (length(x) - sum(is.na(x)))
 #' @export
 is_in_limit <- function(x, limit = 1000L) 1:length(x) <= limit
 
+#' @describeIn pretest
+#' Is Crossref the Registration Agency (RA)?
+#' Potentially duplicates [biblids::is_doi_from_ra()],
+#' or may give subtly different results.
+#' @inheritParams biblids::is_doi_from_ra
+#' @export
+is_doi_from_ra_cr <- function(x, ra = "Crossref") {
+  res <- rcrossref::cr_agency(dois = x)
+  if (length(x) == 1) {
+    # arrgh rcrossref is very much not type stable
+    res <- list(res)
+  }
+  res %>%
+    purrr::map_chr(c("agency", "label"), .default = NA_character_) %>%
+    vctrs::vec_equal(., ra)
+}
+
 #' Test whether DOI as metadata on Crossref
 #'
 #' @param doi [biblids::doi()] of length 1
@@ -167,7 +188,11 @@ lazily <- function(.p, ...) {
     stopifnot(rlang::is_logical(x1))
     x1[is.na(x1)] <- FALSE # protect below logic
     res <- rep(NA, length(x))
-    res[x1] <- exec(.p, x[x1], ...)
+    # weird but necessary protection; we're done when all are FALSE
+    if (!any(x1)) {
+      return(res)
+    }
+    res[x1] <- rlang::exec(.p, x[x1], ...)
     res
   }
 }

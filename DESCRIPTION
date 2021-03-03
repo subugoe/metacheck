@@ -72,7 +72,8 @@ Imports:
     rlang,
     rmarkdown,
     assertthat,
-    shinyjs
+    shinyjs,
+    vctrs
 Suggests:
     testthat,
     subugoetheme,

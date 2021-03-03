@@ -15,3 +15,17 @@ test_that("Acceptable DOIs can be asserted", {
 test_that("DOI acceptability is reported", {
   expect_snapshot_value2(report_metacheckable(dois_weird()))
 })
+
+# custom predicates ====
+
+test_that("DOI RA is identified", {
+  expect_equal(
+    is_doi_from_ra_cr(c("10.1000/1", "10.3389/fbioe.2020.00209")),
+    c(FALSE, TRUE)
+  )
+  # scalar test necessary b/c rcrossref is not type stable
+  expect_equal(
+    is_doi_from_ra_cr("10.3389/fbioe.2020.00209"),
+    TRUE
+  )
+})

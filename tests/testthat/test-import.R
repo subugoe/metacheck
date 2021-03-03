@@ -1,10 +1,12 @@
 x <- biblids::as_doi(c(
   "10.1000/1",
   NA, # is NA
-  "doi:10.1000/1", # not unique,
+  "doi:10.1000/1",  # not unique
   "10.1000/3",
   "10.1000/4",
-  "10.1000/5" # this is above limit of 4
+  "10.1000/5",  # this is above limit of 4
+  "10.3389/fbioe.2020.00209",  # actually from CR
+  "10.3389/fmats.2020.00157"  # also from CR
 ))
 
 test_that("Acceptable DOIs are filtered", {
@@ -15,6 +17,8 @@ test_that("Acceptable DOIs are filtered", {
 
 test_that("Acceptable DOIs can be asserted", {
   expect_error(assert_metacheckable(x))
+  x
+  is_metacheckable(x)
   expect_invisible(assert_metacheckable(x[is_metacheckable(x)]))
 })
 

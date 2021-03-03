@@ -20,7 +20,7 @@ non-boolean is coerced to \code{FALSE}.}
 Get Crossref metadata from API
 }
 \seealso{
-Other ETL import: 
+Other import: 
 \code{\link{tabulate_metacheckable}()}
 }
-\concept{ETL import}
+\concept{import}

@@ -26,7 +26,7 @@ Sie haben **`r length(params$doi)`** DOIs eingegeben.
 metacheck:::report_metacheckable(tabulate_metacheckable(params$dois))
 ```
 
-Weitere Informationen zu den oben stehenden Kriterien finden Sie in der [Dokumentation](https://subugoe.github.io/metacheck/reference/index.html) (gegenwärtig nur auf Englisch).
+Weitere Informationen zu den oben stehenden Kriterien finden Sie in der [Dokumentation](https://subugoe.github.io/metacheck/reference/tabulate_metacheckable.html) (gegenwärtig nur auf Englisch).
 
 Der folgende Bericht bezieht sich daher auf die verbleibenden **`r sum(is_metacheckable(params$doi), na.rm = TRUE)`** DOIs.
 

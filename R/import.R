@@ -2,7 +2,7 @@
 #'
 #' @param dois character vector with DOIs
 #' @inheritParams rcrossref::cr_works
-#' @family ETL import
+#' @family import
 #' @export
 get_cr_md <- function(dois,
                       .progress = ifelse(interactive(), "text", "none")) {
@@ -42,16 +42,25 @@ get_cr_md <- function(dois,
 #'
 #' Tested in order:
 #' 1. `not_na` following [biblids::doi()].
-#' 2. `unique`
+#' 1. `unique`
 #'    `FALSE` for every 2nd and later repetition of a DOI.
 #'     DOIs are compared using [biblids::doi()] logic.
-#' 3. `within_limits`
+#' 1. `within_limits`
 #'     whether remaining DOIs are within the package limit for requests.
+#' 1. `doi_org_found`
+#'     whether remaining DOIs are found on DOI.org,
+#'     using [biblids::is_doi_found()].
+#' 1. `resolvable`
+#'     whether remaining DOIs are resolvable on DOI.org,
+#'     using [biblids::is_doi_resolvable()].
+#' 1. `from_cr`
+#'     whether remaining DOIs have been deposited by the Crossref
+#'     registration agency.
 #'
 #' `NA` can indicate that the test:
 #'  - was not applicable, because a previous predicate was `FALSE`
 # menion here alternative reason server failure, if safely is implemented
-#' @family ETL import
+#' @family import
 #' @export
 tabulate_metacheckable <- function(x, ...) {
   x <- biblids::as_doi(x)
@@ -59,8 +68,12 @@ tabulate_metacheckable <- function(x, ...) {
     `not_missing` = !is.na(x),
     # repeating the column names in the below is inelegant and unnecessary
     # but proper FP design (purrr::reduce? functional op?) would be hard to read
+    # this will be refactored for https://github.com/subugoe/metacheck/issues/169
     `unique` = lazily(purrr::negate(duplicated))(x, `not_missing`),
-    `within_limits` = lazily(is_in_limit, ...)(x, `unique`)
+    `within_limits` = lazily(is_in_limit, ...)(x, `unique`),
+    `doi_org_found` = lazily(biblids::is_doi_found)(x, `within_limits`),
+    `resolvable` = lazily(biblids::is_doi_resolvable)(x, `doi_org_found`),
+    `from_cr` = lazily(biblids::is_doi_from_ra, "Crossref")(x, `resolvable`)
   )
 }
 

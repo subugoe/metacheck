@@ -13,7 +13,7 @@ is_metacheckable(x, ...)
 assert_metacheckable(x, ...)
 }
 \arguments{
-\item{x}{A vector as created by, or convertable to \code{\link[biblids:doi]{doi()}}.}
+\item{x}{A vector created by, or convertable to \code{\link[biblids:doi]{doi()}}.}
 
 \item{...}{Additional arguments passed to predicate functions.}
 }
@@ -29,6 +29,15 @@ Tested in order:
 DOIs are compared using \code{\link[biblids:doi]{biblids::doi()}} logic.
 \item \code{within_limits}
 whether remaining DOIs are within the package limit for requests.
+\item \code{doi_org_found}
+whether remaining DOIs are found on DOI.org,
+using \code{\link[biblids:doi_api]{biblids::is_doi_found()}}.
+\item \code{resolvable}
+whether remaining DOIs are resolvable on DOI.org,
+using \code{\link[biblids:doi_api]{biblids::is_doi_resolvable()}}.
+\item \code{from_cr}
+whether remaining DOIs have been deposited by the Crossref
+registration agency.
 }
 
 \code{NA} can indicate that the test:
@@ -62,7 +71,7 @@ different data sources.
 }}}
 
 \seealso{
-Other ETL import: 
+Other import: 
 \code{\link{get_cr_md}()}
 }
-\concept{ETL import}
+\concept{import}

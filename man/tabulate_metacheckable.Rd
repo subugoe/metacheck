@@ -3,11 +3,14 @@
 \name{tabulate_metacheckable}
 \alias{tabulate_metacheckable}
 \alias{is_metacheckable}
+\alias{assert_metacheckable}
 \title{Report and filter acceptable DOIs}
 \usage{
 tabulate_metacheckable(x, ...)
 
 is_metacheckable(x, ...)
+
+assert_metacheckable(x, ...)
 }
 \arguments{
 \item{x}{A vector as created by, or convertable to \code{\link[biblids:doi]{doi()}}.}
@@ -53,6 +56,9 @@ different data sources.
 \subsection{Functions}{
 \itemize{
 \item \code{is_metacheckable}: Are all checks \code{TRUE}?
+}
+\itemize{
+\item \code{assert_metacheckable}: Assert metacheckable
 }}}
 
 \seealso{

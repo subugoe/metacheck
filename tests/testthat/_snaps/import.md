@@ -46,3 +46,17 @@
       "value": [true, false, false, true, true, true]
     }
 
+# DOI eligiblity is reported
+
+    {
+      "type": "character",
+      "attributes": {
+        "class": {
+          "type": "character",
+          "attributes": {},
+          "value": ["glue", "character"]
+        }
+      },
+      "value": ["- Davon sind **83%** `not_missing` (17% ausgeschlossen)\n- Davon sind **80%** `unique` (20% ausgeschlossen)\n- Davon sind **75%** `within_limits` (25% ausgeschlossen)"]
+    }
+

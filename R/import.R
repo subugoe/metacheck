@@ -6,9 +6,7 @@
 #' @export
 get_cr_md <- function(dois,
                       .progress = ifelse(interactive(), "text", "none")) {
-  # TODO this can be replaced by class validation
-  # TODO not sure where the best place for the unique assertion is
-  checkmate::assert_character(dois, any.missing = FALSE, unique = TRUE)
+  assert_metacheckable(dois)
   tt <- rcrossref::cr_works(dois = dois, .progress = .progress)[["data"]]
   if (nrow(tt) != 0) {
     out <- tt %>%
@@ -72,6 +70,18 @@ is_metacheckable <- function(x, ...) {
   purrr::pmap_lgl(tabulate_metacheckable(x), all)
 }
 
+#' @describeIn tabulate_metacheckable Assert metacheckable
+#' @export
+assert_metacheckable <- function(x, ...) {
+  if (!all(is_metacheckable(x, ...))) {
+    rlang::abort(c(
+      "Not all DOIs are eligible for metacheck",
+      "See `tabulate_metacheck()` for details."
+    ))
+  }
+  invisible(x)
+}
+
 #' Helper to stay similar to other signatures
 #' @noRd
 is_in_limit <- function(x, limit = 1000L) 1:length(x) <= limit
@@ -89,6 +99,35 @@ lazily <- function(.p, ...) {
     res[x1] <- exec(.p, x[x1], ...)
     res
   }
+}
+
+#' Summarise to percent `TRUE`
+#' @noRd
+summarise_metacheckable <- function(dframe) {
+  unlist(dplyr::summarise_all(dframe, get_percent))
+}
+
+#' Helper to get percent `TRUE` of *possible* `TRUE` (i.e. dropping `NA`)
+#' @noRd
+get_percent <- function(x) sum(x, na.rm = TRUE) / (length(x) - sum(is.na(x)))
+
+#' Write out report in prose
+#' @noRd
+report_metacheckable <- function(dframe) {
+  x <- summarise_metacheckable(dframe)
+  glue::glue_collapse(purrr::imap_chr(x, report_metacheckable1), "\n")
+}
+
+#' Write prose for *one* predicate check
+#' @noRd
+report_metacheckable1 <- function(x, desc) {
+  stopifnot(rlang::is_scalar_double(x))
+  stopifnot(rlang::is_scalar_character(desc))
+  perc_pos <- round(x * 100)
+  perc_neg <- 100 - perc_pos
+  glue::glue(
+    "- Davon sind **{perc_pos}%** `{desc}` ({perc_neg}% ausgeschlossen)"
+  )
 }
 
 #' Test whether DOI as metadata on Crossref

@@ -64,7 +64,10 @@ tabulate_metacheckable <- function(x, ...) {
     `doi_org_found` = lazily(biblids::is_doi_found)(x, `within_limits`),
     `resolvable` = lazily(biblids::is_doi_resolvable)(x, `doi_org_found`),
     `from_cr` = lazily(biblids::is_doi_from_ra, "Crossref")(x, `resolvable`),
+    # unclear if duplicate https://github.com/subugoe/metacheck/issues/174
     `from_cr_cr` = lazily(is_doi_from_ra_cr, "Crossref")(x, `from_cr`)
+    # should test for resource existence via header here first
+    # https://github.com/subugoe/metacheck/issues/176
   )
 }
 

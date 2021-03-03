@@ -72,6 +72,6 @@
           "value": ["glue", "character"]
         }
       },
-      "value": ["- Davon sind **88%** `not_missing` (12% ausgeschlossen)\n- Davon sind **86%** `unique` (14% ausgeschlossen)\n- Davon sind **50%** `within_limits` (50% ausgeschlossen)\n- Davon sind **100%** `doi_org_found` (0% ausgeschlossen)\n- Davon sind **100%** `resolvable` (0% ausgeschlossen)\n- Davon sind **0%** `from_cr` (100% ausgeschlossen)"]
+      "value": ["- Davon erfüllen 7 (88%) das Kriterium `not_missing` (**1** ausgeschlossen)\n- Davon erfüllen 6 (86%) das Kriterium `unique` (**1** ausgeschlossen)\n- Davon erfüllen 6 (100%) das Kriterium `within_limits` (**0** ausgeschlossen)\n- Davon erfüllen 6 (100%) das Kriterium `doi_org_found` (**0** ausgeschlossen)\n- Davon erfüllen 6 (100%) das Kriterium `resolvable` (**0** ausgeschlossen)\n- Davon erfüllen 2 (33%) das Kriterium `from_cr` (**4** ausgeschlossen)"]
     }
 

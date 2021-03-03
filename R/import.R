@@ -95,7 +95,9 @@ assert_metacheckable <- function(x, ...) {
   invisible(x)
 }
 
-#' Helper to stay similar to other signatures
+#' Limit as a predicate function
+#' Just takes the first n x up to and including the limit.
+#' Helpful to stay consistent with the other predicate signatures.
 #' @noRd
 is_in_limit <- function(x, limit = 1000L) 1:length(x) <= limit
 
@@ -114,32 +116,40 @@ lazily <- function(.p, ...) {
   }
 }
 
-#' Summarise to percent `TRUE`
-#' @noRd
-summarise_metacheckable <- function(dframe) {
-  unlist(dplyr::summarise_all(dframe, get_percent))
-}
-
 #' Helper to get percent `TRUE` of *possible* `TRUE` (i.e. dropping `NA`)
 #' @noRd
-get_percent <- function(x) sum(x, na.rm = TRUE) / (length(x) - sum(is.na(x)))
+percent_good <- function(x) n_good(x) / n_total(x) * 100
+
+#' Helper to get count `TRUE`
+#' @noRd
+n_good <- function(x) sum(x, na.rm = TRUE)
+
+#' Helper to get count `FALSE` (i.e. dropping `NA`)
+#' @noRd
+n_bad <- function(x) n_total(x) - n_good(x)
+
+#' Helper to get count of possible `TRUE`s (i.e. dropping `NA`)
+#' Necessary because raw counts are not meaningful,
+#' must be compared to those *possible*, i.e. not `NA`.
+#' @noRd
+n_total <- function(x) (length(x) - sum(is.na(x)))
 
 #' Write out report in prose
+#' @describeIn tabulate_metacheckable Report summary in markdown
 #' @noRd
-report_metacheckable <- function(dframe) {
-  x <- summarise_metacheckable(dframe)
-  glue::glue_collapse(purrr::imap_chr(x, report_metacheckable1), "\n")
+report_metacheckable <- function(x) {
+  dframe <- tabulate_metacheckable(x)
+  glue::glue_collapse(purrr::imap_chr(dframe, report_metacheckable1), "\n")
 }
 
 #' Write prose for *one* predicate check
 #' @noRd
 report_metacheckable1 <- function(x, desc) {
-  stopifnot(rlang::is_scalar_double(x))
+  stopifnot(rlang::is_logical(x))
   stopifnot(rlang::is_scalar_character(desc))
-  perc_pos <- round(x * 100)
-  perc_neg <- 100 - perc_pos
   glue::glue(
-    "- Davon sind **{perc_pos}%** `{desc}` ({perc_neg}% ausgeschlossen)"
+    "- Davon erf\U00FCllen {n_good(x)} ({round(percent_good(x))}%) ",
+    "das Kriterium `{desc}` (**{n_bad(x)}** ausgeschlossen)"
   )
 }
 

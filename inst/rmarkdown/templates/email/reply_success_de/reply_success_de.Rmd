@@ -18,17 +18,17 @@ vielen Dank, dass Sie den Open-Access-Metadaten-Schnelltest nutzen.
 
 Hier ist der Bericht der automatischen Überprüfung. 
 
-### Akzeptierte DOIs
+### Vorabprüfung
 
 Sie haben **`r length(params$doi)`** DOIs eingegeben.
 
 ```{r acceptance, results = "asis"}
-metacheck:::report_metacheckable(tabulate_metacheckable(params$dois))
+metacheck:::report_metacheckable(params$dois)
 ```
 
-Weitere Informationen zu den oben stehenden Kriterien finden Sie in der [Dokumentation](https://subugoe.github.io/metacheck/reference/tabulate_metacheckable.html) (gegenwärtig nur auf Englisch).
+Weitere Informationen zur Vorabprüfung finden Sie im [Methodenbericht](https://subugoe.github.io/metacheck/articles/methode.html).
 
-Der folgende Bericht bezieht sich daher auf die verbleibenden **`r sum(is_metacheckable(params$doi), na.rm = TRUE)`** DOIs.
+Die folgende Analyse bezieht sich nur auf die verbleibenden **`r sum(is_metacheckable(params$doi), na.rm = TRUE)`** DOIs.
 
 
 ### Überblick: Crossref-Metadaten

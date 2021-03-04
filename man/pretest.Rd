@@ -8,6 +8,7 @@
 \alias{report_metacheckable}
 \alias{is_in_limit}
 \alias{is_doi_from_ra_cr}
+\alias{is_doi_cr_md}
 \title{Pretest acceptable DOIs}
 \usage{
 tabulate_metacheckable(x, ...)
@@ -21,6 +22,8 @@ report_metacheckable(x, ...)
 is_in_limit(x, limit = 1000L)
 
 is_doi_from_ra_cr(x, ra = "Crossref")
+
+is_doi_cr_md(x)
 }
 \arguments{
 \item{x}{A vector created by, or convertable to \code{\link[biblids:doi]{doi()}}.}
@@ -52,9 +55,11 @@ using \code{\link[biblids:doi_api]{biblids::is_doi_resolvable()}}.
 \item \code{from_cr}
 whether remaining DOIs have been deposited by the Crossref
 registration agency (per doi.org).
-#' 1. \code{from_cr_cr}
+\item \code{from_cr_cr}
 whether remaining DOIs have been deposited by the Crossref
 registration agency (per Crossref).
+\item \code{cr_md}
+whether remaining DOIs have metadata on Crossref.
 }
 
 \code{NA} can indicate that the test:
@@ -96,9 +101,12 @@ different data sources (say, DOI.org and Crossref).
 \item \code{is_in_limit}: Is the DOI in the limit?
 }
 \itemize{
-\item \code{is_doi_from_ra_cr}: Is Crossref the Registration Agency (RA)?
+\item \code{is_doi_from_ra_cr}: Is the DOI registered by Crossref?
 Potentially duplicates \code{\link[biblids:doi_ra]{biblids::is_doi_from_ra()}},
 or may give subtly different results.
+}
+\itemize{
+\item \code{is_doi_cr_md}: Is there metadata for the DOI on Crossref?
 }}}
 
 \seealso{

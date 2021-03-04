@@ -38,9 +38,11 @@
 #' 1. `from_cr`
 #'     whether remaining DOIs have been deposited by the Crossref
 #'     registration agency (per doi.org).
-#' #' 1. `from_cr_cr`
+#' 1. `from_cr_cr`
 #'     whether remaining DOIs have been deposited by the Crossref
 #'     registration agency (per Crossref).
+#' 1. `cr_md`
+#'     whether remaining DOIs have metadata on Crossref.
 #'
 #' `NA` can indicate that the test:
 #'  - was not applicable, because a previous predicate was `FALSE`
@@ -65,9 +67,9 @@ tabulate_metacheckable <- function(x, ...) {
     `resolvable` = lazily(biblids::is_doi_resolvable)(x, `doi_org_found`),
     `from_cr` = lazily(biblids::is_doi_from_ra, "Crossref")(x, `resolvable`),
     # unclear if duplicate https://github.com/subugoe/metacheck/issues/174
-    `from_cr_cr` = lazily(is_doi_from_ra_cr, "Crossref")(x, `from_cr`)
-    # should test for resource existence via header here first
-    # https://github.com/subugoe/metacheck/issues/176
+    `from_cr_cr` = lazily(is_doi_from_ra_cr, "Crossref")(x, `from_cr`),
+    # should singl header first https://github.com/subugoe/metacheck/issues/176
+    `cr_md` = lazily(is_doi_cr_md)(x, `from_cr_cr`)
   )
 }
 
@@ -147,12 +149,13 @@ n_total <- function(x) (length(x) - sum(is.na(x)))
 is_in_limit <- function(x, limit = 1000L) 1:length(x) <= limit
 
 #' @describeIn pretest
-#' Is Crossref the Registration Agency (RA)?
+#' Is the DOI registered by Crossref?
 #' Potentially duplicates [biblids::is_doi_from_ra()],
 #' or may give subtly different results.
 #' @inheritParams biblids::is_doi_from_ra
 #' @export
 is_doi_from_ra_cr <- function(x, ra = "Crossref") {
+  rlang::arg_match(ra, values = biblids::doi_ras())
   res <- rcrossref::cr_agency(dois = x)
   if (length(x) == 1) {
     # arrgh rcrossref is very much not type stable
@@ -161,6 +164,22 @@ is_doi_from_ra_cr <- function(x, ra = "Crossref") {
   res %>%
     purrr::map_chr(c("agency", "label"), .default = NA_character_) %>%
     vctrs::vec_equal(., ra)
+}
+
+#' @describeIn pretest
+#' Is there metadata for the DOI on Crossref?
+#' @export
+is_doi_cr_md <- function(x) {
+  x <- biblids::as_doi(x)
+  # crossref is not length stable
+  # will simply drop rows for which no metadata is found with a warning
+  # suppressing these warnings is a bit dangerous
+  # better way would  be to explicitly ask for header of singleton
+  # as per https://github.com/subugoe/metacheck/issues/176
+  dois_with_md <- suppressWarnings(
+    biblids::as_doi(rcrossref::cr_works(as.character(x))[["data"]][["doi"]])
+  )
+  vctrs::vec_in(x, dois_with_md)
 }
 
 #' Test whether DOI as metadata on Crossref

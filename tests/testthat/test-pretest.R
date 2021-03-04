@@ -29,3 +29,14 @@ test_that("DOI RA is identified", {
     TRUE
   )
 })
+
+test_that("Missing DOI md on cr are caught", {
+  expect_equal(
+    is_doi_cr_md(c("10.1000/1", "10.3389/fbioe.2020.00209")),
+    c(FALSE, TRUE)
+  )
+  expect_equal(
+    is_doi_cr_md(c("10.1000/1", "10.1000/2")),
+    c(FALSE, FALSE)
+  )
+})

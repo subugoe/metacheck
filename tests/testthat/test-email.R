@@ -1,6 +1,9 @@
 test_that("email can be rendered", {
   # pretty bad test
-  expect_s3_class(render_email(dois = tu_dois()[1:3]), "blastula_message")
+  expect_s3_class(
+    render_email(dois = c(dois_weird(), tu_dois()[1:3])),
+    "blastula_message"
+  )
 })
 
 test_that("email can be send", {

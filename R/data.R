@@ -14,6 +14,10 @@ dois_weird <- function() {
     "doi:10.1000/1", # duplicated from above
     "10.3389/fbioe.2020.00209", # actually from CR
     "10.1000/2",
-    "10.1000/3" # would exceed limit of 4
+    "10.1000/3", # would exceed limit of 4
+    # caused issues in https://github.com/subugoe/metacheck/issues/181
+    "10.1007/s00330-019-06284-8",
+    # caused issues in https://github.com/subugoe/metacheck/issues/181
+    "10.1007/s00431-018-3217-8"
   )
 }

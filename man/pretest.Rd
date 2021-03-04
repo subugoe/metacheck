@@ -9,6 +9,7 @@
 \alias{is_in_limit}
 \alias{is_doi_from_ra_cr}
 \alias{is_doi_cr_md}
+\alias{is_doi_cr_type}
 \title{Pretest acceptable DOIs}
 \usage{
 tabulate_metacheckable(x, ...)
@@ -24,6 +25,8 @@ is_in_limit(x, limit = 1000L)
 is_doi_from_ra_cr(x, ra = "Crossref")
 
 is_doi_cr_md(x)
+
+is_doi_cr_type(x, type = types_allowed)
 }
 \arguments{
 \item{x}{A vector created by, or convertable to \code{\link[biblids:doi]{doi()}}.}
@@ -33,6 +36,8 @@ is_doi_cr_md(x)
 \item{limit}{Scalar integer, giving the number of DOIs to be submitted to the metacheck.}
 
 \item{ra}{Character scalar, must be one of \code{names(doi_ras())}.}
+
+\item{type}{Character scalar, must be one of the types from \code{\link[rcrossref:cr_types]{rcrossref::cr_types()}}.}
 }
 \value{
 A tibble with one column for each of the predicate results.
@@ -107,6 +112,9 @@ or may give subtly different results.
 }
 \itemize{
 \item \code{is_doi_cr_md}: Is there metadata for the DOI on Crossref?
+}
+\itemize{
+\item \code{is_doi_cr_type}: Is the DOI a type (per Crossref)?
 }}}
 
 \seealso{

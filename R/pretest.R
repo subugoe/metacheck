@@ -69,7 +69,8 @@ tabulate_metacheckable <- function(x, ...) {
     # unclear if duplicate https://github.com/subugoe/metacheck/issues/174
     `from_cr_cr` = lazily(is_doi_from_ra_cr, "Crossref")(x, `from_cr`),
     # should singl header first https://github.com/subugoe/metacheck/issues/176
-    `cr_md` = lazily(is_doi_cr_md)(x, `from_cr_cr`)
+    `cr_md` = lazily(is_doi_cr_md)(x, `from_cr_cr`),
+    `article` = lazily(is_doi_cr_type, "journal-article")(x, `cr_md`),
   )
 }
 
@@ -155,7 +156,7 @@ is_in_limit <- function(x, limit = 1000L) 1:length(x) <= limit
 #' @inheritParams biblids::is_doi_from_ra
 #' @export
 is_doi_from_ra_cr <- function(x, ra = "Crossref") {
-  rlang::arg_match(ra, values = biblids::doi_ras())
+  ra <- rlang::arg_match(ra, values = biblids::doi_ras())
   res <- rcrossref::cr_agency(dois = x)
   if (length(x) == 1) {
     # arrgh rcrossref is very much not type stable
@@ -181,6 +182,23 @@ is_doi_cr_md <- function(x) {
   )
   vctrs::vec_in(x, dois_with_md)
 }
+
+#' @describeIn pretest
+#' Is the DOI a type (per Crossref)?
+#' @param type
+#' Character scalar, must be one of the types from [rcrossref::cr_types()].
+#' @export
+is_doi_cr_type <- function(x, type = types_allowed) {
+  x <- biblids::as_doi(x)
+  type <- rlang::arg_match(type, values = types_allowed)
+  res <- rcrossref::cr_works(as.character(x))[["data"]][["type"]]
+  res == type
+}
+
+#' Allowed types
+#' By placing this outside of funciton, it only gets run at buildtime.
+#' @noRd
+types_allowed <- rcrossref::cr_types()[["data"]][["id"]]
 
 #' Test whether DOI as metadata on Crossref
 #'

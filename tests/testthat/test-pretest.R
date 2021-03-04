@@ -40,3 +40,13 @@ test_that("Missing DOI md on cr are caught", {
     c(FALSE, FALSE)
   )
 })
+
+test_that("Type on cr is caught", {
+  expect_equal(
+    is_doi_cr_type(
+      c("10.3389/frobt.2020.00074", "10.3389/fbioe.2020.00209"),
+      "journal-article"
+    ),
+    c(TRUE, TRUE)
+  )
+})

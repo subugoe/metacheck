@@ -5,7 +5,7 @@
 #' @export
 render_email <- function(dois, session_id = NULL) {
   dois_ok <- dois[is_metacheckable(dois)]
-  if (length(dois_ok) <= 2) {
+  if (length(dois_ok) < 2) {
     rlang::abort("Too few eligible DOIs remaining.")
   }
   cr <- get_cr_md(dois_ok)

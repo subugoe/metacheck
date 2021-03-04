@@ -119,6 +119,7 @@ or may give subtly different results.
 
 \seealso{
 Other import: 
+\code{\link{cr_works2}()},
 \code{\link{get_cr_md}()}
 }
 \concept{import}

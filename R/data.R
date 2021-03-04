@@ -1,7 +1,14 @@
 #' Some DOIs for testing
 #' @noRd 
 tu_dois <- function() {
-  readr::read_lines(file = system_file2("extdata", "tu_dois.txt"))
+  readr::read_lines(file = system_file2("extdata", "dois", "tu.txt"))
+  }
+
+#' Long list of DOIs
+#' @noRd
+dois_many <- function() {
+  res <- readr::read_lines(file = system_file2("extdata", "dois", "many.txt"))
+  biblids::as_doi(res)
 }
 
 #' Some troublesome DOIs for testing

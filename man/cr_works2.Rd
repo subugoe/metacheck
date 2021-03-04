@@ -98,6 +98,7 @@ Type-/length-stable, defensive and cached variant of \code{\link[rcrossref:cr_wo
 This wrapper changes the underlying behavior as follows:
 \itemize{
 \item vectorised by \code{\link[purrr:map]{purrr::map_dfr()}}
+\item all warnings and empty returned rows are raised to errors
 }
 }
 \seealso{

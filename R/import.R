@@ -27,6 +27,7 @@ get_cr_md <- function(dois,
 #' @details
 #' This wrapper changes the underlying behavior as follows:
 #' - vectorised by [purrr::map_dfr()]
+#' - all warnings and empty returned rows are raised to errors
 #'
 #' @inheritParams biblids::as_doi
 #' @inheritDotParams rcrossref::cr_works
@@ -40,4 +41,37 @@ cr_works2 <- function(x, ...) {
     rcrossref::cr_works(x)[["data"]]
   })
   res
+}
+
+#' Only work with one DOI
+#' Preventing foot guns, one at a time.
+#' @noRd
+lonely_cr_works <- function(dois, ...) {
+  stopifnot(rlang::is_scalar_character(dois))
+  rcrossref::cr_works(dois = dois, ...)
+}
+
+#' Capture warning message
+#' @noRd
+quiet_cr_works <- purrr::quietly(lonely_cr_works)
+
+#' Raise an error if there's a warning or an empty df
+#' @noRd
+prickly_cr_works <- function(...) {
+  res <- quiet_cr_works(...)
+  if (length(res$warnings) != 0L) {
+    # do not accept any warnings
+    # notice that even a 404 may resolve with a retry
+    # as per https://github.com/subugoe/metacheck/issues/181
+    # though one should usually avoid a retry in that case
+    # 404 will be best avoided by first checking singleton header
+    # https://github.com/subugoe/metacheck/issues/176
+    # once that is done, 404s should get special treatment here
+    # and NOT trigger a retry
+    rlang::abort(res$warnings)
+  }
+  if (nrow(res$result$data) != 1) {
+    rlang::abort("Can't find one row in `$data`.")
+  }
+  res$result
 }

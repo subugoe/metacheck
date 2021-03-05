@@ -38,9 +38,6 @@
 #' 1. `from_cr`
 #'     whether remaining DOIs have been deposited by the Crossref
 #'     registration agency (per doi.org).
-#' 1. `from_cr_cr`
-#'     whether remaining DOIs have been deposited by the Crossref
-#'     registration agency (per Crossref).
 #' 1. `cr_md`
 #'     whether remaining DOIs have metadata on Crossref.
 #'
@@ -66,10 +63,8 @@ tabulate_metacheckable <- function(x, ...) {
     `doi_org_found` = lazily(biblids::is_doi_found)(x, `within_limits`),
     `resolvable` = lazily(biblids::is_doi_resolvable)(x, `doi_org_found`),
     `from_cr` = lazily(biblids::is_doi_from_ra, "Crossref")(x, `resolvable`),
-    # unclear if duplicate https://github.com/subugoe/metacheck/issues/174
-    `from_cr_cr` = lazily(is_doi_from_ra_cr, "Crossref")(x, `from_cr`),
     # should singl header first https://github.com/subugoe/metacheck/issues/176
-    `cr_md` = lazily(is_doi_cr_md)(x, `from_cr_cr`),
+    `cr_md` = lazily(is_doi_cr_md)(x, `from_cr`),
     `article` = lazily(is_doi_cr_type, "journal-article")(x, `cr_md`),
   )
 }
@@ -151,10 +146,13 @@ is_in_limit <- function(x, limit = 1000L) 1:length(x) <= limit
 
 #' @describeIn pretest
 #' Is the DOI registered by Crossref?
+#' @details
 #' Potentially duplicates [biblids::is_doi_from_ra()],
 #' or may give subtly different results.
+#' Currently not in use.
+#' See https://github.com/subugoe/metacheck/issues/174.
 #' @inheritParams biblids::is_doi_from_ra
-#' @export
+#' @noRd
 is_doi_from_ra_cr <- function(x, ra = "Crossref") {
   ra <- rlang::arg_match(ra, values = biblids::doi_ras())
   res <- rcrossref::cr_agency(dois = x)

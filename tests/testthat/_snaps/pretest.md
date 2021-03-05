@@ -6,7 +6,7 @@
         "names": {
           "type": "character",
           "attributes": {},
-          "value": ["not_missing", "unique", "within_limits", "doi_org_found", "resolvable", "from_cr", "from_cr_cr", "cr_md", "article"]
+          "value": ["not_missing", "unique", "within_limits", "doi_org_found", "resolvable", "from_cr", "cr_md", "article"]
         },
         "row.names": {
           "type": "integer",
@@ -59,11 +59,6 @@
           "type": "logical",
           "attributes": {},
           "value": [null, null, null, true, null, null, null, null]
-        },
-        {
-          "type": "logical",
-          "attributes": {},
-          "value": [null, null, null, true, null, null, null, null]
         }
       ]
     }
@@ -87,6 +82,6 @@
           "value": ["glue", "character"]
         }
       },
-      "value": ["- Davon erfüllen 7 (88%) das Kriterium `not_missing` (**1** ausgeschlossen)\n- Davon erfüllen 6 (86%) das Kriterium `unique` (**1** ausgeschlossen)\n- Davon erfüllen 6 (100%) das Kriterium `within_limits` (**0** ausgeschlossen)\n- Davon erfüllen 6 (100%) das Kriterium `doi_org_found` (**0** ausgeschlossen)\n- Davon erfüllen 6 (100%) das Kriterium `resolvable` (**0** ausgeschlossen)\n- Davon erfüllen 3 (50%) das Kriterium `from_cr` (**3** ausgeschlossen)\n- Davon erfüllen 3 (100%) das Kriterium `from_cr_cr` (**0** ausgeschlossen)\n- Davon erfüllen 3 (100%) das Kriterium `cr_md` (**0** ausgeschlossen)\n- Davon erfüllen 3 (100%) das Kriterium `article` (**0** ausgeschlossen)"]
+      "value": ["- Davon erfüllen 7 (88%) das Kriterium `not_missing` (**1** ausgeschlossen)\n- Davon erfüllen 6 (86%) das Kriterium `unique` (**1** ausgeschlossen)\n- Davon erfüllen 6 (100%) das Kriterium `within_limits` (**0** ausgeschlossen)\n- Davon erfüllen 6 (100%) das Kriterium `doi_org_found` (**0** ausgeschlossen)\n- Davon erfüllen 6 (100%) das Kriterium `resolvable` (**0** ausgeschlossen)\n- Davon erfüllen 3 (50%) das Kriterium `from_cr` (**3** ausgeschlossen)\n- Davon erfüllen 3 (100%) das Kriterium `cr_md` (**0** ausgeschlossen)\n- Davon erfüllen 3 (100%) das Kriterium `article` (**0** ausgeschlossen)"]
     }
 

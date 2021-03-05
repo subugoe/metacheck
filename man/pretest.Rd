@@ -7,7 +7,6 @@
 \alias{assert_metacheckable}
 \alias{report_metacheckable}
 \alias{is_in_limit}
-\alias{is_doi_from_ra_cr}
 \alias{is_doi_cr_md}
 \alias{is_doi_cr_type}
 \title{Pretest acceptable DOIs}
@@ -22,8 +21,6 @@ report_metacheckable(x, ...)
 
 is_in_limit(x, limit = 1000L)
 
-is_doi_from_ra_cr(x, ra = "Crossref")
-
 is_doi_cr_md(x)
 
 is_doi_cr_type(x, type = types_allowed)
@@ -34,8 +31,6 @@ is_doi_cr_type(x, type = types_allowed)
 \item{...}{Additional arguments passed to the predicate functions.}
 
 \item{limit}{Scalar integer, giving the number of DOIs to be submitted to the metacheck.}
-
-\item{ra}{Character scalar, must be one of \code{names(doi_ras())}.}
 
 \item{type}{Character scalar, must be one of the types from \code{\link[rcrossref:cr_types]{rcrossref::cr_types()}}.}
 }
@@ -60,9 +55,6 @@ using \code{\link[biblids:doi_api]{biblids::is_doi_resolvable()}}.
 \item \code{from_cr}
 whether remaining DOIs have been deposited by the Crossref
 registration agency (per doi.org).
-\item \code{from_cr_cr}
-whether remaining DOIs have been deposited by the Crossref
-registration agency (per Crossref).
 \item \code{cr_md}
 whether remaining DOIs have metadata on Crossref.
 }
@@ -104,11 +96,6 @@ different data sources (say, DOI.org and Crossref).
 }
 \itemize{
 \item \code{is_in_limit}: Is the DOI in the limit?
-}
-\itemize{
-\item \code{is_doi_from_ra_cr}: Is the DOI registered by Crossref?
-Potentially duplicates \code{\link[biblids:doi_ra]{biblids::is_doi_from_ra()}},
-or may give subtly different results.
 }
 \itemize{
 \item \code{is_doi_cr_md}: Is there metadata for the DOI on Crossref?

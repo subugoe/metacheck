@@ -28,6 +28,18 @@ get_cr_md <- function(dois,
 #' This wrapper changes the underlying behavior as follows:
 #' - vectorised by [purrr::map_dfr()]
 #' - all warnings and empty returned rows are raised to errors
+#' - returns type stably and length stably (in rows)
+#' - caches *individual* DOI results
+#' - retries on failed attempts
+#' - returns only the data element
+#'
+#' This function is still *defensive*;
+#' it will error out if attempts fail or inputs are bad.
+#' That is what makes it type stable/length stable.
+#' It is the callers responsibility to use [purrr::possibly()],
+#' and recover from errors by giving some `otherwise` default.
+#' This cannot be done here,
+#' because the caller must determine what a useful default is.
 #'
 #' @inheritParams biblids::as_doi
 #' @inheritDotParams rcrossref::cr_works
@@ -38,7 +50,7 @@ cr_works2 <- function(x, ...) {
   # remove this hackfix https://github.com/subugoe/metacheck/issues/182
   x <- as.character(x)
   res <- purrr::map_dfr(.x = as.character(x), function(x) {
-    rcrossref::cr_works(x)[["data"]]
+    memoised_cr_works(dois = x)[["data"]]
   })
   res
 }

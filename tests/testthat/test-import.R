@@ -18,14 +18,13 @@ test_that("cr_works2 is length-stable", {
   expect_equal(ncol(cr_works2(dois)), ncol(cr_works2(dois[1])))
 })
 
-test_that("Bad DOIs throw error", {
-  skip("Not implemented")
-  expect_equal(1, 1)
+test_that("cr_works2 throws error on bad DOIs", {
+  expect_error(suppressMessages(cr_works2(c(dois[1], "10.1000/foo"))))
 })
 
 test_that("cr_works accepts only one doi (lonely)", {
-  expect_error(lonely_cr_works(tu_dois()[2:3]))
-  expect_type(lonely_cr_works(tu_dois()[2]), "list")
+  expect_error(lonely_cr_works(dois[2:3]))
+  expect_type(lonely_cr_works(dois[2]), "list")
 })
 
 test_that("cr_works captures warnings (quiet)", {
@@ -34,14 +33,14 @@ test_that("cr_works captures warnings (quiet)", {
     regexp = "404"
   )
   expect_equal(
-    quiet_cr_works(tu_dois()[2])$warnings,
+    quiet_cr_works(dois[2])$warnings,
     character()
   )
 })
 
 test_that("cr_works fails on bad output or warning (prickly)", {
   expect_error(prickly_cr_works("10.1000/foo"))
-  expect_type(prickly_cr_works(tu_dois()[2]), "list")
+  expect_type(prickly_cr_works(dois[2]), "list")
 })
 
 test_that("cr_works retries on bad output (insistently)", {

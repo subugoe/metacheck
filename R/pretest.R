@@ -155,6 +155,8 @@ is_in_limit <- function(x, limit = 1000L) 1:length(x) <= limit
 #' @noRd
 is_doi_from_ra_cr <- function(x, ra = "Crossref") {
   ra <- rlang::arg_match(ra, values = biblids::doi_ras())
+  # this call is slow and is never reused,
+  # so there's no point caching it
   res <- rcrossref::cr_agency(dois = x)
   if (length(x) == 1) {
     # arrgh rcrossref is very much not type stable
@@ -194,7 +196,7 @@ is_doi_cr_type <- function(x, type = types_allowed) {
 }
 
 #' Allowed types
-#' By placing this outside of funciton, it only gets run at buildtime.
+#' By placing this outside of function, it only gets run at buildtime.
 #' @noRd
 types_allowed <- rcrossref::cr_types()[["data"]][["id"]]
 

@@ -11,8 +11,10 @@ cr_compliance_overview <- function(cr) {
 
   tdm_df <- cr_tdm_df(cr)
   compliant_tdm <- filter(tdm_df,
-                          is_tdm_compliant == TRUE)
+                          .data$is_tdm_compliant == TRUE)
   funder_df <- cr_funder_df(cr)
+  has_funder <- funder_df %>%
+    filter(!is.na(.data$name))
   orcid_df <- cr_has_orcid(cr)
 
   cr_overview <- cr %>%
@@ -22,9 +24,7 @@ cr_compliance_overview <- function(cr) {
       has_compliant_cc = .data$doi %in%
         filter(cc_df, .data$check_result == "All fine!")$doi,
       has_tdm_links = .data$doi %in% compliant_tdm$doi,
-      has_funder_info = unlist(across(
-        any_of("funder"), ~ sapply(.x, empty_list)
-      )),
+      has_funder_info = .data$doi %in% has_funder$doi,
       has_orcid = .data$doi %in% orcid_df$doi,
       has_open_abstract = unlist(across(any_of("abstract"), ~ !is.na(.x))),
       has_open_refs = unlist(across(

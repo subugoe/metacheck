@@ -31,7 +31,7 @@
 tdm_metrics <- function(tdm = NULL) {
   is_cr_tdm_df(tdm)
   compliant_tdm <- tdm %>%
-    filter(is_tdm_compliant == TRUE)
+    filter(.data$is_tdm_compliant == TRUE)
 
   non_compliant_tdm <- tdm[!tdm$doi %in% compliant_tdm$doi,]
 

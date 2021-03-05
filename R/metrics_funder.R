@@ -29,29 +29,27 @@
 funder_metrics <- function(funder_info = NULL) {
   is_cr_funder_df(funder_info)
 
-
-  if(length(unique(funder_info$name)) > 5) {
+  if(nrow(funder_info[all(!is.na("name")),]) == nrow(funder_info)) {
+    out <- dplyr::mutate(funder_info, name = "No funding info")
+  } else if (length(unique(funder_info$name)) > 5) {
     out <- funder_info %>%
     mutate(name = ifelse(is.na(.data$name), "No funding info", .data$name)) %>%
     mutate(name = forcats::fct_lump_n(.data$name, 5, other_level = "Other funders")) %>%
     mutate(name = forcats::fct_infreq(.data$name)) %>%
     mutate(name = forcats::fct_relevel(.data$name, "Other funders", after = Inf)) %>%
-    mutate(name = forcats::fct_relevel(.data$name, "No funding info", after = Inf)) %>%
-    group_by(indicator = .data$name) %>%
-    summarise(value = n_distinct(.data$doi)) %>%
-    dplyr::ungroup() %>%
-    mutate(prop = .data$value / length(unique(funder_info$doi)) * 100)
+    mutate(name = forcats::fct_relevel(.data$name, "No funding info", after = Inf))
   } else {
     out <-funder_info %>%
       mutate(name = ifelse(is.na(.data$name), "No funding info", .data$name)) %>%
       mutate(name = forcats::fct_infreq(.data$name)) %>%
-      mutate(name = forcats::fct_relevel(.data$name, "No funding info", after = Inf)) %>%
-      group_by(indicator = .data$name) %>%
-      summarise(value = n_distinct(.data$doi)) %>%
-      dplyr::ungroup() %>%
-      mutate(prop = .data$value / length(unique(funder_info$doi)) * 100)
+      mutate(name = forcats::fct_relevel(.data$name, "No funding info", after = Inf))
   }
-  return(out)
+  ind <- out %>%
+    group_by(indicator = .data$name) %>%
+    summarise(value = n_distinct(.data$doi)) %>%
+    dplyr::ungroup() %>%
+    mutate(prop = .data$value / length(unique(funder_info$doi)) * 100)
+  return(ind)
 }
 
 #' Check if funder compliance data is provided

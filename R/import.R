@@ -40,6 +40,9 @@ get_cr_md <- function(dois,
 #' and recover from errors by giving some `otherwise` default.
 #' This cannot be done here,
 #' because the caller must determine what a useful default is.
+#' This weirdness can be resolved when we always test
+#' and return individual fields as per
+#' https://github.com/subugoe/metacheck/issues/183.
 #'
 #' @inheritParams biblids::as_doi
 #' @inheritDotParams rcrossref::cr_works
@@ -52,6 +55,21 @@ cr_works2 <- function(x, ...) {
   res <- purrr::map_dfr(.x = as.character(x), function(x) {
     memoised_cr_works(dois = x)[["data"]]
   })
+  res
+}
+
+#' Helper for predicate functions
+#' @noRd
+looped_possibly_cr_works_field <- function(x, field, ...) {
+  x <- biblids::as_doi(x)
+  # remove this hackfix https://github.com/subugoe/metacheck/issues/182
+  x <- as.character(x)
+  res <- purrr::map_chr(
+    x,
+    possibly_cr_works_field,
+    field = field,
+    ...
+  )
   res
 }
 
@@ -100,7 +118,30 @@ insistently_cr_works <- purrr::insistently(
   quiet = !interactive()
 )
 
-# #' Cache results
-# #' Lives in zzz.R to stick to convention.
-# #' @noRd
-# NULL
+#' Cache results
+#' Lives in zzz.R to stick to convention.
+#' @noRd
+NULL
+
+#' Retrieve some field
+#' This needs to call memoised version,
+#' because we want to always re-use the same entire result object.
+#' @param Integer scalar of a field (column) in cr_works results
+#' @noRd
+cr_works_field <- function(dois, field, ...) {
+  res <- memoised_cr_works(dois, ...)[["data"]][[field]]
+  stopifnot(rlang::is_scalar_vector(res))
+  res
+}
+
+#' Possibly retrieve field
+#' @noRd
+possibly_cr_works_field <- purrr::possibly(
+  cr_works_field,
+  otherwise = NA,
+  quiet = !interactive()
+)
+
+#' Helper for use in predicates.
+#' Eventually this should be used for everything as per
+#' https://github.com/subugoe/metacheck/issues/183.

@@ -112,6 +112,9 @@ It is the callers responsibility to use \code{\link[purrr:safely]{purrr::possibl
 and recover from errors by giving some \code{otherwise} default.
 This cannot be done here,
 because the caller must determine what a useful default is.
+This weirdness can be resolved when we always test
+and return individual fields as per
+https://github.com/subugoe/metacheck/issues/183.
 }
 \seealso{
 Other import: 

@@ -56,3 +56,24 @@ test_that("cr_works uses cache (memoised)", {
   after <- system.time(memoised_cr_works(random_doi))["elapsed"]
   expect_lt(after, before / 10L)
 })
+
+test_that("cr_works_field can find fields", {
+  expect_true(
+    biblids::as_doi(cr_works_field(dois[1], "doi")) == biblids::as_doi(dois[1])
+  )
+})
+
+test_that("cr_works_field defaults to NA for errors", {
+  expect_equal(
+    suppressMessages(possibly_cr_works_field("10.1000/foo", "doi")),
+  NA)
+})
+
+test_that("many cr_works_fields can be retrieved", {
+  expect_equal(
+    suppressMessages(
+      looped_possibly_cr_works_field(c("10.1000/foo", dois[1]), "doi")
+    ),
+    c(NA, dois[1])
+  )
+})

@@ -43,3 +43,10 @@ test_that("cr_works fails on bad output or warning (prickly)", {
   expect_error(prickly_cr_works("10.1000/foo"))
   expect_type(prickly_cr_works(tu_dois()[2]), "list")
 })
+
+test_that("cr_works retries on bad output (insistently)", {
+  expect_error(
+    suppressMessages(insistently_cr_works("10.1000/foo")),
+    regexp = "attempts"
+  )
+})

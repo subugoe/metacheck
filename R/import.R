@@ -75,3 +75,15 @@ prickly_cr_works <- function(...) {
   }
   res$result
 }
+
+#' Rate for retrying
+#' @noRd
+rate <- purrr::rate_backoff()
+
+#' Retry on error
+#' @noRd
+insistently_cr_works <- purrr::insistently(
+  prickly_cr_works,
+  rate = rate,
+  quiet = !interactive()
+)

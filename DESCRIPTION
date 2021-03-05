@@ -73,7 +73,8 @@ Imports:
     rmarkdown,
     assertthat,
     shinyjs,
-    vctrs
+    vctrs,
+    memoise
 Suggests:
     testthat,
     subugoetheme,

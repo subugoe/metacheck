@@ -50,3 +50,10 @@ test_that("cr_works retries on bad output (insistently)", {
     regexp = "attempts"
   )
 })
+
+test_that("cr_works uses cache (memoised)", {
+  random_doi <- as.character(sample(dois_many(), size = 1))
+  before <- system.time(memoised_cr_works(random_doi))["elapsed"]
+  after <- system.time(memoised_cr_works(random_doi))["elapsed"]
+  expect_lt(after, before / 10L)
+})

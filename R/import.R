@@ -87,3 +87,8 @@ insistently_cr_works <- purrr::insistently(
   rate = rate,
   quiet = !interactive()
 )
+
+# #' Cache results
+# #' Lives in zzz.R to stick to convention.
+# #' @noRd
+# NULL

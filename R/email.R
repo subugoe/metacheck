@@ -163,7 +163,7 @@ emailReportUI <- function(id, width = "100%", ...) {
 
 #' @describeIn emailReport Module server
 #' @export
-emailReportServer <- function(id, dois, email = blastula::prepare_test_message()) {
+emailReportServer <- function(id, dois) {
   shiny::moduleServer(
     id,
     module = function(input, output, session) {
@@ -176,7 +176,7 @@ emailReportServer <- function(id, dois, email = blastula::prepare_test_message()
       )
       iv$enable()
       observe({
-        shinyjs::toggleState("send", iv$is_valid())
+        shinyjs::toggleState("send", iv$is_valid() && !is.null(dois))
       })
       observeEvent(input$send, {
         if (iv$is_valid()) {
@@ -184,7 +184,7 @@ emailReportServer <- function(id, dois, email = blastula::prepare_test_message()
             title = "You have succesfully send your DOIs",
             glue::glue(
               "An automated report will be send to your email ",
-              "within the next 15 minutes. ",
+              "within the next 45 minutes. ",
               "Please check your SPAM folder. ",
               "If your have not received your email after an hour, ",
               "please contact us."
@@ -194,7 +194,11 @@ emailReportServer <- function(id, dois, email = blastula::prepare_test_message()
           ))
           smtp_send_metacheck(
             to = input$recipient,
-            email = email
+            email = render_email(
+              dois = dois,
+              # used to disambiguate excel file names, see #83
+              session_id = as.character(floor(runif(1) * 1e20))
+            )
           )
         }
       })

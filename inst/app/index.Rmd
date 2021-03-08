@@ -18,20 +18,8 @@ emailReportUI(id = "send")
 ```
 
 ```{r}
-# used to disambiguate excel file names
-# TODO replace with shiny session id #83
-session_id <- as.character(floor(runif(1) * 1e20))
-
 # get dois
 dois <- biblids::doiEntryServer(id = "dois")
-
-report <- reactive({
-  withProgress(
-      expr = render_email(dois = dois(), session_id = session_id),
-      message = "Generating report..."
-    )
-})
-
 # email
-emailReportServer(id = "send", dois = dois, email = report())
+emailReportServer(id = "send", dois = dois())
 ```

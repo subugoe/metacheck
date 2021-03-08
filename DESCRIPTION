@@ -74,7 +74,9 @@ Imports:
     assertthat,
     shinyjs,
     vctrs,
-    memoise
+    memoise,
+    promises,
+    future
 Suggests:
     testthat,
     subugoetheme,

@@ -2,22 +2,22 @@
 title: "Metacheck input"
 output: 
   flexdashboard::flex_dashboard:
-    css: !expr subugoetheme::pkgdown_template()$assets$css
-runtime: shiny
+    css: css/ugoe_bootswatch.css
+runtime: shiny_prerendered
 ---
 
-```{r global, include=FALSE}
+```{r setup, context = "setup", include=FALSE}
 library(shiny)
 library(metacheck)
 ```
 
 
-```{r}
+```{r, context="render"}
 biblids::doiEntryUI(id = "dois")
 emailReportUI(id = "send")
 ```
 
-```{r}
+```{r, context="server"}
 # get dois
 dois <- biblids::doiEntryServer(id = "dois")
 # email

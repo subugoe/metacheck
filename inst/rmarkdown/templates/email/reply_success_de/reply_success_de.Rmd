@@ -100,5 +100,9 @@ Viele Grüße
 HOAD-Team
 
 ```{r export}
-md_data_attachment(params$cr_overview, session_id = params$session_id, dois = params$dois)
+md_data_attachment(
+  params$cr_overview,
+  session_id = params$session_id,
+  dois = as.character(params$dois)
+)
 ```

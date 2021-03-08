@@ -27,6 +27,7 @@ metacheck:::report_metacheckable(params$dois)
 ```
 
 Weitere Informationen zur Vorabprüfung finden Sie im [Methodenbericht](https://subugoe.github.io/metacheck/articles/methode.html).
+Die vollständige Vorabprüfung mit den Ergebnissen für jeden DOI finden Sie in der beigefügten Excel-Datei im Blatt `pretest`.
 
 Die folgende Analyse bezieht sich nur auf die verbleibenden **`r sum(is_metacheckable(params$doi), na.rm = TRUE)`** DOIs.
 
@@ -90,6 +91,7 @@ Beigefügt finden Sie ein Excel-Spreadsheet mit Metadaten auf Artikelebene für 
 - `cc_license_check`: Detailauswertung Lizenzüberprüfung
 - `tdm`: Detailauswertung Volltextlinks und TDM
 - `funder_info`: Förderinformationen lt. Crossref
+- `pretest`: Ergebnisse der Vorabprüfung
 
 Weitere Informationen, wie das Ergebnis des Schnelltests zu interpretieren ist, finden Sie auf unserer [Webseite](https://subugoe.github.io/metacheck/articles/methode.html). 
 

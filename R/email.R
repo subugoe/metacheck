@@ -139,6 +139,7 @@ emailReport <- function() {
 emailReportUI <- function(id, width = "100%", ...) {
   ns <- shiny::NS(id)
   shiny::tagList(
+    shinyjs::useShinyjs(rmd = TRUE),
     shiny::textInput(
       inputId = ns("recipient"),
       label = "Email Address:",

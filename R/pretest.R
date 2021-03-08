@@ -32,9 +32,6 @@
 #' 1. `doi_org_found`
 #'     whether remaining DOIs are found on DOI.org,
 #'     using [biblids::is_doi_found()].
-#' 1. `resolvable`
-#'     whether remaining DOIs are resolvable on DOI.org,
-#'     using [biblids::is_doi_resolvable()].
 #' 1. `from_cr`
 #'     whether remaining DOIs have been deposited by the Crossref
 #'     registration agency (per doi.org).
@@ -61,8 +58,7 @@ tabulate_metacheckable <- function(x, ...) {
     `unique` = lazily(purrr::negate(duplicated))(x, `not_missing`),
     `within_limits` = lazily(is_in_limit, ...)(x, `unique`),
     `doi_org_found` = lazily(biblids::is_doi_found)(x, `within_limits`),
-    `resolvable` = lazily(biblids::is_doi_resolvable)(x, `doi_org_found`),
-    `from_cr` = lazily(biblids::is_doi_from_ra, "Crossref")(x, `resolvable`),
+    `from_cr` = lazily(biblids::is_doi_from_ra, "Crossref")(x, `doi_org_found`),
     # should singl header first https://github.com/subugoe/metacheck/issues/176
     `cr_md` = lazily(is_doi_cr_md)(x, `from_cr`),
     `article` = lazily(is_doi_cr_type, "journal-article")(x, `cr_md`),

@@ -49,9 +49,6 @@ whether remaining DOIs are within the package limit for requests.
 \item \code{doi_org_found}
 whether remaining DOIs are found on DOI.org,
 using \code{\link[biblids:doi_api]{biblids::is_doi_found()}}.
-\item \code{resolvable}
-whether remaining DOIs are resolvable on DOI.org,
-using \code{\link[biblids:doi_api]{biblids::is_doi_resolvable()}}.
 \item \code{from_cr}
 whether remaining DOIs have been deposited by the Crossref
 registration agency (per doi.org).

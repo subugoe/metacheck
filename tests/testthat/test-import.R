@@ -65,15 +65,14 @@ test_that("cr_works_field can find fields", {
 
 test_that("cr_works_field defaults to NA for errors", {
   expect_equal(
-    suppressMessages(possibly_cr_works_field("10.1000/foo", "doi")),
-  NA)
+    possibly_cr_works_field("10.1000/foo", "doi"),
+    NA
+  )
 })
 
 test_that("many cr_works_fields can be retrieved", {
   expect_equal(
-    suppressMessages(
-      looped_possibly_cr_works_field(c("10.1000/foo", dois[1]), "doi")
-    ),
+    looped_possibly_cr_works_field(c("10.1000/foo", dois[1]), "doi"),
     c(NA, dois[1])
   )
 })

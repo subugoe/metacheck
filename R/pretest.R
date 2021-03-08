@@ -177,9 +177,7 @@ is_doi_cr_md <- function(x) {
   # suppressing these warnings is a bit dangerous
   # better way would  be to explicitly ask for header of singleton
   # as per https://github.com/subugoe/metacheck/issues/176
-  dois_with_md <- suppressWarnings(
-    biblids::as_doi(rcrossref::cr_works(as.character(x))[["data"]][["doi"]])
-  )
+  dois_with_md <- looped_possibly_cr_works_field(x, "doi")
   vctrs::vec_in(x, dois_with_md)
 }
 
@@ -191,7 +189,7 @@ is_doi_cr_md <- function(x) {
 is_doi_cr_type <- function(x, type = types_allowed) {
   x <- biblids::as_doi(x)
   type <- rlang::arg_match(type, values = types_allowed)
-  res <- rcrossref::cr_works(as.character(x))[["data"]][["type"]]
+  res <- looped_possibly_cr_works_field(x, "type")
   res == type
 }
 

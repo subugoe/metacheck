@@ -79,7 +79,8 @@ Send out email
 \seealso{
 Other communicate: 
 \code{\link{emailReport}()},
-\code{\link{render_email}()}
+\code{\link{render_email}()},
+\code{\link{runMetacheck}()}
 }
 \concept{communicate}
 \keyword{internal}

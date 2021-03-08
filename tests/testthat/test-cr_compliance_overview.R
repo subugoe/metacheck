@@ -1,5 +1,4 @@
-dois <- c("10.5194/wes-2019-70",
-          "10.1038/s41598-020-57429-5",
+dois <- c("10.1038/s41598-020-57429-5",
           "10.3389/fmech.2019.00073",
           "10.1038/s41598-020-62245-y")
 req <- get_cr_md(dois)
@@ -34,5 +33,3 @@ test_that("indicators overview calculation works", {
     unlist(tt[tt$doi == "10.1038/s41598-020-57429-5", "has_open_refs"])
   )
 })
-
-

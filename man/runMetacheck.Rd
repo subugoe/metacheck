@@ -71,4 +71,10 @@ rmarkdown::run()
 rmarkdown::run("shiny_doc.Rmd", shiny_args = list(port = 8241))
 }
 }
-\concept{CICD}
+\seealso{
+Other communicate: 
+\code{\link{emailReport}()},
+\code{\link{render_email}()},
+\code{\link{smtp_send_metacheck}()}
+}
+\concept{communicate}

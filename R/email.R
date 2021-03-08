@@ -4,7 +4,11 @@
 #' @family communicate
 #' @export
 render_email <- function(dois, session_id = NULL) {
-  cr <- get_cr_md(dois)
+  dois_ok <- dois[is_metacheckable(dois)]
+  if (length(dois_ok) < 2) {
+    rlang::abort("Too few eligible DOIs remaining.")
+  }
+  cr <- get_cr_md(dois_ok)
   my_df <- cr_compliance_overview(cr)
   email <- blastula::compose_email(
     header = "metacheck: Open Access Metadata Compliance Checker",
@@ -135,6 +139,7 @@ emailReport <- function() {
 emailReportUI <- function(id, width = "100%", ...) {
   ns <- shiny::NS(id)
   shiny::tagList(
+    shinyjs::useShinyjs(rmd = TRUE),
     shiny::textInput(
       inputId = ns("recipient"),
       label = "Email Address:",
@@ -210,12 +215,12 @@ md_data_attachment <-
            dois = NULL,
            session_id = NULL) {
     is_compliance_overview_list(my_df)
-    is_doi_string(dois)
+    my_df[["pretest"]] <- tibble::tibble(
+      # writexl does not know vctrs records
+      doi = as.character(biblids::as_doi(dois)),
+      tabulate_metacheckable(dois)
+    )
 
-    if (setequal(tolower(dois), tolower(my_df$cr_overview$doi)) == FALSE)
-      my_df[["discarded_dois"]] <- tibble::tibble(
-      discarded_dois = dois[!tolower(dois) %in% tolower(my_df$cr_overview$doi)]
-      )
     # write_out
     writexl::write_xlsx(x = my_df,
                         path = xlsx_path(session_id))
@@ -234,9 +239,3 @@ is_compliance_overview_list <- function(x) {
   assertthat::assert_that(x %has_name% c("cr_overview", "cc_license_check"),
                           msg = "No Compliance Data to attach, compliance data from [cr_compliance_overview()]"
   )}
-#' DOIs
-#' @noRd
-is_doi_string <- function(x) {
-  assertthat::assert_that(is.character(x),
-                          msg = "No DOI character vector")
-}

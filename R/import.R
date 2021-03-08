@@ -66,7 +66,7 @@ looped_possibly_cr_works_field <- function(x, field, ...) {
   x <- as.character(x)
   res <- purrr::map_chr(
     x,
-    possibly_cr_works_field,
+    memoised_possibly_cr_works_field,
     field = field,
     ...
   )
@@ -141,6 +141,16 @@ possibly_cr_works_field <- purrr::possibly(
   otherwise = NA,
   quiet = !interactive()
 )
+
+#' Cache results
+#' Lives in zzz.R to stick to convention
+#' @details
+#' possibly_cr_works_field also needs to be cached
+#' so that `NA` results are cached.
+#' Above, lower level caching can only cache when there *is* a result
+#' Conditions cannot be cached.
+#' @noRd
+NULL
 
 #' Helper for use in predicates.
 #' Eventually this should be used for everything as per

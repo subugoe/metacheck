@@ -194,23 +194,6 @@ is_doi_cr_type <- function(x, type = types_allowed) {
 #' @noRd
 types_allowed <- rcrossref::cr_types()[["data"]][["id"]]
 
-#' Test whether DOI as metadata on Crossref
-#'
-#' @param doi [biblids::doi()] of length 1
-#'
-#' @noRd
-has_cr_md <- function(doi) {
-  # TODO this is a bad hackjob, and should be replaced by proper biblids code asap
-  res <- suppressWarnings(rcrossref::cr_works(biblids::as_doi(doi)))
-  # TODO this is a very bad proxy; we actually mean the http response code, but rcrossref doesn't readily give that
-  nrow(res$data) != 0
-}
-
-#' @describeIn has_cr_md Vectorised version
-#' @param dois [biblids::doi()]
-#' @noRd
-have_cr_md <- function(dois) purrr::map_lgl(dois, has_cr_md)
-
 # helpers ====
 #' Adverb to let predicate functions default to `NA` for `x[x1]`
 #'

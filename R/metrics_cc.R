@@ -66,4 +66,3 @@ is_cr_license_df <- function(x) {
   assertthat::assert_that(x %has_name% cc_license_df_skeleton(),
                           msg = "No CC compliance data provided, get data using license_check() or cr_compliance_overview()")
 }
-

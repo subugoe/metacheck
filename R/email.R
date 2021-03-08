@@ -38,6 +38,25 @@ render_email <- function(dois, session_id = NULL) {
   email
 }
 
+
+#' @describeIn render_email Render and send
+#' @inheritParams smtp_send_metacheck
+render_and_send <- function(dois, to) {
+  email <- render_email(
+    dois,
+    # used to disambiguate excel file names, see #83
+    session_id = as.character(floor(runif(1) * 1e20))
+  )
+  smtp_send_metacheck(to = to, email)
+}
+
+#' @describeIn render_email Render and send asynchronously
+#' @export
+render_and_send_async <- function(dois, to) {
+  promises::future_promise(render_and_send(dois = dois, to = to))
+  NULL
+}
+
 #' Add attachment to email
 #' @inheritParams render_email
 #' @noRd
@@ -192,14 +211,7 @@ emailReportServer <- function(id, dois) {
             easyClose = TRUE,
             footer = NULL
           ))
-          smtp_send_metacheck(
-            to = input$recipient,
-            email = render_email(
-              dois = dois,
-              # used to disambiguate excel file names, see #83
-              session_id = as.character(floor(runif(1) * 1e20))
-            )
-          )
+          render_and_send_async(to = input$recipient, dois = dois)
         }
       })
     }

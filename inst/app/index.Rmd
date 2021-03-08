@@ -11,6 +11,10 @@ library(shiny)
 library(metacheck)
 ```
 
+```{r, context="server-start"}
+future::plan(future::multicore)
+```
+
 
 ```{r, context="render"}
 biblids::doiEntryUI(id = "dois")

@@ -87,6 +87,8 @@ test_that("funder_metrics works", {
   expect_error(funder_metrics())
   expect_error(funder_metrics("kdkd"))
   expect_error(funder_metrics(select(out$funder_info, -name)))
+
+  expect_snapshot_value2(a)
 })
 
 test_that("funder_metrics are reported", {

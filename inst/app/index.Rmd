@@ -12,7 +12,7 @@ library(metacheck)
 ```
 
 ```{r, context="server-start"}
-future::plan(future::multicore)
+future::plan(future::multicore, workers = 20L)
 ```
 
 

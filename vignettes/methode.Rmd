@@ -1,32 +1,47 @@
 ---
 title: "Methode"
 subtitle: "Überblick Open-Access-Metadaten-Schnelltest"
-author: "Najko Jahn"
 pkgdown:
     as_is:true
 bibliography: metacheck.bib
 csl: apa.csl
 ---
 
-
-## Überblick
-
 Umfangreiche Metadaten sichern die Auffindbarkeit und Nachnutzung von
 Open-Access-Artikeln. 
-Aus diesem Grunde ist die Überprüfung der Metadaten ein wesentlicher Workflow-Bestandteil beim Umgang mit Open-Access-Publikationskosten und Transformationsverträgen [@Geschuhn_2017; @Marques_2019].
+Aus diesem Grunde ist die Überprüfung der Metadaten ein wesentlicher Workflow-Bestandteil beim Umgang mit Open-Access-Publikationsgebühren und Transformationsverträgen [@Geschuhn_2017; @Marques_2019].
 
 Der Open-Access-Metadaten-Schnelltest ermöglicht die automatische Überprüfung der Metadatenqualität von Open-Access-Zeitschriftenartikeln.
-Er richtet sich in erster Linie an Bibliotheken und wissenschaftliche Informationseinrichtungen, die Open-Access-Artikel verwalten. 
+Er richtet sich in erster Linie an Bibliotheken und wissenschaftliche Informationseinrichtungen, die Open-Access-Publikationskosten verwalten. 
 
-Im Mittelpunkt der Überprüfung des Open-Access-Metadaten-Schnelltests stehen die Metadaten der DOI-Registrierungsagentur [Crossref](https://www.crossref.org/), welche von den meisten wissenschaftlichen Verlagen verwendet wird [@Hendricks_2020]. 
-Crossref-Metadatenservices werden umfangreich in Forschung und Praxis zum Auffinden von Open-Access-Artikeln genutzt, z.B. durch den Open-Access-Discovery-Service Unpaywall [@Piwowar_2018].
+Im Mittelpunkt der Überprüfung des Open-Access-Metadaten-Schnelltests stehen die Metadaten der DOI-Registrierungsagentur [Crossref](https://www.crossref.org/). Crossref wird von den meisten wissenschaftlichen Verlagen verwendet [@Hendricks_2020] und auch im Kontext von Publikationsfonds und Transformationsverträgen werden die meisten DOIs für Open-Access-Artikel über Crossref registriert [@Jahn_2016; @Pieper_2018]. 
+Crossref-Metadatenservices werden zudem umfangreich in Forschung und Praxis zum Auffinden von Open-Access-Artikeln genutzt, z.B. durch den Open-Access-Discovery-Service [Unpaywall](https://unpaywall.org/) [@Piwowar_2018], der eine wesentliche Quelle des deutschen [Open Access Monitor](https://open-access-monitor.de/#/home) ist.
 
-Der Open-Access-Metadaten-Schnelltest nutzt [Crossref Metadata Plus](https://www.crossref.org/services/metadata-retrieval/metadata-plus/). Ein Rahmenvertrag sichert einen priorisierten und hochperformanten Zugang zu den Crossref-Schnittstellen.
+Der Open-Access-Metadaten-Schnelltest nutzt [Crossref Metadata Plus](https://www.crossref.org/services/metadata-retrieval/metadata-plus/). 
+Ein Rahmenvertrag sichert einen priorisierten und hochperformanten Zugang zu den Crossref-Schnittstellen.
+
+## Vorgehen
+
+Der quelloffene Open-Access-Metadaten-Schnelltest erlaubt die umfangreiche Überprüfung von bis zu 1.000 DOIs pro Session und liefert ein Untersuchungsergebnis innerhalb von 45 Minuten per Email. 
+Im Anhang der Ergebnis-Email befindet sich zudem ein umfassender Datenanhang als Exceltabelle.
+
+## Vorabprüfung
+
+Vor dem eigentlichen Metadatentest findet eine umfangreiche Vorabprüfung statt. 
+U.a. wird überprüft:
+
+- ob Dubletten übermittelt wurden,
+- die DOI resolviert,
+- die DOI bei Crossref registriert wurde,
+- Metadaten bei Crossref vorhanden sind,
+- und es sich um Zeitschriftenartikel handelt.
+
+Eine ausführliche Erläuterung des Verfahrens befindet sich in der technischen Dokumentation: 
+https://subugoe.github.io/metacheck/reference/pretest.html
 
 ## Testergebnis
 
-Das Testergebnis des Open-Access-Metadaten-Schnelltest wird per Email verschickt und beinhaltet folgende Ergebnisse:
-
+Das Testergebnis umfasst folgende Metadatenkriterien:
 
 ### Überblick: Crossref-Metadaten
 
@@ -87,7 +102,7 @@ Die prozentualen Anteile in der Tabelle beziehen sich auf alle getesteten Artike
 Es gibt ein großes Interesse, den Förderkontext von Open-Access-Artikeln zu
 erheben. 
 Einige, aber nicht alle Verlage nutzen Crossref, um den Förderinformationen zu teilen. 
-Der Open-Access-Metadaten-Schnelltest zeigt an, bei wie vielem Publikationen Crossref mindestens eine Forschungsförderung verzeichnet, und bei wie vielen Artikeln die DFG vermerkt ist.
+Der Open-Access-Metadaten-Schnelltest zeigt an, bei wie vielen Artikeln Crossref mindestens eine Forschungsförderung verzeichnet.
 
 Bitte beachten Sie, dass aufgrund der unvollständigen Abdeckung Crossref (noch) nicht geeignet ist für umfangreiche Analysen des Förderkontexts von Publikationen.
 
@@ -99,5 +114,6 @@ Beigefügt zur Email befindet sich ein Excel-Spreadsheet mit Metadaten auf Artik
 - `cc_license_check`: Detailauswertung Lizenzüberprüfung
 - `tdm`: Detailauswertung Volltextlinks und TDM
 - `funder_info`: Förderinformationen lt. Crossref
+- `pretest`: Ergebnisse der Vorabprüfung
 
 ## Literatur

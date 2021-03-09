@@ -28,13 +28,14 @@ Im Anhang der Ergebnis-Email befindet sich zudem ein umfassender Datenanhang als
 ## Vorabprüfung
 
 Vor dem eigentlichen Metadatentest findet eine umfangreiche Vorabprüfung statt. 
-U.a. wird überprüft:
+DOIs werden von der weiteren Analyse ausgeschlossen wenn:
 
-- ob Dubletten übermittelt wurden,
-- die DOI resolviert,
-- die DOI bei Crossref registriert wurde,
-- Metadaten bei Crossref vorhanden sind,
-- und es sich um Zeitschriftenartikel handelt.
+- sie mehrfach vorkommen,
+- sie das Limit von ggw. 1000 DOIs überschreiten,
+- sie beim Link Resolver doi.org nicht bekannt sind,
+- sie nicht von Crossref registriert wurden,
+- für sie keine Metadaten bei Crossref vorliegen oder
+- es sich dabei nicht um einen Zeitschriftenartikel handelt.
 
 Eine ausführliche Erläuterung des Verfahrens befindet sich in der technischen Dokumentation: 
 https://subugoe.github.io/metacheck/reference/pretest.html

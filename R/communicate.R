@@ -4,5 +4,8 @@
 #' @family communicate
 #' @export
 runMetacheck <- function(...) {
-  rmarkdown::run(file = system.file("app", "index.Rmd", package = "metacheck"), ...)
+  rmarkdown::run(
+    file = system.file("app", "index.Rmd", package = "metacheck"),
+    ...
+  )
 }

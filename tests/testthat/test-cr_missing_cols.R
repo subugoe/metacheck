@@ -12,7 +12,7 @@ test_that("Missing funder info is captured", {
   expect_s3_class(a, "data.frame")
 
   b <- funder_metrics(a)
-  testthat::expect_snapshot(b)
+  expect_snapshot_value2(b)
 })
 
 test_that("Missing tdm info is captured", {
@@ -26,5 +26,5 @@ test_that("Missing tdm info is captured", {
   expect_s3_class(a, "data.frame")
 
   b <- tdm_metrics(a)
-  testthat::expect_snapshot(b)
+  expect_snapshot_value2(b)
 })

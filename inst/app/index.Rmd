@@ -2,36 +2,28 @@
 title: "Metacheck input"
 output: 
   flexdashboard::flex_dashboard:
-    css: !expr subugoetheme::pkgdown_template()$assets$css
-runtime: shiny
+    css: css/ugoe_bootswatch.css
+runtime: shiny_prerendered
 ---
 
-```{r global, include=FALSE}
+```{r setup, context = "setup", include=FALSE}
 library(shiny)
 library(metacheck)
 ```
 
+```{r, context="server-start"}
+future::plan(future::multicore, workers = 20L)
+```
 
-```{r}
+
+```{r, context="render"}
 biblids::doiEntryUI(id = "dois")
 emailReportUI(id = "send")
 ```
 
-```{r}
-# used to disambiguate excel file names
-# TODO replace with shiny session id #83
-session_id <- as.character(floor(runif(1) * 1e20))
-
+```{r, context="server"}
 # get dois
 dois <- biblids::doiEntryServer(id = "dois")
-
-report <- reactive({
-  withProgress(
-      expr = render_email(dois = dois(), session_id = session_id),
-      message = "Generating report..."
-    )
-})
-
 # email
-emailReportServer(id = "send", dois = dois, email = report())
+emailReportServer(id = "send", dois = dois())
 ```

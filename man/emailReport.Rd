@@ -10,7 +10,7 @@ emailReport()
 
 emailReportUI(id, width = "100\%", ...)
 
-emailReportServer(id, dois, email = blastula::prepare_test_message())
+emailReportServer(id, dois)
 }
 \arguments{
 \item{id}{The id string to be namespaced (optional).}

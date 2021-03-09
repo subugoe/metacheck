@@ -38,6 +38,25 @@ render_email <- function(dois, session_id = NULL) {
   email
 }
 
+
+#' @describeIn render_email Render and send
+#' @inheritParams smtp_send_metacheck
+render_and_send <- function(dois, to) {
+  email <- render_email(
+    dois,
+    # used to disambiguate excel file names, see #83
+    session_id = as.character(floor(runif(1) * 1e20))
+  )
+  smtp_send_metacheck(to = to, email)
+}
+
+#' @describeIn render_email Render and send asynchronously
+#' @export
+render_and_send_async <- function(dois, to) {
+  promises::future_promise(render_and_send(dois = dois, to = to))
+  NULL
+}
+
 #' Add attachment to email
 #' @inheritParams render_email
 #' @noRd
@@ -163,7 +182,7 @@ emailReportUI <- function(id, width = "100%", ...) {
 
 #' @describeIn emailReport Module server
 #' @export
-emailReportServer <- function(id, dois, email = blastula::prepare_test_message()) {
+emailReportServer <- function(id, dois) {
   shiny::moduleServer(
     id,
     module = function(input, output, session) {
@@ -176,7 +195,7 @@ emailReportServer <- function(id, dois, email = blastula::prepare_test_message()
       )
       iv$enable()
       observe({
-        shinyjs::toggleState("send", iv$is_valid())
+        shinyjs::toggleState("send", iv$is_valid() && !is.null(dois))
       })
       observeEvent(input$send, {
         if (iv$is_valid()) {
@@ -184,7 +203,7 @@ emailReportServer <- function(id, dois, email = blastula::prepare_test_message()
             title = "You have succesfully send your DOIs",
             glue::glue(
               "An automated report will be send to your email ",
-              "within the next 15 minutes. ",
+              "within the next 45 minutes. ",
               "Please check your SPAM folder. ",
               "If your have not received your email after an hour, ",
               "please contact us."
@@ -192,10 +211,7 @@ emailReportServer <- function(id, dois, email = blastula::prepare_test_message()
             easyClose = TRUE,
             footer = NULL
           ))
-          smtp_send_metacheck(
-            to = input$recipient,
-            email = email
-          )
+          render_and_send_async(to = input$recipient, dois = dois)
         }
       })
     }

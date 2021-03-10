@@ -32,7 +32,7 @@ Die vollständige Vorabprüfung mit den Ergebnissen für jeden DOI finden Sie in
 Die folgende Analyse bezieht sich nur auf die verbleibenden **`r sum(is_metacheckable(params$doi), na.rm = TRUE)`** DOIs.
 
 
-### Überblick: Crossref-Metadaten
+### Testergebnis: Crossref-Metadaten
 
 ```{r metrics_overview}
 metrics_overview(params$cr_overview$cr_overview) %>%
@@ -94,6 +94,10 @@ Beigefügt finden Sie ein Excel-Spreadsheet mit Metadaten auf Artikelebene für 
 - `pretest`: Ergebnisse der Vorabprüfung
 
 Weitere Informationen, wie das Ergebnis des Schnelltests zu interpretieren ist, finden Sie auf unserer [Webseite](https://subugoe.github.io/metacheck/articles/methode.html). 
+
+**Bitte beachten Sie, dass der Schnelltest eine Workflowunterstützung bei der Überprüfung von Verlagsmetadaten ist. 
+Der Schnelltest trifft keine abschließenden Aussagen zur Förderfähigkeit von Open-Access-Publikationen bzw. deren Kosten. 
+Dazu sind die Förderbedingungen der jeweiligen Förderer heranzuziehen.**
 
 Bei Fragen und Anregungen stehen wir Ihnen gerne unter metacheck-support@sub.uni-goettingen.de zur Verfügung.
 

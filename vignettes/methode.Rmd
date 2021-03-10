@@ -20,6 +20,10 @@ Crossref-Metadatenservices werden zudem umfangreich in Forschung und Praxis zum 
 Der Open-Access-Metadaten-Schnelltest nutzt [Crossref Metadata Plus](https://www.crossref.org/services/metadata-retrieval/metadata-plus/). 
 Ein Rahmenvertrag sichert einen priorisierten und hochperformanten Zugang zu den Crossref-Schnittstellen.
 
+**Bitte beachten Sie, dass der Schnelltest eine Workflowunterstützung bei der Überprüfung von Verlagsmetadaten ist. 
+Der Schnelltest trifft keine abschließenden Aussagen zur Förderfähigkeit von Open-Access-Publikationen bzw. deren Kosten. 
+Dazu sind die Förderbedingungen der jeweiligen Förderer heranzuziehen.**
+
 ## Vorgehen
 
 Der quelloffene Open-Access-Metadaten-Schnelltest erlaubt die umfangreiche Überprüfung von bis zu 1.000 DOIs pro Session und liefert ein Untersuchungsergebnis innerhalb von 45 Minuten per Email. 

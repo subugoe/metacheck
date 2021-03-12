@@ -64,16 +64,18 @@ navbar:
       - text: "German"
       - text: "Methode"
         href: articles/methode.html
+      - text: "Webinare"
+        href: webinare.html
       - text: ----
       - text: "English"
       - text: Frequently Asked Questions (Coming Soon)
         href: #
-      - text: Other Support 
+      - text: Other Support
         href: support.html
     examples:
       text: Examples
       menu:
-      - text: German Example Email (TU Berlin) 
+      - text: German Example Email (TU Berlin)
         href: articles/german.html
     articles: ~
 development:

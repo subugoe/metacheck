@@ -26,7 +26,7 @@ Sie haben **`r length(params$doi)`** DOIs eingegeben.
 metacheck:::report_metacheckable(params$dois)
 ```
 
-Weitere Informationen zur Vorabprüfung finden Sie im [Methodenbericht](https://subugoe.github.io/metacheck/articles/methode.html).
+Weitere Informationen zur Vorabprüfung finden Sie im <a href="https://subugoe.github.io/metacheck/articles/methode.html" rel="notrack">Methodenbericht</a>
 Die vollständige Vorabprüfung mit den Ergebnissen für jeden DOI finden Sie in der beigefügten Excel-Datei im Blatt `pretest`.
 
 Die folgende Analyse bezieht sich nur auf die verbleibenden **`r sum(is_metacheckable(params$doi), na.rm = TRUE)`** DOIs.
@@ -63,10 +63,8 @@ tdm_metrics(params$cr_overview$tdm) %>%
 ```
 
 Die Tabelle bietet einen Überblick, welche Dateiformate,
-ausgedrückt als [MIME
-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types),
-für das Text- und Data-Mining (TDM) unterstützt werden. Grundsätzlich
-kann je Artikel mehr als ein Format über das Crossref-Metadatenprofil
+ausgedrückt als MIME Type, für das Text- und Data-Mining (TDM) unterstützt werden. 
+Grundsätzlich kann je Artikel mehr als ein Format über das Crossref-Metadatenprofil
 angeboten werden.
 
 Der prozentuale Anteil bezieht sich auf die Anzahl der überprüften Artikel mit Crossref-Metadaten.
@@ -93,7 +91,7 @@ Beigefügt finden Sie ein Excel-Spreadsheet mit Metadaten auf Artikelebene für 
 - `funder_info`: Förderinformationen lt. Crossref
 - `pretest`: Ergebnisse der Vorabprüfung
 
-Weitere Informationen, wie das Ergebnis des Schnelltests zu interpretieren ist, finden Sie auf unserer [Webseite](https://subugoe.github.io/metacheck/articles/methode.html). 
+Weitere Informationen, wie das Ergebnis des Schnelltests zu interpretieren ist, finden Sie im <a href="https://subugoe.github.io/metacheck/articles/methode.html" rel="notrack">Methodenbericht</a>. 
 
 **Bitte beachten Sie, dass der Schnelltest eine Workflowunterstützung bei der Überprüfung von Verlagsmetadaten ist. 
 Der Schnelltest trifft keine abschließenden Aussagen zur Förderfähigkeit von Open-Access-Publikationen bzw. deren Kosten. 

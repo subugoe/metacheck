@@ -26,7 +26,7 @@ Sie haben **`r length(params$doi)`** DOIs eingegeben.
 metacheck:::report_metacheckable(params$dois)
 ```
 
-Weitere Informationen zur Vorabprüfung finden Sie im <a href="https://subugoe.github.io/metacheck/articles/methode.html" rel="notrack">Methodenbericht</a>
+Weitere Informationen zur Vorabprüfung finden Sie im <a href="https://subugoe.github.io/metacheck/articles/methode.html" rel="notrack">Methodenbericht</a>.
 Die vollständige Vorabprüfung mit den Ergebnissen für jeden DOI finden Sie in der beigefügten Excel-Datei im Blatt `pretest`.
 
 Die folgende Analyse bezieht sich nur auf die verbleibenden **`r sum(is_metacheckable(params$doi), na.rm = TRUE)`** DOIs.

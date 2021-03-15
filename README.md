@@ -17,6 +17,9 @@
     <a class="btn btn-primary btn-lg" href="https://subugoe.github.io/hoad/newsletter.html" role="button">
       Sign up to the newsletter (German)
     </a>
+    <a class="btn btn-primary btn-lg" href="articles/veranstaltungen.html" role="button">
+      Attend our webinars (German)
+    </a>
   </p>
 </div>
 

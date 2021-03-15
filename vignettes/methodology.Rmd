@@ -1,0 +1,15 @@
+---
+title: "Methodology"
+subtitle: "Overview of the Open-Access Metadata Checker"
+pkgdown:
+    as_is:true
+bibliography: metacheck.bib
+csl: apa.csl
+---
+
+<div class="alert alert-info" role="alert">
+  This document has not yet been translated into english.
+  Please consider the [technical documentation](reference/index.html) instead.
+</div>
+
+## References

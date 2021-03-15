@@ -1,0 +1,30 @@
+---
+title: "Veranstaltungen"
+subtitle: "Erfahren Sie Neues über den Schnelltest und tauschen Sie sich mit anderen Nutzer_innen aus."
+pkgdown:
+    as_is:true
+---
+
+Wir organisieren regelmäßig Webinare und nehmen an anderen Veranstaltungen teil um den Open-Access-Metadaten-Schnelltest vorzustellen und Rückmeldungen einzuholen.
+Wir freuen uns auf Ihre Anregungen!
+
+<div class="alert alert-info" role="alert">
+  Sie finden hier englisch- und deutschsprachige Veranstaltungen.
+</div>
+
+### Nächste Veranstaltungen
+
+```{r echo=FALSE}
+metacheck:::knit_print.events(
+  purrr::keep(metacheck:::events(), function(x) x$end > Sys.time())
+)
+```
+
+
+### Vergangene Veranstaltungen
+
+```{r echo=FALSE}
+metacheck:::knit_print.events(
+  purrr::keep(metacheck:::events(), function(x) x$end < Sys.time())
+)
+```

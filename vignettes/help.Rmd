@@ -1,4 +1,8 @@
-# Receiving Support
+---
+title: "Help"
+pkgdown:
+    as_is:true
+---
 
 ## Troubleshooting your Compliance Report
 
@@ -12,11 +16,6 @@ To receive support for interpreting your compliance report, please write to [`me
 
 This email is backed by a mailing list hosted at [GWDG mbH Göttingen](http://gwdg.de), the IT service provider of the University of Göttingen.
 Learn more about their processing of your data by reading the [GWDG's privacy notice](https://www.gwdg.de/privacy-notice).
-
-<div class="alert alert-info" role="alert">
-  <strong>German-speakers welcome.</strong>
-  Support is offered in both english and german.
-</div>
 
 We're always looking for volunteers with metadata experience to help users.
 Write us and we'll add you to the list.

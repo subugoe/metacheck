@@ -62,16 +62,20 @@ navbar:
       text: Support
       menu:
       - text: "German"
+      - text: Hilfe
+        href: articles/hilfe.html
+      - text: "Veranstaltungen"
+        href: articles/veranstaltungen.html
       - text: "Methode"
         href: articles/methode.html
-      - text: "Webinare"
-        href: webinare.html
       - text: ----
       - text: "English"
-      - text: Frequently Asked Questions (Coming Soon)
-        href: #
-      - text: Other Support
-        href: support.html
+      - text: Help
+        href: articles/help.html
+      - text: "Events"
+        href: articles/events.html
+      - text: "Methodology"
+        href: articles/methodology.html
     examples:
       text: Examples
       menu:

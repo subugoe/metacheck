@@ -1,0 +1,24 @@
+---
+title: "Hilfe"
+pkgdown:
+    as_is:true
+---
+
+## Problemlösung für Ihr Metadaten-Schnelltest Ergebnis
+
+Für Unterstützung in der Interpretation Ihres Schnelltests, schreiben Sie bitte an [`metacheck-support@sub.uni-goettingen.de`](mailto:metacheck-support@sub-uni-goettingen.de).
+
+<div class="alert alert-warning" role="alert">
+  **Bitte senden Sie keine persönlichen oder sensiblen Informationen an diese Adresse.**
+  Die Liste wird von Freiwilligen betreut, darunter auch Helfer_innen, die nicht an der Universität Göttingen angestellt sind.
+</div>
+
+Diese Emailadresse ist als Verteiler bei der [GWDG mbH Göttingen](http://gwdg.de) eingerichtet, dem IT Anbieter der Universität Göttingen.
+Details zur Datenverarbeitung entnehmen Sie der [GWDG Datenschutzerklärung](https://www.gwdg.de/privacy-notice).
+
+Wir suchen immer nach weiteren Freiwilligen, die uns bei der Unterstützung von Nutzer_innen helfen können.
+Schreiben Sie uns gern, wenn Sie Interesse haben.
+
+## Technische Unterstützung
+
+Wenn Sie ein technisches Problem mit der Software haben, können Sie uns auch ein [Ticket bei GitHub einstellen](https://github.com/subugoe/metacheck).

@@ -1,0 +1,18 @@
+---
+title: "Events"
+subtitle: "Learn more about metacheck and engage with the community"
+pkgdown:
+    as_is:true
+---
+
+We regularly run webinars and participate in events to educate our users and gather feedback.
+
+<div class="alert alert-info" role="alert">
+  There are currently no english-language events.
+</div>
+
+
+### Upcoming Events
+
+
+### Past Events

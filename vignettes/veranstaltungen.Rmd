@@ -18,6 +18,12 @@ Erfahren Sie Neues über den Schnelltest und tauschen Sie sich mit anderen Nutze
 Wir organisieren regelmäßig Webinare und nehmen an anderen Veranstaltungen teil um den Open-Access-Metadaten-Schnelltest vorzustellen und Rückmeldungen einzuholen.
 Wir freuen uns auf Ihre Anregungen!
 
+<div class="alert alert-success" role="alert">
+  Manche Veranstaltungen bieten wir mehrfach an.
+  Suchen Sie einfach den Termin aus, der Ihnen am besten passt.
+  Natürlich können Sie auch mehrfach teilnehmen.
+</div>
+
 <div class="alert alert-info" role="alert">
   Sie finden hier englisch- und deutschsprachige Veranstaltungen.
 </div>

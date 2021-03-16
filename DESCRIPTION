@@ -83,7 +83,8 @@ Suggests:
     shinycaas,
     bench,
     withr,
-    htmltools
+    htmltools,
+    knitr
 URL: https://subugoe.github.io/metacheck, https://github.com/subugoe/metacheck
 BugReports: https://github.com/subugoe/metacheck/issues
 Remotes:

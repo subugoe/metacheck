@@ -1,9 +1,12 @@
 ---
 title: "Events"
-subtitle: "Learn more about metacheck and engage with the community"
 pkgdown:
     as_is:true
 ---
+
+<p class="lead">
+Learn more about metacheck and engage with the community.
+</p>
 
 We regularly run webinars and participate in events to educate our users and gather feedback.
 
@@ -12,7 +15,7 @@ We regularly run webinars and participate in events to educate our users and gat
 </div>
 
 
-### Upcoming Events
+## Upcoming Events
 
 
-### Past Events
+## Past Events

@@ -1,9 +1,19 @@
 ---
 title: "Veranstaltungen"
-subtitle: "Erfahren Sie Neues über den Schnelltest und tauschen Sie sich mit anderen Nutzer_innen aus."
 pkgdown:
     as_is:true
 ---
+
+```{r, setup, include=FALSE}
+library(magrittr)
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
+<p class="lead">
+Erfahren Sie Neues über den Schnelltest und tauschen Sie sich mit anderen Nutzer_innen aus.
+</p>
 
 Wir organisieren regelmäßig Webinare und nehmen an anderen Veranstaltungen teil um den Open-Access-Metadaten-Schnelltest vorzustellen und Rückmeldungen einzuholen.
 Wir freuen uns auf Ihre Anregungen!
@@ -12,19 +22,17 @@ Wir freuen uns auf Ihre Anregungen!
   Sie finden hier englisch- und deutschsprachige Veranstaltungen.
 </div>
 
-### Nächste Veranstaltungen
+## Nächste Veranstaltungen
 
-```{r echo=FALSE}
-metacheck:::knit_print.events(
-  purrr::keep(metacheck:::events(), function(x) x$end > Sys.time())
-)
+```{r}
+dplyr::filter(metacheck:::metacheck_events, end >= Sys.time()) %>%
+  metacheck:::knit_print.events(.)
 ```
 
 
-### Vergangene Veranstaltungen
+## Vergangene Veranstaltungen
 
-```{r echo=FALSE}
-metacheck:::knit_print.events(
-  purrr::keep(metacheck:::events(), function(x) x$end < Sys.time())
-)
+```{r}
+dplyr::filter(metacheck:::metacheck_events, end < Sys.time()) %>%
+  metacheck:::knit_print.events(.)
 ```

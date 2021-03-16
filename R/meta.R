@@ -6,63 +6,76 @@
 
 # events ====
 
-#' Metacheck events
-#'
-#' These are our events
+#' Create event
+#' 
+#' @param `topic`,`desc` topic/title and description of the event
+#' @param `start`, `end` a vector of POSIXt, numeric or character objects
+#' @param `lang` language of the event.
+#' @param `type` type of event.
+#' @param `link_reg`,`link_atd` links to registration and attendance.
+#' @param `n_reg`, `n_atd` number of registered and attending.
+#' @inheritParams lubridate::as_datetime()
 #'
 #' @noRd
-events <- function() {
+event <- function(topic,
+                  desc,
+                  start,
+                  end = lubridate::as_datetime(start, tz = tz) + lubridate::hours(1L),
+                  lang = c("de-DE", "en-US"),
+                  type = c("Webinar"),
+                  link_reg = NA,
+                  link_atd = NA,
+                  n_reg = NA,
+                  n_atd = NA,
+                  tz = "Europe/Berlin") {
+  lang <- rlang::arg_match(lang)
+  type <- rlang::arg_match(type)
   list(
-    rlang::exec(
-      event,
-      !!!webinare_beta,
-      start = "2021-03-19 11:00:00",
-      end = "2021-03-19 12:00:00",
-      link = "https://uni-goettingen.zoom.us/meeting/register/tJ0sd-igrDosHdOT-BkziQBFtkacrk0o5WrG",
-      btns = htmltools::a(
-        class = "btn btn-default btn-sm",
-        href = "https://uni-goettingen.zoom.us/meeting/register/tJ0sd-igrDosHdOT-BkziQBFtkacrk0o5WrG",
-        "Jetzt anmelden"
-      )
-    ),
-    rlang::exec(
-      event,
-      !!!webinare_beta,
-      start = "2021-03-19 11:00:00",
-      end = "2021-03-19 12:00:00",
-      link = "https://uni-goettingen.zoom.us/meeting/register/tJEtfumqrTMvEtXtLrnT1m_Jn135Otcv6tOA",
-      btns = htmltools::a(
-        class = "btn btn-default btn-sm",
-        href = "https://uni-goettingen.zoom.us/meeting/register/tJEtfumqrTMvEtXtLrnT1m_Jn135Otcv6tOA",
-        "Jetzt anmelden"
-      )
-    ),
-    rlang::exec(
-      event,
-      !!!webinare_beta,
-      start = "2021-03-30 09:00:00",
-      end = "2021-03-30 10:00:00",
-      link = "https://uni-goettingen.zoom.us/meeting/register/tJEtfumqrTMvEtXtLrnT1m_Jn135Otcv6tOA",
-      btns = htmltools::a(
-        class = "btn btn-default btn-sm",
-        href = "https://uni-goettingen.zoom.us/meeting/register/tJEtfumqrTMvEtXtLrnT1m_Jn135Otcv6tOA",
-        "Jetzt anmelden"
-      )
-    )
+    topic = topic,
+    desc = desc,
+    start = lubridate::as_datetime(start, tz = tz),
+    end = lubridate::as_datetime(end, tz = tz),
+    lang = lang,
+    type = type,
+    link_reg = link_reg,
+    link_atd = link_atd,
+    n_reg = n_reg,
+    n_atd = n_atd
   )
+}
+
+#' @describeIn event Create multiple events
+#' Accepts vectors for each arg, recycles as and returns tibble.
+#' @noRd
+events <- function(...) {
+  x <- tibble::tibble(...)
+  x_list <- vector(mode = "list", length = nrow(x))
+  for (i in 1:nrow(x)) {
+    x_list[[i]] <- rlang::exec(event, !!!x[i, ])
+  }
+  purrr::map_dfr(x_list, tibble::as_tibble_row)
 }
 
 #' Webinars after beta release
 #' @noRd
-webinare_beta <- list(
-  topic = "Vorstellung OA-Metadaten-Schnelltest",
+webinare_beta <- events(
+  topic = "Vorstellung OA-Metadaten-Schnelltest (Beta)",
   desc = glue::glue(
     "Im Webinar wird der OA-Metadaten-Schnelltest und die dahinter liegende Methodik zur Diskussion vorgestellt. ",
     "Die Veranstaltung richtet sich in erster Linie an Personen, die an Bibliotheken und Informationseinrichtungen einen Publikationsfonds oder Transformationsvertr\U00E4ge betreuen. ",
     "Teilnehmende haben die M\U00F6glichkeit, sich in die Projektentwicklung einzubringen und im Webinar ihre Anforderungen und Erfahrungen zu teilen. "
   ),
-  type = "Webinar"
+  start = c("2021-03-19 11:00:00", "2021-03-30 10:00:00", "2021-04-15 14:00:00"),
+  link_reg = c(
+    "https://uni-goettingen.zoom.us/meeting/register/tJ0sd-igrDosHdOT-BkziQBFtkacrk0o5WrG",
+    "https://uni-goettingen.zoom.us/meeting/register/tJEtfumqrTMvEtXtLrnT1m_Jn135Otcv6tOA",
+    "https://uni-goettingen.zoom.us/meeting/register/tJIrcOmqqTkiH9wd7DoKTC94vx2NQJR_EHfy"
+  )
 )
+
+#' Our events
+#' @noRd
+metacheck_events <- rbind(webinare_beta)
 
 #' Print an event events to HTML
 #' 
@@ -72,57 +85,16 @@ webinare_beta <- list(
 #' Because there is no class, this is not a proper knit_print method.
 #' It's just named thus to be expressive.
 #' 
-#' @param x list of events
+#' @param x a tibble of events as returned by [events()].
 #' 
 #' @noRd
-knit_print.events <- function(x = events()) {
+knit_print.events <- function(x = metacheck_events) {
+  if (nrow(x) == 0) return(knitr::asis_output(x = ""))
+  # let's make a list first for purrr
+  x_list <- split(x, seq(nrow(x)))
   htmltools::div(
     class = "list-group",
-    purrr::map(x, knit_print.event)
-  )
-}
-
-#' Creates an event
-#' 
-#' @param topic,desc topic/title and description of the event
-#' 
-#' @param start,end
-#' a vector of POSIXt, numeric or character objects
-#' See [lubridate::as_datetime]
-#' 
-#' @inheritParams lubridate::as_datetime()
-#' 
-#' @param lang language of the event.
-#' 
-#' @param type type of event.
-#' 
-#' @param link link to the event.
-#' 
-#' @param btns [htmltools::tagList()] of buttons.
-#' 
-#' @return a named list
-#' 
-#' @noRd
-event <- function(topic,
-                  desc,
-                  start,
-                  end = NULL,
-                  tz = "Europe/Berlin",
-                  lang = "DE",
-                  type = c("", "Webinar"),
-                  link = "#",
-                  btns = NULL
-                  ) {
-  type <- rlang::arg_match(type)
-  list(
-    topic = topic,
-    desc = desc,
-    start = lubridate::as_datetime(start, tz = tz),
-    end = lubridate::as_datetime(end, tz = tz),
-    lang = lang,
-    type = type,
-    link = link,
-    btns = btns
+    purrr::map(x_list, knit_print.event)
   )
 }
 
@@ -142,10 +114,7 @@ knit_print.event <- function(x) {
     htmltools::h4(
       class = "list-group-item-heading",
       `data-toc-skip` = TRUE,
-      htmltools::a(
-        href = x$link,
-        x$topic
-      ),
+      x$topic,
       htmltools::tags$small(
         class = "text-primary",
         htmltools::tags$time(
@@ -163,7 +132,7 @@ knit_print.event <- function(x) {
     htmltools::p(
       class = "list-group-item-text",
       x$desc,
-      knit_print.btns(x$btns)
+      knit_print.btns(x$link_reg, x$link_atd, x$n_reg, x$n_atd, x$end, x$lang)
     )
   )
 }
@@ -183,5 +152,37 @@ knit_print.type <- function(x) {
 }
 
 #' Print many buttons
+#' @inheritParams event
 #' @noRd
-knit_print.btns <- function(x) htmltools::div(class = "btn-group", x)
+knit_print.btns <- function(link_reg,
+                            link_atd,
+                            n_reg,
+                            n_atd,
+                            end,
+                            lang) {
+  reg <- NULL
+  if (end >= Sys.time()) {
+    reg <- htmltools::a(
+      class = "btn btn-default btn-sm",
+      href = link_reg,
+      switch(lang, `de-DE` = "Jetzt anmelden", `en-US` = "Register now")
+    )
+    atd <- htmltools::a(
+      class = "btn btn-primary btn-sm",
+      href = link_atd,
+      switch(lang, `de-DE` = "Jetzt teilnehmen", `en-US` = "Participate now")
+    )
+  } else {
+    atd <- htmltools::a(
+      class = "btn btn-default btn-sm",
+      href = link_atd,
+      switch(lang, `de-DE` = "Teilnehmer_innen", `en-US` = "Participants"),
+      if (!is.na(n_atd)) {
+        htmltools::span(
+          class = "badge", n_atd
+        )
+      }
+    )
+  }
+  htmltools::p(class = "list-group-item-text", reg, atd)
+}

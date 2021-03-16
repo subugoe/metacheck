@@ -4,7 +4,7 @@ pkgdown:
     as_is:true
 ---
 
-## Problemlösung für Ihr Metadaten-Schnelltest Ergebnis
+## Probleme mit den Ergebnissen
 
 Für Unterstützung in der Interpretation Ihres Schnelltests, schreiben Sie bitte an [`metacheck-support@sub.uni-goettingen.de`](mailto:metacheck-support@sub-uni-goettingen.de).
 
@@ -19,6 +19,6 @@ Details zur Datenverarbeitung entnehmen Sie der [GWDG Datenschutzerklärung](htt
 Wir suchen immer nach weiteren Freiwilligen, die uns bei der Unterstützung von Nutzer_innen helfen können.
 Schreiben Sie uns gern, wenn Sie Interesse haben.
 
-## Technische Unterstützung
+## Technische Probleme
 
 Wenn Sie ein technisches Problem mit der Software haben, können Sie uns auch ein [Ticket bei GitHub einstellen](https://github.com/subugoe/metacheck).

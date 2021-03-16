@@ -14,9 +14,6 @@
     <a class="btn btn-success btn-lg" href="articles/app.html" role="button">
       Try out the alpha
     </a>
-    <a class="btn btn-primary btn-lg" href="https://subugoe.github.io/hoad/newsletter.html" role="button">
-      Sign up to the newsletter (German)
-    </a>
     <a class="btn btn-primary btn-lg" href="articles/veranstaltungen.html" role="button">
       Attend our webinars (German)
     </a>

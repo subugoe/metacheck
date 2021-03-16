@@ -68,6 +68,8 @@ navbar:
         href: articles/veranstaltungen.html
       - text: "Methode"
         href: articles/methode.html
+      - text: "Newsletter"
+        href: https://subugoe.github.io/hoad/newsletter.html
       - text: ----
       - text: "English"
       - text: Help

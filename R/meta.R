@@ -65,7 +65,7 @@ webinare_beta <- events(
     "Die Veranstaltung richtet sich in erster Linie an Personen, die an Bibliotheken und Informationseinrichtungen einen Publikationsfonds oder Transformationsvertr\U00E4ge betreuen. ",
     "Teilnehmende haben die M\U00F6glichkeit, sich in die Projektentwicklung einzubringen und im Webinar ihre Anforderungen und Erfahrungen zu teilen. "
   ),
-  start = c("2021-03-19 11:00:00", "2021-03-30 10:00:00", "2021-04-15 14:00:00"),
+  start = c("2021-03-19 11:00:00", "2021-03-30 09:00:00", "2021-04-15 14:00:00"),
   link_reg = c(
     "https://uni-goettingen.zoom.us/meeting/register/tJ0sd-igrDosHdOT-BkziQBFtkacrk0o5WrG",
     "https://uni-goettingen.zoom.us/meeting/register/tJEtfumqrTMvEtXtLrnT1m_Jn135Otcv6tOA",

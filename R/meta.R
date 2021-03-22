@@ -7,7 +7,7 @@
 # events ====
 
 #' Create event
-#' 
+#'
 #' @param `topic`,`desc` topic/title and description of the event
 #' @param `start`, `end` a vector of POSIXt, numeric or character objects
 #' @param `lang` language of the event.
@@ -65,7 +65,7 @@ webinare_beta <- events(
     "Die Veranstaltung richtet sich in erster Linie an Personen, die an Bibliotheken und Informationseinrichtungen einen Publikationsfonds oder Transformationsvertr\U00E4ge betreuen. ",
     "Teilnehmende haben die M\U00F6glichkeit, sich in die Projektentwicklung einzubringen und im Webinar ihre Anforderungen und Erfahrungen zu teilen. "
   ),
-  start = c("2021-03-19 11:00:00", "2021-03-30 10:00:00", "2021-04-15 14:00:00"),
+  start = c("2021-03-19 11:00:00", "2021-03-30 09:00:00", "2021-04-15 14:00:00"),
   link_reg = c(
     "https://uni-goettingen.zoom.us/meeting/register/tJ0sd-igrDosHdOT-BkziQBFtkacrk0o5WrG",
     "https://uni-goettingen.zoom.us/meeting/register/tJEtfumqrTMvEtXtLrnT1m_Jn135Otcv6tOA",
@@ -78,15 +78,15 @@ webinare_beta <- events(
 metacheck_events <- rbind(webinare_beta)
 
 #' Print an event events to HTML
-#' 
+#'
 #' Creates a bootstrap (3.4) `"list-group".
-#' 
+#'
 #' @details
 #' Because there is no class, this is not a proper knit_print method.
 #' It's just named thus to be expressive.
-#' 
+#'
 #' @param x a tibble of events as returned by [events()].
-#' 
+#'
 #' @noRd
 knit_print.events <- function(x = metacheck_events) {
   if (nrow(x) == 0) return(knitr::asis_output(x = ""))
@@ -99,14 +99,14 @@ knit_print.events <- function(x = metacheck_events) {
 }
 
 #' Print an event to HTML
-#' 
+#'
 #' Creates a
 #' [bootstrap 3.4 list group element](https://getbootstrap.com/docs/3.4/components/#list-group)
-#' 
+#'
 #' @inherit knit_print.event_list
-#' 
+#'
 #' @param x a named list as returned by [event()]
-#' 
+#'
 #' @noRd
 knit_print.event <- function(x) {
   htmltools::div(

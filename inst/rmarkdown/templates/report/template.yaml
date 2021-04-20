@@ -1,0 +1,4 @@
+name: Metacheck Report
+description: >
+   A metacheck compliance report
+create_dir: FALSE

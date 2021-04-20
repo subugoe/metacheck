@@ -1,0 +1,10 @@
+---
+title: "Example Metacheck Report"
+pkgdown:
+    as_is:true
+---
+
+```{r, echo = FALSE, results = 'asis'}
+res <- knitr::knit_child(metacheck:::path_report_rmd(lang = "en"), quiet = TRUE)
+cat(res, sep = '\n')
+```

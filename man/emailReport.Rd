@@ -45,6 +45,7 @@ Email Report through a Shiny Module
 \seealso{
 Other communicate: 
 \code{\link{render_email}()},
+\code{\link{report}},
 \code{\link{runMetacheck}()},
 \code{\link{smtp_send_metacheck}()}
 }

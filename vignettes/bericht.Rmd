@@ -1,0 +1,10 @@
+---
+title: "Beispiel-Bericht"
+pkgdown:
+    as_is:true
+---
+
+```{r, echo = FALSE, results = 'asis'}
+res <- knitr::knit_child(metacheck:::path_report_rmd(lang = "de"), quiet = TRUE)
+cat(res, sep = '\n')
+```

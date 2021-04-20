@@ -80,6 +80,7 @@ Send out email
 Other communicate: 
 \code{\link{emailReport}()},
 \code{\link{render_email}()},
+\code{\link{report}},
 \code{\link{runMetacheck}()}
 }
 \concept{communicate}

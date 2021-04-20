@@ -37,6 +37,7 @@ Render email
 \seealso{
 Other communicate: 
 \code{\link{emailReport}()},
+\code{\link{report}},
 \code{\link{runMetacheck}()},
 \code{\link{smtp_send_metacheck}()}
 }

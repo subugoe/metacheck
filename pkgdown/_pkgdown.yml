@@ -46,7 +46,7 @@ reference:
 - contents:
   - has_concept("model")
 - title: Communicate
-  desc: Shiny app and rmarkdown
+  desc: Report the results in a shiny app or rmarkdown report
 - contents:
   - has_concept("communicate")
 navbar:
@@ -64,6 +64,8 @@ navbar:
       - text: "German"
       - text: Hilfe
         href: articles/hilfe.html
+      - text: Beispiel-Bericht
+        href: articles/bericht.html
       - text: "Veranstaltungen"
         href: articles/veranstaltungen.html
       - text: "Methode"
@@ -74,15 +76,12 @@ navbar:
       - text: "English"
       - text: Help
         href: articles/help.html
+      - text: Example Report
+        href: articles/report.html
       - text: "Events"
         href: articles/events.html
       - text: "Methodology"
         href: articles/methodology.html
-    examples:
-      text: Examples
-      menu:
-      - text: German Example Email (TU Berlin)
-        href: articles/german.html
     articles: ~
 development:
   version_label: danger

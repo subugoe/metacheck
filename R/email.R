@@ -38,7 +38,6 @@ render_email <- function(dois, session_id = NULL) {
   email
 }
 
-
 #' @describeIn render_email Render and send
 #' @inheritParams smtp_send_metacheck
 render_and_send <- function(dois, to) {

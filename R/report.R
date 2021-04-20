@@ -34,11 +34,30 @@ draft_report <- function(lang = c("en", "de"), ...) {
 
 #' @describeIn report
 #' Render a parametrised metacheck report.
+#' @param dois
+#' Vector of DOIs, as created by, or coerceable to [biblids::doi()].
 #' @inheritDotParams rmarkdown::render
 #' @export
-render_report <- function(lang = c("en", "de"), ...) {
+render_report <- function(dois = tu_dois(), lang = c("en", "de"), ...) {
+  dois <- biblids::as_doi(dois)
+  checkmate::assert_vector(dois, min.len = 2, null.ok = FALSE)
   rmarkdown::render(
     input = path_report_rmd(lang = lang),
+    params = list(dois = dois),
     ...
   )
+}
+
+#' @describeIn report
+#' Render report as a child document.
+#' Used inside vignettes.
+#' @noRd
+knit_child_report <- function(...) {
+  # knit_child does not know params, so these have to be in env
+  params <<- list(dois = tu_dois())
+  res <- knitr::knit_child(
+    path_report_rmd(...),
+    quiet = TRUE
+  )
+  cat(res, sep = "\n")
 }

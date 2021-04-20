@@ -8,7 +8,7 @@
 \usage{
 draft_report(lang = c("en", "de"), ...)
 
-render_report(lang = c("en", "de"), ...)
+render_report(dois = tu_dois(), lang = c("en", "de"), ...)
 }
 \arguments{
 \item{lang}{Language of the report.}
@@ -93,6 +93,8 @@ output.}
     \item{\code{quiet}}{An option to suppress printing of the pandoc command line.}
     \item{\code{encoding}}{Ignored. The encoding is always assumed to be UTF-8.}
   }}
+
+\item{dois}{Vector of DOIs, as created by, or coerceable to \code{\link[biblids:doi]{biblids::doi()}}.}
 }
 \description{
 Helper functions to generate a metacheck report.

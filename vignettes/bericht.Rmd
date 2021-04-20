@@ -4,7 +4,12 @@ pkgdown:
     as_is:true
 ---
 
+<!-- this file always has to be in sync with other language versions -->
+
+<div class="alert alert-warning" role="alert">
+  Dieses Ergebnis basiert auf den `tu_dois()` Beispieldaten im metacheck Paket.
+</div>
+
 ```{r, echo = FALSE, results = 'asis'}
-res <- knitr::knit_child(metacheck:::path_report_rmd(lang = "de"), quiet = TRUE)
-cat(res, sep = '\n')
+metacheck:::knit_child_report(lang = "de")
 ```

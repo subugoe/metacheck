@@ -1,10 +1,15 @@
 ---
-title: "Example Metacheck Report"
+title: "Example Report"
 pkgdown:
     as_is:true
 ---
 
+<!-- this file always has to be in sync with other language versions -->
+
+<div class="alert alert-warning" role="alert">
+  This is an example report using the `tu_dois()` data, shipped with the package.
+</div>
+
 ```{r, echo = FALSE, results = 'asis'}
-res <- knitr::knit_child(metacheck:::path_report_rmd(lang = "en"), quiet = TRUE)
-cat(res, sep = '\n')
+metacheck:::knit_child_report(lang = "en")
 ```

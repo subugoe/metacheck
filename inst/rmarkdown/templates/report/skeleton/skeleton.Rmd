@@ -1,12 +1,18 @@
 ---
 title: "Metacheck Report"
+params:
+  dois: !r metacheck:::tu_dois()
 ---
+
+<!-- this file always has to be in sync with other language versions -->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(metacheck)
 ```
 
-Here is the result of the automatic open access metadata compliance check.
+Here are the results of the automatic open access metadata compliance check.
 
 ## Pretest
+
+**`r length(params$dois)`** DOIs were entered.

@@ -92,6 +92,6 @@ Remotes:
     subugoe/shinycaas@1.0.0,
     subugoe/rcrossref@51d036808c1dc1f46cf1bad1b136e97ad213e162,
     rstudio/shinyvalidate@2688f6eb485ad2602e3a5ed70d4c07449b2bc422,
-    subugoe/biblids@e8b1dc88c0653ef15bd7ad84fa4941e21b8a6401
+    subugoe/biblids@3c353ec8c1d4bba8e1f11f36bd694c056935e1c9
 Config/testthat/edition: 3
 Config/testthat/parallel: true

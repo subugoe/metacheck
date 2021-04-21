@@ -76,7 +76,8 @@ Imports:
     vctrs,
     memoise,
     promises,
-    future
+    future,
+    cachem
 Suggests:
     testthat,
     subugoetheme,

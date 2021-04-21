@@ -57,8 +57,8 @@ tabulate_metacheckable <- function(x, ...) {
     # https://github.com/subugoe/metacheck/issues/169
     `unique` = lazily(purrr::negate(duplicated))(x, `not_missing`),
     `within_limits` = lazily(is_in_limit, ...)(x, `unique`),
-    `doi_org_found` = lazily(biblids::is_doi_found)(x, `within_limits`),
-    `from_cr` = lazily(biblids::is_doi_from_ra, "Crossref")(x, `doi_org_found`),
+    `doi_org_found` = lazily(memoised_is_doi_found)(x, `within_limits`),
+    `from_cr` = lazily(memoised_is_doi_from_ra, "Crossref")(x, `doi_org_found`),
     # should singl header first https://github.com/subugoe/metacheck/issues/176
     `cr_md` = lazily(is_doi_cr_md)(x, `from_cr`),
     `article` = lazily(is_doi_cr_type, "journal-article")(x, `cr_md`),

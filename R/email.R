@@ -1,9 +1,10 @@
 #' Render email
 #' @param dois Character vector of DOIs
 #' @param session_id Character vector to identify current shiny session
+#' @inheritParams report
 #' @family communicate
 #' @export
-render_email <- function(dois, session_id = NULL) {
+render_email <- function(dois, lang = "en", session_id = NULL) {
   dois_ok <- dois[is_metacheckable(dois)]
   if (length(dois_ok) < 2) {
     rlang::abort("Too few eligible DOIs remaining.")
@@ -17,14 +18,10 @@ render_email <- function(dois, session_id = NULL) {
     # otherwise, tests are illegibly noisy
     body = suppressWarnings(
       blastula::render_email(
-        input = system.file(
-          "rmarkdown/templates/email/reply_success_de/reply_success_de.Rmd",
-          package = "metacheck"
-        ),
+        input = path_report_rmd(lang),
         render_options = list(
           params = list(
             dois = dois,
-            cr_overview = my_df,
             session_id = session_id
           )
         )
@@ -34,7 +31,8 @@ render_email <- function(dois, session_id = NULL) {
       "Email sent on ", format(Sys.time(), "%a %b %d %X %Y"), "."
     ))
   )
-  email <- add_attachment_xlsx(email, session_id = session_id)
+  # TODO enable again when xls is fine
+  # email <- add_attachment_xlsx(email, session_id = session_id)
   email
 }
 

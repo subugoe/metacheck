@@ -1,7 +1,9 @@
 ---
 title: "Metacheck Bericht"
 params:
-  dois: !r metacheck::tu_dois()
+  dois: !r metacheck:::tu_dois()
+  lang: "de"
+  session_id: NULL
 ---
 
 <!-- this file always has to be in sync with other language versions -->
@@ -13,6 +15,17 @@ library(metacheck)
 
 Hier sind die Ergebnisse der automatischen Open Access Metadaten Überprüfung.
 
+Die unten stehenden Abschnitte aggregieren die Testergebnisse.
+Die Ergebnisse für jeden einzelnen DOI entnehmen Sie der beigefügten Exceltabelle.
+
 ## Vorabprüfung
 
-**`r length(params$dois)`** DOIs wurden eingegeben.
+Zunächst prüfen wir, ob zu diesen DOIs konforme Open Access Metadaten vorliegen *könnten*.
+
+Sie haben **`r length(params$dois)`** eingegeben.
+
+```{r pretest, results = "asis"}
+report_metacheckable(params$dois)
+```
+
+Die folgende Analyse bezieht sich nur auf die verbleibenden **`r sum(is_metacheckable(params$doi), na.rm = TRUE)`** DOIs.

@@ -6,7 +6,7 @@
 \alias{render_and_send_async}
 \title{Render email}
 \usage{
-render_email(dois, session_id = NULL)
+render_email(dois, lang = "en", session_id = NULL)
 
 render_and_send(dois, to)
 
@@ -14,6 +14,8 @@ render_and_send_async(dois, to)
 }
 \arguments{
 \item{dois}{Character vector of DOIs}
+
+\item{lang}{Language of the report.}
 
 \item{session_id}{Character vector to identify current shiny session}
 

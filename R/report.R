@@ -38,7 +38,7 @@ draft_report <- function(lang = c("en", "de"), ...) {
 #' Vector of DOIs, as created by, or coerceable to [biblids::doi()].
 #' @inheritDotParams rmarkdown::render
 #' @export
-render_report <- function(dois = tu_dois(), lang = c("en", "de"), ...) {
+render_report <- function(dois, lang = c("en", "de"), ...) {
   dois <- biblids::as_doi(dois)
   checkmate::assert_vector(dois, min.len = 2, null.ok = FALSE)
   rmarkdown::render(

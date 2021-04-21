@@ -8,7 +8,7 @@
 \usage{
 draft_report(lang = c("en", "de"), ...)
 
-render_report(dois = tu_dois(), lang = c("en", "de"), ...)
+render_report(dois, lang = c("en", "de"), ...)
 }
 \arguments{
 \item{lang}{Language of the report.}

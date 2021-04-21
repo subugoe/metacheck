@@ -12,20 +12,6 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(metacheck)
 ```
 
-Hallo,
-
-vielen Dank, dass Sie den Open-Access-Metadaten-Schnelltest nutzen.
-
-Hier ist der Bericht der automatischen Überprüfung. 
-
-### Vorabprüfung
-
-Sie haben **`r length(params$doi)`** DOIs eingegeben.
-
-```{r acceptance, results = "asis"}
-metacheck:::report_metacheckable(params$dois)
-```
-
 Weitere Informationen zur Vorabprüfung finden Sie im [Methodenbericht](https://subugoe.github.io/metacheck/articles/methode.html).
 Die vollständige Vorabprüfung mit den Ergebnissen für jeden DOI finden Sie in der beigefügten Excel-Datei im Blatt `pretest`.
 

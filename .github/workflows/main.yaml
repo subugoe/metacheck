@@ -22,7 +22,9 @@ jobs:
         uses: actions/cache@v2
         with:
           # only cache the user library
-          path: ".github/library"
+          path: |
+            .github/library
+            ~/.metacheck-cache
           key: ${{ job.container.image }}-${{ hashFiles('DESCRIPTION') }}
       - name: Install System Dependencies
         run: muggle::install_sysdeps()

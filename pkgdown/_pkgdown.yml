@@ -49,6 +49,9 @@ reference:
   desc: Report the results in a shiny app or rmarkdown report
 - contents:
   - has_concept("communicate")
+- title: Helpers
+- contents:
+  - has_concept("helpers")
 navbar:
   structure:
     left:  [home, reference, app, examples]

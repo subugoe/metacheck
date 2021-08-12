@@ -74,4 +74,8 @@ but default to \code{NA}.
 }
 }}}
 
+\seealso{
+Other helpers: 
+\code{\link{auth_cr}()}
+}
 \concept{helpers}

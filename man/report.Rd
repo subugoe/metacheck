@@ -90,7 +90,10 @@ during knitting (can use \code{\link{new.env}()} to guarantee an empty new
 environment).}
     \item{\code{run_pandoc}}{An option for whether to run pandoc to convert Markdown
 output.}
-    \item{\code{quiet}}{An option to suppress printing of the pandoc command line.}
+    \item{\code{quiet}}{An option to suppress printing during rendering from knitr,
+pandoc command line and others. To only suppress printing of the last
+"Output created: " message, you can set \code{rmarkdown.render.message} to
+\code{FALSE}}
     \item{\code{encoding}}{Ignored. The encoding is always assumed to be UTF-8.}
   }}
 

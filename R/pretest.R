@@ -192,7 +192,10 @@ is_doi_cr_type <- function(x, type = types_allowed) {
 #' Allowed types
 #' By placing this outside of function, it only gets run at buildtime.
 #' @noRd
-types_allowed <- rcrossref::cr_types()[["data"]][["id"]]
+types_allowed <- {
+  auth_cr()
+  rcrossref::cr_types()[["data"]][["id"]]
+}
 
 # helpers ====
 #' Adverb to let predicate functions default to `NA` for `x[x1]`

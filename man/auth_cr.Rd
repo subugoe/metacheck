@@ -29,9 +29,8 @@ If set, you can access the \href{https://github.com/CrossRef/rest-api-doc/#etiqu
 In this order, returns the first hit of:
 \enumerate{
 \item \code{crossref_email} environment variable, as used by crossref R client,
-\item \href{https://docs.github.com/en/actions/reference/environment-variables}{\code{GITHUB_ACTOR}} environment variable (set on GitHub Actions),
 \item git user email address for the repo at the working directory (requires git to be configured),
-\item \code{NULL} with a warning.
+\item an empty character scalar with a warning.
 }
 }
 \itemize{

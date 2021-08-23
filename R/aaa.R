@@ -20,16 +20,12 @@ auth_cr <- function(user = get_cr_user(), token = get_cr_token()) {
 #' In this order, returns the first hit of:
 #'
 #' 1. `crossref_email` environment variable, as used by crossref R client,
-#' 1. [`GITHUB_ACTOR`](https://docs.github.com/en/actions/reference/environment-variables) environment variable (set on GitHub Actions),
 #' 1. git user email address for the repo at the working directory (requires git to be configured),
-#' 1. `NULL` with a warning.
+#' 1. an empty character scalar with a warning.
 #' @export
 get_cr_user <- function() {
   if (Sys.getenv("crossref_email") != "") {
     return(Sys.getenv("crossref_email"))
-  }
-  if (Sys.getenv("GITHUB_ACTOR") != "") {
-    return(Sys.getenv("GITHUB_ACTOR"))
   }
   if (gert::user_is_configured()) {
     cf <- gert::git_config()
@@ -39,7 +35,7 @@ get_cr_user <- function() {
       "No crossref user could be found. ",
       "You may not be in the 'polite' pool and performance may be degraded."
     )
-    return(NULL)
+    return(character(1))
   }
 }
 

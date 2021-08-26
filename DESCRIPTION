@@ -92,5 +92,6 @@ Remotes:
     subugoe/shinycaas@1.0.0,
     subugoe/rcrossref@158d6d35091b75fcf1cd4271ecf585b2a6c56006,
     rstudio/shinyvalidate@2688f6eb485ad2602e3a5ed70d4c07449b2bc422,
-    subugoe/biblids@e8b1dc88c0653ef15bd7ad84fa4941e21b8a6401
+    subugoe/biblids@e8b1dc88c0653ef15bd7ad84fa4941e21b8a6401,
+    rstudio/flexdashboard@42d732959ea6664c7642eaeffdcf297ab6a6648a
 Config/testthat/edition: 3

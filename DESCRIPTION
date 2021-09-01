@@ -93,8 +93,9 @@ BugReports: https://github.com/subugoe/metacheck/issues
 Remotes:
     subugoe/subugoetheme@1.1.1,
     subugoe/shinycaas@1.0.0,
-    subugoe/rcrossref@51d036808c1dc1f46cf1bad1b136e97ad213e162,
+    subugoe/rcrossref@158d6d35091b75fcf1cd4271ecf585b2a6c56006,
     rstudio/shinyvalidate@2688f6eb485ad2602e3a5ed70d4c07449b2bc422,
-    subugoe/biblids@3c353ec8c1d4bba8e1f11f36bd694c056935e1c9
+    subugoe/biblids@4f1f5e35b6bcc2799a3b2832a1f0d3f152e2e252,
+    rstudio/flexdashboard@42d732959ea6664c7642eaeffdcf297ab6a6648a
 Config/testthat/edition: 3
 Config/testthat/parallel: true

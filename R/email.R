@@ -92,7 +92,7 @@ smtp_send_metacheck <- function(email,
     to = to,
     from = from,
     subject = subject,
-    cc = cc,
+    cc = ifelse(is_prod(), cc, NULL),
     credentials = credentials,
     verbose = verbose
   )

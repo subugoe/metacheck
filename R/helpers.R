@@ -117,3 +117,11 @@ transitively <- function(.p, ...) {
     res
   }
 }
+
+#' Check whether context is production
+is_prod <- function() {
+  # this works for Azure only
+  # https://docs.microsoft.com/en-us/azure/app-service/reference-app-settings?tabs=kudu%2Cdotnet
+  # TODO should be factored out, used from shinycaas
+  Sys.getenv("WEBSITE_SLOT_NAME" == "Production")
+}

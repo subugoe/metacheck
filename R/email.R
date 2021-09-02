@@ -165,6 +165,14 @@ emailReportUI <- function(id, width = "100%", ...) {
     shiny::p(
       "Emails are sent via the Mailjet SMTP relay service."
     ),
+    shiny::checkboxInput(
+      ns("gdpr_consent"),
+      label = shiny::tagList(shiny::p(
+        "Let Mailjet GmbH process my email address.",
+        shiny::a(href = "https://www.mailjet.de/dsgvo/", "Learn more.")
+      )),
+      width = width
+    ),
     shinyjs::disabled(
       shiny::actionButton(
         label = "Send Compliance Report",
@@ -185,12 +193,17 @@ emailReportServer <- function(id, dois) {
     module = function(input, output, session) {
       # input validation
       iv <- shinyvalidate::InputValidator$new()
+      iv$add_rule(
+        "gdpr_consent",
+        shinyvalidate::sv_equal(TRUE, "")
+      )
       iv$add_rule("recipient", shinyvalidate::sv_required())
       iv$add_rule(
         "recipient",
         ~ if (!is_valid_email(.)) "Please provide a valid email"
       )
-      iv$enable()
+      # wait until email is typed before complaining
+      observeEvent(input$recipient, iv$enable(), ignoreInit = TRUE)
       observe({
         shinyjs::toggleState("send", iv$is_valid() && !is.null(dois))
       })

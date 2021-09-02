@@ -20,3 +20,11 @@ test_that("transitively adverb works", {
     c(NA, NA, FALSE, TRUE)
   )
 })
+
+test_that("testing is never prod", {
+  expect_true(!is_prod())
+})
+test_that("prod is found from env var", {
+  withr::local_envvar(c("WEBSITE_SLOT_NAME" = "Production"))
+  expect_true(is_prod())
+})

@@ -79,7 +79,8 @@ Imports:
     future,
     cachem,
     gert,
-    keyring
+    keyring,
+    shinytest
 Suggests:
     testthat,
     subugoetheme,

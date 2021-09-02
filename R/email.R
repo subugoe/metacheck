@@ -50,7 +50,7 @@ render_and_send <- function(dois, to) {
 #' @describeIn render_email Render and send asynchronously
 #' @export
 render_and_send_async <- function(dois, to) {
-  promises::future_promise(render_and_send(dois = dois, to = to))
+  promises::future_promise(render_and_send(dois = dois, to = to), seed = TRUE)
   NULL
 }
 

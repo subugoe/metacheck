@@ -33,6 +33,13 @@ mcInputUI <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
     biblids::doiEntryUI(id = ns("dois")),
+    shiny::checkboxInput(
+      ns("gdpr-consent"),
+      label = shiny::tagList(
+        "Let Mailjet GmbH process my email address.",
+        shiny::a(href="https://www.mailjet.de/dsgvo/", "Learn more.")
+      )
+    ),
     emailReportUI(id = ns("send"))
   )
 }

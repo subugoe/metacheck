@@ -1,7 +1,7 @@
 # shiny app ====
 
 test_that("shiny app works", {
-  app <- shinytest::ShinyDriver$new(mcInputApp())
+  app <- shinytest::ShinyDriver$new(mcControlsApp())
   app$click("test-dois-fill_ex")
   app$click("test-dois-submit")
   app$setInputs(`test-send-recipient` = throwaway)

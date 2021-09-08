@@ -65,7 +65,6 @@ add_attachment_xlsx <- function(email, session_id = NULL) {
   )
 }
 
-
 #' Temp path to write xlsx to
 #' @inheritParams render_email
 xlsx_path <- function(session_id = NULL) {
@@ -92,7 +91,7 @@ smtp_send_metacheck <- function(email,
     to = to,
     from = from,
     subject = subject,
-    if(is_prod()) cc = cc,
+    if (is_prod()) cc = cc,
     credentials = credentials,
     verbose = verbose
   )
@@ -141,41 +140,44 @@ NULL
 #' @export
 emailReport <- function() {
   ui <- shiny::fluidPage(emailReportUI(id = "test"))
-  server <- function(input, output, session) {
-    emailReportServer(id = "test")
-  }
+  server <- function(input, output, session) emailReportServer(id = "test")
   shiny::shinyApp(ui, server)
 }
 
 #' @describeIn emailReport Module UI
 #' @inheritParams shiny::NS
 #' @inheritParams shiny::textInput
+#' @inheritParams biblids::doiEntryUI
 #' @inheritDotParams shiny::actionButton
 #' @export
-emailReportUI <- function(id, width = "100%", ...) {
+emailReportUI <- function(id, width = "100%", translator = mc_translator, ...) {
   ns <- shiny::NS(id)
   shiny::tagList(
     shinyjs::useShinyjs(rmd = TRUE),
+    shiny.i18n::usei18n(translator),
     shiny::textInput(
       inputId = ns("recipient"),
-      label = "Email Address:",
+      label = translator$t("Email Address"),
       placeholder = "jane.doe@example.com",
       width = width
     ),
     shiny::p(
-      "Emails are sent via the Mailjet SMTP relay service."
+      translator$t("Emails are sent via the Mailjet SMTP relay service.")
     ),
     shiny::checkboxInput(
       ns("gdpr_consent"),
       label = shiny::tagList(shiny::p(
-        "Let Mailjet GmbH process my email address.",
-        shiny::a(href = "https://www.mailjet.de/dsgvo/", "Learn more.")
+        translator$t("Let Mailjet GmbH process my email address."),
+        shiny::a(
+          href = "https://www.mailjet.de/dsgvo/",
+          translator$t("Learn more.")
+        )
       )),
       width = width
     ),
     shinyjs::disabled(
       shiny::actionButton(
-        label = "Send Compliance Report",
+        label = translator$t("Send Compliance Report"),
         inputId = ns("send"),
         icon = shiny::icon("paper-plane"),
         width = width,
@@ -186,37 +188,73 @@ emailReportUI <- function(id, width = "100%", ...) {
 }
 
 #' @describeIn emailReport Module server
+#' @inheritParams biblids::doiEntryServer
 #' @export
-emailReportServer <- function(id, dois) {
+emailReportServer <- function(id,
+                              dois = shiny::reactive(NULL),
+                              translator = mc_translator,
+                              lang = shiny::reactive("en")) {
+  stopifnot(shiny::is.reactive(dois))
+  biblids::stopifnot_i18n(translator)
+  stopifnot(shiny::is.reactive(lang))
+  translWithLang <- shiny::reactive({
+    translator$set_translation_language(lang())
+    translator
+  })
   shiny::moduleServer(
     id,
     module = function(input, output, session) {
+      # update language client side
+      shiny::observe(shiny.i18n::update_lang(session, lang()))
+      # update language server side
+      shiny::observe({
+        shiny::updateTextAreaInput(
+          session = session,
+          inputId = "recipient",
+          placeholder = translWithLang()$translate("jane.doe@example.com")
+        )
+      })
+
       # input validation
       iv <- shinyvalidate::InputValidator$new()
       iv$add_rule(
         "gdpr_consent",
         shinyvalidate::sv_equal(TRUE, "")
       )
-      iv$add_rule("recipient", shinyvalidate::sv_required())
-      iv$add_rule(
-        "recipient",
-        ~ if (!is_valid_email(.)) "Please provide a valid email"
-      )
-      # wait until email is typed before complaining
-      observeEvent(input$recipient, iv$enable(), ignoreInit = TRUE)
-      observe({
-        shinyjs::toggleState("send", iv$is_valid() && !is.null(dois))
+      # translate msg
+      shiny::observe({
+        iv$add_rule(
+          "recipient",
+          shinyvalidate::sv_required(translWithLang()$translate("Required"))
+        )
+        iv$add_rule(
+          "recipient",
+          ~ if (!is_valid_email(.)) {
+            translWithLang()$translate(
+              "Please provide a valid email."
+            )
+          }
+        )
       })
-      observeEvent(input$send, {
+      
+      # wait until email is typed before complaining
+      shiny::observeEvent(input$recipient, iv$enable(), ignoreInit = TRUE)
+      shiny::observe({
+        shinyjs::toggleState("send", iv$is_valid() && !is.null(dois()))
+      })
+      shiny::observeEvent(input$send, {
         if (iv$is_valid()) {
-          showModal(modalDialog(
-            title = "You have succesfully send your DOIs",
+          shiny::showModal(modalDialog(
+            title = translWithLang()$translate(
+              "You have succesfully send your DOIs"
+            ),
             glue::glue(
-              "An automated report will be send to your email ",
-              "within the next 45 minutes. ",
-              "Please check your SPAM folder. ",
-              "If your have not received your email after an hour, ",
-              "please contact us."
+              translWithLang()$translate(
+                "You will receive an email with your report within the next 45 minutes. "
+              ),
+              translWithLang()$translate(
+                "Please check your SPAM folder. "
+              )
             ),
             easyClose = TRUE,
             footer = NULL

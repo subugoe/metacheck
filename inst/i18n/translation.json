@@ -1,0 +1,92 @@
+{
+  "languages": [
+    "en",
+    "de"
+  ],
+  "translation": [
+    {
+      "en": "Language",
+      "de": "Sprache"
+    },
+    {
+      "en": "Email Address",
+      "de": "Email Adresse"
+    },
+    {
+      "en": "jane.doe@example.com",
+      "de": "maxi.muster@example.com"
+    },
+    {
+      "en": "Please provide a valid email.",
+      "de": "Bitte gültige Email Adresse eintragen."
+    },
+    {
+      "en": "Enter your DOIs here.",
+      "de": "Bitte geben Sie hier ihre DOIs ein."
+    },
+    {
+      "en": "Entered DOIs",
+      "de": "Eingegebene DOIs"
+    },
+    {
+      "en": "Required",
+      "de": "Erforderlich"
+    },
+    {
+      "en": "Please provide at least one valid DOI.",
+      "de": "Bitte fügen Sie mindestens einen validen DOI ein."
+    },
+    {
+      "en": "Cannot parse more than {char_limit} characters.",
+      "de": "Mehr als {char_limit} Zeichen können nicht verarbeitet werden."
+    },
+    {
+      "en": "Please provide a shorter input.",
+      "de": "Bitte kürzen Sie Ihre Eingabe."
+    },
+    {
+      "en": "Found ",
+      "de": ""
+    },
+    {
+      "en": " DOIs",
+      "de": " Gefundene DOIs"
+    },
+    {
+      "en": "Fill in example",
+      "de": "Beispiel einfügen"
+    },
+    {
+      "en": "Edit",
+      "de": "Bearbeiten"
+    },
+    {
+      "en": "Submit",
+      "de": "Absenden"
+    },
+    {
+      "en": "Emails are sent via the Mailjet SMTP relay service.",
+      "de": "Emails werden über den Mailjet SMTP Relay Service versandt."
+    },
+    {
+      "en": "Let Mailjet GmbH process my email address.",
+      "de": "Mailjet GmbH darf meine Email Adresse verarbeiten."
+    },
+    {
+      "en": "Learn more.",
+      "de": "Weitere Informationen."
+    },
+    {
+      "en": "Send Compliance Report",
+      "de": "Metacheck Bericht Versenden"
+    },
+    {
+      "en": "You will receive an email with your report within the next 45 minutes. ",
+      "de": "Der Bericht wird Ihnen innerhalt von 45 Minuten per Email zugeschickt. "
+    },
+    {
+      "en": "Please check your SPAM folder. ",
+      "de": "Bitte prüfen Sie auch Ihren SPAM-Ordner. "
+    }
+  ]
+}

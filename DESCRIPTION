@@ -80,7 +80,8 @@ Imports:
     cachem,
     gert,
     keyring,
-    shinytest
+    shinytest,
+    shiny.i18n
 Suggests:
     testthat,
     subugoetheme,
@@ -95,8 +96,8 @@ Remotes:
     subugoe/subugoetheme@1.1.1,
     subugoe/shinycaas@1.0.0,
     subugoe/rcrossref@158d6d35091b75fcf1cd4271ecf585b2a6c56006,
-    subugoe/biblids@4f1f5e35b6bcc2799a3b2832a1f0d3f152e2e252,
+    subugoe/biblids@3ffa325c12fc49766d93f472ab903a6ee39a6379,
     rstudio/flexdashboard@42d732959ea6664c7642eaeffdcf297ab6a6648a
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Config/wama/defaultShinyApp: mcInputApp()
+Config/wama/defaultShinyApp: mcControlsApp()

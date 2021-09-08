@@ -12,39 +12,59 @@ runMetacheck <- function(...) {
 
 # shiny modules ====
 
-#' Enter metacheck inputs through a shiny module
-#'
+#' Enter metacheck controls through a shiny module
 #' @family communicate
-#' @name mcInput
+#' @name mcControls
 NULL
 
-#' @describeIn mcInput Test App
+#' @describeIn mcControls Test App
 #' @export
-mcInputApp <- function() {
-  ui <- shiny::fluidPage(mcInputUI(id = "test"))
-  server <- function(input, output, session) mcInputServer(id = "test")
+mcControlsApp <- function() {
+  ui <- shiny::fluidPage(mcControlsUI(id = "test"))
+  server <- function(input, output, session) {
+    mcControlsServer(id = "test")
+  }
   shiny::shinyApp(ui, server)
 }
 
-#' @describeIn mcInput Module UI
-#' @inheritParams shiny::NS
+#' @describeIn mcControls Module UI
+#' @inheritParams emailReportUI
 #' @export
-mcInputUI <- function(id) {
+mcControlsUI <- function(id, translator = mc_translator) {
   ns <- shiny::NS(id)
   shiny::tagList(
-    biblids::doiEntryUI(id = ns("dois")),
-    emailReportUI(id = ns("send"))
+    shiny.i18n::usei18n(translator),
+    shiny::selectInput(
+      inputId = ns("lang"),
+      label = translator$t("Language"),
+      choices = translator$get_languages(),
+      selected = "en"
+    ),
+    # TODO biblids could use its own translations, instead of these duplicates
+    # but blocked by #270
+    biblids::doiEntryUI(id = ns("dois"), translator = mc_translator),
+    emailReportUI(id = ns("send"), translator = mc_translator)
   )
 }
 
-#' @describeIn mcInput Module server
+#' @describeIn mcControls Module server
+#' @inheritParams emailReportServer
 #' @export
-mcInputServer <- function(id) {
+mcControlsServer <- function(id, translator = mc_translator) {
+  biblids::stopifnot_i18n(translator)
   shiny::moduleServer(
     id = id,
     module = function(input, output, session) {
-      dois <- biblids::doiEntryServer(id = "dois", char_limit = 10000L)
-      emailReportServer(id = "send", dois = dois())
+      lang <- shiny::reactive(input$lang)
+      # update language client side
+      shiny::observe(shiny.i18n::update_lang(session, lang()))
+      dois <- biblids::doiEntryServer(
+        id = "dois",
+        char_limit = 10000L,
+        translator = translator,
+        lang = lang
+      )
+      emailReportServer(id = "send", dois = dois, lang = lang)
     }
   )
 }

@@ -79,7 +79,7 @@ Send out email
 \seealso{
 Other communicate: 
 \code{\link{emailReport}()},
-\code{\link{mcInput}},
+\code{\link{mcControls}},
 \code{\link{render_email}()},
 \code{\link{report}},
 \code{\link{runMetacheck}()}

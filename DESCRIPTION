@@ -100,4 +100,4 @@ Remotes:
     rstudio/flexdashboard@42d732959ea6664c7642eaeffdcf297ab6a6648a
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Config/wama/defaultShinyApp: mcControlsApp()
+Config/wama/defaultShinyApp: runMetacheck()

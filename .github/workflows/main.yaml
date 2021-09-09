@@ -71,11 +71,10 @@ jobs:
           add_git_labels: true
           push: ${{ github.event_name != 'pull_request' }}
       - name: Log in to Azure
-        if: github.ref == 'refs/heads/main'
         uses: azure/login@v1.1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Deploy to Azure Webapps
+      - name: Deploy Main to Production
         if: github.ref == 'refs/heads/main'
         run: |
           shinycaas::az_webapp(
@@ -88,6 +87,23 @@ jobs:
             docker_registry_server_url = "https://docker.pkg.github.com",
             docker_registry_server_user = "maxheld83",
             docker_registry_server_password = Sys.getenv("GH_PAT_PKG")
+          )
+        env:
+          GH_PAT_PKG: ${{ secrets.GH_PAT_PKG }}
+      - name: Deploy Preview to Staging
+        if: github.ref == 'refs/heads/intl'
+        run: |
+          shinycaas::az_webapp(
+            plan = "hoad",
+            deployment_container_image_name = paste0(
+              "docker.pkg.github.com/subugoe/metacheck/metacheck-runtime", 
+              ":",
+              Sys.getenv("GITHUB_SHA")
+            ),
+            docker_registry_server_url = "https://docker.pkg.github.com",
+            docker_registry_server_user = "maxheld83",
+            docker_registry_server_password = Sys.getenv("GH_PAT_PKG"),
+            slot = "metacheck-intl"
           )
         env:
           GH_PAT_PKG: ${{ secrets.GH_PAT_PKG }}

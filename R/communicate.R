@@ -1,12 +1,57 @@
 #' Start web application
-#' @inheritDotParams rmarkdown::run
-#' @inherit rmarkdown::run
+#' @inheritDotParams shiny::runApp
 #' @family communicate
 #' @export
-runMetacheck <- function(...) {
-  rmarkdown::run(
-    file = system.file("app", "index.Rmd", package = "metacheck"),
-    ...
+runMetacheck <- function(...) shiny::runApp(appDir = mcApp(), ...)
+
+#' Shiny webapp for metacheck
+#' @family communicate
+#' @export
+mcApp <- function() {
+  future::plan(future::multicore, workers = 20L)
+  shiny::shinyApp(
+    ui = mcAppUI(),
+    server = mcAppServer
+  )
+}
+
+#' @describeIn mcApp UI
+#' @noRd
+mcAppUI <- function() {
+  shiny::fillPage(
+    theme = mc_theme(),
+    shiny::sidebarLayout(
+      shiny::sidebarPanel(
+        mcControlsUI(id = "webapp")
+      ),
+      shiny::mainPanel(
+        shiny::p("foo")
+      )
+    )
+  )
+}
+
+#' @describeIn mcApp Server
+#' @noRd
+mcAppServer <- function(input, output, session) {
+  mcControlsServer(id = "webapp")
+}
+
+# TODO move to subugoetheme https://github.com/subugoe/metacheck/issues/271
+mc_theme <- function() {
+  bslib::bs_theme(
+    version = 4,
+    bootswatch = "cosmo",
+    bg = subugoetheme::ugoe_pal()$primary["Weiss"],
+    fg = subugoetheme::ugoe_pal()$primary["Schwarz"],
+    primary = subugoetheme::ugoe_pal()$primary["Uni-Blau (HKS 41)"],
+    secondary = subugoetheme::ugoe_pal()$primary["Schwarz"],
+    success = subugoetheme::ugoe_pal()$faculty["Agrarwissenschaften"],
+    # this is not one of the ugoe pal, but was used in the past
+    # as per less in subugoetheme
+    info = "#45195c",
+    warning = subugoetheme::ugoe_pal()$faculty["Biologie und Psychologie"],
+    danger = subugoetheme::ugoe_pal()$faculty["Jura"]
   )
 }
 

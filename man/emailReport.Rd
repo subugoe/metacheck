@@ -62,6 +62,7 @@ Email Report through a Shiny Module
 
 \seealso{
 Other communicate: 
+\code{\link{mcApp}()},
 \code{\link{mcControls}},
 \code{\link{render_email}()},
 \code{\link{report}},

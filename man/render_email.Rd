@@ -39,6 +39,7 @@ Render email
 \seealso{
 Other communicate: 
 \code{\link{emailReport}()},
+\code{\link{mcApp}()},
 \code{\link{mcControls}},
 \code{\link{report}},
 \code{\link{runMetacheck}()},

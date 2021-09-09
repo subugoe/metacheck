@@ -115,6 +115,7 @@ Useful for manual edits; equivalent to opening a new template in RStudio.
 \seealso{
 Other communicate: 
 \code{\link{emailReport}()},
+\code{\link{mcApp}()},
 \code{\link{mcControls}},
 \code{\link{render_email}()},
 \code{\link{runMetacheck}()},

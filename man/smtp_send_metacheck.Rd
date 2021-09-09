@@ -79,6 +79,7 @@ Send out email
 \seealso{
 Other communicate: 
 \code{\link{emailReport}()},
+\code{\link{mcApp}()},
 \code{\link{mcControls}},
 \code{\link{render_email}()},
 \code{\link{report}},

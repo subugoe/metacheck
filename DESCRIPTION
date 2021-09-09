@@ -97,7 +97,8 @@ Remotes:
     subugoe/shinycaas@1.0.0,
     subugoe/rcrossref@158d6d35091b75fcf1cd4271ecf585b2a6c56006,
     subugoe/biblids@3ffa325c12fc49766d93f472ab903a6ee39a6379,
-    rstudio/flexdashboard@42d732959ea6664c7642eaeffdcf297ab6a6648a
+    rstudio/flexdashboard@42d732959ea6664c7642eaeffdcf297ab6a6648a,
+    appsilon/shiny.i18n@efb0bc0dd5412d35e6747f10f24b1ea48201f886
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/wama/defaultShinyApp: runMetacheck()

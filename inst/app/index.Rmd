@@ -17,9 +17,9 @@ future::plan(future::multicore, workers = 20L)
 
 
 ```{r, context="render"}
-mcInputUI("dashboard_app")
+mcControlsUI("dashboard_app")
 ```
 
 ```{r, context="server"}
-mcInputServer("dashboard_app")
+mcControlsServer("dashboard_app")
 ```

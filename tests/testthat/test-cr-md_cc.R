@@ -1,3 +1,4 @@
+skip_if_offline()
 test_that("license md checker works (Delayed licenses)",
           {
             delayed_sample <- c(

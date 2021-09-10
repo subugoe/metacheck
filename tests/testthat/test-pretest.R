@@ -1,4 +1,5 @@
 # This need not cover any abnormalities already covered in biblids
+skip_if_offline()
 
 test_that("Acceptable DOIs are filtered", {
   expect_snapshot_value2(tabulate_metacheckable(dois_weird(), limit = 3))

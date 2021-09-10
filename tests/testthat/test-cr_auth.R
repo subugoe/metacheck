@@ -1,3 +1,4 @@
+skip_if_offline()
 test_that("crossref metadata is enabled", {
   # could not capture with header response from rcrossref,
   # so result must be inspected manually in logs

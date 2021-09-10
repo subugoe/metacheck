@@ -1,8 +1,9 @@
 # wrapped cr api calls ====
 
+skip_if_offline()
 dois <- tu_dois()[2:5]
 
-test_that("Crossref metadata can be read in", {  
+test_that("Crossref metadata can be read in", {
   # testthat does not seem to know about vctrs equality
   # https://github.com/r-lib/testthat/issues/1349
   expect_true(

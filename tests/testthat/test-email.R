@@ -8,6 +8,7 @@ test_that("email can be rendered", {
 
 test_that("email can be send", {
   skip_if_not_smtp_auth()
+  skip_if_offline()
   expect_message({
     smtp_send_metacheck(
       email = blastula::prepare_test_message(),

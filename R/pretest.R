@@ -193,6 +193,7 @@ is_doi_cr_type <- function(x, type = types_allowed) {
 #' By placing this outside of function, it only gets run at buildtime.
 #' @noRd
 types_allowed <- {
+  stopifnot(curl::has_internet())
   auth_cr()
   rcrossref::cr_types()[["data"]][["id"]]
 }

@@ -81,7 +81,8 @@ Imports:
     keyring,
     shinytest,
     shiny.i18n,
-    bslib
+    bslib,
+    curl
 Suggests:
     testthat,
     subugoetheme,

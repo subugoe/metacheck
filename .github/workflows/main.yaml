@@ -74,24 +74,8 @@ jobs:
         uses: azure/login@v1.1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Deploy Main to Production
-        if: github.ref == 'refs/heads/main'
-        run: |
-          shinycaas::az_webapp(
-            plan = "hoad",
-            deployment_container_image_name = paste0(
-              "docker.pkg.github.com/subugoe/metacheck/metacheck-runtime", 
-              ":",
-              Sys.getenv("GITHUB_SHA")
-            ),
-            docker_registry_server_url = "https://docker.pkg.github.com",
-            docker_registry_server_user = "maxheld83",
-            docker_registry_server_password = Sys.getenv("GH_PAT_PKG")
-          )
-        env:
-          GH_PAT_PKG: ${{ secrets.GH_PAT_PKG }}
-      - name: Deploy Preview to Staging
-        if: github.ref == 'refs/heads/intl'
+      - name: Deploy to Production
+        if: ${{ github.event_name == 'push' }}
         run: |
           shinycaas::az_webapp(
             plan = "hoad",
@@ -103,13 +87,12 @@ jobs:
             docker_registry_server_url = "https://docker.pkg.github.com",
             docker_registry_server_user = "maxheld83",
             docker_registry_server_password = Sys.getenv("GH_PAT_PKG"),
-            slot = "intl2",
-            restart = TRUE
+            slot = Sys.getenv("GITHUB_REF")
           )
         env:
           GH_PAT_PKG: ${{ secrets.GH_PAT_PKG }}
       - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main'
+        if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
         uses: maxheld83/ghpages@github-token
         env:
           BUILD_DIR: docs

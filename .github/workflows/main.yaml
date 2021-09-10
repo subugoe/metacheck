@@ -103,7 +103,7 @@ jobs:
             docker_registry_server_url = "https://docker.pkg.github.com",
             docker_registry_server_user = "maxheld83",
             docker_registry_server_password = Sys.getenv("GH_PAT_PKG"),
-            slot = "intl",
+            slot = "intl2",
             restart = TRUE
           )
         env:

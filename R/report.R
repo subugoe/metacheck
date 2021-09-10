@@ -8,7 +8,8 @@ NULL
 
 #' @describeIn report Path to template
 #' @noRd
-path_report_template <- function(lang = c("en", "de")) {
+path_report_template <- function(lang = mc_langs) {
+  stopifnot(!shiny::is.reactive(lang))
   lang <- rlang::arg_match(lang)
   switch(lang,
     en = system_file2("rmarkdown", "templates", "report"),
@@ -22,13 +23,14 @@ path_report_rmd <- function(...) {
   fs::path(path_report_template(...), "skeleton", "skeleton.Rmd")
 }
 
-#' @describeIn report 
+#' @describeIn report
 #' Create a draft report from the template.
 #' Useful for manual edits; equivalent to opening a new template in RStudio.
-#' @param lang Language of the report.
+#' @param lang Character scalar giving the anguage of the report.
+#' *Not* reactive as in [mcControlsServer()].
 #' @inheritDotParams rmarkdown::draft
 #' @export
-draft_report <- function(lang = c("en", "de"), ...) {
+draft_report <- function(lang = mc_langs, ...) {
   rmarkdown::draft(..., template = path_report_template(lang), package = NULL)
 }
 
@@ -38,7 +40,7 @@ draft_report <- function(lang = c("en", "de"), ...) {
 #' Vector of DOIs, as created by, or coerceable to [biblids::doi()].
 #' @inheritDotParams rmarkdown::render
 #' @export
-render_report <- function(dois, lang = c("en", "de"), ...) {
+render_report <- function(dois = tu_dois(), lang = mc_langs, ...) {
   dois <- biblids::as_doi(dois)
   checkmate::assert_vector(dois, min.len = 2, null.ok = FALSE)
   rmarkdown::render(

@@ -1,8 +1,12 @@
-test_that("paths exists", {
-  expect_true(fs::dir_exists(path_report_template("en")))
-  expect_true(fs::dir_exists(path_report_template("de")))
-  expect_true(fs::file_exists(path_report_rmd("en")))
-  expect_true(fs::file_exists(path_report_rmd("de")))
+test_that("report templates exist in all languages", {
+  purrr::map_chr(
+    .x = mc_langs,
+    .f = function(x) expect_true(fs::dir_exists(path_report_template(!!x)))
+  )
+  purrr::map_chr(
+    .x = mc_langs,
+    .f = function(x) expect_true(fs::file_exists(path_report_rmd(!!x)))
+  )
 })
 
 test_that("draft can be created from template", {

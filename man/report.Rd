@@ -6,12 +6,13 @@
 \alias{render_report}
 \title{Report Metadata Compliance}
 \usage{
-draft_report(lang = c("en", "de"), ...)
+draft_report(lang = mc_langs, ...)
 
-render_report(dois, lang = c("en", "de"), ...)
+render_report(dois = tu_dois(), lang = mc_langs, ...)
 }
 \arguments{
-\item{lang}{Language of the report.}
+\item{lang}{Character scalar giving the anguage of the report.
+\emph{Not} reactive as in \code{\link[=mcControlsServer]{mcControlsServer()}}.}
 
 \item{...}{
   Arguments passed on to \code{\link[rmarkdown:draft]{rmarkdown::draft}}, \code{\link[rmarkdown:render]{rmarkdown::render}}

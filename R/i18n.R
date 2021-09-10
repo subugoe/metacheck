@@ -7,3 +7,8 @@ mc_translator <- shiny.i18n::Translator$new(
     "translation.json"
   )
 )
+
+#' Available languages for metacheck
+#' @export
+#' @keywords internal
+mc_langs <- mc_translator$get_languages()

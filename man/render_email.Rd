@@ -15,7 +15,8 @@ render_and_send_async(dois, to)
 \arguments{
 \item{dois}{Character vector of DOIs}
 
-\item{lang}{Language of the report.}
+\item{lang}{Character scalar giving the anguage of the report.
+\emph{Not} reactive as in \code{\link[=mcControlsServer]{mcControlsServer()}}.}
 
 \item{session_id}{Character vector to identify current shiny session}
 

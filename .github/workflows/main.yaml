@@ -67,7 +67,6 @@ jobs:
           add_git_labels: true
           push: ${{ github.event_name != 'pull_request' }}
       - name: Log in to Azure
-        if: github.ref == 'refs/heads/main'
         uses: azure/login@v1.1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}

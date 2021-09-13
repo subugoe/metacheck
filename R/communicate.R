@@ -20,14 +20,7 @@ mcApp <- function() {
 mcAppUI <- function() {
   shiny::fluidPage(
     theme = mc_theme(),
-    shiny::sidebarLayout(
-      shiny::sidebarPanel(
-        mcControlsUI(id = "webapp")
-      ),
-      shiny::mainPanel(
-        shiny::p("foo")
-      )
-    )
+    mcControlsUI(id = "webapp")
   )
 }
 

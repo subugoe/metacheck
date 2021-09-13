@@ -95,3 +95,33 @@ This table gives an overview over the most frequent fundders per DOI, as per Cro
 Crossref metadata can include more than one funder for each DOI.
 
 The percentage share refers to the total number of checked DOIs.
+
+
+### Attachment 
+
+Please find attached an excel spreadsheet with individual results for every DOI.
+It includes these sheets:
+
+- `cr_overview`: Overview results
+- `cc_license_check`: Detailed results licensing check
+- `tdm`: Detailed results full text links and TDM
+- `funder_info`: Funding information from Crossref
+- `pretest`: Results of the pretest
+
+**Metacheck supports workflows to check publisher metadata.
+It does not conclusively assert funding eligibility of open access publications.
+Please consult the funding conditions of the respective funder.**
+
+For questions, support and sugggestions for improvements, please contact us at metacheck-support@sub.uni-goettingen.de.
+
+Best regards,
+
+Your HOAD-Team
+
+```{r export}
+md_data_attachment(
+  mcres,
+  session_id = params$session_id,
+  dois = as.character(dois)
+)
+```

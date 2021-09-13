@@ -1,5 +1,0 @@
-name: License metadata compliance report
-description: >
-   This is the email template for license compliance reports.
-   It runs the compliance check.
-create_dir: FALSE

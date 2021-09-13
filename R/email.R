@@ -25,7 +25,7 @@ render_email <- function(dois, lang = "en", session_id = NULL) {
       "Email sent on ", format(Sys.time(), "%a %b %d %X %Y"), "."
     ))
   )
-  # TODO enable again when xls is fine
+  # TODO enable https://github.com/subugoe/metacheck/issues/276
   # email <- add_attachment_xlsx(email, session_id = session_id)
   email
 }

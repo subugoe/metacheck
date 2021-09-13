@@ -31,7 +31,7 @@ render_email <- function(dois, lang = "en", session_id = NULL) {
 }
 
 #' @describeIn render_email Render and send
-#' @inheritParams smtp_send_metacheck
+#' @inheritParams smtp_send_mc
 render_and_send <- function(dois, to, lang) {
   email <- render_email(
     dois,
@@ -39,7 +39,7 @@ render_and_send <- function(dois, to, lang) {
     session_id = as.character(floor(runif(1) * 1e20)),
     lang = lang
   )
-  smtp_send_metacheck(to = to, email)
+  smtp_send_mc(to = to, email)
 }
 
 #' @describeIn render_email Render and send asynchronously
@@ -74,26 +74,28 @@ xlsx_path <- function(session_id = NULL) {
 #' Send out email
 #' @inheritParams blastula::smtp_send
 #' @inheritDotParams blastula::smtp_send
+#' @inheritParams mcControlsServer
 #' @family communicate
 #' @keywords internal
 #' @export
-smtp_send_metacheck <- function(email,
-                                to,
-                                from = "metacheck-support@sub.uni-goettingen.de",
-                                subject = "OA-Metadaten-Schnelltest: Ihr Ergebnis",
-                                cc = from,
-                                credentials = creds_metacheck(),
-                                verbose = FALSE) {
+smtp_send_mc <- function(email = blastula::prepare_test_message(),
+                         to = throwaway,
+                         from = "metacheck-support@sub.uni-goettingen.de",
+                         credentials = creds_metacheck(),
+                         translator = mc_translator,
+                         ...) {
   blastula::smtp_send(
     email = email,
     to = to,
     from = from,
-    subject = subject,
-    if (is_prod()) cc = cc,
+    subject = mc_translator$translate(
+      "Metacheck: Your OA Metadata Compliance Check Results"
+    ),
+    if (is_prod()) cc = from,
     credentials = credentials,
-    verbose = verbose
+    ...
   )
-  invisible(email)  # best practice
+  invisible(email) # best practice
 }
 
 #' Get credentials for smtp
@@ -244,7 +246,7 @@ emailReportServer <- function(id,
         if (iv$is_valid()) {
           shiny::showModal(modalDialog(
             title = translWithLang()$translate(
-              "You have successfully send your DOIs"
+              "You have successfully sent your DOIs"
             ),
             glue::glue(
               translWithLang()$translate(

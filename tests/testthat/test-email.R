@@ -9,21 +9,9 @@ test_that("email can be rendered", {
 test_that("email can be send", {
   skip_if_not_smtp_auth()
   skip_if_offline()
-  expect_message({
-    smtp_send_metacheck(
-      email = blastula::prepare_test_message(),
-      to = throwaway,
-      subject = "Test email",
-      cc = NULL
-    )
-  })
+  expect_message(smtp_send_mc())
   expect_error({
     withr::local_envvar(.new = c("MAILJET_SMTP_PASSWORD" = "zap"))
-    smtp_send_metacheck(
-      email = blastula::prepare_test_message(),
-      to = throwaway,
-      subject = "Bad test email",
-      cc = NULL
-    )
+    smtp_send_mc()
   })
 })

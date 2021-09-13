@@ -87,6 +87,14 @@
     {
       "en": "Please check your SPAM folder. ",
       "de": "Bitte prüfen Sie auch Ihren SPAM-Ordner. "
+    },
+    {
+      "en": "You have successfully sent your DOIs.",
+      "de": "Ihre DOIs wurden erfolgreich versendet."
+    },
+    {
+      "en": "Metacheck: Your OA Metadata Compliance Check Results",
+      "de": "Metacheck: Ihr OA Metadaten Schnelltest Ergebnis"
     }
   ]
 }

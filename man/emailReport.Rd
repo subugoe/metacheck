@@ -67,7 +67,7 @@ Other communicate:
 \code{\link{render_email}()},
 \code{\link{report}},
 \code{\link{runMetacheck}()},
-\code{\link{smtp_send_metacheck}()}
+\code{\link{smtp_send_mc}()}
 }
 \concept{communicate}
 \keyword{internal}

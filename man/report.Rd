@@ -120,6 +120,6 @@ Other communicate:
 \code{\link{mcControls}},
 \code{\link{render_email}()},
 \code{\link{runMetacheck}()},
-\code{\link{smtp_send_metacheck}()}
+\code{\link{smtp_send_mc}()}
 }
 \concept{communicate}

@@ -28,4 +28,28 @@ You have provided **`r length(params$dois)`** DOIs.
 report_metacheckable(params$dois, lang = lang)
 ```
 
-The following analysis covers only the remaining **`r sum(is_metacheckable(params$doi), na.rm = TRUE)`** DOIs.
+```{r filter, include = FALSE}
+dois <- params$doi[is_metacheckable(params$doi)]
+enough <- length(dois) > 1
+```
+
+## Test Results
+
+```{r enough, eval = !enough, results = "asis"}
+cat("Not enough DOIs remain to run the test.")
+```
+
+The following analysis covers only the remaining **`r length(dois)`** DOIs.
+
+```{r import, eval = enough, include = FALSE}
+cr <- get_cr_md(dois)
+mcres <- cr_compliance_overview(cr)
+```
+
+
+### Crossref-Metadata
+
+```{r metrics_overview}
+metrics_overview(mcres$cr_overview) %>%
+   ind_table_to_gt(.color = "#00A4A7")
+```

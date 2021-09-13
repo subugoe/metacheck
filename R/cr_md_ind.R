@@ -2,10 +2,24 @@
 #'
 #' @param ind_table tibble compliance metrics overview
 #' @param .color table styling
+#' @inheritParams draft_report
 #' @family visualize
 #' @export
-ind_table_to_gt <- function(ind_table, .color = NULL) {
+ind_table_to_gt <- function(ind_table, .color = NULL, lang = mc_langs) {
+  lang <- rlang::arg_match(lang)
   is_ind_table(ind_table)
+  # TODO this should probably be done via the mc translator,
+  # though that requires passing around that object
+  switch(
+    lang,
+    en = str_article <- "Article",
+    de = str_article <- "Artikel"
+  )
+  switch(
+    lang,
+    en = str_share <- "Share",
+    de = str_share <- "Anteil"
+  )
   ind_table %>%
     dplyr::mutate(
       prop_bar = purrr::map(.data$prop, ~ bar_chart(value = .x, .color = .color))
@@ -13,8 +27,8 @@ ind_table_to_gt <- function(ind_table, .color = NULL) {
     gt::gt() %>%
     gt::cols_label(
       indicator = "",
-      value = "Artikel",
-      prop = "Anteil",
+      value = str_article,
+      prop = str_share,
       prop_bar = "") %>%
     gt::tab_style(
       style = gt::cell_text(color = "black", weight = "bold"),

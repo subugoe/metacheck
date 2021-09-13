@@ -25,7 +25,7 @@ Zunächst prüfen wir, ob zu diesen DOIs konforme Open Access Metadaten vorliege
 Sie haben **`r length(params$dois)`** eingegeben.
 
 ```{r pretest, results = "asis"}
-report_metacheckable(params$dois)
+report_metacheckable(params$dois, lang = params$lang)
 ```
 
 Die folgende Analyse bezieht sich nur auf die verbleibenden **`r sum(is_metacheckable(params$doi), na.rm = TRUE)`** DOIs.

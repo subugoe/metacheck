@@ -17,7 +17,7 @@ is_metacheckable(x, ...)
 
 assert_metacheckable(x, ...)
 
-report_metacheckable(x, ...)
+report_metacheckable(x, lang = mc_langs, ...)
 
 is_in_limit(x, limit = 1000L)
 
@@ -29,6 +29,9 @@ is_doi_cr_type(x, type = types_allowed)
 \item{x}{A vector created by, or convertable to \code{\link[biblids:doi]{doi()}}.}
 
 \item{...}{Additional arguments passed to the predicate functions.}
+
+\item{lang}{Character scalar giving the anguage of the report.
+\emph{Not} reactive as in \code{\link[=mcControlsServer]{mcControlsServer()}}.}
 
 \item{limit}{Scalar integer, giving the number of DOIs to be submitted to the metacheck.}
 

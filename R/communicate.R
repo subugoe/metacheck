@@ -18,7 +18,7 @@ mcApp <- function() {
 #' @describeIn mcApp UI
 #' @noRd
 mcAppUI <- function() {
-  shiny::fillPage(
+  shiny::fluidPage(
     theme = mc_theme(),
     shiny::sidebarLayout(
       shiny::sidebarPanel(

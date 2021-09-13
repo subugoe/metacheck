@@ -8,12 +8,12 @@
 \usage{
 emailReport()
 
-emailReportUI(id, width = "100\%", translator = mc_translator, ...)
+emailReportUI(id, width = "100\%", translator = mc_translator(), ...)
 
 emailReportServer(
   id,
   dois = shiny::reactive(NULL),
-  translator = mc_translator,
+  translator = mc_translator(),
   lang = shiny::reactive("en")
 )
 }

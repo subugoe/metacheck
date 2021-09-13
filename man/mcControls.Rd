@@ -9,9 +9,9 @@
 \usage{
 mcControlsApp()
 
-mcControlsUI(id, translator = mc_translator)
+mcControlsUI(id, translator = mc_translator())
 
-mcControlsServer(id, translator = mc_translator)
+mcControlsServer(id, translator = mc_translator())
 }
 \arguments{
 \item{id}{The id string to be namespaced (optional).}

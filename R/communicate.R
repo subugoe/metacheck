@@ -75,7 +75,7 @@ mcControlsApp <- function() {
 #' @describeIn mcControls Module UI
 #' @inheritParams emailReportUI
 #' @export
-mcControlsUI <- function(id, translator = mc_translator) {
+mcControlsUI <- function(id, translator = mc_translator()) {
   ns <- shiny::NS(id)
   shiny::tagList(
     shiny.i18n::usei18n(translator),
@@ -87,15 +87,15 @@ mcControlsUI <- function(id, translator = mc_translator) {
     ),
     # TODO biblids could use its own translations, instead of these duplicates
     # but blocked by #270
-    biblids::doiEntryUI(id = ns("dois"), translator = mc_translator),
-    emailReportUI(id = ns("send"), translator = mc_translator)
+    biblids::doiEntryUI(id = ns("dois"), translator = mc_translator()),
+    emailReportUI(id = ns("send"), translator = mc_translator())
   )
 }
 
 #' @describeIn mcControls Module server
 #' @inheritParams emailReportServer
 #' @export
-mcControlsServer <- function(id, translator = mc_translator) {
+mcControlsServer <- function(id, translator = mc_translator()) {
   biblids::stopifnot_i18n(translator)
   shiny::moduleServer(
     id = id,

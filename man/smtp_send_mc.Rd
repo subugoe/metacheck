@@ -9,7 +9,7 @@ smtp_send_mc(
   to = throwaway,
   from = "metacheck-support@sub.uni-goettingen.de",
   credentials = creds_metacheck(),
-  translator = mc_translator,
+  translator = mc_translator(),
   ...
 )
 }

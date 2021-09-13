@@ -82,13 +82,13 @@ smtp_send_mc <- function(email = blastula::prepare_test_message(),
                          to = throwaway,
                          from = "metacheck-support@sub.uni-goettingen.de",
                          credentials = creds_metacheck(),
-                         translator = mc_translator,
+                         translator = mc_translator(),
                          ...) {
   blastula::smtp_send(
     email = email,
     to = to,
     from = from,
-    subject = mc_translator$translate(
+    subject = mc_translator()$translate(
       "Metacheck: Your OA Metadata Compliance Check Results"
     ),
     if (is_prod()) cc = from,
@@ -150,7 +150,7 @@ emailReport <- function() {
 #' @inheritParams biblids::doiEntryUI
 #' @inheritDotParams shiny::actionButton
 #' @export
-emailReportUI <- function(id, width = "100%", translator = mc_translator, ...) {
+emailReportUI <- function(id, width = "100%", translator = mc_translator(), ...) {
   ns <- shiny::NS(id)
   shiny::tagList(
     shinyjs::useShinyjs(rmd = TRUE),
@@ -192,7 +192,7 @@ emailReportUI <- function(id, width = "100%", translator = mc_translator, ...) {
 #' @export
 emailReportServer <- function(id,
                               dois = shiny::reactive(NULL),
-                              translator = mc_translator,
+                              translator = mc_translator(),
                               lang = shiny::reactive("en")) {
   stopifnot(shiny::is.reactive(dois))
   biblids::stopifnot_i18n(translator)

@@ -78,7 +78,7 @@ tdm_metrics(mcres$tdm) %>%
 ```
 
 This table summarises which file formats ([MIME
-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types) are supported for text and data mining (TDM).
+Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)) are supported for text and data mining (TDM).
 Crossref metadata can include more than one format for each DOI.
 
 The percentage share refers to the total number of checked DOIs.

@@ -8,7 +8,7 @@
 \usage{
 draft_report(lang = mc_langs, ...)
 
-render_report(dois = tu_dois(), lang = mc_langs, ...)
+render_report(dois = tu_dois(), translator = mc_translator(), ...)
 }
 \arguments{
 \item{lang}{Character scalar giving the anguage of the report.
@@ -99,6 +99,13 @@ pandoc command line and others. To only suppress printing of the last
   }}
 
 \item{dois}{Vector of DOIs, as created by, or coerceable to \code{\link[biblids:doi]{biblids::doi()}}.}
+
+\item{translator}{A \link[shiny.i18n:Translator]{shiny.i18n::Translator} object or \code{NULL} for english-only defaults.
+Strings inside the module UI are marked as translateable.
+You can pass a translator object included in the package,
+or can create your own \code{translator} using \link[shiny.i18n:Translator]{shiny.i18n::Translator}.
+This must not be a reactive, it is only set at shiny startup.
+To update the language reactively \emph{during} a shiny session, see \code{lang}.}
 }
 \description{
 Helper functions to generate a metacheck report.
@@ -116,10 +123,9 @@ Useful for manual edits; equivalent to opening a new template in RStudio.
 \seealso{
 Other communicate: 
 \code{\link{emailReport}()},
+\code{\link{email}},
 \code{\link{mcApp}()},
 \code{\link{mcControls}},
-\code{\link{render_email}()},
-\code{\link{runMetacheck}()},
-\code{\link{smtp_send_mc}()}
+\code{\link{runMetacheck}()}
 }
 \concept{communicate}

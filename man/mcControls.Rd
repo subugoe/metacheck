@@ -41,10 +41,9 @@ Enter metacheck controls through a shiny module
 \seealso{
 Other communicate: 
 \code{\link{emailReport}()},
+\code{\link{email}},
 \code{\link{mcApp}()},
-\code{\link{render_email}()},
 \code{\link{report}},
-\code{\link{runMetacheck}()},
-\code{\link{smtp_send_mc}()}
+\code{\link{runMetacheck}()}
 }
 \concept{communicate}

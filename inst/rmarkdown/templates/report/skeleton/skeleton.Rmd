@@ -2,21 +2,17 @@
 title: "Metacheck Report"
 params:
   dois: !r metacheck:::tu_dois()
+  translator: !r metacheck::mc_translator()
   session_id: NULL
 ---
-
-<!-- this file always has to be in sync with other language versions -->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(metacheck)
 lang <- "en"
+translator <- params$translator
 ```
 
-Here are the results of the automatic open access metadata compliance check.
-
-The below sections aggregate the test results.
-You can results for each individual DOI in the attached spreadsheet.
 
 ## Pretest
 
@@ -97,7 +93,7 @@ Crossref metadata can include more than one funder for each DOI.
 The percentage share refers to the total number of checked DOIs.
 
 
-### Attachment 
+### Individual Results 
 
 Please find attached an excel spreadsheet with individual results for every DOI.
 It includes these sheets:
@@ -108,15 +104,6 @@ It includes these sheets:
 - `funder_info`: Funding information from Crossref
 - `pretest`: Results of the pretest
 
-**Metacheck supports workflows to check publisher metadata.
-It does not conclusively assert funding eligibility of open access publications.
-Please consult the funding conditions of the respective funder.**
-
-For questions, support and sugggestions for improvements, please contact us at metacheck-support@sub.uni-goettingen.de.
-
-Best regards,
-
-Your HOAD-Team
 
 ```{r export}
 md_data_attachment(

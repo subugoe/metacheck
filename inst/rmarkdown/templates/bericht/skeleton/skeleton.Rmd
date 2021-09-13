@@ -2,6 +2,7 @@
 title: "Metacheck Bericht"
 params:
   dois: !r metacheck:::tu_dois()
+  translator: !r metacheck::mc_translator()
   session_id: NULL
 ---
 
@@ -11,12 +12,9 @@ params:
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(metacheck)
 lang <- "de"
+translator <- params$translator
 ```
 
-Hier sind die Ergebnisse der automatischen Open Access Metadaten Überprüfung.
-
-Die unten stehenden Abschnitte aggregieren die Testergebnisse.
-Die Ergebnisse für jeden einzelnen DOI entnehmen Sie der beigefügten Exceltabelle.
 
 ## Vorabprüfung
 
@@ -100,7 +98,7 @@ Grundsätzlich können mehrere Förderer je Artikel vermerkt sein.
 Der prozentuale Anteil bezieht sich auf die Anzahl der überprüften Artikel mit Crossref-Metadaten.
 
 
-### Datenanhang 
+### Individual Results 
 
 Beigefügt finden Sie ein Excel-Spreadsheet mit Metadaten auf Artikelebene für weitere Analysen. 
 Es umfasst folgende Datenblätter:
@@ -111,17 +109,6 @@ Es umfasst folgende Datenblätter:
 - `funder_info`: Förderinformationen lt. Crossref
 - `pretest`: Ergebnisse der Vorabprüfung
 
-Weitere Informationen, wie das Ergebnis des Schnelltests zu interpretieren ist, finden Sie auf unserer [Webseite](https://subugoe.github.io/metacheck/articles/methode.html). 
-
-**Bitte beachten Sie, dass der Schnelltest eine Workflowunterstützung bei der Überprüfung von Verlagsmetadaten ist. 
-Der Schnelltest trifft keine abschließenden Aussagen zur Förderfähigkeit von Open-Access-Publikationen bzw. deren Kosten. 
-Dazu sind die Förderbedingungen der jeweiligen Förderer heranzuziehen.**
-
-Bei Fragen und Anregungen stehen wir Ihnen gerne unter metacheck-support@sub.uni-goettingen.de zur Verfügung.
-
-Viele Grüße
-
-Ihr HOAD-Team
 
 ```{r export}
 md_data_attachment(

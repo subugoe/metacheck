@@ -39,13 +39,15 @@ draft_report <- function(lang = mc_langs, ...) {
 #' @param dois
 #' Vector of DOIs, as created by, or coerceable to [biblids::doi()].
 #' @inheritDotParams rmarkdown::render
+#' @inheritParams mcControlsServer
 #' @export
-render_report <- function(dois = tu_dois(), lang = mc_langs, ...) {
+render_report <- function(dois = tu_dois(), translator = mc_translator(), ...) {
+  stopifnot(!shiny::is.reactive(dois))
+  checkmate::assert_vector(dois, min.len = 1, null.ok = FALSE)
   dois <- biblids::as_doi(dois)
-  checkmate::assert_vector(dois, min.len = 2, null.ok = FALSE)
   rmarkdown::render(
-    input = path_report_rmd(lang = lang),
-    params = list(dois = dois),
+    input = path_report_rmd(lang = translator$get_translation_language()),
+    params = list(dois = dois, translator = translator),
     ...
   )
 }

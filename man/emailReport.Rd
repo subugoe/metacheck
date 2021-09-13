@@ -62,12 +62,11 @@ Email Report through a Shiny Module
 
 \seealso{
 Other communicate: 
+\code{\link{email}},
 \code{\link{mcApp}()},
 \code{\link{mcControls}},
-\code{\link{render_email}()},
 \code{\link{report}},
-\code{\link{runMetacheck}()},
-\code{\link{smtp_send_mc}()}
+\code{\link{runMetacheck}()}
 }
 \concept{communicate}
 \keyword{internal}

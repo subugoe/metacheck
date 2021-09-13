@@ -51,10 +51,9 @@ Start web application
 \seealso{
 Other communicate: 
 \code{\link{emailReport}()},
+\code{\link{email}},
 \code{\link{mcApp}()},
 \code{\link{mcControls}},
-\code{\link{render_email}()},
-\code{\link{report}},
-\code{\link{smtp_send_mc}()}
+\code{\link{report}}
 }
 \concept{communicate}

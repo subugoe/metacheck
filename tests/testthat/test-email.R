@@ -1,3 +1,11 @@
+test_that("email without body can be composed", {
+  # pretty bad test
+  expect_s3_class(
+    mc_compose_email(),
+    "blastula_message"
+  )
+})
+
 test_that("email can be rendered", {
   # pretty bad test
   expect_s3_class(

@@ -1,52 +1,152 @@
-#' Render email
-#' @param dois Character vector of DOIs
+#' Send metacheck results as an parametrised email
+#' @family communicate
+#' @name email
+NULL
+
+#' @describeIn email Compose
+#' @inheritParams blastula::compose_email
+#' @inheritParams mcControlsServer
+mc_compose_email <- function(body = "Lorem", translator = mc_translator()) {
+  biblids::stopifnot_i18n(translator)
+  blastula::compose_email(
+    header = blastula::blocks(
+      blastula::block_title(translator$translate("Metacheck Results")),
+      block_text_centered(translator$translate(
+        "Here are your open access metadata compliance test results."
+      ))
+    ),
+    body = body,
+    footer = blastula::blocks(
+      # newsletter is only available in german
+      if (translator$get_translation_language() == "de") {
+        list(
+          newsletter = block_text_centered_vec(
+            translator$translate("Stay tuned for new metacheck features."),
+            blastula::add_cta_button(
+              url = "https://subugoe.github.io/hoad/newsletter.html",
+              text = translator$translate("Subscribe to our newsletter")
+            )
+          ),
+          blastula::block_spacer()
+        )
+      },
+      disclaimer = block_text_centered_vec(
+        translator$translate(
+          # TODO https://github.com/subugoe/metacheck/issues/282
+          # line breaking this breaks the translation
+          # but should live in long docs anyway 
+          "Metacheck supports your workflows to check OA metadata deposited by publishers, but it cannot conclusively check funding eligibility of OA publications."
+        ),
+        translator$translate(
+          "Please consult the funding conditions of the respective funder."
+        )
+      ),
+      support = block_text_centered_vec(
+        translator$translate("Need help interpreting your results?"),
+        translator$translate(
+          "[Get additional support](https://subugoe.github.io/metacheck/articles/help.html)"
+        )
+      ),
+      copyright = block_text_centered_vec(
+        "\u00A9",
+        paste0(
+          "[",
+          translator$translate("G\u00F6ttingen State and University Library"),
+          "]",
+          "(https://www.sub.uni-goettingen.de)"
+        ),
+        lubridate::year(lubridate::now())
+      ),
+      funding = block_text_centered_vec(
+        translator$translate("Funded by the"),
+        paste0(
+          "[",
+          translator$translate("German Research Foundation"),
+          "]",
+          "(https://www.dfg.de)"
+        )
+      ),
+      data = block_text_centered_vec(
+        translator$translate("Based on data by"),
+        "[Crossref](https://crossref.org)"
+      ),
+      links = blastula::block_social_links(
+        mc_social_link("website", "http://subugoe.github.io/metacheck"),
+        mc_social_link(
+          "email",
+          "mailto:metacheck-support@sub.uni-goettingen.de"
+        ),
+        mc_social_link("GitHub", "http://github.com/subugoe/metacheck"),
+        mc_social_link("Twitter", "https://twitter.com/subugoe")
+      )
+    ),
+    title = "metacheck results"
+  )
+}
+
+#' Defaults for social links
+#' @noRd
+mc_social_link <- purrr::partial(blastula::social_link, variant = "dark_gray")
+
+#' Centered block text
+#' @noRd
+block_text_centered <- purrr::partial(blastula::block_text, align = "center")
+
+#' Vectorised helper
+#' @noRd
+block_text_centered_vec <- function(...) {
+  block_text_centered(blastula::md(paste(..., collapse = " ")))
+}
+
+#' @describeIn email Render
 #' @param session_id Character vector to identify current shiny session
 #' @inheritParams report
-#' @family communicate
 #' @export
-render_email <- function(dois, lang = "en", session_id = NULL) {
-  email <- blastula::compose_email(
-    header = "metacheck: Open Access Metadata Compliance Checker",
-    # suppression is dangerous hack-fix for
+render_email <- function(dois = tu_dois(),
+                         translator = mc_translator(),
+                         session_id = NULL) {
+  email <- mc_compose_email(
+     # suppression is dangerous hack-fix for
     # https://github.com/subugoe/metacheck/issues/138
     # otherwise, tests are illegibly noisy
     body = suppressWarnings(
       blastula::render_email(
-        input = path_report_rmd(lang),
+        input = path_report_rmd(lang = translator$get_translation_language()),
         render_options = list(
           params = list(
             dois = dois,
-            session_id = session_id
+            session_id = session_id,
+            translator = translator
           )
         )
       )$html_html
     ),
-    footer = blastula::md(c(
-      "Email sent on ", format(Sys.time(), "%a %b %d %X %Y"), "."
-    ))
+    translator = translator
   )
   # TODO enable https://github.com/subugoe/metacheck/issues/276
   # email <- add_attachment_xlsx(email, session_id = session_id)
   email
 }
 
-#' @describeIn render_email Render and send
+#' @describeIn email Render and send
+#' @inheritDotParams render_email
 #' @inheritParams smtp_send_mc
-render_and_send <- function(dois, to, lang) {
+#' @export
+render_and_send <- function(to, translator = mc_translator(), ...) {
   email <- render_email(
-    dois,
     # used to disambiguate excel file names, see #83
     session_id = as.character(floor(runif(1) * 1e20)),
-    lang = lang
+    translator = translator,
+    ...
   )
-  smtp_send_mc(to = to, email)
+  smtp_send_mc(to = to, email = email, translator = translator)
 }
 
-#' @describeIn render_email Render and send asynchronously
+#' @describeIn email Render and send asynchronously
 #' @export
-render_and_send_async <- function(dois, to, lang) {
+render_and_send_async <- function(...) {
   promises::future_promise(
-    render_and_send(dois = dois, to = to, lang),
+    render_and_send(...),
     seed = TRUE
   )
   NULL
@@ -71,12 +171,9 @@ xlsx_path <- function(session_id = NULL) {
 
 # sending ====
 
-#' Send out email
+#' @describeIn email Send
 #' @inheritParams blastula::smtp_send
 #' @inheritDotParams blastula::smtp_send
-#' @inheritParams mcControlsServer
-#' @family communicate
-#' @keywords internal
 #' @export
 smtp_send_mc <- function(email = blastula::prepare_test_message(),
                          to = throwaway,
@@ -262,7 +359,7 @@ emailReportServer <- function(id,
           render_and_send_async(
             to = input$recipient,
             dois = dois(),
-            lang = lang()
+            translator = translWithLang()
           )
         }
       })

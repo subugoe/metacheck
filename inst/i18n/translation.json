@@ -93,8 +93,56 @@
       "de": "Ihre DOIs wurden erfolgreich versendet."
     },
     {
-      "en": "Metacheck: Your OA Metadata Compliance Check Results",
-      "de": "Metacheck: Ihr OA Metadaten Schnelltest Ergebnis"
+      "en": "metacheck: Your Open Access Metadata Compliance Test Results",
+      "de": "metacheck: Ihr Open Access Metadaten Schnelltest Ergebnis"
+    },
+    {
+      "en": "Metacheck Results",
+      "de": "Metacheck Ergebnisse"
+    },
+    {
+      "en": "Here are your open access metadata compliance test results.",
+      "de": "Hier sind die Ergebnisse Ihres Open Access Metadaten Schnelltests."
+    },
+    {
+      "en": "Stay tuned for new metacheck features.",
+      "de": "Bleiben Sie auf dem Laufenden für neue Metacheck Funktionen."
+    },
+    {
+      "en": "Subscribe to our newsletter",
+      "de": "Newsletter Abonnieren"
+    },
+    {
+      "en": "Metacheck supports your workflows to check OA metadata deposited by publishers, but it cannot conclusively check funding eligibility of OA publications.",
+      "de": "Metacheck unterstützt Sie bei der Überprüfung von Verlagsmetadaten, bietet aber keine abschließenden Aussagen zur Förderfähigkeit von OA Publikationen bzw. deren Kosten."
+    },
+    {
+      "en": "Please consult the funding conditions of the respective funder.",
+      "de": "Dazu sind die Förderbedingungen der jeweiligen Förderer heranzuziehen."
+    },
+    {
+      "en": "Need help interpreting your results?",
+      "de": "Haben Sie Fragen zur Interpretation ihrer Ergebnisse?"
+    },
+    {
+      "en": "[Get additional support](https://subugoe.github.io/metacheck/articles/help.html).",
+      "de": "[Erhalten Sie weitere Unterstützung](https://subugoe.github.io/metacheck/articles/hilfe.html)."
+    },
+    {
+      "en": "G\u00F6ttingen State and University Library",
+      "de": "Staats- und Universitätsbibliothek Göttingen"
+    },
+    {
+      "en": "Funded by the",
+      "de": "Gefördert durch die"
+    },
+    {
+      "en": "German Research Foundation",
+      "de": "Deutsche Forschungsgemeinschaft"
+    },
+    {
+      "en": "Based on data by",
+      "de": "Basierend auf Daten erhoben von"
     }
   ]
 }

@@ -15,10 +15,6 @@ test_that("draft can be created from template", {
 
 test_that("parametrised report can be rendered", {
   expect_invisible(
-    render_report(
-      dois = tu_dois(),
-      output_file = withr::local_tempfile(),
-      quiet = TRUE
-    )
+    render_report(output_file = withr::local_tempfile(), quiet = TRUE)
   )
 })

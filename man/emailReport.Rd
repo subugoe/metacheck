@@ -41,7 +41,7 @@ you could also use any other HTML, like an image.}
 
 \item{lang}{a reactive variable, returning a character scalar.
 Must be one of the languages in \code{translator}.
-Defaults to \code{NULL},
+Defaults to \code{shiny::reactive("en")},
 in which case no server side translation
 is triggered.}
 }

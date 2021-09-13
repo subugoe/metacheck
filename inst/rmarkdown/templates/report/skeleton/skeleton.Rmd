@@ -2,7 +2,6 @@
 title: "Metacheck Report"
 params:
   dois: !r metacheck:::tu_dois()
-  lang: "en"
   session_id: NULL
 ---
 
@@ -11,6 +10,7 @@ params:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(metacheck)
+lang <- "en"
 ```
 
 Here are the results of the automatic open access metadata compliance check.
@@ -25,7 +25,7 @@ We first check whether these DOIs *could* have compliant open access metadata.
 You have provided **`r length(params$dois)`** DOIs.
 
 ```{r pretest, results = "asis"}
-report_metacheckable(params$dois, lang = params$lang)
+report_metacheckable(params$dois, lang = lang)
 ```
 
 The following analysis covers only the remaining **`r sum(is_metacheckable(params$doi), na.rm = TRUE)`** DOIs.

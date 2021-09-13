@@ -244,7 +244,7 @@ emailReportServer <- function(id,
         if (iv$is_valid()) {
           shiny::showModal(modalDialog(
             title = translWithLang()$translate(
-              "You have succesfully send your DOIs"
+              "You have successfully send your DOIs"
             ),
             glue::glue(
               translWithLang()$translate(

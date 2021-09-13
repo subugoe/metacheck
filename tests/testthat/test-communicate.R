@@ -11,6 +11,6 @@ test_that("shiny app works", {
   Sys.sleep(5)
   expect_equal(
     app$findElements(".modal-title")[[1]]$getText(),
-    "You have succesfully send your DOIs"
+    "You have successfully send your DOIs"
   )
 })

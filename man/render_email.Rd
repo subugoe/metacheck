@@ -8,9 +8,9 @@
 \usage{
 render_email(dois, lang = "en", session_id = NULL)
 
-render_and_send(dois, to)
+render_and_send(dois, to, lang)
 
-render_and_send_async(dois, to)
+render_and_send_async(dois, to, lang)
 }
 \arguments{
 \item{dois}{Character vector of DOIs}

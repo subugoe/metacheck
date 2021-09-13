@@ -32,19 +32,23 @@ render_email <- function(dois, lang = "en", session_id = NULL) {
 
 #' @describeIn render_email Render and send
 #' @inheritParams smtp_send_metacheck
-render_and_send <- function(dois, to) {
+render_and_send <- function(dois, to, lang) {
   email <- render_email(
     dois,
     # used to disambiguate excel file names, see #83
-    session_id = as.character(floor(runif(1) * 1e20))
+    session_id = as.character(floor(runif(1) * 1e20)),
+    lang = lang
   )
   smtp_send_metacheck(to = to, email)
 }
 
 #' @describeIn render_email Render and send asynchronously
 #' @export
-render_and_send_async <- function(dois, to) {
-  promises::future_promise(render_and_send(dois = dois, to = to), seed = TRUE)
+render_and_send_async <- function(dois, to, lang) {
+  promises::future_promise(
+    render_and_send(dois = dois, to = to, lang),
+    seed = TRUE
+  )
   NULL
 }
 
@@ -253,7 +257,11 @@ emailReportServer <- function(id,
             easyClose = TRUE,
             footer = NULL
           ))
-          render_and_send_async(to = input$recipient, dois = dois)
+          render_and_send_async(
+            to = input$recipient,
+            dois = dois(),
+            lang = lang()
+          )
         }
       })
     }

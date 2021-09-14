@@ -12,9 +12,9 @@ jobs:
     env:
       MUGGLE_PKG_NAME: ${{ github.event.repository.name }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      crossref_plus: ${{ secrets.CR_MD_PLUS_TOKEN }}
+      CR_MD_MAILTO1: ${{ github.event.pusher.email }}
+      CR_MD_PLUS_TOKEN1: ${{ secrets.CR_MD_PLUS_TOKEN }}
       MAILJET_SMTP_PASSWORD: ${{ secrets.MAILJET_SMTP_PASSWORD }}
-      CR_MD_MAILTO: ${{ github.event.pusher.email }}
     steps:
       - uses: actions/checkout@v2
       - name: Cache R Packages

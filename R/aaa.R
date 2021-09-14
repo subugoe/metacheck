@@ -1,6 +1,8 @@
 #' Authorise crossref requests
 #' 
-#' Tries [crlite::get_cr_mailto()] and [crlite::get_cr_token()] or sets `character(1)` otherwise.
+#' Tries [crlite::get_cr_mailto()] and [crlite::get_cr_token()],
+#' and sets env vars expected by rcrossref.
+#' Does nothing otherwise, returns `FALSE` invisibly.
 #'
 #' @family helpers
 #'
@@ -17,8 +19,8 @@ auth_cr <- function() {
     crlite::get_cr_token(),
     error = function(cond) character(1)
   )
-  Sys.setenv(crossref_email = mailto)
-  Sys.setenv(crossref_plus = token)
+  if (mailto != "") Sys.setenv(crossref_email = mailto) else FALSE
+  if (mailto != "") Sys.setenv(crossref_plus = token) else FALSE
 }
 
 #' Username used with password

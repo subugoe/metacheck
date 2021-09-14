@@ -7,7 +7,9 @@
 auth_cr()
 }
 \description{
-Tries \code{\link[crlite:polite]{crlite::get_cr_mailto()}} and \code{\link[crlite:plus]{crlite::get_cr_token()}} or sets \code{character(1)} otherwise.
+Tries \code{\link[crlite:polite]{crlite::get_cr_mailto()}} and \code{\link[crlite:plus]{crlite::get_cr_token()}},
+and sets env vars expected by rcrossref.
+Does nothing otherwise, returns \code{FALSE} invisibly.
 }
 \seealso{
 Other helpers: 

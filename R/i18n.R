@@ -1,5 +1,6 @@
 #' Translations for metacheck
-#' @noRd
+#' @export
+#' @keywords internal
 mc_translator <- function() {
   shiny.i18n::Translator$new(
     translation_json_path = system.file(

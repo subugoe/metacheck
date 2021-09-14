@@ -3,15 +3,23 @@
 \name{email}
 \alias{email}
 \alias{mc_compose_email}
-\alias{render_email}
+\alias{mc_compose_email_outer}
+\alias{mc_render_email}
 \alias{render_and_send}
 \alias{render_and_send_async}
 \alias{smtp_send_mc}
 \title{Send metacheck results as an parametrised email}
 \usage{
-mc_compose_email(body = "Lorem", translator = mc_translator())
+mc_compose_email(translator = mc_translator(), ...)
 
-render_email(dois = tu_dois(), translator = mc_translator(), session_id = NULL)
+mc_compose_email_outer(body = "Lorem", translator = mc_translator())
+
+mc_render_email(
+  dois = tu_dois()[1:10],
+  translator = mc_translator(),
+  session_id = NULL,
+  ...
+)
 
 render_and_send(to, translator = mc_translator(), ...)
 
@@ -27,12 +35,6 @@ smtp_send_mc(
 )
 }
 \arguments{
-\item{body}{The three layout sections for an email message
-(ordered from top to bottom). Markdown text can be supplied to each of
-these by using the \code{\link[blastula:md]{md()}} text helper function. Alternatively, we can
-supply a set of \verb{block_*()} calls enclosed within the \code{\link[blastula:blocks]{blocks()}} function
-to take advantage of precomposed HTML blocks.}
-
 \item{translator}{A \link[shiny.i18n:Translator]{shiny.i18n::Translator} object or \code{NULL} for english-only defaults.
 Strings inside the module UI are marked as translateable.
 You can pass a translator object included in the package,
@@ -40,18 +42,25 @@ or can create your own \code{translator} using \link[shiny.i18n:Translator]{shin
 This must not be a reactive, it is only set at shiny startup.
 To update the language reactively \emph{during} a shiny session, see \code{lang}.}
 
-\item{dois}{Vector of DOIs, as created by, or coerceable to \code{\link[biblids:doi]{biblids::doi()}}.}
-
-\item{session_id}{Character vector to identify current shiny session}
-
-\item{to}{A vector of email addresses serving as primary recipients for the
-message. For secondary recipients, use the \code{cc} and \code{bcc} arguments. A
-named character vector can be used to specify the recipient names along
-with the their email address (e.g., \code{c("Jane Doe" = "jane_doe@example.com")}).}
-
 \item{...}{
-  Arguments passed on to \code{\link[=render_email]{render_email}}, \code{\link[blastula:smtp_send]{blastula::smtp_send}}
+  Arguments passed on to \code{\link[=mc_render_email]{mc_render_email}}, \code{\link[blastula:render_email]{blastula::render_email}}, \code{\link[=mc_compose_email]{mc_compose_email}}, \code{\link[blastula:smtp_send]{blastula::smtp_send}}
   \describe{
+    \item{\code{input}}{The input file to be rendered. This should be an R Markdown
+document (.Rmd) with the output specified as \code{output: blastula::blastula_email}.}
+    \item{\code{envir}}{The environment in which the code chunks are to be evaluated
+during knitting.}
+    \item{\code{quiet}}{An option to suppress printing of the command line output from
+Pandoc during rendering. By default, this is set to \code{TRUE}.}
+    \item{\code{output_options}}{Lists of options can be used to augment
+the rendering of the email message. The \code{output_options} list will be
+passed as the \code{output_options} argument of \code{rmarkdown::render()}. The
+\code{render_options} list is for providing additional arguments to
+\code{rmarkdown::render()}. By default, both lists are empty.}
+    \item{\code{render_options}}{Lists of options can be used to augment
+the rendering of the email message. The \code{output_options} list will be
+passed as the \code{output_options} argument of \code{rmarkdown::render()}. The
+\code{render_options} list is for providing additional arguments to
+\code{rmarkdown::render()}. By default, both lists are empty.}
     \item{\code{subject}}{The subject of the message, which is usually a brief summary
 of the topic of the message. If not provided, an empty string will be used
 (which is handled differently by email clients).}
@@ -80,6 +89,21 @@ during the exchange, such information is encoded and won't be stored on
 the user's system.}
   }}
 
+\item{body}{The three layout sections for an email message
+(ordered from top to bottom). Markdown text can be supplied to each of
+these by using the \code{\link[blastula:md]{md()}} text helper function. Alternatively, we can
+supply a set of \verb{block_*()} calls enclosed within the \code{\link[blastula:blocks]{blocks()}} function
+to take advantage of precomposed HTML blocks.}
+
+\item{dois}{Vector of DOIs, as created by, or coerceable to \code{\link[biblids:doi]{biblids::doi()}}.}
+
+\item{session_id}{Character vector to identify current shiny session}
+
+\item{to}{A vector of email addresses serving as primary recipients for the
+message. For secondary recipients, use the \code{cc} and \code{bcc} arguments. A
+named character vector can be used to specify the recipient names along
+with the their email address (e.g., \code{c("Jane Doe" = "jane_doe@example.com")}).}
+
 \item{email}{The email message object, as created by the \code{\link[blastula:compose_email]{compose_email()}}
 function. The object's class is \code{email_message}.}
 
@@ -105,10 +129,13 @@ Send metacheck results as an parametrised email
 \section{Related Functions and Methods}{
 \subsection{Functions}{
 \itemize{
-\item \code{mc_compose_email}: Compose
+\item \code{mc_compose_email}: Compose complete mail
 }
 \itemize{
-\item \code{render_email}: Render
+\item \code{mc_compose_email_outer}: Wrap inner email in outer content
+}
+\itemize{
+\item \code{mc_render_email}: Render email body (inner content)
 }
 \itemize{
 \item \code{render_and_send}: Render and send

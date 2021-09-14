@@ -3,10 +3,20 @@
 #' @name email
 NULL
 
-#' @describeIn email Compose
+#' @describeIn email Compose complete mail
+#' @inheritDotParams mc_render_email
+#' @export
+mc_compose_email <- function(translator = mc_translator(), ...) {
+  mc_render_email(translator = translator, ...)$html_html %>%
+    mc_compose_email_outer(translator = translator)
+}
+
+#' @describeIn email Wrap inner email in outer content
 #' @inheritParams blastula::compose_email
 #' @inheritParams mcControlsServer
-mc_compose_email <- function(body = "Lorem", translator = mc_translator()) {
+#' @export
+mc_compose_email_outer <- function(body = "Lorem",
+                                   translator = mc_translator()) {
   biblids::stopifnot_i18n(translator)
   blastula::compose_email(
     header = blastula::blocks(
@@ -82,6 +92,8 @@ mc_compose_email <- function(body = "Lorem", translator = mc_translator()) {
     ),
     title = "metacheck results"
   )
+  # TODO enable https://github.com/subugoe/metacheck/issues/276
+  # email <- add_attachment_xlsx(email, session_id = session_id)
 }
 
 #' Defaults for social links
@@ -98,42 +110,39 @@ block_text_centered_vec <- function(...) {
   block_text_centered(blastula::md(paste(..., collapse = " ")))
 }
 
-#' @describeIn email Render
-#' @param session_id Character vector to identify current shiny session
+#' @describeIn email Render email body (inner content)
 #' @inheritParams report
+#' @param session_id Character vector to identify current shiny session
+#' @inheritDotParams blastula::render_email
 #' @export
-render_email <- function(dois = tu_dois(),
-                         translator = mc_translator(),
-                         session_id = NULL) {
-  email <- mc_compose_email(
-     # suppression is dangerous hack-fix for
-    # https://github.com/subugoe/metacheck/issues/138
-    # otherwise, tests are illegibly noisy
-    body = suppressWarnings(
-      blastula::render_email(
-        input = path_report_rmd(lang = translator$get_translation_language()),
-        render_options = list(
-          params = list(
-            dois = dois,
-            session_id = session_id,
-            translator = translator
-          )
+mc_render_email <- function(dois = tu_dois()[1:10],
+                            translator = mc_translator(),
+                            session_id = NULL,
+                            ...) {
+  # suppression is dangerous hack-fix for
+  # https://github.com/subugoe/metacheck/issues/138
+  # otherwise, tests are illegibly noisy
+  suppressWarnings(
+    blastula::render_email(
+      input = path_report_rmd(lang = translator$get_translation_language()),
+      render_options = list(
+        params = list(
+          dois = dois,
+          session_id = session_id,
+          translator = translator
         )
-      )$html_html
-    ),
-    translator = translator
+      ),
+      ...
+    )
   )
-  # TODO enable https://github.com/subugoe/metacheck/issues/276
-  # email <- add_attachment_xlsx(email, session_id = session_id)
-  email
 }
 
 #' @describeIn email Render and send
-#' @inheritDotParams render_email
+#' @inheritDotParams mc_compose_email
 #' @inheritParams smtp_send_mc
 #' @export
 render_and_send <- function(to, translator = mc_translator(), ...) {
-  email <- render_email(
+  email <- mc_compose_email(
     # used to disambiguate excel file names, see #83
     session_id = as.character(floor(runif(1) * 1e20)),
     translator = translator,
@@ -153,7 +162,7 @@ render_and_send_async <- function(...) {
 }
 
 #' Add attachment to email
-#' @inheritParams render_email
+#' @inheritParams mc_render_email
 #' @noRd
 add_attachment_xlsx <- function(email, session_id = NULL) {
   blastula::add_attachment(
@@ -164,7 +173,7 @@ add_attachment_xlsx <- function(email, session_id = NULL) {
 }
 
 #' Temp path to write xlsx to
-#' @inheritParams render_email
+#' @inheritParams mc_render_email
 xlsx_path <- function(session_id = NULL) {
   fs::path_temp(paste0(session_id, "-license_df.xlsx"))
 }
@@ -393,7 +402,7 @@ md_data_attachment <-
   }
 
 #' Temp path to write xlsx to
-#' @inheritParams render_email
+#' @inheritParams mc_render_email
 #' @noRd
 xlsx_path <- function(session_id = NULL) {
   fs::path_temp(paste0(session_id, "-license_df.xlsx"))

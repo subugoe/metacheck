@@ -1,4 +1,5 @@
 ---
+output: blastula::blastula_email
 title: "Metacheck Report"
 params:
   dois: !r metacheck:::tu_dois()
@@ -105,7 +106,7 @@ It includes these sheets:
 - `pretest`: Results of the pretest
 
 
-```{r export}
+```{r export, include = FALSE}
 md_data_attachment(
   mcres,
   session_id = params$session_id,

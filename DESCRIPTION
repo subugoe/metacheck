@@ -83,7 +83,8 @@ Imports:
     shiny.i18n,
     bslib,
     curl,
-    crlite
+    crlite,
+    lobstr
 Suggests:
     testthat,
     subugoetheme,

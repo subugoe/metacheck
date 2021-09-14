@@ -1,17 +1,22 @@
-test_that("email without body can be composed", {
+test_that("outer email can be composed", {
   # pretty bad test
-  expect_s3_class(
-    mc_compose_email(),
-    "blastula_message"
-  )
+  expect_s3_class(mc_compose_email_outer(), "blastula_message")
 })
 
 test_that("email can be rendered", {
   # pretty bad test
-  expect_s3_class(
-    render_email(dois = c(dois_weird(), tu_dois()[1:3])),
-    "blastula_message"
-  )
+  expect_s3_class(mc_render_email(), "blastula_message")
+})
+
+test_that("complete email can be composed", {
+  # pretty bad test
+  expect_s3_class(mc_compose_email(), "blastula_message")
+})
+
+test_that("email is smaller than 102KB to meet google limit", {
+  # emails bigger than 102kb are clipped on gmail.com
+  email_source <- mc_compose_email()$html_html
+  expect_true(lobstr::obj_size(email_source) / 1000 < 102)
 })
 
 test_that("email can be send", {

@@ -87,7 +87,7 @@ funder_metrics(mcres$funder_info) %>%
   ind_table_to_gt(.color = "#000099", lang = lang)
 ```
 
-This table gives an overview over the most frequent fundders per DOI, as per Crossref metada.
+This table gives an overview over the most frequent funders per DOI, as per Crossref metada.
 Crossref metadata can include more than one funder for each DOI.
 
 The percentage share refers to the total number of checked DOIs.

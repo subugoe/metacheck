@@ -20,7 +20,7 @@ translator <- params$translator
 
 Zunächst prüfen wir, ob zu diesen DOIs konforme Open Access Metadaten vorliegen *könnten*.
 
-Sie haben **`r length(params$dois)`** eingegeben.
+Sie haben **`r length(params$dois)`** DOIs eingegeben.
 
 ```{r pretest, results = "asis"}
 report_metacheckable(params$dois, lang = lang)
@@ -93,12 +93,12 @@ funder_metrics(mcres$funder_info) %>%
   ind_table_to_gt(.color = "#000099", lang = lang)
 ```
 
-Die Tabelle gibt einen Überblick, über die häufigsten Förderer je Artikel lt. Crossref-Metadaten. 
+Die Tabelle gibt einen Überblick über die häufigsten Förderer je Artikel laut Crossref-Metadaten. 
 Grundsätzlich können mehrere Förderer je Artikel vermerkt sein.
 Der prozentuale Anteil bezieht sich auf die Anzahl der überprüften Artikel mit Crossref-Metadaten.
 
 
-### Individual Results 
+### Einzelergebnisse pro DOI
 
 Beigefügt finden Sie ein Excel-Spreadsheet mit Metadaten auf Artikelebene für weitere Analysen. 
 Es umfasst folgende Datenblätter:

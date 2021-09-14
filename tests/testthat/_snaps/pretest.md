@@ -77,6 +77,6 @@
           "value": ["glue", "character"]
         }
       },
-      "value": ["- 7 (88%) thereof fulfill criterion `not_missing` (**1** dropped)\n- 6 (86%) thereof fulfill criterion `unique` (**1** dropped)\n- 6 (100%) thereof fulfill criterion `within_limits` (**0** dropped)\n- 6 (100%) thereof fulfill criterion `doi_org_found` (**0** dropped)\n- 3 (50%) thereof fulfill criterion `from_cr` (**3** dropped)\n- 3 (100%) thereof fulfill criterion `cr_md` (**0** dropped)\n- 3 (100%) thereof fulfill criterion `article` (**0** dropped)"]
+      "value": ["- 7 (88%) thereof fulfill the criterion `not_missing` (**1** dropped)\n- 6 (86%) thereof fulfill the criterion `unique` (**1** dropped)\n- 6 (100%) thereof fulfill the criterion `within_limits` (**0** dropped)\n- 6 (100%) thereof fulfill the criterion `doi_org_found` (**0** dropped)\n- 3 (50%) thereof fulfill the criterion `from_cr` (**3** dropped)\n- 3 (100%) thereof fulfill the criterion `cr_md` (**0** dropped)\n- 3 (100%) thereof fulfill the criterion `article` (**0** dropped)"]
     }
 

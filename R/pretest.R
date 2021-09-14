@@ -109,7 +109,7 @@ report_metacheckable1 <- function(x, desc, lang = mc_langs) {
   switch(
     lang,
     "en" = glue::glue(
-      "- {n_good(x)} ({round(percent_good(x))}%) thereof fulfill ",
+      "- {n_good(x)} ({round(percent_good(x))}%) thereof fulfill the ",
       "criterion `{desc}` (**{n_bad(x)}** dropped)"
     ),
     "de" = glue::glue(

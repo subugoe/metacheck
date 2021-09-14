@@ -10,6 +10,6 @@ pkgdown:
   This is an example report using the `tu_dois()` data, shipped with the package.
 </div>
 
-```{r, echo = FALSE, results = 'asis'}
+```{r, echo = FALSE, results = 'asis', message = FALSE}
 metacheck:::knit_child_report(lang = "en")
 ```

@@ -10,6 +10,6 @@ pkgdown:
   Dieses Ergebnis basiert auf den `tu_dois()` Beispieldaten im metacheck Paket.
 </div>
 
-```{r, echo = FALSE, results = 'asis'}
+```{r, echo = FALSE, results = 'asis', message = FALSE}
 metacheck:::knit_child_report(lang = "de")
 ```

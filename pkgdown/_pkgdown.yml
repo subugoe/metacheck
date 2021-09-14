@@ -58,9 +58,9 @@ navbar:
       text: App
       icon: "fa fa-tachometer"
       menu:
-      - text: "Stable"
+      - text: "Stable (German only)"
         href: articles/app.html
-      - text: "Preview"
+      - text: "Preview (International)"
         href: articles/preview.html
     support:
       text: Support

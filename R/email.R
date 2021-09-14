@@ -198,6 +198,7 @@ smtp_send_mc <- function(email = blastula::prepare_test_message(),
 #' Get credentials for smtp
 #' @noRd
 creds_metacheck <- function() {
+  auth_mailjet()
   if (has_creds_envvar()) {
     res <- creds_envvar_metacheck()
   } else {
@@ -210,9 +211,9 @@ creds_metacheck <- function() {
 #' @noRd
 creds_envvar_metacheck <- function() {
   blastula::creds_envvar(
-    user = "7dd3848a47e310558c101fefb4d8edc5",
+    user = mailjet_username,
     pass_envvar = "MAILJET_SMTP_PASSWORD",
-    host = "in-v3.mailjet.com",
+    host = mailjet_smtp_server,
     port = 587,
     use_ssl = TRUE
   )

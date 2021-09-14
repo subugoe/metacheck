@@ -2,52 +2,16 @@
 % Please edit documentation in R/aaa.R
 \name{auth_cr}
 \alias{auth_cr}
-\alias{get_cr_user}
-\alias{get_cr_token}
 \title{Authorise crossref requests}
 \usage{
-auth_cr(user = get_cr_user(), token = get_cr_token())
-
-get_cr_user()
-
-get_cr_token(service = "https://api.crossref.org", username = get_cr_user())
-}
-\arguments{
-\item{user, token}{A character string used to authenticate into higher performance API pools.}
-
-\item{service, username}{A character string giving the service and username under which the token can be found in the OS keychain.}
+auth_cr()
 }
 \description{
-Authorise crossref requests
+Tries \code{\link[crlite:polite]{crlite::get_cr_mailto()}} and \code{\link[crlite:plus]{crlite::get_cr_token()}} or sets \code{character(1)} otherwise.
 }
-\section{Related Functions and Methods}{
-\subsection{Functions}{
-\itemize{
-\item \code{get_cr_user}: Get the email address to be used in the request \code{User-Agent} header.
-If set, you can access the \href{https://github.com/CrossRef/rest-api-doc/#etiquette}{"polite pool"} of the API.
-
-In this order, returns the first hit of:
-\enumerate{
-\item \code{crossref_email} environment variable, as used by crossref R client,
-\item git user email address for the repo at the working directory (requires git to be configured),
-\item an empty character scalar with a warning.
-}
-}
-\itemize{
-\item \code{get_cr_token}: Get the token to authenticate into the Crossref plus API tool.
-
-In this order, returns the first hit of:
-\enumerate{
-\item \code{crossref_plus} environment variable,
-as used by crossref R client
-(recommended only for secure environment variables in the cloud),
-\item an entry in the OS keychain manager for \code{service} and \code{username},
-\item \code{NULL} with a warning.
-}
-}}}
-
 \seealso{
 Other helpers: 
-\code{\link{accumulate_pred_trans}()}
+\code{\link{accumulate_pred_trans}()},
+\code{\link{auth_mailjet}()}
 }
 \concept{helpers}

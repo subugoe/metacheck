@@ -1,7 +1,6 @@
 #' Authorise crossref requests
-#'
-#' @param user,token
-#' A character string used to authenticate into higher performance API pools.
+#' 
+#' Tries [crlite::get_cr_mailto()] and [crlite::get_cr_token()] or sets `character(1)` otherwise.
 #'
 #' @family helpers
 #'
@@ -9,62 +8,65 @@
 #'
 # TODO this should really live in the crossref client
 # https://github.com/subugoe/metacheck/issues/248
-auth_cr <- function(user = get_cr_user(), token = get_cr_token()) {
-  Sys.setenv(crossref_email = user)
+auth_cr <- function() {
+  mailto <- tryCatch(
+    crlite::get_cr_mailto(),
+    error = function(cond) character(1)
+  )
+  token <- tryCatch(
+    crlite::get_cr_token(),
+    error = function(cond) character(1)
+  )
+  Sys.setenv(crossref_email = mailto)
   Sys.setenv(crossref_plus = token)
 }
 
-#' @describeIn auth_cr Get the email address to be used in the request `User-Agent` header.
-#' If set, you can access the ["polite pool"](https://github.com/CrossRef/rest-api-doc/#etiquette) of the API.
-#'
-#' In this order, returns the first hit of:
-#'
-#' 1. `crossref_email` environment variable, as used by crossref R client,
-#' 1. git user email address for the repo at the working directory (requires git to be configured),
-#' 1. an empty character scalar with a warning.
-#' @export
-get_cr_user <- function() {
-  if (Sys.getenv("crossref_email") != "") {
-    return(Sys.getenv("crossref_email"))
-  }
-  if (gert::user_is_configured()) {
-    cf <- gert::git_config()
-    return(as.character(cf[cf$name == "user.email", "value"]))
-  } else {
-    warning(
-      "No crossref user could be found. ",
-      "You may not be in the 'polite' pool and performance may be degraded."
-    )
-    return(character(1))
-  }
-}
+#' Username used with password
+#' @noRd
+mailjet_username <- "7dd3848a47e310558c101fefb4d8edc5"
 
-#' @describeIn auth_cr Get the token to authenticate into the Crossref plus API tool.
-#'
-#' In this order, returns the first hit of:
-#'
-#' 1. `crossref_plus` environment variable,
-#'     as used by crossref R client
-#'     (recommended only for secure environment variables in the cloud),
-#' 1. an entry in the OS keychain manager for `service` and `username`,
-#' 1. `NULL` with a warning.
-#'
-#' @param service,username
-#' A character string giving the service and username under which the token can be found in the OS keychain.
-#'
+#' Mailjet smtps server
+#' see https://documentation.mailjet.com/hc/en-us/articles/360043229473-How-can-I-configure-my-SMTP-parameters-
+#' @noRd
+mailjet_smtp_server <- "in-v3.mailjet.com"
+
+#' Authorise mailjet requests
+#' 
+#' Tries the env var, then keyring and sets as env var.
+#' Otherwise throws warning.
+#' 
+#' @family helpers
+#' 
 #' @export
-get_cr_token <- function(service = "https://api.crossref.org", username = get_cr_user()) {
-  if (Sys.getenv("crossref_plus") != "") {
-    Sys.getenv("crossref_plus")
-  } else {
-    tryCatch(
-      expr = keyring::key_get(service = service, username = username),
-      error = function(x) {
-        warning(
-          "No crossref plus token could be found. ",
-          "Performance may be degraded."
-        )
-      }
+# TODO this is a bit messy, b/c it is copying auth_cr()
+auth_mailjet <- function() {
+  from_envvar <- Sys.getenv("MAILJET_SMTP_PASSWORD")
+  if (from_envvar != "") {
+    rlang::inform(
+      c("i" = "Using Mailjet password from env var `MAILJET_SMTP_PASSWORD`"),
+      .frequency = "once",
+      .frequency_id = "auth_mailjet"
     )
+    return(invisible(TRUE))
+  }
+  from_keyring <- tryCatch(
+    keyring::key_get(
+      service = mailjet_smtp_server,
+      username = mailjet_username
+    ),
+    error = function(x) {
+      warning("Could not find Mailjet SMTPs credentials; you may not be send out email.")
+      return(character(1))
+    }
+  )
+  if (from_keyring != "") {
+    rlang::inform(
+      c("i" = "Using Mailjet password from system keyring."),
+      .frequency = "once",
+      .frequency_id = "auth_mailjet"
+    )
+    return(Sys.setenv("MAILJET_SMTP_PASSWORD" = from_keyring))
+  } else {
+     return(invisible(FALSE))
   }
 }

@@ -14,8 +14,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       crossref_plus: ${{ secrets.CR_MD_PLUS_TOKEN }}
       MAILJET_SMTP_PASSWORD: ${{ secrets.MAILJET_SMTP_PASSWORD }}
-      # TODO committer email here https://github.com/subugoe/metar/issues/110
-      crossref_email: "held@sub.uni-goettingen.de"
+      CR_MD_MAILTO: ${{ github.event.pusher.email }}
     steps:
       - uses: actions/checkout@v2
       - name: Cache R Packages

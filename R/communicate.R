@@ -8,7 +8,8 @@ runMetacheck <- function(...) shiny::runApp(appDir = mcApp(), ...)
 #' @family communicate
 #' @export
 mcApp <- function() {
-  future::plan(future::multicore, workers = 20L)
+  # disabled as hotfix for https://github.com/subugoe/metacheck/issues/290
+  # future::plan(future::multicore, workers = 20L)
   shiny::shinyApp(
     ui = mcAppUI(),
     server = mcAppServer

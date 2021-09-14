@@ -100,7 +100,7 @@ mcControlsServer <- function(id, translator = mc_translator()) {
       dois <- biblids::doiEntryServer(
         id = "dois",
         example_dois = tu_dois()[1:30],
-        char_limit = 10000L,
+        char_limit = 50000L,
         translator = translator,
         lang = lang
       )

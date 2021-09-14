@@ -55,9 +55,13 @@ navbar:
     right: [support, github]
   components:
     app:
-      text: "App"
+      text: App
       icon: "fa fa-tachometer"
-      href: articles/app.html
+      menu:
+      - text: "Stable"
+        href: articles/app.html
+      - text: "Preview"
+        href: articles/preview.html
     support:
       text: Support
       menu:

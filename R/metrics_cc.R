@@ -49,7 +49,7 @@ cc_metrics <- function(cc_license_check = NULL) {
 #' req <- get_cr_md(my_dois)
 #'
 #' # Then, check article-level compliance
-#  out <- cr_compliance_overview(req)
+#' out <- cr_compliance_overview(req)
 #'
 #' # Obtain CC compliance check resutls metrics
 #' cc_compliance_metrics(out$cc_license_check)

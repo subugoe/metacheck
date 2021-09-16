@@ -23,6 +23,7 @@ my_dois <- c("10.5194/wes-2019-70", "10.1038/s41598-020-57429-5",
 req <- get_cr_md(my_dois)
 
 # Then, check article-level compliance
+out <- cr_compliance_overview(req)
 
 # Obtain CC compliance check resutls metrics
 cc_compliance_metrics(out$cc_license_check)

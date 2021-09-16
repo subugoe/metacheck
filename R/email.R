@@ -20,13 +20,31 @@ mc_compose_email_outer <- function(body = "Lorem",
   biblids::stopifnot_i18n(translator)
   blastula::compose_email(
     header = blastula::blocks(
-      blastula::block_title(translator$translate("Metacheck Results")),
-      block_text_centered(translator$translate(
+      title = blastula::block_title(translator$translate("Metacheck Results")),
+      results = block_text_centered(translator$translate(
         "Here are your open access metadata compliance test results."
-      ))
+      )),
+      disclaimer = block_text_centered_vec(
+        translator$translate(
+          # TODO https://github.com/subugoe/metacheck/issues/282
+          # line breaking this breaks the translation
+          # but should live in long docs anyway 
+          "Metacheck supports your workflows to check OA metadata deposited by publishers, but it cannot conclusively check funding eligibility of OA publications."
+        ),
+        translator$translate(
+          "Please consult the funding conditions of the respective funder."
+        )
+      )
     ),
     body = body,
     footer = blastula::blocks(
+      support = block_text_centered_vec(
+        translator$translate("Need help interpreting your results?"),
+        blastula::add_cta_button(
+          url = "https://subugoe.github.io/metacheck/articles/help.html",
+          text = translator$translate("Get additional support")
+        )
+      ),
       # newsletter is only available in german
       if (translator$get_translation_language() == "de") {
         list(
@@ -40,23 +58,6 @@ mc_compose_email_outer <- function(body = "Lorem",
           blastula::block_spacer()
         )
       },
-      disclaimer = block_text_centered_vec(
-        translator$translate(
-          # TODO https://github.com/subugoe/metacheck/issues/282
-          # line breaking this breaks the translation
-          # but should live in long docs anyway 
-          "Metacheck supports your workflows to check OA metadata deposited by publishers, but it cannot conclusively check funding eligibility of OA publications."
-        ),
-        translator$translate(
-          "Please consult the funding conditions of the respective funder."
-        )
-      ),
-      support = block_text_centered_vec(
-        translator$translate("Need help interpreting your results?"),
-        translator$translate(
-          "[Get additional support](https://subugoe.github.io/metacheck/articles/help.html)"
-        )
-      ),
       copyright = block_text_centered_vec(
         "\u00A9",
         paste0(
@@ -65,7 +66,13 @@ mc_compose_email_outer <- function(body = "Lorem",
           "]",
           "(https://www.sub.uni-goettingen.de)"
         ),
-        lubridate::year(lubridate::now())
+        lubridate::year(lubridate::now()),
+        blastula::add_image(
+          file = "https://subugoe.github.io/subugoetheme/sub_wordmark.jpg",
+          align = "center",
+          alt = "SUB Logo",
+          width = "200"
+        )
       ),
       funding = block_text_centered_vec(
         translator$translate("Funded by the"),
@@ -78,7 +85,13 @@ mc_compose_email_outer <- function(body = "Lorem",
       ),
       data = block_text_centered_vec(
         translator$translate("Based on data by"),
-        "[Crossref](https://crossref.org)"
+        "[Crossref](https://crossref.org)",
+        blastula::add_image(
+          file = "https://assets.crossref.org/logo/member-badges/member-badge-member.svg",
+          align = "center",
+          alt = "Crossref Member Badge",
+          width = "200"
+        )
       ),
       links = blastula::block_social_links(
         mc_social_link("website", "http://subugoe.github.io/metacheck"),

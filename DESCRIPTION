@@ -30,7 +30,8 @@ Authors@R:
       ),
       person(
         given = "German Research Foundation",
-        role = c("spn")
+        role = c("spn"),
+        comment = "Projektnummer #416115939"
       ),
       person(
         given = "Crossref",
@@ -92,7 +93,8 @@ Suggests:
     bench,
     withr,
     htmltools,
-    knitr
+    knitr,
+    pkgdown
 URL: https://subugoe.github.io/metacheck, https://github.com/subugoe/metacheck
 BugReports: https://github.com/subugoe/metacheck/issues
 Remotes: 
@@ -101,7 +103,8 @@ Remotes:
     subugoe/rcrossref@158d6d35091b75fcf1cd4271ecf585b2a6c56006,
     subugoe/biblids@3ffa325c12fc49766d93f472ab903a6ee39a6379,
     appsilon/shiny.i18n@efb0bc0dd5412d35e6747f10f24b1ea48201f886,
-    subugoe/crlite@3524eef7092c570d13c522f0353ba7ce55942284
+    subugoe/crlite@3524eef7092c570d13c522f0353ba7ce55942284,
+    r-lib/pkgdown@705ff7c650bb1c7d46d35e72f27ad093689e2f29
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Config/wama/defaultShinyApp: runMetacheck()

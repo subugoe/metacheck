@@ -7,13 +7,13 @@ authors:
     href: https://www.sub.uni-goettingen.de/
   German Research Foundation:
     href: https://www.dfg.de
-    html: <img src="reference/figures/dfg_logo_schriftzug_blau_foerderung_en.jpg" height="15">
+    html: <img src="reference/figures/dfg_logo_schriftzug_blau_foerderung_en.jpg" width="263">
   Crossref:
     href: https://www.crossref.org
-    html: <img src="reference/figures/metadata-from-crossref-logo-200.svg" height="15">
-  OpenAPC Initiative:
-    href: https://github.com/openapc
-    html: <img src="reference/figures/openAPC_01+.png" height="15">
+    html: <img src="https://assets.crossref.org/logo/member-badges/member-badge-member.svg" width="263">
+  sidebar:
+    roles: [cre, aut, spn, dtc]
+    before: "Developed at [SUB](https://www.sub.uni-goettingen.de) on [DFG grant #416115939](https://gepris.dfg.de/gepris/projekt/416115939)."
 template:
   package: subugoetheme
 home:

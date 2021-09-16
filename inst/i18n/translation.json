@@ -125,8 +125,12 @@
       "de": "Haben Sie Fragen zur Interpretation ihrer Ergebnisse?"
     },
     {
-      "en": "[Get additional support](https://subugoe.github.io/metacheck/articles/help.html).",
-      "de": "[Erhalten Sie weitere Unterstützung](https://subugoe.github.io/metacheck/articles/hilfe.html)."
+      "en": "Get additional support",
+      "de": "Weitere Unterstützung erhalten"
+    },
+    {
+      "en": "https://subugoe.github.io/metacheck/articles/help.html",
+      "de": "https://subugoe.github.io/metacheck/articles/hilfe.html"
     },
     {
       "en": "G\u00F6ttingen State and University Library",

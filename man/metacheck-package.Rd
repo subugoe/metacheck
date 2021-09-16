@@ -30,7 +30,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Göttingen State and University Library [copyright holder, funder]
-  \item German Research Foundation [sponsor]
+  \item German Research Foundation (Projektnummer #416115939) [sponsor]
   \item Crossref [data contributor]
 }
 

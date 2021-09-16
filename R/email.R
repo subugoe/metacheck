@@ -41,9 +41,10 @@ mc_compose_email_outer <- function(body = "Lorem",
       support = block_text_centered_vec(
         translator$translate("Need help interpreting your results?"),
         blastula::add_cta_button(
-          url = "https://subugoe.github.io/metacheck/articles/help.html",
+          url = "http://subugoe.github.io/metacheck/articles/help.html",
           text = translator$translate("Get additional support")
-        )
+        ),
+        blastula::block_spacer()
       ),
       # newsletter is only available in german
       if (translator$get_translation_language() == "de") {
@@ -51,48 +52,13 @@ mc_compose_email_outer <- function(body = "Lorem",
           newsletter = block_text_centered_vec(
             translator$translate("Stay tuned for new metacheck features."),
             blastula::add_cta_button(
-              url = "https://subugoe.github.io/hoad/newsletter.html",
+              url = "http://subugoe.github.io/hoad/newsletter.html",
               text = translator$translate("Subscribe to our newsletter")
             )
           ),
           blastula::block_spacer()
         )
       },
-      copyright = block_text_centered_vec(
-        "\u00A9",
-        paste0(
-          "[",
-          translator$translate("G\u00F6ttingen State and University Library"),
-          "]",
-          "(https://www.sub.uni-goettingen.de)"
-        ),
-        lubridate::year(lubridate::now()),
-        blastula::add_image(
-          file = "https://subugoe.github.io/subugoetheme/sub_wordmark.jpg",
-          align = "center",
-          alt = "SUB Logo",
-          width = "200"
-        )
-      ),
-      funding = block_text_centered_vec(
-        translator$translate("Funded by the"),
-        paste0(
-          "[",
-          translator$translate("German Research Foundation"),
-          "]",
-          "(https://www.dfg.de)"
-        )
-      ),
-      data = block_text_centered_vec(
-        translator$translate("Based on data by"),
-        "[Crossref](https://crossref.org)",
-        blastula::add_image(
-          file = "https://assets.crossref.org/logo/member-badges/member-badge-member.svg",
-          align = "center",
-          alt = "Crossref Member Badge",
-          width = "200"
-        )
-      ),
       links = blastula::block_social_links(
         mc_social_link("website", "http://subugoe.github.io/metacheck"),
         mc_social_link(
@@ -101,6 +67,31 @@ mc_compose_email_outer <- function(body = "Lorem",
         ),
         mc_social_link("GitHub", "http://github.com/subugoe/metacheck"),
         mc_social_link("Twitter", "https://twitter.com/subugoe")
+      ),
+      blastula::block_spacer(),
+      copyright = block_text_centered_vec(
+        blastula::add_image(
+          file = "http://subugoe.github.io/metacheck/reference/figures/SUB_centered_cmyk.png",
+          align = "center",
+          alt = "SUB Logo",
+          width = "200"
+        )
+      ),
+      funding = block_text_centered_vec(
+        blastula::add_image(
+          file = "http://subugoe.github.io/metacheck/reference/figures/dfg_logo_schriftzug_blau_foerderung_en.jpg",
+          align = "center",
+          alt = "DFG logo",
+          width = "200"
+        )
+      ),
+      data = block_text_centered_vec(
+        blastula::add_image(
+          file = "http://subugoe.github.io/metacheck/reference/figures/member-badge-member@2x.jpeg",
+          align = "center",
+          alt = "Crossref Member Badge",
+          width = "200"
+        )
       )
     ),
     title = "metacheck results"

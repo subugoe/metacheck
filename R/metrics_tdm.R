@@ -28,6 +28,7 @@
 #' # Finally, obtain TDM metrics overview
 #' tdm_metrics(out$tdm)
 #' }
+#' @keywords internal
 tdm_metrics <- function(tdm = NULL) {
   is_cr_tdm_df(tdm)
   compliant_tdm <- tdm %>%

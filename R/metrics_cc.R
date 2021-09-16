@@ -16,11 +16,12 @@
 #' req <- get_cr_md(my_dois)
 #'
 #' # Then, check article-level compliance
-#  out <- cr_compliance_overview(req)
+#' out <- cr_compliance_overview(req)
 #'
 #' # Obtain CC variants metrics
-#' cc_metrics(out$> out$cc_license_check)
+#' cc_metrics(out$cc_license_check)
 #' }
+#' @keywords internal
 cc_metrics <- function(cc_license_check = NULL) {
   is_cr_license_df(cc_license_check)
   cc_license_check %>%
@@ -53,6 +54,7 @@ cc_metrics <- function(cc_license_check = NULL) {
 #' # Obtain CC compliance check resutls metrics
 #' cc_compliance_metrics(out$cc_license_check)
 #' }
+#' @keywords internal
 cc_compliance_metrics <- function(cc_license_check = NULL) {
   is_cr_license_df(cc_license_check)
   cc_license_check %>%

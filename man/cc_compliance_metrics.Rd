@@ -31,3 +31,4 @@ cc_compliance_metrics(out$cc_license_check)
 \seealso{
 \code{\link[=license_check]{license_check()}}
 }
+\keyword{internal}

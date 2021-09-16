@@ -78,6 +78,7 @@ get_license_md <- function(cr) {
 #'   without delay.
 #' @param license_df data frame with licenses
 #'
+#' @keywords internal
 get_compliant_cc <- function(license_df) {
   license_df %>%
     filter(
@@ -120,6 +121,7 @@ vor_issue <- function(license_df, compliant_dois) {
 #'
 #' @importFrom dplyr `%>%` mutate filter
 #' @export
+#' @keywords internal
 get_delayed_license <- function(license_df) {
   license_df %>%
     filter(.data$content.version == "vor", !is.na(.data$cc_norm) &

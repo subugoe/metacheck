@@ -26,6 +26,7 @@
 #' # Obtain funder metrics overview
 #' funder_metrics(out$funder_info)
 #' }
+#' @keywords internal
 funder_metrics <- function(funder_info = NULL) {
   is_cr_funder_df(funder_info)
 

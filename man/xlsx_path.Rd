@@ -12,3 +12,4 @@ xlsx_path(session_id = NULL)
 \description{
 Temp path to write xlsx to
 }
+\keyword{internal}

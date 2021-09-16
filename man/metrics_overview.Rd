@@ -41,3 +41,4 @@ req <- get_cr_md(my_dois)
 metrics_overview(out)
 }
 }
+\keyword{internal}

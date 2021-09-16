@@ -16,3 +16,4 @@ md_data_attachment(my_df = NULL, dois = NULL, session_id = NULL)
 \description{
 Make Spreadsheet attachment
 }
+\keyword{internal}

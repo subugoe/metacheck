@@ -35,3 +35,4 @@ req <- get_cr_md(my_dois)
 funder_metrics(out$funder_info)
 }
 }
+\keyword{internal}

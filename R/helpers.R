@@ -119,6 +119,7 @@ transitively <- function(.p, ...) {
 }
 
 #' Check whether context is production
+#' @noRd
 is_prod <- function() {
   # this works for Azure only
   # https://docs.microsoft.com/en-us/azure/app-service/reference-app-settings?tabs=kudu%2Cdotnet

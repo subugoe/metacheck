@@ -5,6 +5,7 @@
 #' @inheritParams draft_report
 #' @family visualize
 #' @export
+#' @keywords internal
 ind_table_to_gt <- function(ind_table, .color = NULL, lang = mc_langs) {
   lang <- rlang::arg_match(lang)
   is_ind_table(ind_table)

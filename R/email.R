@@ -187,6 +187,7 @@ add_attachment_xlsx <- function(email, session_id = NULL) {
 
 #' Temp path to write xlsx to
 #' @inheritParams mc_render_email
+#' @keywords internal
 xlsx_path <- function(session_id = NULL) {
   fs::path_temp(paste0(session_id, "-license_df.xlsx"))
 }
@@ -398,6 +399,7 @@ emailReportServer <- function(id,
 #'
 #' @importFrom writexl write_xlsx
 #' @export
+#' @keywords internal
 md_data_attachment <-
   function(my_df = NULL,
            dois = NULL,

@@ -37,3 +37,4 @@ req <- get_cr_md(my_dois)
 tdm_metrics(out$tdm)
 }
 }
+\keyword{internal}

@@ -18,3 +18,4 @@ ind_table_to_gt(ind_table, .color = NULL, lang = mc_langs)
 GT representation of compliance overview table
 }
 \concept{visualize}
+\keyword{internal}

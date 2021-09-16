@@ -34,6 +34,7 @@
 #' # Finally, obtain compliance metrics overview
 #' metrics_overview(out)
 #' }
+#' @keywords internal
 metrics_overview <- function(cr_overview = NULL) {
   is_cr_overview_df(cr_overview)
 

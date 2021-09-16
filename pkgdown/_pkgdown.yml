@@ -88,4 +88,4 @@ navbar:
     articles: ~
 development:
   version_label: danger
-  version_tooltip: "Alpha Release"
+  version_tooltip: "Beta Release"

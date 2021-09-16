@@ -37,19 +37,19 @@ ind_table_to_gt <- function(ind_table, .color = NULL, lang = mc_langs) {
       )
     ) %>%
     gt::cols_width(
-      vars(indicator) ~ gt::px(150)
+      c(indicator) ~ gt::px(150)
     ) %>%
     gt::cols_width(
-      vars(prop_bar) ~ gt::px(100)
+      c(prop_bar) ~ gt::px(100)
     ) %>%
     gt::fmt_number(
-      columns = vars(prop),
+      columns = c(prop),
       decimals = 0,
       pattern = "{x}%") %>%
     gt::cols_align(align = "right",
-               columns = vars(value, prop)) %>%
+               columns = c(value, prop)) %>%
     gt::cols_align(align = "left",
-               columns = vars(indicator, prop_bar)) %>%
+               columns = c(indicator, prop_bar)) %>%
     gt::tab_options(
       row_group.border.top.width = gt::px(3),
       row_group.border.top.color = "black",

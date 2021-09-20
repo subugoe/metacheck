@@ -6,7 +6,8 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
+#' \dontrun{
 #' my_dois <- c("10.5194/wes-2019-70", "10.1038/s41598-020-57429-5",
 #'   "10.3389/fmech.2019.00073", "10.1038/s41598-020-62245-y",
 #'   "10.1109/JLT.2019.2961931")
@@ -40,6 +41,7 @@ cc_metrics <- function(cc_license_check = NULL) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # Workflow:
 #' # First, obtain metadata from Crossref API
 #' req <- get_cr_md(tu_dois()[7:10])
@@ -49,6 +51,7 @@ cc_metrics <- function(cc_license_check = NULL) {
 #'
 #' # Obtain CC compliance check resutls metrics
 #' cc_compliance_metrics(out$cc_license_check)
+#' }
 #' @keywords internal
 cc_compliance_metrics <- function(cc_license_check = NULL) {
   is_cr_license_df(cc_license_check)

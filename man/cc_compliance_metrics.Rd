@@ -13,8 +13,6 @@ cc_compliance_metrics(cc_license_check = NULL)
 Presents the result of the CC compliance check (absolute and relative)
 }
 \examples{
-\dontshow{
-\dontrun{
 # Workflow:
 # First, obtain metadata from Crossref API
 req <- get_cr_md(tu_dois()[7:10])
@@ -24,8 +22,6 @@ out <- cr_compliance_overview(req)
 
 # Obtain CC compliance check resutls metrics
 cc_compliance_metrics(out$cc_license_check)
-}
-}
 }
 \seealso{
 \code{\link[=license_check]{license_check()}}

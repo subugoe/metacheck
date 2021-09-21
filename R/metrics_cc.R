@@ -41,8 +41,6 @@ cc_metrics <- function(cc_license_check = NULL) {
 #' @export
 #'
 #' @examples
-#' \dontshow{
-#' \dontrun{
 #' # Workflow:
 #' # First, obtain metadata from Crossref API
 #' req <- get_cr_md(tu_dois()[7:10])
@@ -52,8 +50,6 @@ cc_metrics <- function(cc_license_check = NULL) {
 #'
 #' # Obtain CC compliance check resutls metrics
 #' cc_compliance_metrics(out$cc_license_check)
-#' }
-#' }
 #' @keywords internal
 cc_compliance_metrics <- function(cc_license_check = NULL) {
   is_cr_license_df(cc_license_check)

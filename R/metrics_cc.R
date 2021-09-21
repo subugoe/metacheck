@@ -40,8 +40,7 @@ cc_metrics <- function(cc_license_check = NULL) {
 #'
 #' @export
 #'
-#' @examples
-#' \dontrun{
+#' @examples \dontrun{
 #' # Workflow:
 #' # First, obtain metadata from Crossref API
 #' req <- get_cr_md(tu_dois()[7:10])

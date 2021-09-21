@@ -119,7 +119,7 @@ block_text_centered_vec <- function(...) {
 #' @param session_id Character vector to identify current shiny session
 #' @inheritDotParams blastula::render_email
 #' @export
-mc_render_email <- function(dois = tu_dois()[1:10],
+mc_render_email <- function(dois = doi_examples$good[1:10],
                             translator = mc_translator(),
                             session_id = NULL,
                             ...) {

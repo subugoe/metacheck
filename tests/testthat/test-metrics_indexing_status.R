@@ -1,6 +1,6 @@
 skip_if_offline()
 
-test_dois <- tu_dois()[2:6]
+test_dois <- doi_examples$good[2:6]
 req <- get_cr_md(test_dois)
 out <- cr_compliance_overview(req)
 

@@ -19,20 +19,13 @@ Relative number is calculated by the number of checked articles.
 Articles without funder information are tagged as "No funder links found".
 }
 \examples{
-\dontrun{
-## Some DOIs from OA articles
-my_dois <- c("10.5194/wes-2019-70", "10.1038/s41598-020-57429-5",
-  "10.3389/fmech.2019.00073", "10.1038/s41598-020-62245-y",
-  "10.1109/JLT.2019.2961931")
-
-# Workflow:
 # First, obtain metadata from Crossref API
-req <- get_cr_md(my_dois)
+req <- get_cr_md(doi_examples$good)
 
 # Then, check article-level compliance
+out <- cr_compliance_overview(req)
 
 # Obtain funder metrics overview
 funder_metrics(out$funder_info)
-}
 }
 \keyword{internal}

@@ -15,7 +15,7 @@ mc_compose_email(translator = mc_translator(), ...)
 mc_compose_email_outer(body = "Lorem", translator = mc_translator())
 
 mc_render_email(
-  dois = tu_dois()[1:10],
+  dois = doi_examples$good[1:10],
   translator = mc_translator(),
   session_id = NULL,
   ...

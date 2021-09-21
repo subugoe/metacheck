@@ -2,7 +2,7 @@
 output: blastula::blastula_email
 title: "Metacheck Bericht"
 params:
-  dois: !r metacheck:::tu_dois()
+  dois: !r metacheck::doi_examples$good
   translator: !r metacheck::mc_translator()
   session_id: NULL
 ---

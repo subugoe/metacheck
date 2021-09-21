@@ -7,7 +7,7 @@ pkgdown:
 <!-- this file always has to be in sync with other language versions -->
 
 <div class="alert alert-warning" role="alert">
-  Dieses Ergebnis basiert auf den `tu_dois()` Beispieldaten im metacheck Paket.
+  Dieses Ergebnis basiert auf den [doi_examples$good] Beispieldaten im metacheck Paket.
 </div>
 
 ```{r, echo = FALSE, results = 'asis', message = FALSE}

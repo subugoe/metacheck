@@ -32,4 +32,3 @@ empty_funder <- function(cr) {
   }
   out
 }
-

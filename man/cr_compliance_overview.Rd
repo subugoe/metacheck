@@ -14,6 +14,7 @@ Get compliance overview
 }
 \seealso{
 Other transform: 
+\code{\link{cc}},
 \code{\link{cr_funder_df}()},
 \code{\link{cr_has_orcid}()},
 \code{\link{cr_tdm_df}()},

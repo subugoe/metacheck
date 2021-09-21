@@ -99,7 +99,7 @@ mcControlsServer <- function(id, translator = mc_translator()) {
       shiny::observe(shiny.i18n::update_lang(session, lang()))
       dois <- biblids::doiEntryServer(
         id = "dois",
-        example_dois = tu_dois()[1:30],
+        example_dois = doi_examples$good[1:30],
         char_limit = 50000L,
         translator = translator,
         lang = lang

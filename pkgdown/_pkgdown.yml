@@ -24,7 +24,7 @@ reference:
 - title: Data
   desc: Data objects and queries
 - contents:
-  - has_concept("doi")
+  - has_concept("data")
 - title: Import
   desc: Read in data
 - contents:

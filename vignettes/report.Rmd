@@ -7,7 +7,7 @@ pkgdown:
 <!-- this file always has to be in sync with other language versions -->
 
 <div class="alert alert-warning" role="alert">
-  This is an example report using the `tu_dois()` data, shipped with the package.
+  This is an example report using the [doi_examples$good] data, shipped with the package.
 </div>
 
 ```{r, echo = FALSE, results = 'asis', message = FALSE}

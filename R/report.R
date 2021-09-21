@@ -41,7 +41,9 @@ draft_report <- function(lang = mc_langs, ...) {
 #' @inheritDotParams rmarkdown::render
 #' @inheritParams mcControlsServer
 #' @export
-render_report <- function(dois = tu_dois(), translator = mc_translator(), ...) {
+render_report <- function(dois = doi_examples$good,
+                          translator = mc_translator(),
+                          ...) {
   stopifnot(!shiny::is.reactive(dois))
   checkmate::assert_vector(dois, min.len = 1, null.ok = FALSE)
   dois <- biblids::as_doi(dois)
@@ -58,7 +60,7 @@ render_report <- function(dois = tu_dois(), translator = mc_translator(), ...) {
 #' @noRd
 knit_child_report <- function(...) {
   # knit_child does not know params, so these have to be in env
-  params <<- list(dois = tu_dois())
+  params <<- list(dois = doi_examples$good)
   res <- knitr::knit_child(
     path_report_rmd(...),
     quiet = TRUE

@@ -11,7 +11,7 @@
         "row.names": {
           "type": "integer",
           "attributes": {},
-          "value": [1, 2, 3, 4, 5, 6, 7, 8]
+          "value": [1, 2, 3, 4, 5, 6, 7, 8, 9]
         },
         "names": {
           "type": "character",
@@ -23,37 +23,37 @@
         {
           "type": "logical",
           "attributes": {},
-          "value": [true, false, true, true, true, true, true, true]
+          "value": [true, false, true, true, true, true, true, true, true]
         },
         {
           "type": "logical",
           "attributes": {},
-          "value": [true, null, false, true, true, true, true, true]
+          "value": [true, null, false, true, true, true, true, true, true]
         },
         {
           "type": "logical",
           "attributes": {},
-          "value": [true, null, null, true, true, false, false, false]
+          "value": [true, null, null, true, true, false, false, false, false]
         },
         {
           "type": "logical",
           "attributes": {},
-          "value": [true, null, null, true, true, null, null, null]
+          "value": [true, null, null, true, true, null, null, null, null]
         },
         {
           "type": "logical",
           "attributes": {},
-          "value": [false, null, null, true, false, null, null, null]
+          "value": [false, null, null, true, false, null, null, null, null]
         },
         {
           "type": "logical",
           "attributes": {},
-          "value": [null, null, null, true, null, null, null, null]
+          "value": [null, null, null, true, null, null, null, null, null]
         },
         {
           "type": "logical",
           "attributes": {},
-          "value": [null, null, null, true, null, null, null, null]
+          "value": [null, null, null, true, null, null, null, null, null]
         }
       ]
     }
@@ -63,7 +63,7 @@
     {
       "type": "logical",
       "attributes": {},
-      "value": [false, false, false, true, false, false, true, true]
+      "value": [false, false, false, true, false, false, true, true, false]
     }
 
 # DOI acceptability is reported
@@ -77,6 +77,6 @@
           "value": ["glue", "character"]
         }
       },
-      "value": ["- 7 (88%) thereof fulfill the criterion `not_missing` (**1** dropped)\n- 6 (86%) thereof fulfill the criterion `unique` (**1** dropped)\n- 6 (100%) thereof fulfill the criterion `within_limits` (**0** dropped)\n- 6 (100%) thereof fulfill the criterion `doi_org_found` (**0** dropped)\n- 3 (50%) thereof fulfill the criterion `from_cr` (**3** dropped)\n- 3 (100%) thereof fulfill the criterion `cr_md` (**0** dropped)\n- 3 (100%) thereof fulfill the criterion `article` (**0** dropped)"]
+      "value": ["- 8 (89%) thereof fulfill the criterion `not_missing` (**1** dropped)\n- 7 (88%) thereof fulfill the criterion `unique` (**1** dropped)\n- 7 (100%) thereof fulfill the criterion `within_limits` (**0** dropped)\n- 6 (86%) thereof fulfill the criterion `doi_org_found` (**1** dropped)\n- 3 (50%) thereof fulfill the criterion `from_cr` (**3** dropped)\n- 3 (100%) thereof fulfill the criterion `cr_md` (**0** dropped)\n- 3 (100%) thereof fulfill the criterion `article` (**0** dropped)"]
     }
 

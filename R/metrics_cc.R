@@ -1,28 +1,22 @@
-#' CC license variants metrics overview
+#' Diagnose Creative Commons Licensing
+#' @family transform
+#' @examples
+#' # obtain metadata from Crossref API
+#' req <- get_cr_md(doi_examples$good)
 #'
-#' Presents normalised CC licence variants like BY (absolute and relative)
+#' # check article-level compliance
+#' out <- cr_compliance_overview(req)
+#' @name cc
+NULL
+
+#' @describeIn cc Presents normalised CC licence variants.
+#' For example, `BY` (absolute and relative).
 #'
 #' @param cc_license_check tibble, result from [license_check()]
-#'
 #' @export
-#'
 #' @examples
-#' \dontrun{
-#' my_dois <- c("10.5194/wes-2019-70", "10.1038/s41598-020-57429-5",
-#'   "10.3389/fmech.2019.00073", "10.1038/s41598-020-62245-y",
-#'   "10.1109/JLT.2019.2961931")
-#'
-#' # Workflow:
-#' # First, obtain metadata from Crossref API
-#' req <- get_cr_md(my_dois)
-#'
-#' # Then, check article-level compliance
-#' out <- cr_compliance_overview(req)
-#'
-#' # Obtain CC variants metrics
+#' # obtain CC variants metrics
 #' cc_metrics(out$cc_license_check)
-#' }
-#' @keywords internal
 cc_metrics <- function(cc_license_check = NULL) {
   is_cr_license_df(cc_license_check)
   cc_license_check %>%
@@ -30,25 +24,13 @@ cc_metrics <- function(cc_license_check = NULL) {
     dplyr::mutate(prop = .data$value / sum(.data$value) * 100)
 }
 
-#' CC compliance metrics overview
-#'
-#' Presents the result of the CC compliance check (absolute and relative)
+#' @describeIn cc Presents the result of the CC compliance check.
+#' Absolute and relative normalised CC licence variants.
 #'
 #' @seealso [license_check()]
-#'
-#' @inheritParams cc_metrics
-#'
 #' @export
-#'
 #' @examples
-#' # Workflow:
-#' # First, obtain metadata from Crossref API
-#' req <- get_cr_md(tu_dois()[7:10])
-#'
-#' # Then, check article-level compliance
-#' out <- cr_compliance_overview(req)
-#'
-#' # Obtain CC compliance check resutls metrics
+#' # Obtain cc compliance check resutls metrics
 #' cc_compliance_metrics(out$cc_license_check)
 #' @keywords internal
 cc_compliance_metrics <- function(cc_license_check = NULL) {

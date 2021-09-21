@@ -8,7 +8,7 @@
 \usage{
 draft_report(lang = mc_langs, ...)
 
-render_report(dois = tu_dois(), translator = mc_translator(), ...)
+render_report(dois = doi_examples$good, translator = mc_translator(), ...)
 }
 \arguments{
 \item{lang}{Character scalar giving the anguage of the report.

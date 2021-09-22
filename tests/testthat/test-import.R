@@ -52,7 +52,8 @@ test_that("cr_works retries on bad output (insistently)", {
 })
 
 test_that("cr_works uses cache (memoised)", {
-  skip("Test is not deterministic")
+  skip("Test is not deterministic (#291)")
+  # see https://github.com/subugoe/metacheck/issues/291
   random_doi <- as.character(sample(doi_examples$many, size = 1))
   before <- system.time(memoised_cr_works(random_doi))["elapsed"]
   after <- system.time(memoised_cr_works(random_doi))["elapsed"]

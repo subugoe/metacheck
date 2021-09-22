@@ -87,7 +87,7 @@ mc_compose_email_outer <- function(body = "Lorem",
       ),
       data = block_text_centered_vec(
         blastula::add_image(
-          file = "http://subugoe.github.io/metacheck/reference/figures/member-badge-member@2x.jpeg",
+          file = "http://subugoe.github.io/metacheck/reference/figures/crossref-metadata-apis-200@2x.png",
           align = "center",
           alt = "Crossref Member Badge",
           width = "200"

@@ -158,8 +158,16 @@ render_and_send <- function(to, translator = mc_translator(), ...) {
 #' @describeIn email Render and send asynchronously
 #' @export
 render_and_send_async <- function(...) {
+  # this is a workaround to enable async when developing on macOS
+  # macOS forked processes apparently cannot read keychain (makes sense)
+  # so we have to pass in the password manually
+  auth_mailjet()
+  mj_pw <- Sys.getenv("MAILJET_SMTP_PASSWORD")
   promises::future_promise(
-    render_and_send(...),
+    expr = {
+      Sys.setenv("MAILJET_SMTP_PASSWORD" = mj_pw)
+      render_and_send(...)
+    },
     seed = TRUE
   )
   NULL

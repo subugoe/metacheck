@@ -2,18 +2,46 @@
 % Please edit documentation in R/email.R
 \name{md_data_attachment}
 \alias{md_data_attachment}
-\title{Make Spreadsheet attachment}
+\title{Make Spreadsheet attachment
+Creates an excel spreadsheet with individual-level results.}
 \usage{
-md_data_attachment(my_df = NULL, dois = NULL, session_id = NULL)
+md_data_attachment(
+  dois,
+  df = cr_compliance_overview(get_cr_md(dois[is_metacheckable(dois)])),
+  path = fs::file_temp(ext = "xlsx")
+)
 }
 \arguments{
-\item{my_df}{compliance data from \code{\link[=cr_compliance_overview]{cr_compliance_overview()}}}
+\item{dois}{character, \emph{all} submitted dois}
 
-\item{dois}{character, submitted dois}
+\item{df}{compliance data from \code{\link[=cr_compliance_overview]{cr_compliance_overview()}}}
 
-\item{session_id}{link spreadsheet to R session}
+\item{path}{a file name to write to}
+}
+\value{
+path to the created file
 }
 \description{
 Make Spreadsheet attachment
+Creates an excel spreadsheet with individual-level results.
 }
-\keyword{internal}
+\details{
+The spreadsheet includes these sheets:
+\itemize{
+\item \code{cr_overview}: Overview results
+\item \code{cc_license_check}: Detailed results licensing check
+\item \code{tdm}: Detailed results full text links and TDM
+\item \code{funder_info}: Funding information from Crossref
+\item \code{pretest}: Results of the pretest
+}
+}
+\seealso{
+Other communicate: 
+\code{\link{emailReport}()},
+\code{\link{email}},
+\code{\link{mcApp}()},
+\code{\link{mcControls}},
+\code{\link{report}},
+\code{\link{runMetacheck}()}
+}
+\concept{communicate}

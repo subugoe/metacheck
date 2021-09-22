@@ -105,6 +105,22 @@
       "de": "Hier sind die Ergebnisse Ihres Open Access Metadaten Schnelltests."
     },
     {
+      "en": "Summaries",
+      "de": "Zusammenfassung"
+    },
+    {
+      "en": "Individual Results",
+      "de": "Vollständige Ergebnisse"
+    },
+    {
+      "en": "mc_individual_results.xlsx",
+      "de": "mc_einzelergebnisse.xlsx"
+    },
+    {
+      "en": "You can find individual results for every DOI in the attached spreadsheet.",
+      "de": "Ergebnisse auf DOI-Ebene finden Sie in der angehängten Tabelle."
+    },
+    {
       "en": "Stay tuned for new metacheck features.",
       "de": "Bleiben Sie auf dem Laufenden für neue Metacheck Funktionen."
     },

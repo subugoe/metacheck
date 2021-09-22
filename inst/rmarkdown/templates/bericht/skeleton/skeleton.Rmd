@@ -4,7 +4,6 @@ title: "Metacheck Bericht"
 params:
   dois: !r metacheck::doi_examples$good
   translator: !r metacheck::mc_translator()
-  session_id: NULL
 ---
 
 <!-- this file always has to be in sync with other language versions -->
@@ -97,24 +96,3 @@ funder_metrics(mcres$funder_info) %>%
 Die Tabelle gibt einen Überblick über die häufigsten Förderer je Artikel laut Crossref-Metadaten. 
 Grundsätzlich können mehrere Förderer je Artikel vermerkt sein.
 Der prozentuale Anteil bezieht sich auf die Anzahl der überprüften Artikel mit Crossref-Metadaten.
-
-
-### Einzelergebnisse pro DOI
-
-Beigefügt finden Sie ein Excel-Spreadsheet mit Metadaten auf Artikelebene für weitere Analysen. 
-Es umfasst folgende Datenblätter:
-
-- `cr_overview`: Überblick  
-- `cc_license_check`: Detailauswertung Lizenzüberprüfung
-- `tdm`: Detailauswertung Volltextlinks und TDM
-- `funder_info`: Förderinformationen lt. Crossref
-- `pretest`: Ergebnisse der Vorabprüfung
-
-
-```{r export, include = FALSE}
-md_data_attachment(
-  mcres,
-  session_id = params$session_id,
-  dois = as.character(dois)
-)
-```

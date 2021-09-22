@@ -10,14 +10,13 @@
 \alias{smtp_send_mc}
 \title{Send metacheck results as an parametrised email}
 \usage{
-mc_compose_email(translator = mc_translator(), ...)
+mc_compose_email(dois, translator = mc_translator(), ...)
 
 mc_compose_email_outer(body = "Lorem", translator = mc_translator())
 
 mc_render_email(
   dois = doi_examples$good[1:10],
   translator = mc_translator(),
-  session_id = NULL,
   ...
 )
 
@@ -35,6 +34,8 @@ smtp_send_mc(
 )
 }
 \arguments{
+\item{dois}{Vector of DOIs, as created by, or coerceable to \code{\link[biblids:doi]{biblids::doi()}}.}
+
 \item{translator}{A \link[shiny.i18n:Translator]{shiny.i18n::Translator} object or \code{NULL} for english-only defaults.
 Strings inside the module UI are marked as translateable.
 You can pass a translator object included in the package,
@@ -95,10 +96,6 @@ these by using the \code{\link[blastula:md]{md()}} text helper function. Alterna
 supply a set of \verb{block_*()} calls enclosed within the \code{\link[blastula:blocks]{blocks()}} function
 to take advantage of precomposed HTML blocks.}
 
-\item{dois}{Vector of DOIs, as created by, or coerceable to \code{\link[biblids:doi]{biblids::doi()}}.}
-
-\item{session_id}{Character vector to identify current shiny session}
-
 \item{to}{A vector of email addresses serving as primary recipients for the
 message. For secondary recipients, use the \code{cc} and \code{bcc} arguments. A
 named character vector can be used to specify the recipient names along
@@ -152,6 +149,7 @@ Other communicate:
 \code{\link{emailReport}()},
 \code{\link{mcApp}()},
 \code{\link{mcControls}},
+\code{\link{md_data_attachment}()},
 \code{\link{report}},
 \code{\link{runMetacheck}()}
 }

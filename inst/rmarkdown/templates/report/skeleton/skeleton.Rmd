@@ -4,7 +4,6 @@ title: "Metacheck Report"
 params:
   dois: !r metacheck::doi_examples$good
   translator: !r metacheck::mc_translator()
-  session_id: NULL
 ---
 
 ```{r setup, include=FALSE}
@@ -92,24 +91,3 @@ This table gives an overview over the most frequent funders per DOI, as per Cros
 Crossref metadata can include more than one funder for each DOI.
 
 The percentage share refers to the total number of checked DOIs.
-
-
-### Individual Results 
-
-Please find attached an excel spreadsheet with individual results for every DOI.
-It includes these sheets:
-
-- `cr_overview`: Overview results
-- `cc_license_check`: Detailed results licensing check
-- `tdm`: Detailed results full text links and TDM
-- `funder_info`: Funding information from Crossref
-- `pretest`: Results of the pretest
-
-
-```{r export, include = FALSE}
-md_data_attachment(
-  mcres,
-  session_id = params$session_id,
-  dois = as.character(dois)
-)
-```

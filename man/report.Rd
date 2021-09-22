@@ -126,6 +126,7 @@ Other communicate:
 \code{\link{email}},
 \code{\link{mcApp}()},
 \code{\link{mcControls}},
+\code{\link{md_data_attachment}()},
 \code{\link{runMetacheck}()}
 }
 \concept{communicate}

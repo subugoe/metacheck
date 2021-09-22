@@ -6,9 +6,28 @@ NULL
 #' @describeIn email Compose complete mail
 #' @inheritDotParams mc_render_email
 #' @export
-mc_compose_email <- function(translator = mc_translator(), ...) {
-  mc_render_email(translator = translator, ...)$html_html %>%
-    mc_compose_email_outer(translator = translator)
+mc_compose_email <- function(dois,
+                             translator = mc_translator(),
+                             ...) {
+  mc_body_block(dois = dois, translator = translator, ...) %>%
+    mc_compose_email_outer(translator = translator) %>%
+    blastula::add_attachment(
+      md_data_attachment(dois = dois),
+      filename = translator$translate("mc_individual_results.xlsx")
+    )
+}
+
+mc_body_block <- function(dois, translator = mc_translator(), ...) {
+  blastula::blocks(
+    blastula::block_title(translator$translate("Summaries")),
+    blastula::block_text(blastula::md(
+      mc_render_email(dois = dois, translator = translator, ...)$html_html
+    )),
+    blastula::block_title(translator$translate("Individual Results")),
+    blastula::block_text(translator$translate(
+      "You can find individual results for every DOI in the attached spreadsheet."
+    ))
+  )
 }
 
 #' @describeIn email Wrap inner email in outer content
@@ -96,8 +115,6 @@ mc_compose_email_outer <- function(body = "Lorem",
     ),
     title = "metacheck results"
   )
-  # TODO enable https://github.com/subugoe/metacheck/issues/276
-  # email <- add_attachment_xlsx(email, session_id = session_id)
 }
 
 #' Defaults for social links
@@ -116,12 +133,10 @@ block_text_centered_vec <- function(...) {
 
 #' @describeIn email Render email body (inner content)
 #' @inheritParams report
-#' @param session_id Character vector to identify current shiny session
 #' @inheritDotParams blastula::render_email
 #' @export
 mc_render_email <- function(dois = doi_examples$good[1:10],
                             translator = mc_translator(),
-                            session_id = NULL,
                             ...) {
   # suppression is dangerous hack-fix for
   # https://github.com/subugoe/metacheck/issues/138
@@ -132,7 +147,6 @@ mc_render_email <- function(dois = doi_examples$good[1:10],
       render_options = list(
         params = list(
           dois = dois,
-          session_id = session_id,
           translator = translator
         )
       ),
@@ -147,8 +161,6 @@ mc_render_email <- function(dois = doi_examples$good[1:10],
 #' @export
 render_and_send <- function(to, translator = mc_translator(), ...) {
   email <- mc_compose_email(
-    # used to disambiguate excel file names, see #83
-    session_id = as.character(floor(runif(1) * 1e20)),
     translator = translator,
     ...
   )
@@ -171,24 +183,6 @@ render_and_send_async <- function(...) {
     seed = TRUE
   )
   NULL
-}
-
-#' Add attachment to email
-#' @inheritParams mc_render_email
-#' @noRd
-add_attachment_xlsx <- function(email, session_id = NULL) {
-  blastula::add_attachment(
-    email = email,
-    file = xlsx_path(session_id),
-    filename = "metadata_report.xlsx"
-  )
-}
-
-#' Temp path to write xlsx to
-#' @inheritParams mc_render_email
-#' @keywords internal
-xlsx_path <- function(session_id = NULL) {
-  fs::path_temp(paste0(session_id, "-license_df.xlsx"))
 }
 
 # sending ====
@@ -390,36 +384,36 @@ emailReportServer <- function(id,
   )
 }
 
+# excel attachment ====
+
 #' Make Spreadsheet attachment
+#' Creates an excel spreadsheet with individual-level results.
 #'
-#' @param my_df compliance data from [cr_compliance_overview()]
-#' @param dois character, submitted dois
-#' @param session_id link spreadsheet to R session
+#' @includeRmd inst/long_docs/en/spreadsheet.md
+#' 
+#' @param dois character, *all* submitted dois
+#' @param df compliance data from [cr_compliance_overview()]
+#' @inheritParams writexl::write_xlsx
+#' 
+#' @return path to the created file
 #'
-#' @importFrom writexl write_xlsx
 #' @export
-#' @keywords internal
-md_data_attachment <-
-  function(my_df = NULL,
-           dois = NULL,
-           session_id = NULL) {
-    is_compliance_overview_list(my_df)
-    my_df[["pretest"]] <- tibble::tibble(
-      # writexl does not know vctrs records
-      doi = as.character(biblids::as_doi(dois)),
-      tabulate_metacheckable(dois)
-    )
-
-    # write_out
-    writexl::write_xlsx(x = my_df,
-                        path = xlsx_path(session_id))
-  }
-
-#' Temp path to write xlsx to
-#' @inheritParams mc_render_email
-#' @noRd
-xlsx_path <- function(session_id = NULL) {
-  fs::path_temp(paste0(session_id, "-license_df.xlsx"))
+#' @family communicate
+md_data_attachment <- function(dois,
+                               df = cr_compliance_overview(get_cr_md(
+                                 dois[is_metacheckable(dois)]
+                              )),
+                              path = fs::file_temp(ext = "xlsx")) {
+  is_compliance_overview_list(df)
+  df[["pretest"]] <- tibble::tibble(
+    # writexl does not know vctrs records
+    doi = as.character(biblids::as_doi(dois)),
+    tabulate_metacheckable(dois)
+  )
+  writexl::write_xlsx(
+    x = df,
+    path = path
+  )
 }
 
 #' Data is available
@@ -427,4 +421,5 @@ xlsx_path <- function(session_id = NULL) {
 is_compliance_overview_list <- function(x) {
   assertthat::assert_that(x %has_name% c("cr_overview", "cc_license_check"),
                           msg = "No Compliance Data to attach, compliance data from [cr_compliance_overview()]"
-  )}
+  )
+}

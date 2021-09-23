@@ -86,9 +86,9 @@ jobs:
             docker_registry_server_url = "https://docker.pkg.github.com",
             docker_registry_server_user = "maxheld83",
             docker_registry_server_password = Sys.getenv("GH_PAT_PKG"),
-            slot = stringr::str_replace(
+            slot = stringr::str_replace_all(
               stringr::str_remove(Sys.getenv("GITHUB_REF"), pattern = "refs/"),
-              "/",
+              "/|_",
               "-"
             )
           )

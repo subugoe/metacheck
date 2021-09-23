@@ -2,10 +2,25 @@
 #'
 #' @param ind_table tibble compliance metrics overview
 #' @param .color table styling
+#' @inheritParams draft_report
 #' @family visualize
 #' @export
-ind_table_to_gt <- function(ind_table, .color = NULL) {
+#' @keywords internal
+ind_table_to_gt <- function(ind_table, .color = NULL, lang = mc_langs) {
+  lang <- rlang::arg_match(lang)
   is_ind_table(ind_table)
+  # TODO this should probably be done via the mc translator,
+  # though that requires passing around that object
+  switch(
+    lang,
+    en = str_article <- "Article",
+    de = str_article <- "Artikel"
+  )
+  switch(
+    lang,
+    en = str_share <- "Share",
+    de = str_share <- "Anteil"
+  )
   ind_table %>%
     dplyr::mutate(
       prop_bar = purrr::map(.data$prop, ~ bar_chart(value = .x, .color = .color))
@@ -13,8 +28,8 @@ ind_table_to_gt <- function(ind_table, .color = NULL) {
     gt::gt() %>%
     gt::cols_label(
       indicator = "",
-      value = "Artikel",
-      prop = "Anteil",
+      value = str_article,
+      prop = str_share,
       prop_bar = "") %>%
     gt::tab_style(
       style = gt::cell_text(color = "black", weight = "bold"),
@@ -23,19 +38,19 @@ ind_table_to_gt <- function(ind_table, .color = NULL) {
       )
     ) %>%
     gt::cols_width(
-      vars(indicator) ~ gt::px(150)
+      c(indicator) ~ gt::px(150)
     ) %>%
     gt::cols_width(
-      vars(prop_bar) ~ gt::px(100)
+      c(prop_bar) ~ gt::px(100)
     ) %>%
     gt::fmt_number(
-      columns = vars(prop),
+      columns = c(prop),
       decimals = 0,
       pattern = "{x}%") %>%
     gt::cols_align(align = "right",
-               columns = vars(value, prop)) %>%
+               columns = c(value, prop)) %>%
     gt::cols_align(align = "left",
-               columns = vars(indicator, prop_bar)) %>%
+               columns = c(indicator, prop_bar)) %>%
     gt::tab_options(
       row_group.border.top.width = gt::px(3),
       row_group.border.top.color = "black",

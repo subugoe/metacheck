@@ -11,18 +11,13 @@
     Automatically check metadata compliance for funded open access articles.
   </p>
   <p>
-    <a class="btn btn-success btn-lg" href="articles/app.html" role="button">
-      Try out the alpha
+    <a class="btn btn-danger btn-lg" href="articles/app.html" role="button">
+      Check your own DOIs
     </a>
-    <a class="btn btn-primary btn-lg" href="articles/veranstaltungen.html" role="button">
-      Attend our webinars (German)
+    <a class="btn btn-primary btn-lg" href="articles/report.html" role="button">
+      Look at an example
     </a>
   </p>
-</div>
-
-<div class="alert alert-info" role="alert">
-  <strong>During the alpha release, only German libraries and funder are supported.</strong>
-  Stay tuned for an internationalised version.
 </div>
 
 ## Why Metadata Compliance Matters
@@ -112,13 +107,6 @@ The compliance checker helps libraries and funders of open access publications s
   </li>
 </ul>
 
-## Data Sources
-
-<!-- TODO this should be replaced by proper metadata in pkgdown sidebar https://github.com/subugoe/metacheck/issues/39 -->
-
-- [Crossref REST API (Metadata Plus)](https://github.com/CrossRef/rest-api-doc)
-- [Open APC Initiative](https://openapc.net/)
-
 ## Technical Implementation
 
 The Open Access Metadata Compliance Checker is powered by **metacheck**, an R package.
@@ -128,9 +116,3 @@ The package includes:
 - compliance checks
 - a parametrised rmarkdown compliance report
 - a webapp to send e-mail reports
-
-## Funding acknowledgement
-
-<!-- TODO this should be replaced by proper metadata in pkgdown sidebar https://github.com/subugoe/metacheck/issues/39 -->
-
-This scholarly communication analytics services is supported by the [Deutsche Forschungsgemeinschaft](https://gepris.dfg.de/gepris/projekt/416115939).

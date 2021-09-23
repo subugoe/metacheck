@@ -1,0 +1,93 @@
+---
+output: blastula::blastula_email
+title: "Metacheck Report"
+params:
+  dois: !r metacheck::doi_examples$good
+  translator: !r metacheck::mc_translator()
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+suppressMessages(library(metacheck))
+lang <- "en"
+translator <- params$translator
+```
+
+
+## Pretest
+
+We first check whether these DOIs *could* have compliant open access metadata.
+
+You have provided **`r length(params$dois)`** DOIs.
+
+```{r pretest, results = "asis"}
+report_metacheckable(params$dois, lang = lang)
+```
+
+```{r filter, include = FALSE}
+dois <- params$dois[is_metacheckable(params$dois)]
+enough <- length(dois) > 1
+```
+
+## Test Results
+
+```{r enough, eval = !enough, results = "asis"}
+cat("Not enough DOIs remain to run the test.")
+```
+
+The following analysis covers only the remaining **`r length(dois)`** DOIs.
+
+```{r import, include = FALSE}
+cr <- get_cr_md(dois)
+mcres <- cr_compliance_overview(cr)
+```
+
+
+### Overview
+
+```{r metrics_overview}
+metrics_overview(mcres$cr_overview) %>%
+   ind_table_to_gt(.color = "#00A4A7", lang = lang)
+```
+
+### Creative-Commons-License
+
+#### Overview Licensing
+
+```{r cc_metrics}
+cc_metrics(mcres$cc_license_check) %>%
+  ind_table_to_gt(.color =  "#F3A9BB", lang = lang)
+```
+
+#### Results Compliance Check
+
+```{r cc_compliance}
+cc_compliance_metrics(mcres$cc_license_check) %>%
+  ind_table_to_gt(.color = "#A0A5A9", lang = lang)
+```
+
+#### Text and Data Mining (TDM)
+
+```{r tdm_metrics}
+tdm_metrics(mcres$tdm) %>%
+  ind_table_to_gt(.color =  "#9B0056", lang = lang)
+```
+
+This table summarises which file formats ([MIME
+Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)) are supported for text and data mining (TDM).
+Crossref metadata can include more than one format for each DOI.
+
+The percentage share refers to the total number of checked DOIs.
+
+
+### Funding Information
+
+```{r funder_info}
+funder_metrics(mcres$funder_info) %>%
+  ind_table_to_gt(.color = "#000099", lang = lang)
+```
+
+This table gives an overview over the most frequent funders per DOI, as per Crossref metada.
+Crossref metadata can include more than one funder for each DOI.
+
+The percentage share refers to the total number of checked DOIs.

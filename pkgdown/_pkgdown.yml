@@ -7,13 +7,13 @@ authors:
     href: https://www.sub.uni-goettingen.de/
   German Research Foundation:
     href: https://www.dfg.de
-    html: <img src="reference/figures/dfg_logo_schriftzug_blau_foerderung_en.jpg" height="15">
+    html: <img src="reference/figures/dfg_logo_schriftzug_blau_foerderung_en.jpg" width="263">
   Crossref:
     href: https://www.crossref.org
-    html: <img src="reference/figures/metadata-from-crossref-logo-200.svg" height="15">
-  OpenAPC Initiative:
-    href: https://github.com/openapc
-    html: <img src="reference/figures/openAPC_01+.png" height="15">
+    html: <img src="http://assets.crossref.org/logo/crossref-metadata-apis-200.svg" width="263">
+  sidebar:
+    roles: [cre, aut, spn, dtc]
+    before: "Developed at [SUB](https://www.sub.uni-goettingen.de) on [DFG grant #416115939](https://gepris.dfg.de/gepris/projekt/416115939)."
 template:
   package: subugoetheme
 home:
@@ -24,7 +24,7 @@ reference:
 - title: Data
   desc: Data objects and queries
 - contents:
-  - has_concept("doi")
+  - has_concept("data")
 - title: Import
   desc: Read in data
 - contents:
@@ -46,9 +46,12 @@ reference:
 - contents:
   - has_concept("model")
 - title: Communicate
-  desc: Shiny app and rmarkdown
+  desc: Report the results in a shiny app or rmarkdown report
 - contents:
   - has_concept("communicate")
+- title: Helpers
+- contents:
+  - has_concept("helpers")
 navbar:
   structure:
     left:  [home, reference, app, examples]
@@ -57,22 +60,15 @@ navbar:
     app:
       text: App
       icon: "fa fa-tachometer"
-      menu:
-      - text: German
-      - text: Stabil
-        href: articles/app.html
-      - text: Vorschau
-        href: articles/preview.html
-      - text: ----
-      - text: English
-      - text: Preview
-        href: articles/preview.html
+      href: articles/app.html
     support:
       text: Support
       menu:
       - text: "German"
       - text: Hilfe
         href: articles/hilfe.html
+      - text: Beispiel-Bericht
+        href: articles/bericht.html
       - text: "Veranstaltungen"
         href: articles/veranstaltungen.html
       - text: "Methode"
@@ -83,16 +79,13 @@ navbar:
       - text: "English"
       - text: Help
         href: articles/help.html
+      - text: Example Report
+        href: articles/report.html
       - text: "Events"
         href: articles/events.html
       - text: "Methodology"
         href: articles/methodology.html
-    examples:
-      text: Examples
-      menu:
-      - text: German Example Email (TU Berlin)
-        href: articles/german.html
     articles: ~
 development:
   version_label: danger
-  version_tooltip: "Alpha Release"
+  version_tooltip: "Beta Release"

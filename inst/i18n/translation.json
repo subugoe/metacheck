@@ -1,0 +1,168 @@
+{
+  "languages": [
+    "en",
+    "de"
+  ],
+  "translation": [
+    {
+      "en": "Language",
+      "de": "Sprache"
+    },
+    {
+      "en": "Email Address",
+      "de": "Email Adresse"
+    },
+    {
+      "en": "jane.doe@example.com",
+      "de": "maxi.muster@example.com"
+    },
+    {
+      "en": "Please provide a valid email.",
+      "de": "Bitte gültige Email Adresse eintragen."
+    },
+    {
+      "en": "Enter your DOIs here.",
+      "de": "Bitte geben Sie hier ihre DOIs ein."
+    },
+    {
+      "en": "Entered DOIs",
+      "de": "Eingegebene DOIs"
+    },
+    {
+      "en": "Required",
+      "de": "Erforderlich"
+    },
+    {
+      "en": "Please provide at least one valid DOI.",
+      "de": "Bitte fügen Sie mindestens einen validen DOI ein."
+    },
+    {
+      "en": "Cannot parse more than {char_limit} characters.",
+      "de": "Mehr als {char_limit} Zeichen können nicht verarbeitet werden."
+    },
+    {
+      "en": "Please provide a shorter input.",
+      "de": "Bitte kürzen Sie Ihre Eingabe."
+    },
+    {
+      "en": "Found ",
+      "de": ""
+    },
+    {
+      "en": " DOIs",
+      "de": " Gefundene DOIs"
+    },
+    {
+      "en": "Fill in example",
+      "de": "Beispiel einfügen"
+    },
+    {
+      "en": "Edit",
+      "de": "Bearbeiten"
+    },
+    {
+      "en": "Submit",
+      "de": "Absenden"
+    },
+    {
+      "en": "Emails are sent via the Mailjet SMTP relay service.",
+      "de": "Emails werden über den Mailjet SMTP Relay Service versandt."
+    },
+    {
+      "en": "Let Mailjet GmbH process my email address.",
+      "de": "Mailjet GmbH darf meine Email Adresse verarbeiten."
+    },
+    {
+      "en": "Learn more.",
+      "de": "Weitere Informationen."
+    },
+    {
+      "en": "Send Compliance Report",
+      "de": "Metacheck Bericht Versenden"
+    },
+    {
+      "en": "You will receive an email with your report within the next 45 minutes. ",
+      "de": "Der Bericht wird Ihnen innerhalt von 45 Minuten per Email zugeschickt. "
+    },
+    {
+      "en": "Please check your SPAM folder. ",
+      "de": "Bitte prüfen Sie auch Ihren SPAM-Ordner. "
+    },
+    {
+      "en": "You have successfully sent your DOIs.",
+      "de": "Ihre DOIs wurden erfolgreich versendet."
+    },
+    {
+      "en": "metacheck: Your Open Access Metadata Compliance Test Results",
+      "de": "metacheck: Ihr Open Access Metadaten Schnelltest Ergebnis"
+    },
+    {
+      "en": "Metacheck Results",
+      "de": "Metacheck Ergebnisse"
+    },
+    {
+      "en": "Here are your open access metadata compliance test results.",
+      "de": "Hier sind die Ergebnisse Ihres Open Access Metadaten Schnelltests."
+    },
+    {
+      "en": "Summaries",
+      "de": "Zusammenfassung"
+    },
+    {
+      "en": "Individual Results",
+      "de": "Vollständige Ergebnisse"
+    },
+    {
+      "en": "mc_individual_results.xlsx",
+      "de": "mc_einzelergebnisse.xlsx"
+    },
+    {
+      "en": "You can find individual results for every DOI in the attached spreadsheet.",
+      "de": "Ergebnisse auf DOI-Ebene finden Sie in der angehängten Tabelle."
+    },
+    {
+      "en": "Stay tuned for new metacheck features.",
+      "de": "Bleiben Sie auf dem Laufenden für neue Metacheck Funktionen."
+    },
+    {
+      "en": "Subscribe to our newsletter",
+      "de": "Newsletter Abonnieren"
+    },
+    {
+      "en": "Metacheck supports your workflows to check OA metadata deposited by publishers, but it cannot conclusively check funding eligibility of OA publications.",
+      "de": "Metacheck unterstützt Sie bei der Überprüfung von Verlagsmetadaten, bietet aber keine abschließenden Aussagen zur Förderfähigkeit von OA Publikationen bzw. deren Kosten."
+    },
+    {
+      "en": "Please consult the funding conditions of the respective funder.",
+      "de": "Dazu sind die Förderbedingungen der jeweiligen Förderer heranzuziehen."
+    },
+    {
+      "en": "Need help interpreting your results?",
+      "de": "Haben Sie Fragen zur Interpretation ihrer Ergebnisse?"
+    },
+    {
+      "en": "Get additional support",
+      "de": "Weitere Unterstützung erhalten"
+    },
+    {
+      "en": "https://subugoe.github.io/metacheck/articles/help.html",
+      "de": "https://subugoe.github.io/metacheck/articles/hilfe.html"
+    },
+    {
+      "en": "G\u00F6ttingen State and University Library",
+      "de": "Staats- und Universitätsbibliothek Göttingen"
+    },
+    {
+      "en": "Funded by the",
+      "de": "Gefördert durch die"
+    },
+    {
+      "en": "German Research Foundation",
+      "de": "Deutsche Forschungsgemeinschaft"
+    },
+    {
+      "en": "Based on data by",
+      "de": "Basierend auf Daten erhoben von"
+    }
+  ]
+}

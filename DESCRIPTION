@@ -1,6 +1,6 @@
 Package: metacheck
 Title: Crossref Metadata Compliance
-Version: 0.1.0.9000
+Version: 0.2.0.9000
 Authors@R:
     c(
       person(
@@ -30,7 +30,8 @@ Authors@R:
       ),
       person(
         given = "German Research Foundation",
-        role = c("spn")
+        role = c("spn"),
+        comment = "Projektnummer #416115939"
       ),
       person(
         given = "Crossref",
@@ -57,7 +58,6 @@ Imports:
     stringi,
     lubridate,
     shiny,
-    flexdashboard,
     shinyvalidate,
     biblids,
     magrittr,
@@ -76,7 +76,16 @@ Imports:
     vctrs,
     memoise,
     promises,
-    future
+    future,
+    cachem,
+    gert,
+    keyring,
+    shinytest,
+    shiny.i18n,
+    bslib,
+    curl,
+    crlite,
+    lobstr
 Suggests:
     testthat,
     subugoetheme,
@@ -84,14 +93,20 @@ Suggests:
     bench,
     withr,
     htmltools,
-    knitr
+    knitr,
+    pkgdown,
+    downlit
 URL: https://subugoe.github.io/metacheck, https://github.com/subugoe/metacheck
 BugReports: https://github.com/subugoe/metacheck/issues
-Remotes:
+Remotes: 
     subugoe/subugoetheme@1.1.1,
     subugoe/shinycaas@1.0.0,
     subugoe/rcrossref@158d6d35091b75fcf1cd4271ecf585b2a6c56006,
-    rstudio/shinyvalidate@2688f6eb485ad2602e3a5ed70d4c07449b2bc422,
-    subugoe/biblids@e8b1dc88c0653ef15bd7ad84fa4941e21b8a6401,
-    rstudio/flexdashboard@42d732959ea6664c7642eaeffdcf297ab6a6648a
+    subugoe/biblids@3ffa325c12fc49766d93f472ab903a6ee39a6379,
+    appsilon/shiny.i18n@efb0bc0dd5412d35e6747f10f24b1ea48201f886,
+    subugoe/crlite@3524eef7092c570d13c522f0353ba7ce55942284,
+    r-lib/pkgdown@85d8beb537a6cf3c050438398d610da03dba3353,
+    r-lib/downlit@47e30dbe7650bac683c979e73608180813ce660c
 Config/testthat/edition: 3
+Config/testthat/parallel: true
+Config/wama/defaultShinyApp: runMetacheck()

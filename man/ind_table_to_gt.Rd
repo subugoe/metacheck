@@ -4,14 +4,18 @@
 \alias{ind_table_to_gt}
 \title{GT representation of compliance overview table}
 \usage{
-ind_table_to_gt(ind_table, .color = NULL)
+ind_table_to_gt(ind_table, .color = NULL, lang = mc_langs)
 }
 \arguments{
 \item{ind_table}{tibble compliance metrics overview}
 
 \item{.color}{table styling}
+
+\item{lang}{Character scalar giving the anguage of the report.
+\emph{Not} reactive as in \code{\link[=mcControlsServer]{mcControlsServer()}}.}
 }
 \description{
 GT representation of compliance overview table
 }
 \concept{visualize}
+\keyword{internal}

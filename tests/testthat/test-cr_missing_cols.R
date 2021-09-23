@@ -1,3 +1,4 @@
+skip_if_offline()
 test_that("Missing funder info is captured", {
   dois <- c(
     "10.1046/j.1472-8206.2001.00030.x",

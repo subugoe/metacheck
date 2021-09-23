@@ -3,15 +3,15 @@
     {
       "type": "list",
       "attributes": {
-        "row.names": {
-          "type": "integer",
-          "attributes": {},
-          "value": [1, 2, 3, 4, 5]
-        },
         "class": {
           "type": "character",
           "attributes": {},
           "value": ["tbl_df", "tbl", "data.frame"]
+        },
+        "row.names": {
+          "type": "integer",
+          "attributes": {},
+          "value": [1, 2, 3, 4]
         },
         "names": {
           "type": "character",
@@ -26,7 +26,7 @@
             "levels": {
               "type": "character",
               "attributes": {},
-              "value": ["Collaborative Research Center", "Deutsche Forschungsgemeinschaft", "Fundação de Amparo à Pesquisa do Estado de São Paulo", "Tomsk State University", "No funding info"]
+              "value": ["Collaborative Research Center", "Deutsche Forschungsgemeinschaft", "Fundação de Amparo à Pesquisa do Estado de São Paulo", "No funding info"]
             },
             "class": {
               "type": "character",
@@ -34,17 +34,17 @@
               "value": ["factor"]
             }
           },
-          "value": [1, 2, 3, 4, 5]
+          "value": [1, 2, 3, 4]
         },
         {
           "type": "integer",
           "attributes": {},
-          "value": [1, 1, 1, 1, 2]
+          "value": [1, 1, 1, 3]
         },
         {
           "type": "double",
           "attributes": {},
-          "value": [20, 20, 20, 20, 40]
+          "value": [20, 20, 20, 60]
         }
       ]
     }

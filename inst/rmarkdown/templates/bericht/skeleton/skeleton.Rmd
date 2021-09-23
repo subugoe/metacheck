@@ -1,0 +1,98 @@
+---
+output: blastula::blastula_email
+title: "Metacheck Bericht"
+params:
+  dois: !r metacheck::doi_examples$good
+  translator: !r metacheck::mc_translator()
+---
+
+<!-- this file always has to be in sync with other language versions -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(metacheck)
+lang <- "de"
+translator <- params$translator
+```
+
+
+## Vorabprüfung
+
+Zunächst prüfen wir, ob zu diesen DOIs konforme Open Access Metadaten vorliegen *könnten*.
+
+Sie haben **`r length(params$dois)`** DOIs eingegeben.
+
+```{r pretest, results = "asis"}
+report_metacheckable(params$dois, lang = lang)
+```
+
+```{r filter, include = FALSE}
+dois <- params$dois[is_metacheckable(params$dois)]
+enough <- length(dois) > 1
+```
+
+## Testergebnis
+
+```{r "enough", eval = !enough, results = "asis"}
+cat("Es verbleiben nicht genügend DOIs für einen Test.")
+```
+
+Die folgende Analyse bezieht sich nur auf die verbleibenden **`r length(dois)`** DOIs.
+
+```{r import, include = FALSE}
+cr <- get_cr_md(dois)
+mcres <- cr_compliance_overview(cr)
+```
+
+
+### Überblick
+
+```{r metrics_overview}
+metrics_overview(mcres$cr_overview) %>%
+   ind_table_to_gt(.color = "#00A4A7", lang = lang)
+```
+
+
+### Creative-Commons-Lizenzen
+
+#### Überblick Lizenzbedingungen
+
+```{r cc_metrics}
+cc_metrics(mcres$cc_license_check) %>%
+  ind_table_to_gt(.color =  "#F3A9BB", lang = lang)
+```
+
+#### Ergebnis Compliance Check
+
+```{r cc_compliance}
+cc_compliance_metrics(mcres$cc_license_check) %>%
+  ind_table_to_gt(.color = "#A0A5A9", lang = lang)
+```
+
+#### Text and Data Mining (TDM)
+
+```{r tdm_metrics}
+tdm_metrics(mcres$tdm) %>%
+  ind_table_to_gt(.color =  "#9B0056", lang = lang)
+```
+
+Die Tabelle bietet einen Überblick, welche Dateiformate,
+ausgedrückt als [MIME
+Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types),
+für das Text- und Data-Mining (TDM) unterstützt werden. Grundsätzlich
+kann je Artikel mehr als ein Format über das Crossref-Metadatenprofil
+angeboten werden.
+
+Der prozentuale Anteil bezieht sich auf die Anzahl der überprüften Artikel mit Crossref-Metadaten.
+
+
+### Förderinformationen 
+
+```{r funder_info}
+funder_metrics(mcres$funder_info) %>%
+  ind_table_to_gt(.color = "#000099", lang = lang)
+```
+
+Die Tabelle gibt einen Überblick über die häufigsten Förderer je Artikel laut Crossref-Metadaten. 
+Grundsätzlich können mehrere Förderer je Artikel vermerkt sein.
+Der prozentuale Anteil bezieht sich auf die Anzahl der überprüften Artikel mit Crossref-Metadaten.

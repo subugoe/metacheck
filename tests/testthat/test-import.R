@@ -1,8 +1,9 @@
 # wrapped cr api calls ====
 
-dois <- tu_dois()[2:5]
+skip_if_offline()
+dois <- doi_examples$good[2:5]
 
-test_that("Crossref metadata can be read in", {  
+test_that("Crossref metadata can be read in", {
   # testthat does not seem to know about vctrs equality
   # https://github.com/r-lib/testthat/issues/1349
   expect_true(
@@ -23,8 +24,8 @@ test_that("cr_works2 throws error on bad DOIs", {
 })
 
 test_that("cr_works accepts only one doi (lonely)", {
-  expect_error(lonely_cr_works(dois[2:3]))
-  expect_type(lonely_cr_works(dois[2]), "list")
+  expect_error(lonely_cr_works(as.character(dois[2:3])))
+  expect_type(lonely_cr_works(as.character(dois[2])), "list")
 })
 
 test_that("cr_works captures warnings (quiet)", {
@@ -33,14 +34,14 @@ test_that("cr_works captures warnings (quiet)", {
     regexp = "404"
   )
   expect_equal(
-    quiet_cr_works(dois[2])$warnings,
+    quiet_cr_works(as.character(dois[2]))$warnings,
     character()
   )
 })
 
 test_that("cr_works fails on bad output or warning (prickly)", {
   expect_error(prickly_cr_works("10.1000/foo"))
-  expect_type(prickly_cr_works(dois[2]), "list")
+  expect_type(prickly_cr_works(as.character(dois[2])), "list")
 })
 
 test_that("cr_works retries on bad output (insistently)", {
@@ -51,7 +52,9 @@ test_that("cr_works retries on bad output (insistently)", {
 })
 
 test_that("cr_works uses cache (memoised)", {
-  random_doi <- as.character(sample(dois_many(), size = 1))
+  skip("Test is not deterministic (#291)")
+  # see https://github.com/subugoe/metacheck/issues/291
+  random_doi <- as.character(sample(doi_examples$many, size = 1))
   before <- system.time(memoised_cr_works(random_doi))["elapsed"]
   after <- system.time(memoised_cr_works(random_doi))["elapsed"]
   expect_lt(after, before / 10L)
@@ -59,7 +62,9 @@ test_that("cr_works uses cache (memoised)", {
 
 test_that("cr_works_field can find fields", {
   expect_true(
-    biblids::as_doi(cr_works_field(dois[1], "doi")) == biblids::as_doi(dois[1])
+    biblids::as_doi(
+      cr_works_field(as.character(dois[1]), "doi")
+    ) == biblids::as_doi(dois[1])
   )
 })
 
@@ -72,7 +77,7 @@ test_that("cr_works_field defaults to NA for errors", {
 
 test_that("many cr_works_fields can be retrieved", {
   expect_equal(
-    looped_possibly_cr_works_field(c("10.1000/foo", dois[1]), "doi"),
-    c(NA, dois[1])
+    looped_possibly_cr_works_field(c("10.1000/foo", as.character(dois[1])), "doi"),
+    c(NA, as.character(dois[1]))
   )
 })

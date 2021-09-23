@@ -57,8 +57,8 @@ tabulate_metacheckable <- function(x, ...) {
     # https://github.com/subugoe/metacheck/issues/169
     `unique` = lazily(purrr::negate(duplicated))(x, `not_missing`),
     `within_limits` = lazily(is_in_limit, ...)(x, `unique`),
-    `doi_org_found` = lazily(biblids::is_doi_found)(x, `within_limits`),
-    `from_cr` = lazily(biblids::is_doi_from_ra, "Crossref")(x, `doi_org_found`),
+    `doi_org_found` = lazily(memoised_is_doi_found)(x, `within_limits`),
+    `from_cr` = lazily(memoised_is_doi_from_ra, "Crossref")(x, `doi_org_found`),
     # should singl header first https://github.com/subugoe/metacheck/issues/176
     `cr_md` = lazily(is_doi_cr_md)(x, `from_cr`),
     `article` = lazily(is_doi_cr_type, "journal-article")(x, `cr_md`),
@@ -87,23 +87,35 @@ assert_metacheckable <- function(x, ...) {
 # reporting ====
 
 #' @describeIn pretest Report summary in markdown
+#' @inheritParams draft_report
 #' @export
-report_metacheckable <- function(x, ...) {
+report_metacheckable <- function(x, lang = mc_langs, ...) {
+  lang <- rlang::arg_match(lang)
   tabulate_metacheckable(x, ...) %>%
-    purrr::imap_chr(report_metacheckable1) %>%
+    purrr::imap_chr(report_metacheckable1, lang = lang) %>%
     glue::glue_collapse(sep = "\n")
 }
 
 #' Write markdown for *one* logical vector
 #' @param x A logical vector.
 #' @param desc Criterion name.
+#' @inheritParams draft_report
 #' @noRd
-report_metacheckable1 <- function(x, desc) {
+report_metacheckable1 <- function(x, desc, lang = mc_langs) {
+  lang <- rlang::arg_match(lang)
   stopifnot(rlang::is_logical(x))
   stopifnot(rlang::is_scalar_character(desc))
-  glue::glue(
-    "- Davon erf\U00FCllen {n_good(x)} ({round(percent_good(x))}%) ",
-    "das Kriterium `{desc}` (**{n_bad(x)}** ausgeschlossen)"
+  # doing this via i18n would be too cumbersome with glue
+  switch(
+    lang,
+    "en" = glue::glue(
+      "- {n_good(x)} ({round(percent_good(x))}%) thereof fulfill the ",
+      "criterion `{desc}` (**{n_bad(x)}** dropped)"
+    ),
+    "de" = glue::glue(
+      "- Davon erf\U00FCllen {n_good(x)} ({round(percent_good(x))}%) ",
+      "das Kriterium `{desc}` (**{n_bad(x)}** ausgeschlossen)"
+    )
   )
 }
 
@@ -192,7 +204,11 @@ is_doi_cr_type <- function(x, type = types_allowed) {
 #' Allowed types
 #' By placing this outside of function, it only gets run at buildtime.
 #' @noRd
-types_allowed <- rcrossref::cr_types()[["data"]][["id"]]
+types_allowed <- {
+  stopifnot(curl::has_internet())
+  auth_cr()
+  rcrossref::cr_types()[["data"]][["id"]]
+}
 
 # helpers ====
 #' Adverb to let predicate functions default to `NA` for `x[x1]`

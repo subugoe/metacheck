@@ -12,22 +12,16 @@
 #' @param tdm tibble obtained with [cr_tdm_df()] or [cr_compliance_overview()]
 #' @export
 #'
-#' @examples \dontrun{
-#' ## Some DOIs from OA articles
-#' my_dois <- c("10.5194/wes-2019-70", "10.1038/s41598-020-57429-5",
-#'   "10.3389/fmech.2019.00073", "10.1038/s41598-020-62245-y",
-#'   "10.1109/JLT.2019.2961931")
-#'
-#' # Workflow:
+#' @examples
 #' # First, obtain metadata from Crossref API
-#' req <- get_cr_md(my_dois)
+#' req <- get_cr_md(doi_examples$good)
 #'
 #' # Then, check article-level compliance
-#  out <- cr_compliance_overview(req)
+#' out <- cr_compliance_overview(req)
 #'
 #' # Finally, obtain TDM metrics overview
 #' tdm_metrics(out$tdm)
-#' }
+#' @keywords internal
 tdm_metrics <- function(tdm = NULL) {
   is_cr_tdm_df(tdm)
   compliant_tdm <- tdm %>%

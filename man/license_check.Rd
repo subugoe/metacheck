@@ -17,6 +17,7 @@ by the license date.
 }
 \seealso{
 Other transform: 
+\code{\link{cc}},
 \code{\link{cr_compliance_overview}()},
 \code{\link{cr_funder_df}()},
 \code{\link{cr_has_orcid}()},

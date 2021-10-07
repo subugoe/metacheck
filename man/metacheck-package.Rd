@@ -6,8 +6,7 @@
 \alias{metacheck-package}
 \title{metacheck: Crossref Metadata Compliance}
 \description{
-Automatically check metadata compliance for hybrid open access (OA).
-    Includes a webapp to send compliance reports by email.
+Automatically check metadata compliance for hybrid open access (OA). Includes a webapp to send compliance reports by email.
 }
 \seealso{
 Useful links:

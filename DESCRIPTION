@@ -102,11 +102,11 @@ Remotes:
     subugoe/subugoetheme@1.1.1,
     subugoe/shinycaas@1.0.0,
     subugoe/rcrossref@158d6d35091b75fcf1cd4271ecf585b2a6c56006,
-    subugoe/biblids@3ffa325c12fc49766d93f472ab903a6ee39a6379,
+    subugoe/biblids@9e16309cd1e94544dd3e676e03541e0b26d72ea2,
     appsilon/shiny.i18n@efb0bc0dd5412d35e6747f10f24b1ea48201f886,
     subugoe/crlite@3524eef7092c570d13c522f0353ba7ce55942284,
     r-lib/pkgdown@85d8beb537a6cf3c050438398d610da03dba3353,
     r-lib/downlit@47e30dbe7650bac683c979e73608180813ce660c
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Config/wama/defaultShinyApp: runMetacheck()
+Config/wama/defaultShinyApp: mcApp()

@@ -20,7 +20,13 @@ mcApp <- function() {
 mcAppUI <- function() {
   shiny::fluidPage(
     theme = mc_theme(),
-    mcControlsUI(id = "webapp")
+    shiny::fluidRow(
+      shiny::column(
+        width = 8,
+        mcControlsUI(id = "webapp"),
+        offset = 2
+      )
+    )
   )
 }
 

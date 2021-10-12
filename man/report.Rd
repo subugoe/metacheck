@@ -120,6 +120,10 @@ Useful for manual edits; equivalent to opening a new template in RStudio.
 \item \code{render_report}: Render a parametrised metacheck report.
 }}}
 
+\note{
+Metacheck supports your workflows to check OA metadata deposited by publishers, but it cannot conclusively check funding eligibility of OA publications.
+Please consult the funding conditions of the respective funder.
+}
 \seealso{
 Other communicate: 
 \code{\link{emailReport}()},

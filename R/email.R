@@ -43,15 +43,10 @@ mc_compose_email_outer <- function(body = "Lorem",
       results = block_text_centered(translator$translate(
         "Here are your open access metadata compliance test results."
       )),
-      disclaimer = block_text_centered_vec(
-        translator$translate(
-          # TODO https://github.com/subugoe/metacheck/issues/282
-          # line breaking this breaks the translation
-          # but should live in long docs anyway 
-          "Metacheck supports your workflows to check OA metadata deposited by publishers, but it cannot conclusively check funding eligibility of OA publications."
-        ),
-        translator$translate(
-          "Please consult the funding conditions of the respective funder."
+      disclaimer = block_text_centered(
+        mc_long_docs_string(
+          "disclaimer_fe.md",
+          lang = translator$get_translation_language()
         )
       )
     ),
@@ -388,8 +383,8 @@ emailReportServer <- function(id,
 
 #' Make Spreadsheet attachment
 #' Creates an excel spreadsheet with individual-level results.
-#'
-#' @includeRmd inst/long_docs/en/spreadsheet.md
+#' 
+#' @details `r metacheck::mc_long_docs_string("spreadsheet.md")`
 #' 
 #' @param dois character, *all* submitted dois
 #' @param df compliance data from [cr_compliance_overview()]

@@ -6,8 +6,12 @@ pkgdown:
 
 <!-- this file always has to be in sync with other language versions -->
 
-<div class="alert alert-warning" role="alert">
+<div class="alert alert-info" role="alert">
   Dieses Ergebnis basiert auf den `metacheck::doi_examples` Beispieldaten im metacheck Paket.
+</div>
+
+<div class="alert alert-warning" role="alert">
+`r metacheck::mc_long_docs_string("disclaimer_fe.md", lang = "de")`
 </div>
 
 ```{r, echo = FALSE, results = 'asis', message = FALSE}

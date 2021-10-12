@@ -2,6 +2,8 @@
 #' 
 #' Helper functions to generate a metacheck report.
 #' 
+#' @note `r metacheck::mc_long_docs_string("disclaimer_fe.md")`
+#' 
 #' @family communicate
 #' @name report
 NULL

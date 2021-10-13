@@ -199,7 +199,7 @@ smtp_send_mc <- function(email = blastula::prepare_test_message(),
     subject = mc_translator()$translate(
       "Metacheck: Your OA Metadata Compliance Check Results"
     ),
-    if (is_prod()) bcc = from,
+    bcc = from,
     credentials = credentials,
     ...
   )

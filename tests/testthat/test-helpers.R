@@ -25,6 +25,6 @@ test_that("testing is never prod", {
   expect_true(!is_prod())
 })
 test_that("prod is found from env var", {
-  withr::local_envvar(c("WEBSITE_SLOT_NAME" = "Production"))
+  withr::local_envvar(c("MC_PROD" = "true"))
   expect_true(is_prod())
 })

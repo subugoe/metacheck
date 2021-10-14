@@ -81,6 +81,10 @@
       "de": "Metacheck Bericht Versenden"
     },
     {
+      "en": "Your report is being prepared ...",
+      "de": "Ihr Bericht wird erstellt ..."
+    },
+    {
       "en": "You will receive an email with your report within the next 45 minutes. ",
       "de": "Der Bericht wird Ihnen innerhalt von 45 Minuten per Email zugeschickt. "
     },
@@ -89,8 +93,12 @@
       "de": "Bitte prüfen Sie auch Ihren SPAM-Ordner. "
     },
     {
-      "en": "You have successfully sent your DOIs.",
-      "de": "Ihre DOIs wurden erfolgreich versendet."
+      "en": "You can close this window or wait for completion. ",
+      "de": "Sie können dieses Fenster schließen oder auf die Fertigstellung warten."
+    },
+    {
+      "en": "Your report is in your email inbox. ",
+      "de": "Ihr Bericht wartet in Ihrem Email Postfach. "
     },
     {
       "en": "metacheck: Your Open Access Metadata Compliance Test Results",

@@ -353,25 +353,41 @@ emailReportServer <- function(id,
       })
       shiny::observeEvent(input$send, {
         if (iv$is_valid()) {
-          shiny::showModal(modalDialog(
-            title = translWithLang()$translate(
-              "You have successfully sent your DOIs"
+          pb_outer <- shiny::Progress$new()
+          pb_outer$set(
+            message = translWithLang()$translate(
+              "Your report is being prepared ...",
             ),
-            glue::glue(
+            detail = glue::glue(
               translWithLang()$translate(
                 "You will receive an email with your report within the next 45 minutes. "
               ),
               translWithLang()$translate(
                 "Please check your SPAM folder. "
+              ),
+              translWithLang()$translate(
+                "You can close this window or wait for completion. "
               )
-            ),
-            easyClose = TRUE,
-            footer = NULL
-          ))
+            )
+          )
+          Sys.sleep(5)
           render_and_send_async(
             to = input$recipient,
             dois = dois(),
             translator = translWithLang()
+          )
+          pb_outer$set(
+            message = translWithLang()$translate(
+              "Your report is in your email inbox."
+            ),
+            detail = glue::glue(
+              translWithLang()$translate(
+                "Please check your SPAM folder. "
+              ),
+              translWithLang()$translate(
+                "You can close this window or wait for completion. "
+              )
+            )
           )
         }
       })

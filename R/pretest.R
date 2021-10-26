@@ -2,42 +2,25 @@
 
 #' Pretest acceptable DOIs
 #'
-#' @details
-#' Before even checking what metadata has been deposited for a DOI,
-#' a DOI has to pass a number of criteria to be eligible for metacheck.
+#' @details `r metacheck::mc_long_docs_string("pretest.md")`
+#' These criteria are tested in this order, and assumed to be transitive but asymmetric in the order given.
+#' For example, if a DOI is not found on DOI.org, it is assumed that it also *cannot* be known to Crossref.
 #'
-#' The below criteria are assumed to be transitive but asymmetric
-#' in the order given.
-#' For example, if a DOI is not found on DOI.org,
-#' it is assumed that it also *cannot* be known to crossref and all later
-#' predicates are also assumed to be `NA`.
-#' This must necessarily be the case for, say, syntactically invalid DOIs,
-#' but is more of an assumption when it comes to the consistency between
-#' different data sources (say, DOI.org and Crossref).
+#' This must necessarily be the case for, say, 
+#' syntactically invalud DOIs (which cannot have metadata), 
+#' but is more of an assumption when it comes to the consistency between 
+#' different data sources.
+#' For example, it is conceivable, though implausible, 
+#' that a DOI might not resolve on DOI.org, 
+#' but is still listed on Crossref.
 #'
 #' @inheritParams biblids::as_doi
 #' @param... Additional arguments passed to the predicate functions.
 #'
 #' @return
-#' A tibble with one column for each of the predicate results.
+#' A tibble with one column for each of the predicate results listed above.
 #' `TRUE` always means that a DOI passes a criterion.
-#'
-#' Tested in order:
-#' 1. `not_na` following [biblids::doi()].
-#' 1. `unique`
-#'    `FALSE` for every 2nd and later repetition of a DOI.
-#'     DOIs are compared using [biblids::doi()] logic.
-#' 1. `within_limits`
-#'     whether remaining DOIs are within the package limit for requests.
-#' 1. `doi_org_found`
-#'     whether remaining DOIs are found on DOI.org,
-#'     using [biblids::is_doi_found()].
-#' 1. `from_cr`
-#'     whether remaining DOIs have been deposited by the Crossref
-#'     registration agency (per doi.org).
-#' 1. `cr_md`
-#'     whether remaining DOIs have metadata on Crossref.
-#'
+#' 
 #' `NA` can indicate that the test:
 #'  - was not applicable, because a previous predicate was `FALSE`
 # TODO mention here alternative reason server failure, if safely is implemented

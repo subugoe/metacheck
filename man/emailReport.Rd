@@ -48,17 +48,14 @@ is triggered.}
 \description{
 Email Report through a Shiny Module
 }
-\section{Related Functions and Methods}{
-\subsection{Functions}{
+\section{Functions}{
 \itemize{
 \item \code{emailReport}: Test app
-}
-\itemize{
+
 \item \code{emailReportUI}: Module UI
-}
-\itemize{
+
 \item \code{emailReportServer}: Module server
-}}}
+}}
 
 \seealso{
 Other communicate: 

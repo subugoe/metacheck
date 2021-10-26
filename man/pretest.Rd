@@ -38,26 +38,8 @@ is_doi_cr_type(x, type = types_allowed)
 \item{type}{Character scalar, must be one of the types from \code{\link[rcrossref:cr_types]{rcrossref::cr_types()}}.}
 }
 \value{
-A tibble with one column for each of the predicate results.
+A tibble with one column for each of the predicate results listed above.
 \code{TRUE} always means that a DOI passes a criterion.
-
-Tested in order:
-\enumerate{
-\item \code{not_na} following \code{\link[biblids:doi]{biblids::doi()}}.
-\item \code{unique}
-\code{FALSE} for every 2nd and later repetition of a DOI.
-DOIs are compared using \code{\link[biblids:doi]{biblids::doi()}} logic.
-\item \code{within_limits}
-whether remaining DOIs are within the package limit for requests.
-\item \code{doi_org_found}
-whether remaining DOIs are found on DOI.org,
-using \code{\link[biblids:doi_api]{biblids::is_doi_found()}}.
-\item \code{from_cr}
-whether remaining DOIs have been deposited by the Crossref
-registration agency (per doi.org).
-\item \code{cr_md}
-whether remaining DOIs have metadata on Crossref.
-}
 
 \code{NA} can indicate that the test:
 \itemize{
@@ -68,41 +50,53 @@ whether remaining DOIs have metadata on Crossref.
 Pretest acceptable DOIs
 }
 \details{
-Before even checking what metadata has been deposited for a DOI,
-a DOI has to pass a number of criteria to be eligible for metacheck.
+Before even checking what metadata has been deposited for a DOI, a DOI has to pass a number of criteria to be eligible for metacheck.
 
-The below criteria are assumed to be transitive but asymmetric
-in the order given.
-For example, if a DOI is not found on DOI.org,
-it is assumed that it also \emph{cannot} be known to crossref and all later
-predicates are also assumed to be \code{NA}.
-This must necessarily be the case for, say, syntactically invalid DOIs,
-but is more of an assumption when it comes to the consistency between
-different data sources (say, DOI.org and Crossref).
+Eligible DOIs must be:
+\enumerate{
+\item non-missing (\code{not_na}).
+For details, see \code{biblids::doi()}.
+\item non-duplicated (\code{unique}).
+Every 2nd and later repetition of a DOI fails this test.
+For details, see \code{biblids::doi()}.
+\item within the limit of 1000 DOIs (\code{within_limits}).
+This limit is set for the web application to avoid misuse.
+Please contact \href{https://subugoe.github.io/metacheck/articles/help.html}{support} if you need to test more DOIs.
+\item resolvable on DOI.org (\code{doi_org_found}).
+For details, see \code{biblids::is_doi_found()}.
+\item have been deposited by the Crossref registration agency (as per doi.org) (\code{from_cr}).
+DOIs registered by an agency other than Crossref will not have metadata on Crossref.
+\item have metadata deposited on Crossref (\code{cr_md}).
+\item have to resolve to a journal article (\code{article}).
 }
-\section{Related Functions and Methods}{
-\subsection{Functions}{
+
+These criteria are tested in this order, and assumed to be transitive but asymmetric in the order given.
+For example, if a DOI is not found on DOI.org, it is assumed that it also \emph{cannot} be known to Crossref.
+
+This must necessarily be the case for, say,
+syntactically invalud DOIs (which cannot have metadata),
+but is more of an assumption when it comes to the consistency between
+different data sources.
+For example, it is conceivable, though implausible,
+that a DOI might not resolve on DOI.org,
+but is still listed on Crossref.
+}
+\section{Functions}{
 \itemize{
 \item \code{tabulate_metacheckable}: Tabulate results
-}
-\itemize{
+
 \item \code{is_metacheckable}: Are all predicates \code{TRUE}?
-}
-\itemize{
+
 \item \code{assert_metacheckable}: Assert metacheckability
-}
-\itemize{
+
 \item \code{report_metacheckable}: Report summary in markdown
-}
-\itemize{
+
 \item \code{is_in_limit}: Is the DOI in the limit?
-}
-\itemize{
+
 \item \code{is_doi_cr_md}: Is there metadata for the DOI on Crossref?
-}
-\itemize{
+
 \item \code{is_doi_cr_type}: Is the DOI a type (per Crossref)?
-}}}
+}}
 
 \seealso{
 Other import: 

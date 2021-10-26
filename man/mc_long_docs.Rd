@@ -21,10 +21,9 @@ mc_long_docs_string(...)
 Longer translations are included as separate \verb{*.md} files,
 and are not covered in \code{translation.json} powering \code{\link[=mc_translator]{mc_translator()}}.
 }
-\section{Related Functions and Methods}{
-\subsection{Functions}{
+\section{Functions}{
 \itemize{
 \item \code{mc_long_docs_string}: Return content of file
-}}}
+}}
 
 \keyword{internal}

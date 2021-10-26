@@ -16,16 +16,14 @@ cc_compliance_metrics(cc_license_check = NULL)
 \description{
 Diagnose Creative Commons Licensing
 }
-\section{Related Functions and Methods}{
-\subsection{Functions}{
+\section{Functions}{
 \itemize{
 \item \code{cc_metrics}: Presents normalised CC licence variants.
 For example, \code{BY} (absolute and relative).
-}
-\itemize{
+
 \item \code{cc_compliance_metrics}: Presents the result of the CC compliance check.
 Absolute and relative normalised CC licence variants.
-}}}
+}}
 
 \examples{
 # obtain metadata from Crossref API

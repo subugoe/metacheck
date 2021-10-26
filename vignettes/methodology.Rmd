@@ -34,9 +34,23 @@ With this email, you also receive a comprehensive Excel spreadsheet with article
 
 ## Pretest
 
-`r metacheck::mc_long_docs_string("pretest.md", lang = "en")`
+Before even checking what metadata has been deposited for a DOI, a DOI has to pass a number of criteria to be eligible for metacheck.
 
-See `metacheck::pretest()` for more details.
+Eligible DOIs must meet the following criteria.
+
+```{r pretest_criteria, echo=FALSE}
+library(metacheck)
+transl <- mc_translator()
+transl$set_translation_language("en")
+knitr::kable(
+  tibble::tibble(
+    Name = pretests()$name,
+    Beschreibung = transl$translate(pretests()$desc)
+  )
+)
+```
+
+See `metacheck::pretests()` for more details.
 
 ## Test results
 

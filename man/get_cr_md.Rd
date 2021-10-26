@@ -15,6 +15,6 @@ Get Crossref metadata from API
 \seealso{
 Other import: 
 \code{\link{cr_works2}()},
-\code{\link{pretest}}
+\code{\link{pretests}()}
 }
 \concept{import}

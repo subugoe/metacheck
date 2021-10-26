@@ -34,9 +34,24 @@ Im Anhang der Ergebnis-Email befindet sich zudem ein umfassender Datenanhang als
 
 ## Vorabprüfung
 
-`r metacheck::mc_long_docs_string("pretest.md", lang = "en")`
+Vor dem eigentlichen Metadatentest findet eine umfangreiche Vorabprüfung statt.
+Nur wenn DOIs die folgenden Kriterien erfüllen, kann ein Metadatentest durchgeführt werden.
 
-Weitere Details in `metacheck::pretest()`.
+Gültige DOIs müssen folgende Kriterien erfüllen:
+
+```{r pretest_criteria, echo=FALSE}
+library(metacheck)
+transl <- mc_translator()
+transl$set_translation_language("de")
+knitr::kable(
+  tibble::tibble(
+    Name = pretests()$name,
+    Beschreibung = transl$translate(pretests()$desc)
+  )
+)
+```
+
+Weitere Details in `metacheck::pretests()`.
 
 ## Testergebnis
 

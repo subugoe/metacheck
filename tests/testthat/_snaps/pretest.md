@@ -3,20 +3,20 @@
     {
       "type": "list",
       "attributes": {
-        "class": {
+        "names": {
           "type": "character",
           "attributes": {},
-          "value": ["tbl_df", "tbl", "data.frame"]
+          "value": ["not_missing", "unique", "within_limits", "doi_org_found", "from_cr", "cr_md", "article"]
         },
         "row.names": {
           "type": "integer",
           "attributes": {},
           "value": [1, 2, 3, 4, 5, 6, 7, 8, 9]
         },
-        "names": {
+        "class": {
           "type": "character",
           "attributes": {},
-          "value": ["not_missing", "unique", "within_limits", "doi_org_found", "from_cr", "cr_md", "article"]
+          "value": ["tbl_df", "tbl", "data.frame"]
         }
       },
       "value": [
@@ -77,6 +77,6 @@
           "value": ["glue", "character"]
         }
       },
-      "value": ["- 8 (89%) thereof fulfill the criterion `not_missing` (**1** dropped)\n- 7 (88%) thereof fulfill the criterion `unique` (**1** dropped)\n- 7 (100%) thereof fulfill the criterion `within_limits` (**0** dropped)\n- 6 (86%) thereof fulfill the criterion `doi_org_found` (**1** dropped)\n- 3 (50%) thereof fulfill the criterion `from_cr` (**3** dropped)\n- 3 (100%) thereof fulfill the criterion `cr_md` (**0** dropped)\n- 3 (100%) thereof fulfill the criterion `article` (**0** dropped)"]
+      "value": ["- 8 (89%) thereof fulfill the criterion `not_missing`: *DOIs must not be missing values.* (**1** dropped.)\n- 7 (88%) thereof fulfill the criterion `unique`: *DOIs must be unique.* (**1** dropped.)\n- 7 (100%) thereof fulfill the criterion `within_limits`: *Number of DOIs must be within the allowed limit.* (**0** dropped.)\n- 6 (86%) thereof fulfill the criterion `doi_org_found`: *DOIs must be resolveable on DOI.org.* (**1** dropped.)\n- 3 (50%) thereof fulfill the criterion `from_cr`: *DOIs must have been deposited by the Crossref registration agency (RA).* (**3** dropped.)\n- 3 (100%) thereof fulfill the criterion `cr_md`: *DOIs must have metadata on Crossref.* (**0** dropped.)\n- 3 (100%) thereof fulfill the criterion `article`: *DOIs must resolve to a journal article.* (**0** dropped.)"]
     }
 

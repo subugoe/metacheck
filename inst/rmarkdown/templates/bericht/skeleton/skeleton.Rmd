@@ -19,12 +19,15 @@ translator <- params$translator
 ## Vorabprüfung
 
 Zunächst prüfen wir, ob zu diesen DOIs konforme Open Access Metadaten vorliegen *könnten*.
+DOIs die eine oder mehrere der folgenden Kriterien nicht erfüllen, werden aus der weiteren Analyse ausgeschlossen.
 
 Sie haben **`r length(params$dois)`** DOIs eingegeben.
 
 ```{r pretest, results = "asis"}
 report_metacheckable(params$dois, lang = lang)
 ```
+
+Weitere Details in `metacheck::pretests()`.
 
 ```{r filter, include = FALSE}
 dois <- params$dois[is_metacheckable(params$dois)]

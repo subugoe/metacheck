@@ -1,6 +1,6 @@
 ---
 title: "Methodology"
-subtitle: "Overview of metacheck"
+subtitle: "Overview of the Open-Access Metadata Checker"
 pkgdown:
     as_is:true
 bibliography: metacheck.bib

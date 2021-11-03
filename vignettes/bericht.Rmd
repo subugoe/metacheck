@@ -2,9 +2,27 @@
 title: "Beispiel-Bericht"
 pkgdown:
     as_is:true
+bibliography: metacheck.bib
+csl: apa.csl
 ---
 
 <!-- this file always has to be in sync with other language versions -->
+
+## Hintergrund
+
+Umfangreiche Metadaten sichern die Auffindbarkeit und Nachnutzung von
+Open-Access (OA) Artikeln. 
+Aus diesem Grunde ist die Überprüfung der Metadaten ein wesentlicher Workflow-Bestandteil beim Umgang mit OA-Publikationsgebühren und Transformationsverträgen [@Geschuhn_2017; @Marques_2019].
+
+Der Open-Access-Metadaten-Schnelltest ermöglicht die automatische Überprüfung der Metadatenqualität von OA-Zeitschriftenartikeln.
+Er richtet sich in erster Linie an Bibliotheken und wissenschaftliche Informationseinrichtungen, die Open-Access-Publikationskosten verwalten. 
+
+Im Mittelpunkt der Überprüfung des Open-Access-Metadaten-Schnelltests stehen die Metadaten der DOI-Registrierungsagentur [Crossref](https://www.crossref.org/). 
+Crossref wird von den meisten wissenschaftlichen Verlagen verwendet [@Hendricks_2020] und auch im Kontext von Publikationsfonds und Transformationsverträgen werden die meisten DOIs für Open-Access-Artikel über Crossref registriert [@Jahn_2016; @Pieper_2018]. 
+Crossref-Metadatenservices werden zudem umfangreich in Forschung und Praxis zum Auffinden von Open-Access-Artikeln genutzt, z.B. durch den Open-Access-Discovery-Service [Unpaywall](https://unpaywall.org/) [@Piwowar_2018], der eine wesentliche Quelle des deutschen [Open Access Monitor](https://open-access-monitor.de/#/home) ist.
+
+Der Open-Access-Metadaten-Schnelltest nutzt [Crossref Metadata Plus](https://www.crossref.org/services/metadata-retrieval/metadata-plus/). 
+Ein Rahmenvertrag sichert einen priorisierten und hochperformanten Zugang zu den Crossref-Schnittstellen.
 
 <div class="alert alert-info" role="alert">
   Dieses Ergebnis basiert auf den `metacheck::doi_examples` Beispieldaten im metacheck Paket.

@@ -9,49 +9,9 @@ csl: apa.csl
 
 <!-- NOTE this has to stay in sync with methodology.Rmd -->
 
-Umfangreiche Metadaten sichern die Auffindbarkeit und Nachnutzung von
-Open-Access (OA) Artikeln. 
-Aus diesem Grunde ist die Überprüfung der Metadaten ein wesentlicher Workflow-Bestandteil beim Umgang mit OA-Publikationsgebühren und Transformationsverträgen [@Geschuhn_2017; @Marques_2019].
-
-Der Open-Access-Metadaten-Schnelltest ermöglicht die automatische Überprüfung der Metadatenqualität von OA-Zeitschriftenartikeln.
-Er richtet sich in erster Linie an Bibliotheken und wissenschaftliche Informationseinrichtungen, die Open-Access-Publikationskosten verwalten. 
-
-Im Mittelpunkt der Überprüfung des Open-Access-Metadaten-Schnelltests stehen die Metadaten der DOI-Registrierungsagentur [Crossref](https://www.crossref.org/). 
-Crossref wird von den meisten wissenschaftlichen Verlagen verwendet [@Hendricks_2020] und auch im Kontext von Publikationsfonds und Transformationsverträgen werden die meisten DOIs für Open-Access-Artikel über Crossref registriert [@Jahn_2016; @Pieper_2018]. 
-Crossref-Metadatenservices werden zudem umfangreich in Forschung und Praxis zum Auffinden von Open-Access-Artikeln genutzt, z.B. durch den Open-Access-Discovery-Service [Unpaywall](https://unpaywall.org/) [@Piwowar_2018], der eine wesentliche Quelle des deutschen [Open Access Monitor](https://open-access-monitor.de/#/home) ist.
-
-Der Open-Access-Metadaten-Schnelltest nutzt [Crossref Metadata Plus](https://www.crossref.org/services/metadata-retrieval/metadata-plus/). 
-Ein Rahmenvertrag sichert einen priorisierten und hochperformanten Zugang zu den Crossref-Schnittstellen.
-
 <div class="alert alert-warning" role="alert">
 `r metacheck::mc_long_docs_string("disclaimer_fe.md", lang = "de")`
 </div>
-
-## Vorgehen
-
-Der quelloffene Open-Access-Metadaten-Schnelltest erlaubt die umfangreiche Überprüfung von bis zu `r formals(metacheck::is_in_limit)$limit` DOIs pro Bericht und liefert ein Untersuchungsergebnis innerhalb von 45 Minuten per Email. 
-Im Anhang der Ergebnis-Email befindet sich zudem ein umfassender Datenanhang als Exceltabelle.
-
-## Vorabprüfung
-
-Vor dem eigentlichen Metadatentest findet eine umfangreiche Vorabprüfung statt.
-Nur wenn DOIs die folgenden Kriterien erfüllen, kann ein Metadatentest durchgeführt werden.
-
-Gültige DOIs müssen folgende Kriterien erfüllen:
-
-```{r pretest_criteria, echo=FALSE}
-library(metacheck)
-transl <- mc_translator()
-transl$set_translation_language("de")
-knitr::kable(
-  tibble::tibble(
-    Name = pretests()$name,
-    Beschreibung = transl$translate(pretests()$desc)
-  )
-)
-```
-
-Weitere Details in `metacheck::pretests()`.
 
 ## Testergebnis
 

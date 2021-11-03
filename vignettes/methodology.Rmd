@@ -9,48 +9,6 @@ csl: apa.csl
 
 <!-- NOTE this has to stay in sync with methode.Rmd -->
 
-Rich metadata ensure that open access (OA) articles can be found and reused. 
-To manage OA publication fees and negotiate transformative agreements, it is therefore crucial to monitor metadata compliance as part of the workflows [@Geschuhn_2017; @Marques_2019; @Borrego_2020].
-
-metacheck lets you automatically check the quality of publisher-provided metadata for OA journal articles. 
-The tool mainly targets libraries and consortia that manage OA publishing funds and negotiate transformative agreements.
-
-metacheck focuses on DOIs from the registration agency [Crossref](https://www.crossref.org/).
-Crossref is used by all major publishers [@Hendricks_2020]. 
-As a consequence, Crossref is a key data source for leading open access discovery services like [Unpaywall](https://unpaywall.org/) [@Piwowar_2018] and open access transparency initiatives like Open APC [@Jahn_2016; @Pieper_2018]. 
-
-metacheck uses [Crossref Metadata Plus](https://www.crossref.org/services/metadata-retrieval/metadata-plus/).
-A service-level agreement ensures supported access to the Crossref REST API.
-
-<div class="alert alert-warning" role="alert">
-`r metacheck::mc_long_docs_string("disclaimer_fe.md", lang = "en")`
-</div>
-
-## How to Use Metacheck
-
-You can check up to `r formals(metacheck::is_in_limit)$limit` DOIs at once using this freely available tool. 
-We'll run a couple of checks and you can expect an email report within 45 minutes. 
-With this email, you also receive a comprehensive Excel spreadsheet with article-level metadata. 
-
-## Pretest
-
-Before even checking what metadata has been deposited for a DOI, a DOI has to pass a number of criteria to be eligible for metacheck.
-
-Eligible DOIs must meet the following criteria.
-
-```{r pretest_criteria, echo=FALSE}
-library(metacheck)
-transl <- mc_translator()
-transl$set_translation_language("en")
-knitr::kable(
-  tibble::tibble(
-    Name = pretests()$name,
-    Beschreibung = transl$translate(pretests()$desc)
-  )
-)
-```
-
-See `metacheck::pretests()` for more details.
 
 ## Test results
 

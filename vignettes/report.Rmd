@@ -35,4 +35,4 @@ A service-level agreement ensures supported access to the Crossref REST API.
 metacheck:::knit_child_report(lang = "en")
 ```
 
-## 
+## Literatur

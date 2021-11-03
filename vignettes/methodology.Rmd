@@ -3,8 +3,6 @@ title: "Methodology"
 subtitle: "Overview of metacheck"
 pkgdown:
     as_is:true
-bibliography: metacheck.bib
-csl: apa.csl
 ---
 
 <!-- NOTE this has to stay in sync with methode.Rmd -->
@@ -82,5 +80,3 @@ It contains the following sheets with article-level metadata:
 - `tdm`: Full-text links for Text and Data Mining (TDM)
 - `funder_info`: Funder information
 - `pretest`: Pre-test
-
-## References

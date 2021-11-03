@@ -3,8 +3,6 @@ title: "Methode"
 subtitle: "Überblick Open-Access-Metadaten-Schnelltest"
 pkgdown:
     as_is:true
-bibliography: metacheck.bib
-csl: apa.csl
 ---
 
 <!-- NOTE this has to stay in sync with methodology.Rmd -->
@@ -89,5 +87,3 @@ Beigefügt zur Email befindet sich ein Excel-Spreadsheet mit Metadaten auf Artik
 - `tdm`: Detailauswertung Volltextlinks und TDM
 - `funder_info`: Förderinformationen lt. Crossref
 - `pretest`: Ergebnisse der Vorabprüfung
-
-## Literatur

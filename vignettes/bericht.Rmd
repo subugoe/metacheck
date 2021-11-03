@@ -35,3 +35,6 @@ Ein Rahmenvertrag sichert einen priorisierten und hochperformanten Zugang zu den
 ```{r, echo = FALSE, results = 'asis', message = FALSE}
 metacheck:::knit_child_report(lang = "de")
 ```
+
+
+## References

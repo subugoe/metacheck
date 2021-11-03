@@ -52,16 +52,20 @@ For details about DOI predicates (\code{\link[=is.na]{is.na()}} etc.), see \code
 For details about custom metacheck predicates,
 see \code{\link[=mc_predicates]{mc_predicates()}}.
 }
-\section{Functions}{
+\section{Related Functions and Methods}{
+\subsection{Functions}{
 \itemize{
 \item \code{tabulate_metacheckable}: Tabulate results
-
+}
+\itemize{
 \item \code{is_metacheckable}: Are all predicates \code{TRUE}?
-
+}
+\itemize{
 \item \code{assert_metacheckable}: Assert metacheckability
-
+}
+\itemize{
 \item \code{report_metacheckable}: Report summary in markdown
-}}
+}}}
 
 \examples{
 pretests()

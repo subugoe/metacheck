@@ -23,14 +23,17 @@ is_doi_cr_type(x, type = types_allowed)
 \description{
 Metacheck custom predicates
 }
-\section{Functions}{
+\section{Related Functions and Methods}{
+\subsection{Functions}{
 \itemize{
 \item \code{is_in_limit}: Is the DOI in the limit?
-
+}
+\itemize{
 \item \code{is_doi_cr_md}: Is there metadata for the DOI on Crossref?
-
+}
+\itemize{
 \item \code{is_doi_cr_type}: Is the DOI a type (per Crossref)?
-}}
+}}}
 
 \seealso{
 Other transform: 

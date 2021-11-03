@@ -60,7 +60,8 @@ predicates.
 }
 }
 }
-\section{Functions}{
+\section{Related Functions and Methods}{
+\subsection{Functions}{
 \itemize{
 \item \code{transitively}: Adverb to let predicate functions default to \code{NA} for \code{.x[!.prior]}.
 Creates a function with two arguments:
@@ -71,7 +72,7 @@ where \code{FALSE} or \code{NA} implies that \code{.p(.x)} should not be run
 but default to \code{NA}.
 \item ...: Other arguments passed to \code{.p()}.
 }
-}}
+}}}
 
 \seealso{
 Other helpers: 

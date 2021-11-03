@@ -26,14 +26,17 @@ To update the language reactively \emph{during} a shiny session, see \code{lang}
 \description{
 Enter metacheck controls through a shiny module
 }
-\section{Functions}{
+\section{Related Functions and Methods}{
+\subsection{Functions}{
 \itemize{
 \item \code{mcControlsApp}: Test App
-
+}
+\itemize{
 \item \code{mcControlsUI}: Module UI
-
+}
+\itemize{
 \item \code{mcControlsServer}: Module server
-}}
+}}}
 
 \seealso{
 Other communicate: 

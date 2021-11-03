@@ -123,20 +123,26 @@ Such a file is created using the \code{\link[blastula:create_smtp_creds_file]{cr
 \description{
 Send metacheck results as an parametrised email
 }
-\section{Functions}{
+\section{Related Functions and Methods}{
+\subsection{Functions}{
 \itemize{
 \item \code{mc_compose_email}: Compose complete mail
-
+}
+\itemize{
 \item \code{mc_compose_email_outer}: Wrap inner email in outer content
-
+}
+\itemize{
 \item \code{mc_render_email}: Render email body (inner content)
-
+}
+\itemize{
 \item \code{render_and_send}: Render and send
-
+}
+\itemize{
 \item \code{render_and_send_async}: Render and send asynchronously
-
+}
+\itemize{
 \item \code{smtp_send_mc}: Send
-}}
+}}}
 
 \seealso{
 Other communicate: 

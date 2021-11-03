@@ -110,13 +110,15 @@ To update the language reactively \emph{during} a shiny session, see \code{lang}
 \description{
 Helper functions to generate a metacheck report.
 }
-\section{Functions}{
+\section{Related Functions and Methods}{
+\subsection{Functions}{
 \itemize{
 \item \code{draft_report}: Create a draft report from the template.
 Useful for manual edits; equivalent to opening a new template in RStudio.
-
+}
+\itemize{
 \item \code{render_report}: Render a parametrised metacheck report.
-}}
+}}}
 
 \note{
 Metacheck supports your workflows to check OA metadata deposited by publishers, but it cannot conclusively check funding eligibility of OA publications.

@@ -23,16 +23,22 @@ As a consequence, Crossref is a key data source for leading open access discover
 metacheck uses [Crossref Metadata Plus](https://www.crossref.org/services/metadata-retrieval/metadata-plus/).
 A service-level agreement ensures supported access to the Crossref REST API.
 
-<div class="alert alert-info" role="alert">
-  This is an example report using the `metacheck::doi_examples` data, shipped with the package.
-</div>
-
 <div class="alert alert-warning" role="alert">
 `r metacheck::mc_long_docs_string("disclaimer_fe.md", lang = "en")`
 </div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">Example</div>
+  <div class="panel-body">
 
 ```{r, echo = FALSE, results = 'asis', message = FALSE}
 metacheck:::knit_child_report(lang = "en")
 ```
 
-## Literatur
+  </div>
+  <div class="panel-footer">
+  This is an example report using the `metacheck::doi_examples` data, shipped with the package.
+  </div>
+</div>
+
+## References

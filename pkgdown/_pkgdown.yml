@@ -54,13 +54,16 @@ reference:
   - has_concept("helpers")
 navbar:
   structure:
-    left:  [home, reference, app, examples]
+    left:  [home, reference, app, example]
     right: [support, github]
   components:
     app:
       text: App
       icon: "fa fa-tachometer"
       href: articles/app.html
+    example:
+      text: Example
+      href: articles/report.html
     support:
       text: Support
       menu:
@@ -71,8 +74,6 @@ navbar:
         href: articles/bericht.html
       - text: "Veranstaltungen"
         href: articles/veranstaltungen.html
-      - text: "Methode"
-        href: articles/methode.html
       - text: "Newsletter"
         href: https://subugoe.github.io/hoad/newsletter.html
       - text: ----
@@ -83,8 +84,6 @@ navbar:
         href: articles/report.html
       - text: "Events"
         href: articles/events.html
-      - text: "Methodology"
-        href: articles/methodology.html
     articles: ~
 development:
   version_label: danger

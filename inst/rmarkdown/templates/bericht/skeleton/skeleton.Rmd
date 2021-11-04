@@ -91,7 +91,7 @@ CC-BY ist sowohl in den [DEAL-Verträgen](https://www.projekt-deal.de/) als auch
 `NA` bedeutet, dass keine Lizeninformation in den Crossref-Metadaten verfügbar ist.
 
 
-#### Regelkonformität der CC-Lizensinformation
+#### Regelkonformität der CC-Lizenzinformation
 
 Die unten stehende Tabelle zeigt die Anzahl und den Anteil regelkonformer CC-Lizenzinformationen.
 

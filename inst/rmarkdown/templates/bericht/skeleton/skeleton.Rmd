@@ -142,16 +142,3 @@ funder_metrics(mcres$funder_info) %>%
 Erneut können Crossref Metadaten mehr als einen Förderer pro DOI enthalten, so dass Anteile ggfs. auf über 100% addieren.
 
 Bitte beachten Sie, dass aufgrund der unvollständigen Abdeckung Crossref (noch) nicht geeignet ist für umfangreiche Analysen des Förderkontexts von Publikationen.
-
-
-## Datenanhang
-
-Beigefügt zur Email befindet sich ein Excel-Spreadsheet mit Metadaten auf Artikelebene für weitere Analysen.
-
-Es umfasst folgende Datenblätter:
-
-- `cr_overview`: Überblick  
-- `cc_license_check`: Detailauswertung Lizenzüberprüfung
-- `tdm`: Detailauswertung Volltextlinks und TDM
-- `funder_info`: Förderinformationen lt. Crossref
-- `pretest`: Ergebnisse der Vorabprüfung

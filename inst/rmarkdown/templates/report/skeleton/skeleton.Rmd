@@ -142,16 +142,3 @@ funder_metrics(mcres$funder_info) %>%
 Here again, Crossref metadata can include more than one funder for each DOI, and the percentages can add to more than 100%.
 
 Please note that due to the (still) limited coverage of Crossref, results may not be suitable to comprehensively analyse funding contexts of a publication.
-
-
-### Attachment
-
-An attached Excel-Spreadsheet allows you to build on our analysis. 
-
-It contains the following sheets with article-level metadata:
-
-- `cr_overview`: Overview  
-- `cc_license_check`: License metadata 
-- `tdm`: Full-text links for Text and Data Mining (TDM)
-- `funder_info`: Funder information
-- `pretest`: Pre-test

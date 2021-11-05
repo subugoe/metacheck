@@ -132,7 +132,6 @@ The funding context of research articles becomes more and more important in open
 A growing number of publishers use Crossref to share such information. 
 
 The below table displays the share of DOIs with such funding information, along with the three most frequent funders among the DOIs submitted.
-shows the three most frequent funders, as well as the  among the submitted DOIs.
 Crossref metadata can include more than one funder for each DOI.
 
 ```{r funder_info}

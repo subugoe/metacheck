@@ -21,7 +21,7 @@ translator <- params$translator
 Sie haben **`r length(params$dois)`** DOIs eingegeben.
 
 Zunächst haben wir geprüft, ob zu diesen DOIs konforme Open Access Metadaten vorliegen *könnten*.
-DOIs die eine oder mehrere der folgenden Kriterien nicht erfüllen, werden aus der weiteren Analyse ausgeschlossen.
+DOIs, die eine oder mehrere der folgenden Kriterien nicht erfüllen, werden aus der weiteren Analyse ausgeschlossen.
 
 ```{r pretest, results = "asis"}
 report_metacheckable(params$dois, lang = lang)

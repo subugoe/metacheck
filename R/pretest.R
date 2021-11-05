@@ -57,7 +57,7 @@ pretests <- function(...) {
 
     "from_cr",
     purrr::partial(memoised_is_doi_from_ra, ra = "Crossref"),
-    "DOIs must have been deposited by the Crossref registration agency (RA).",
+    "DOIs must have been registered by the Crossref registration agency (RA).",
 
     "cr_md",
     is_doi_cr_md,

@@ -20,6 +20,7 @@ Other transform:
 \code{\link{cr_has_orcid}()},
 \code{\link{cr_tdm_df}()},
 \code{\link{license_check}()},
+\code{\link{mc_predicates}},
 \code{\link{vor_issue}()}
 }
 \concept{transform}

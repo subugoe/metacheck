@@ -6,6 +6,8 @@ params:
   translator: !r metacheck::mc_translator()
 ---
 
+<!-- this file always has to be in sync with other language versions -->
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 suppressMessages(library(metacheck))
@@ -16,9 +18,10 @@ translator <- params$translator
 
 ## Pretest
 
-We first check whether these DOIs *could* have compliant open access metadata.
-
 You have provided **`r length(params$dois)`** DOIs.
+
+We first check whether these DOIs *could* have compliant open access metadata.
+DOIs that do not meet one or more of following criteria are excluded from the below analysis.
 
 ```{r pretest, results = "asis"}
 report_metacheckable(params$dois, lang = lang)
@@ -45,49 +48,97 @@ mcres <- cr_compliance_overview(cr)
 
 ### Overview
 
+The below table summarises the test results.
+
 ```{r metrics_overview}
 metrics_overview(mcres$cr_overview) %>%
    ind_table_to_gt(.color = "#00A4A7", lang = lang)
 ```
 
-### Creative-Commons-License
+The table shows absolute counts and relative shares.
 
-#### Overview Licensing
+Tests include:
+
+- **CC License**: Availability of Creative Commons (CC) licenses
+- **Compliant CC**: Availability of compliant Creative Commons (CC) licenses
+- **TDM Support**: Support for text and data mining (TDM)
+- **Funder info**: Information regarding bodies funding the publication
+- **ORCID**: [Open Researcher and Contributor ID](https://orcid.org) for authors
+- **Open Abstracts**: [Open Abstracts](https://i4oa.org/) metadata
+- **Open Citations**: [Open Citations](https://i4oc.org/)) metadata
+
+Below are the results for each test in greater detail.
+
+
+### Creative-Commons Licenses
+
+Open content licenses are essential to govern access and re-use to open access journal articles. 
+
+metacheck normalizes Creative Commons licenses and maps them to the different variants in use such as CC BY.
+We also check if license statements are compliant.
+
+#### Used CC Licenses
+
+The below table shows the number and percentage by Creative Commons variant. 
 
 ```{r cc_metrics}
 cc_metrics(mcres$cc_license_check) %>%
   ind_table_to_gt(.color =  "#F3A9BB", lang = lang)
 ```
 
-#### Results Compliance Check
+Many research funders recommend CC-BY, in particular those supporting the [Plan S Principles](https://www.coalition-s.org/plan_s_principles/). 
+`NA` indicates articles where no licence metadata was found. 
+
+
+#### Compliance of CC Licensing Information
+
+The below table displays the number and percentage of articles with compliant license metadata. 
 
 ```{r cc_compliance}
 cc_compliance_metrics(mcres$cc_license_check) %>%
   ind_table_to_gt(.color = "#A0A5A9", lang = lang)
 ```
 
+We consider license metadata as compliant, if and only if:
+
+- the license URL represents a Creative Commons license URL,
+- the Creative Commons license refers to the publisher version, the so-called "version-of-record", and
+- the Creative Commons license came into effect at the date of publication (exclusion of delayed OA).
+
+We noted that while more and more publishers do provide Creative Commons license metadata through Crossref, some metadata is still incomplete. 
+This can negatively affect the discovery and re-use of open access articles. 
+**If you observe license metadata issues, we strongly encourage you to contact the publisher**
+
+
 #### Text and Data Mining (TDM)
+
+The below table summarises which ([MIME
+Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)) file formats are supported for text and data mining (TDM).
 
 ```{r tdm_metrics}
 tdm_metrics(mcres$tdm) %>%
   ind_table_to_gt(.color =  "#9B0056", lang = lang)
 ```
 
-This table summarises which file formats ([MIME
-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)) are supported for text and data mining (TDM).
 Crossref metadata can include more than one format for each DOI.
+Therefore, percentages can add to more than 100%. 
 
-The percentage share refers to the total number of checked DOIs.
+We recommend that publishers do not only provide PDF files for TDM purposes, but also XML to promote automated re-use.
 
 
 ### Funding Information
+
+The funding context of research articles becomes more and more important in open access monitoring. 
+A growing number of publishers use Crossref to share such information. 
+
+The below table displays the share of DOIs with such funding information, along with the three most frequent funders among the DOIs submitted.
+Crossref metadata can include more than one funder for each DOI.
 
 ```{r funder_info}
 funder_metrics(mcres$funder_info) %>%
   ind_table_to_gt(.color = "#000099", lang = lang)
 ```
 
-This table gives an overview over the most frequent funders per DOI, as per Crossref metada.
-Crossref metadata can include more than one funder for each DOI.
+Here again, Crossref metadata can include more than one funder for each DOI, and the percentages can add to more than 100%.
 
-The percentage share refers to the total number of checked DOIs.
+Please note that due to the (still) limited coverage of Crossref, results may not be suitable to comprehensively analyse funding contexts of a publication.

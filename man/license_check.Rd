@@ -23,6 +23,7 @@ Other transform:
 \code{\link{cr_has_orcid}()},
 \code{\link{cr_tdm_df}()},
 \code{\link{get_license_md}()},
+\code{\link{mc_predicates}},
 \code{\link{vor_issue}()}
 }
 \concept{transform}

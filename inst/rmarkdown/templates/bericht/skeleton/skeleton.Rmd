@@ -65,7 +65,7 @@ Untersucht wurden:
 - **Funder info**: Verknüpfung zwischen Publikationen und Förderinformationen
 - **ORCID**: [Open Researcher and Contributor ID](https://orcid.org) der Autor:innen
 - **Open Abstracts**: Metadaten zu [Open Abstracts](https://i4oa.org/)
-- **Open Citations**: Metadaten zu [Open Citations](https://i4oc.org/))
+- **Open Citations**: Metadaten zu [Open Citations](https://i4oc.org/)
 
 Details zu den einzelnen Tests finden Sie im Folgenden.
 
@@ -111,7 +111,7 @@ Dies kann Auswirkungen auf die automatisierte Auffindbarkeit von Open-Access-Art
 **Bei Problemen empfehlen wir daher, mit dem Verlag in Kontakt zu treten.**
 
 
-#### Text and Data Mining (TDM)
+### Text and Data Mining (TDM)
 
 Die Tabelle bietet einen Überblick, welche ([MIME
 Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)) Dateitypen für das Text- und Data-Mining (TDM) unterstützt werden.

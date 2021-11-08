@@ -65,7 +65,7 @@ Tests include:
 - **Funder info**: Information regarding bodies funding the publication
 - **ORCID**: [Open Researcher and Contributor ID](https://orcid.org) for authors
 - **Open Abstracts**: [Open Abstracts](https://i4oa.org/) metadata
-- **Open Citations**: [Open Citations](https://i4oc.org/)) metadata
+- **Open Citations**: [Open Citations](https://i4oc.org/) metadata
 
 Below are the results for each test in greater detail.
 
@@ -110,7 +110,7 @@ This can negatively affect the discovery and re-use of open access articles.
 **If you observe license metadata issues, we strongly encourage you to contact the publisher**
 
 
-#### Text and Data Mining (TDM)
+### Text and Data Mining (TDM)
 
 The below table summarises which ([MIME
 Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)) file formats are supported for text and data mining (TDM).

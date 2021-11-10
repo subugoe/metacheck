@@ -10,9 +10,9 @@ test_that("shiny app works", {
   app$setInputs(`test-send-gdpr_consent` = TRUE)
   app$click("test-send-send")
   # sending email is done async, so we need to wait
-  Sys.sleep(5)
+  Sys.sleep(20)
   expect_equal(
-    app$findElement(".modal-title")$getText(),
-    "You have successfully sent your DOIs"
+    app$findElement(".progress-message")$getText(),
+    "Your report is in your email inbox."
   )
 })

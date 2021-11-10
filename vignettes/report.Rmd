@@ -2,18 +2,45 @@
 title: "Example Report"
 pkgdown:
     as_is:true
+bibliography: metacheck.bib
+csl: apa.csl
 ---
 
 <!-- this file always has to be in sync with other language versions -->
 
-<div class="alert alert-info" role="alert">
-  This is an example report using the `metacheck::doi_examples` data, shipped with the package.
-</div>
+## Background
+
+Rich metadata ensure that open access (OA) articles can be found and reused. 
+To manage OA publication fees and negotiate transformative agreements, it is therefore crucial to monitor metadata compliance [@Geschuhn_2017; @Marques_2019; @Borrego_2020].
+
+metacheck lets you automatically check the quality of publisher-provided metadata for OA journal articles. 
+The tool mainly targets libraries and consortia that manage OA publishing funds and negotiate transformative agreements.
+
+metacheck focuses on DOIs from the registration agency [Crossref](https://www.crossref.org/).
+Crossref is used by all major publishers [@Hendricks_2020]. 
+As a consequence, Crossref is a key data source for leading open access discovery services like [Unpaywall](https://unpaywall.org/) [@Piwowar_2018] and open access transparency initiatives like Open APC [@Jahn_2016; @Pieper_2018]. 
+
+metacheck uses [Crossref Metadata Plus](https://www.crossref.org/services/metadata-retrieval/metadata-plus/).
+A service-level agreement ensures performant access to the Crossref REST API.
+
+For more details on compliance checking of licensing information in Crossref in the context of OA transformative agreements, see @Voigt_2020.
 
 <div class="alert alert-warning" role="alert">
 `r metacheck::mc_long_docs_string("disclaimer_fe.md", lang = "en")`
 </div>
 
+<div class="panel panel-primary">
+  <div class="panel-heading">Example</div>
+  <div class="panel-body">
+
 ```{r, echo = FALSE, results = 'asis', message = FALSE}
 metacheck:::knit_child_report(lang = "en")
 ```
+
+</div>
+<div class="panel-footer">
+This is an example report using the `metacheck::doi_examples` data, shipped with the package.
+</div>
+</div>
+
+## References

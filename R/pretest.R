@@ -1,78 +1,101 @@
 # criteria ====
 
 #' Pretest acceptable DOIs
+#' 
+#' DOIs have to meet some pretests to have a meaningful metadata compliance.
 #'
 #' @details
-#' Before even checking what metadata has been deposited for a DOI,
-#' a DOI has to pass a number of criteria to be eligible for metacheck.
-#'
-#' The below criteria are assumed to be transitive but asymmetric
-#' in the order given.
+#' These criteria are tested,
+#' and assumed to be transitive but asymmetric in the order given.
 #' For example, if a DOI is not found on DOI.org,
-#' it is assumed that it also *cannot* be known to crossref and all later
-#' predicates are also assumed to be `NA`.
-#' This must necessarily be the case for, say, syntactically invalid DOIs,
-#' but is more of an assumption when it comes to the consistency between
-#' different data sources (say, DOI.org and Crossref).
+#' it is assumed that it also *cannot* be known to Crossref.
 #'
-#' @inheritParams biblids::as_doi
+#' This must necessarily be the case for, say,
+#' syntactically invalid DOIs (which cannot have metadata),
+#' but is more of an assumption when it comes to the consistency between
+#' different data sources.
+#' For example, it is conceivable, though implausible,
+#' that a DOI might not resolve on DOI.org,
+#' but is still listed on Crossref.
+#' 
+#' For details about DOI predicates ([is.na()] etc.), see [biblids::doi()].
+#' For details about custom metacheck predicates, 
+#' see [metacheck::mc_predicates()].
+#' 
+# TODO explain that this is being run one by one (hence oddness about uniqueness)
+#'
 #' @param... Additional arguments passed to the predicate functions.
 #'
 #' @return
-#' A tibble with one column for each of the predicate results.
-#' `TRUE` always means that a DOI passes a criterion.
-#'
-#' Tested in order:
-#' 1. `not_na` following [biblids::doi()].
-#' 1. `unique`
-#'    `FALSE` for every 2nd and later repetition of a DOI.
-#'     DOIs are compared using [biblids::doi()] logic.
-#' 1. `within_limits`
-#'     whether remaining DOIs are within the package limit for requests.
-#' 1. `doi_org_found`
-#'     whether remaining DOIs are found on DOI.org,
-#'     using [biblids::is_doi_found()].
-#' 1. `from_cr`
-#'     whether remaining DOIs have been deposited by the Crossref
-#'     registration agency (per doi.org).
-#' 1. `cr_md`
-#'     whether remaining DOIs have metadata on Crossref.
-#'
-#' `NA` can indicate that the test:
-#'  - was not applicable, because a previous predicate was `FALSE`
-# TODO mention here alternative reason server failure, if safely is implemented
+#' `TRUE` indicates that the test passes the criterion, `FALSE` otherwise.
+#' `NA` can indicates that the test was not applicable, 
+#' because a previous predicate was `FALSE`.
+#' 
+#' @examples
+#' pretests()
 #' @family import
-#' @name pretest
-NULL
-
-#' @describeIn pretest Tabulate results
 #' @export
-tabulate_metacheckable <- function(x, ...) {
-  x <- biblids::as_doi(x)
-  tibble::tibble(
-    `not_missing` = !is.na(x),
-    # repeating the column names in the below is inelegant and unnecessary
-    # but proper FP design (purrr::reduce? functional op?) would be hard to read
-    # this will be refactored for
-    # https://github.com/subugoe/metacheck/issues/169
-    `unique` = lazily(purrr::negate(duplicated))(x, `not_missing`),
-    `within_limits` = lazily(is_in_limit, ...)(x, `unique`),
-    `doi_org_found` = lazily(memoised_is_doi_found)(x, `within_limits`),
-    `from_cr` = lazily(memoised_is_doi_from_ra, "Crossref")(x, `doi_org_found`),
-    # should singl header first https://github.com/subugoe/metacheck/issues/176
-    `cr_md` = lazily(is_doi_cr_md)(x, `from_cr`),
-    `article` = lazily(is_doi_cr_type, "journal-article")(x, `cr_md`),
+pretests <- function(...) {
+  tibble::tribble(
+    ~name, ~fun, ~desc,
+    
+    "not_missing",
+    purrr::negate(is.na),
+    "DOIs must not be missing values.",
+
+    "unique",
+    purrr::negate(duplicated),
+    "DOIs must be unique.",
+
+    "within_limits",
+    purrr::partial(is_in_limit, ...),
+    "Number of DOIs must be within the allowed limit.",
+
+    "doi_org_found",
+    memoised_is_doi_found,
+    "DOIs must be resolveable on DOI.org.",
+
+    "from_cr",
+    purrr::partial(memoised_is_doi_from_ra, ra = "Crossref"),
+    "DOIs must have been registered by the Crossref registration agency (RA).",
+
+    "cr_md",
+    is_doi_cr_md,
+    "DOIs must have metadata on Crossref.",
+
+    "article",
+    purrr::partial(is_doi_cr_type, type = "journal-article"),
+    "DOIs must resolve to a journal article."
   )
 }
 
-#' @describeIn pretest Are all predicates `TRUE`?
+#' @describeIn pretests Tabulate results
+#' @inheritParams biblids::as_doi
+#' @export
+tabulate_metacheckable <- function(x, ...) {
+  x <- biblids::as_doi(x)
+  lazyfuns <- purrr::map(pretests(...)$fun, lazily)
+  # create empty res object
+  res <- tibble::tibble(doi = x)
+  prev <- rep_len(TRUE, length(x))
+  for (i in 1:length(lazyfuns)) {
+    curr <- lazyfuns[[i]](x, prev)
+    res <- tibble::add_column(res, curr, .name_repair = "minimal")
+    prev <- curr
+  }
+  res <- res[-1]
+  names(res) <- pretests()$name
+  res
+}
+
+#' @describeIn pretests Are all predicates `TRUE`?
 #' @export
 is_metacheckable <- function(x, ...) {
   tabulate_metacheckable(x) %>%
     purrr::pmap_lgl(all)
 }
 
-#' @describeIn pretest Assert metacheckability
+#' @describeIn pretests Assert metacheckability
 #' @export
 assert_metacheckable <- function(x, ...) {
   if (!all(is_metacheckable(x, ...))) {
@@ -86,23 +109,33 @@ assert_metacheckable <- function(x, ...) {
 
 # reporting ====
 
-#' @describeIn pretest Report summary in markdown
+#' @describeIn pretests Report summary in markdown
 #' @inheritParams draft_report
 #' @export
 report_metacheckable <- function(x, lang = mc_langs, ...) {
   lang <- rlang::arg_match(lang)
-  tabulate_metacheckable(x, ...) %>%
-    purrr::imap_chr(report_metacheckable1, lang = lang) %>%
+    purrr::pmap_chr(
+      .l = list(
+        x = tabulate_metacheckable(x, ...),
+        name = pretests()$name,
+        desc = pretests()$desc
+      ),
+      .f = report_metacheckable1,
+      lang = lang
+    ) %>%
     glue::glue_collapse(sep = "\n")
 }
 
 #' Write markdown for *one* logical vector
 #' @param x A logical vector.
-#' @param desc Criterion name.
+#' @param name Criterion name.
+#' @param desc Criterion description.
 #' @inheritParams draft_report
 #' @noRd
-report_metacheckable1 <- function(x, desc, lang = mc_langs) {
+report_metacheckable1 <- function(x, name, desc, lang = mc_langs) {
   lang <- rlang::arg_match(lang)
+  transl <- mc_translator()
+  transl$set_translation_language(lang)
   stopifnot(rlang::is_logical(x))
   stopifnot(rlang::is_scalar_character(desc))
   # doing this via i18n would be too cumbersome with glue
@@ -110,11 +143,13 @@ report_metacheckable1 <- function(x, desc, lang = mc_langs) {
     lang,
     "en" = glue::glue(
       "- {n_good(x)} ({round(percent_good(x))}%) thereof fulfill the ",
-      "criterion `{desc}` (**{n_bad(x)}** dropped)"
+      "criterion `{name}`: *{transl$translate(desc)}* ",
+       "(**{n_bad(x)}** dropped.)"
     ),
     "de" = glue::glue(
       "- Davon erf\U00FCllen {n_good(x)} ({round(percent_good(x))}%) ",
-      "das Kriterium `{desc}` (**{n_bad(x)}** ausgeschlossen)"
+      "das Kriterium `{name}`: *{transl$translate(desc)}* ",
+      "(**{n_bad(x)}** ausgeschlossen.)"
     )
   )
 }
@@ -145,14 +180,22 @@ n_total <- function(x) (length(x) - sum(is.na(x)))
 
 # custom predicates ====
 
-#' @describeIn pretest
+#' Metacheck custom predicates
+#' @family transform
+#' @name mc_predicates
+NULL
+
+#' @describeIn mc_predicates
 #' Is the DOI in the limit?
+#' @inheritParams biblids::as_doi
 #' @param limit
 #' Scalar integer, giving the number of DOIs to be submitted to the metacheck.
 #' @export
-is_in_limit <- function(x, limit = 1000L) 1:length(x) <= limit
+is_in_limit <- function(x, limit = getOption("mc_limit", 1000L)) {
+  1:length(x) <= limit
+}
 
-#' @describeIn pretest
+#' @describeIn mc_predicates
 #' Is the DOI registered by Crossref?
 #' @details
 #' Potentially duplicates [biblids::is_doi_from_ra()],
@@ -175,7 +218,7 @@ is_doi_from_ra_cr <- function(x, ra = "Crossref") {
     vctrs::vec_equal(., ra)
 }
 
-#' @describeIn pretest
+#' @describeIn mc_predicates
 #' Is there metadata for the DOI on Crossref?
 #' @export
 is_doi_cr_md <- function(x) {
@@ -189,7 +232,7 @@ is_doi_cr_md <- function(x) {
   vctrs::vec_in(x, dois_with_md)
 }
 
-#' @describeIn pretest
+#' @describeIn mc_predicates
 #' Is the DOI a type (per Crossref)?
 #' @param type
 #' Character scalar, must be one of the types from [rcrossref::cr_types()].
@@ -214,7 +257,7 @@ types_allowed <- {
 #' Adverb to let predicate functions default to `NA` for `x[x1]`
 #'
 #' @param .p A predicate function.
-#' @inheritParams pretest
+#' @inheritParams pretests
 #' @noRd
 lazily <- function(.p, ...) {
   function(x, x1) {

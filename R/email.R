@@ -26,7 +26,15 @@ mc_body_block <- function(dois, translator = mc_translator(), ...) {
     blastula::block_title(translator$translate("Individual Results")),
     blastula::block_text(translator$translate(
       "You can find individual results for every DOI in the attached spreadsheet."
-    ))
+    )),
+    blastula::block_text(
+      blastula::md(
+        mc_long_docs_string(
+          "table.md",
+          lang = translator$get_translation_language()
+        )
+      )
+    )
   )
 }
 

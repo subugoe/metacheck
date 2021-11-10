@@ -119,7 +119,7 @@ https://github.com/subugoe/metacheck/issues/183.
 \seealso{
 Other import: 
 \code{\link{get_cr_md}()},
-\code{\link{pretest}}
+\code{\link{pretests}()}
 }
 \concept{import}
 \keyword{internal}

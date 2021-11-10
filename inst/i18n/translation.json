@@ -163,6 +163,34 @@
     {
       "en": "Based on data by",
       "de": "Basierend auf Daten erhoben von"
+    },
+    {
+      "en": "DOIs must not be missing values.",
+      "de": "DOIs dürfen keine Fehlwerte sein."
+    },
+    {
+      "en": "DOIs must be unique.",
+      "de": "DOIs dürfen keine Dubletten enthalten."
+    },
+    {
+      "en": "Number of DOIs must be within the allowed limit.",
+      "de": "Anzahl der DOIs muss innerhalb der erlaubten Grenzen liegen."
+    },
+    {
+      "en": "DOIs must be resolveable on DOI.org.",
+      "de": "DOIs müssen bei DOI.org eine hinterlegte URL haben."
+    },
+    {
+      "en": "DOIs must have been registered by the Crossref registration agency (RA).",
+      "de": "DOIs müssen durch Crossref registriert sein."
+    },
+    {
+      "en": "DOIs must have metadata on Crossref.",
+      "de": "DOIs müssen auf Crossref Metadaten haben."
+    },
+    {
+      "en": "DOIs must resolve to a journal article.",
+      "de": "DOIs müssen auf einen Zeitschriftenartikel verweisen."
     }
   ]
 }

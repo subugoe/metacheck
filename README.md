@@ -30,13 +30,7 @@ General metadata recommendations:
 
 - [ESAC Guidelines for Transformative Agreements](https://esac-initiative.org/about/transformative-agreements/guidelines-for-transformative-agreements/)
 - [Crossref: Recommended journal metadata]( https://www.crossref.org/get-started/content-registration/journal-metadata/)
-
-In the first phase, we support metadata guidelines outlined in the following funding streams and transformative agreements:
-
-- [DFG-Förderprogramm: "Open-Access-Publikationskosten"](https://www.dfg.de/foerderung/programme/infrastruktur/lis/lis_foerderangebote/open_access_publikationskosten/)
-- [DEAL: Wiley](https://esac-initiative.org/about/transformative-agreements/agreement-registry/wiley2019deal/)
-- [DEAL: Springer Nature](https://esac-initiative.org/about/transformative-agreements/agreement-registry/sn2020deal/)
-
+- [METADATA 2020: Negotiate metadata in contracts](https://metadata2020.org/do-more/negotiate-in-contracts/)
 
 ## Supporting Libraries and OA Funders
 

@@ -18,9 +18,10 @@ translator <- params$translator
 
 ## Vorabprüfung
 
-Zunächst prüfen wir, ob zu diesen DOIs konforme Open Access Metadaten vorliegen *könnten*.
-
 Sie haben **`r length(params$dois)`** DOIs eingegeben.
+
+Zunächst haben wir geprüft, ob zu diesen DOIs konforme Open Access Metadaten vorliegen *könnten*.
+DOIs, die eine oder mehrere der folgenden Kriterien nicht erfüllen, werden aus der weiteren Analyse ausgeschlossen.
 
 ```{r pretest, results = "asis"}
 report_metacheckable(params$dois, lang = lang)
@@ -47,52 +48,97 @@ mcres <- cr_compliance_overview(cr)
 
 ### Überblick
 
+Die unten stehende Tabelle fasst die Ergebnisse der Überprüfung zusammen. 
+
 ```{r metrics_overview}
 metrics_overview(mcres$cr_overview) %>%
    ind_table_to_gt(.color = "#00A4A7", lang = lang)
 ```
 
+Es werden absolute und relative Häufigkeiten dargestellt.
 
-### Creative-Commons-Lizenzen
+Untersucht wurden:
 
-#### Überblick Lizenzbedingungen
+- **CC License**: Verfügbarkeit von Creative-Commons-Lizenzen (CC)
+- **Compliant CC**: Verfügbarkeit von regelkonformen CC-Lizenzen
+- **TDM Support**: Unterstützung von Versionen für das Text- und Data-Mining (TDM)
+- **Funder info**: Verknüpfung zwischen Publikationen und Förderinformationen
+- **ORCID**: [Open Researcher and Contributor ID](https://orcid.org) der Autor:innen
+- **Open Abstracts**: Metadaten zu [Open Abstracts](https://i4oa.org/)
+- **Open Citations**: Metadaten zu [Open Citations](https://i4oc.org/)
+
+Details zu den einzelnen Tests finden Sie im Folgenden.
+
+
+### Creative-Commons Lizenzen
+
+Offene Lizenzen sind wesentlich, um den Zugang und die Nachnutzung von Open-Access-Artikeln unter bestimmten Bedingungen zu regeln. 
+Einschlägig sind die Creative-Commons-Lizenzen (CC-Lizenzen) (siehe Überblick des
+[Bundesministeriums für Bildung und Forschung](https://www.bildung-forschung.digital/de/lizenzvertrag-und-offene-lizenzen-2650.html)).
+
+Der Open-Access-Metadaten-Schnelltest normalisiert die Varianten der Creative-Commons-Lizenzen und untersucht, ob Creative-Commons-Lizenzen in den Metadaten regelkonform erfasst sind.
+
+#### Verwendete CC Lizenzen
+
+Die tabellarische Übersicht zeigt die Häufigkeit von CC-Varianten an. 
 
 ```{r cc_metrics}
 cc_metrics(mcres$cc_license_check) %>%
   ind_table_to_gt(.color =  "#F3A9BB", lang = lang)
 ```
 
-#### Ergebnis Compliance Check
+CC-BY ist sowohl in den [DEAL-Verträgen](https://www.projekt-deal.de/) als auch beim [DFG-Programm Open-Access-Publikationskosten](https://www.dfg.de/foerderung/programme/infrastruktur/lis/lis_foerderangebote/open_access_publikationskosten/index.html) der präferierte Lizenztyp.
+`NA` bedeutet, dass keine Lizeninformation in den Crossref-Metadaten verfügbar ist.
+
+
+#### Regelkonformität der CC-Lizenzinformation
+
+Die unten stehende Tabelle zeigt die Anzahl und den Anteil regelkonformer CC-Lizenzinformationen.
 
 ```{r cc_compliance}
 cc_compliance_metrics(mcres$cc_license_check) %>%
   ind_table_to_gt(.color = "#A0A5A9", lang = lang)
 ```
 
-#### Text and Data Mining (TDM)
+Nach diesem Test ist eine Lizenzinformation ist genau dann regelkonform, wenn:
+
+- es sich um eine Creative-Commons-Standardlizenz handelt,
+- die CC-Lizenz sich auf die Verlagsversion, die sogenannte "version-of-record" bezieht,
+- und die CC-Lizenz mit Erscheinen ohne zeitlichen Verzug gültig ist (Ausschluss von delayed OA).
+
+Wir haben festgestellt, dass Verlage zwar immer häufiger CC-Lizenzen in den Crossref-Metadaten verzeichnen, einige allerdings die Lizenzinformation nur unvollständig beschreiben. 
+Dies kann Auswirkungen auf die automatisierte Auffindbarkeit von Open-Access-Artikeln haben. 
+**Bei Problemen empfehlen wir daher, mit dem Verlag in Kontakt zu treten.**
+
+
+### Text and Data Mining (TDM)
+
+Die Tabelle bietet einen Überblick, welche ([MIME
+Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)) Dateitypen für das Text- und Data-Mining (TDM) unterstützt werden.
 
 ```{r tdm_metrics}
 tdm_metrics(mcres$tdm) %>%
   ind_table_to_gt(.color =  "#9B0056", lang = lang)
 ```
 
-Die Tabelle bietet einen Überblick, welche Dateiformate,
-ausgedrückt als [MIME
-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types),
-für das Text- und Data-Mining (TDM) unterstützt werden. Grundsätzlich
-kann je Artikel mehr als ein Format über das Crossref-Metadatenprofil
-angeboten werden.
+Grundsätzlich kann je Artikel mehr als ein Format über das Crossref-Metadatenprofil angeboten werden.
+Die prozentualen Anteile können sich daher auf über 100% summieren.
 
-Der prozentuale Anteil bezieht sich auf die Anzahl der überprüften Artikel mit Crossref-Metadaten.
+Wir empfehlen, dass Verlage neben PDF-Dateien auch strukturierte XML-Volltexte verfügbar machen, um die automatisierte Nachnutzung zu erleichtern.
 
 
 ### Förderinformationen 
+
+Es gibt ein großes Interesse, den Förderkontext von Open-Access-Artikeln zu erheben. 
+Verlage nutzen zunehmend Crossref, um Förderinformationen zu veröffentlichen. 
+
+Die unten stehende Tabelle zeigt den Anteil der DOIs mit solchen Förderinformationen, sowie die drei unter den getesteten DOIs am häufigsten genannten Förderer.
 
 ```{r funder_info}
 funder_metrics(mcres$funder_info) %>%
   ind_table_to_gt(.color = "#000099", lang = lang)
 ```
 
-Die Tabelle gibt einen Überblick über die häufigsten Förderer je Artikel laut Crossref-Metadaten. 
-Grundsätzlich können mehrere Förderer je Artikel vermerkt sein.
-Der prozentuale Anteil bezieht sich auf die Anzahl der überprüften Artikel mit Crossref-Metadaten.
+Erneut können Crossref Metadaten mehr als einen Förderer pro DOI enthalten, so dass Anteile ggfs. auf über 100% addieren.
+
+Bitte beachten Sie, dass aufgrund der unvollständigen Abdeckung Crossref (noch) nicht geeignet ist für umfangreiche Analysen des Förderkontexts von Publikationen.

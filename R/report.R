@@ -40,6 +40,7 @@ draft_report <- function(lang = mc_langs, ...) {
 #' Render a parametrised metacheck report.
 #' @param dois
 #' Vector of DOIs, as created by, or coerceable to [biblids::doi()].
+#' @inheritParams biblids::doiEntryUI
 #' @inheritDotParams rmarkdown::render
 #' @inheritParams mcControlsServer
 #' @export

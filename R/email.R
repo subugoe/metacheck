@@ -5,6 +5,7 @@ NULL
 
 #' @describeIn email Compose complete mail
 #' @inheritDotParams mc_render_email
+#' @inheritParams biblids::doiEntryUI
 #' @export
 mc_compose_email <- function(dois,
                              translator = mc_translator(),
@@ -344,6 +345,7 @@ emailReportServer <- function(id,
 
 #' @describeIn emailReport Promise of a rendered and send email
 #' Emits notifications and progress bar updates.
+#' @inheritParams mc_compose_email
 #' @inheritDotParams mc_compose_email
 #' @inheritParams smtp_send_mc
 #' @export

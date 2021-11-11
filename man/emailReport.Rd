@@ -4,6 +4,7 @@
 \alias{emailReport}
 \alias{emailReportUI}
 \alias{emailReportServer}
+\alias{email_async}
 \title{Email Report through a Shiny Module}
 \usage{
 emailReport()
@@ -16,6 +17,8 @@ emailReportServer(
   translator = mc_translator(),
   lang = shiny::reactive("en")
 )
+
+email_async(to, translator = mc_translator(), ...)
 }
 \arguments{
 \item{id}{The id string to be namespaced (optional).}
@@ -31,7 +34,7 @@ This must not be a reactive, it is only set at shiny startup.
 To update the language reactively \emph{during} a shiny session, see \code{lang}.}
 
 \item{...}{
-  Arguments passed on to \code{\link[shiny:actionButton]{shiny::actionButton}}
+  Arguments passed on to \code{\link[shiny:actionButton]{shiny::actionButton}}, \code{\link[=mc_compose_email]{mc_compose_email}}
   \describe{
     \item{\code{inputId}}{The \code{input} slot that will be used to access the value.}
     \item{\code{label}}{The contents of the button or link--usually a text label, but
@@ -39,11 +42,18 @@ you could also use any other HTML, like an image.}
     \item{\code{icon}}{An optional \code{\link[shiny:icon]{icon()}} to appear on the button.}
   }}
 
+\item{dois}{Vector of DOIs, as created by, or coerceable to \code{\link[biblids:doi]{biblids::doi()}}.}
+
 \item{lang}{a reactive variable, returning a character scalar.
 Must be one of the languages in \code{translator}.
 Defaults to \code{shiny::reactive("en")},
 in which case no server side translation
 is triggered.}
+
+\item{to}{A vector of email addresses serving as primary recipients for the
+message. For secondary recipients, use the \code{cc} and \code{bcc} arguments. A
+named character vector can be used to specify the recipient names along
+with the their email address (e.g., \code{c("Jane Doe" = "jane_doe@example.com")}).}
 }
 \description{
 Email Report through a Shiny Module
@@ -58,6 +68,10 @@ Email Report through a Shiny Module
 }
 \itemize{
 \item \code{emailReportServer}: Module server
+}
+\itemize{
+\item \code{email_async}: Promise of a rendered and send email
+Emits notifications and progress bar updates.
 }}}
 
 \seealso{

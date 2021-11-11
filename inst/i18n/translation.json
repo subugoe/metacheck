@@ -81,20 +81,40 @@
       "de": "Metacheck Bericht Versenden"
     },
     {
-      "en": "Your report is being prepared ...",
-      "de": "Ihr Bericht wird erstellt ..."
-    },
-    {
-      "en": "You will receive an email with your report within the next 45 minutes. ",
-      "de": "Der Bericht wird Ihnen innerhalt von 45 Minuten per Email zugeschickt. "
-    },
-    {
-      "en": "Please check your SPAM folder. ",
-      "de": "Bitte prüfen Sie auch Ihren SPAM-Ordner. "
+      "en": "Your email report is being prepared. ",
+      "de": "Ihr Email Bericht wird erstellt. "
     },
     {
       "en": "You can close this window or wait for completion. ",
       "de": "Sie können dieses Fenster schließen oder auf die Fertigstellung warten."
+    },
+    {
+      "en": "Remember to check your SPAM folder. ",
+      "de": "Bitte prüfen Sie auch Ihren SPAM-Ordner. "
+    },
+    {
+      "en": "Starting ...",
+      "de": "Renderprozess wird gestartet ..."
+    },
+    {
+      "en": "Authenticating email relay ...",
+      "de": "Email Relay wird authentifiziert ..."
+    },
+    {
+      "en": "Composing email ... ",
+      "de": "Email wird gerendert ... "
+    },
+    {
+      "en": "This can take several minutes.",
+      "de": "Dieser Prozess kann einige Minuten dauern."
+    },
+    {
+      "en": "Sending email ...",
+      "de": "Email wird versendet ..."
+    },
+    {
+      "en": "Done.",
+      "de": "Fertig."
     },
     {
       "en": "Your report is in your email inbox. ",

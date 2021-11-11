@@ -158,36 +158,6 @@ mc_render_email <- function(dois = doi_examples$good[1:10],
   )
 }
 
-#' @describeIn email Render and send
-#' @inheritDotParams mc_compose_email
-#' @inheritParams smtp_send_mc
-#' @export
-render_and_send <- function(to, translator = mc_translator(), ...) {
-  email <- mc_compose_email(
-    translator = translator,
-    ...
-  )
-  smtp_send_mc(to = to, email = email, translator = translator)
-}
-
-#' @describeIn email Render and send asynchronously
-#' @export
-render_and_send_async <- function(...) {
-  # this is a workaround to enable async when developing on macOS
-  # macOS forked processes apparently cannot read keychain (makes sense)
-  # so we have to pass in the password manually
-  auth_mailjet()
-  mj_pw <- Sys.getenv("MAILJET_SMTP_PASSWORD")
-  promises::future_promise(
-    expr = {
-      Sys.setenv("MAILJET_SMTP_PASSWORD" = mj_pw)
-      render_and_send(...)
-    },
-    seed = TRUE
-  )
-  NULL
-}
-
 # sending ====
 
 #' @describeIn email Send
@@ -361,46 +331,96 @@ emailReportServer <- function(id,
       })
       shiny::observeEvent(input$send, {
         if (iv$is_valid()) {
-          pb_outer <- shiny::Progress$new()
-          pb_outer$set(
-            message = translWithLang()$translate(
-              "Your report is being prepared ...",
-            ),
-            detail = glue::glue(
-              translWithLang()$translate(
-                "You will receive an email with your report within the next 45 minutes. "
-              ),
-              translWithLang()$translate(
-                "Please check your SPAM folder. "
-              ),
-              translWithLang()$translate(
-                "You can close this window or wait for completion. "
-              )
-            )
-          )
-          Sys.sleep(5)
-          render_and_send_async(
+          email_async(
             to = input$recipient,
             dois = dois(),
             translator = translWithLang()
-          )
-          pb_outer$set(
-            message = translWithLang()$translate(
-              "Your report is in your email inbox."
-            ),
-            detail = glue::glue(
-              translWithLang()$translate(
-                "Please check your SPAM folder. "
-              ),
-              translWithLang()$translate(
-                "You can close this window or wait for completion. "
-              )
-            )
           )
         }
       })
     }
   )
+}
+
+#' @describeIn emailReport Promise of a rendered and send email
+#' Emits notifications and progress bar updates.
+#' @inheritDotParams mc_compose_email
+#' @inheritParams smtp_send_mc
+#' @export
+email_async <- function(to, translator = mc_translator(), ...) {
+  shiny::showNotification(
+    ui = glue::glue(
+      translator$translate("Your email report is being prepared."),
+      translator$translate(
+        "You can close this window or wait for completion. "
+      ),
+      translator$translate("Remember to check your SPAM folder.")
+    ),
+    duration = NULL,
+    id = "notifi_start",
+    type = "message"
+  )
+  pb <- shiny::Progress$new()
+  pb$set(value = 0, message = translator$translate("Starting ..."))
+  # this is strictly out of order and is only needed later
+  # but run here, b/c it actually need not be async,
+  # so placing this here is cleaner to read
+  pb$set(
+    value = 1/4,
+    message = translator$translate("Authenticating email relay ...")
+  )
+  # this is a workaround to enable async when developing on macOS
+  # macOS forked processes apparently cannot read keychain (makes sense)
+  # so we have to pass in the password manually
+  auth_mailjet()
+  mj_pw <- Sys.getenv("MAILJET_SMTP_PASSWORD")
+  promise_email <- promises::future_promise(
+    expr = mc_compose_email(translator = translator, ...),
+    seed = TRUE
+  )
+  pb$set(
+    value = 2/4,
+    message = translator$translate("Composing email ..."),
+    detail = translator$translate("This can take several minutes.")
+  )
+  promise_sent <- promises::then(
+    promise_email,
+    onFulfilled = function(value) {
+      pb$set(
+        value = 3/4,
+        message = translator$translate("Sending email ...")
+      )
+      promises::future_promise(
+        expr = {
+          Sys.setenv("MAILJET_SMTP_PASSWORD" = mj_pw)
+          smtp_send_mc(to = to, email = value, translator = translator)
+        },
+        seed = TRUE
+      )
+    }
+  )
+  id_notifi_done <- "notifi_done"
+  promise_done <- promises::then(
+    promise_sent,
+    onFulfilled = function(value) {
+      pb$set(value = 4/4, message = translator$translate("Done."))
+      pb$close()
+      shiny::removeNotification("notifi_start")
+      shiny::showNotification(
+        ui = glue::glue(
+          translator$translate("Your report is in your email inbox. "),
+          translator$translate("Remember to check your SPAM folder. ")
+        ),
+        duration = NULL,
+        closeButton = TRUE,
+        id = id_notifi_done,
+        type = "message"
+      )
+      value
+    }
+  )
+  # both are needed upstream
+  list(done = promise_done, id_notifi = id_notifi_done)
 }
 
 # excel attachment ====

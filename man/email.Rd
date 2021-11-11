@@ -5,8 +5,6 @@
 \alias{mc_compose_email}
 \alias{mc_compose_email_outer}
 \alias{mc_render_email}
-\alias{render_and_send}
-\alias{render_and_send_async}
 \alias{smtp_send_mc}
 \title{Send metacheck results as an parametrised email}
 \usage{
@@ -20,10 +18,6 @@ mc_render_email(
   ...
 )
 
-render_and_send(to, translator = mc_translator(), ...)
-
-render_and_send_async(...)
-
 smtp_send_mc(
   email = blastula::prepare_test_message(),
   to = throwaway,
@@ -36,15 +30,8 @@ smtp_send_mc(
 \arguments{
 \item{dois}{Vector of DOIs, as created by, or coerceable to \code{\link[biblids:doi]{biblids::doi()}}.}
 
-\item{translator}{A \link[shiny.i18n:Translator]{shiny.i18n::Translator} object or \code{NULL} for english-only defaults.
-Strings inside the module UI are marked as translateable.
-You can pass a translator object included in the package,
-or can create your own \code{translator} using \link[shiny.i18n:Translator]{shiny.i18n::Translator}.
-This must not be a reactive, it is only set at shiny startup.
-To update the language reactively \emph{during} a shiny session, see \code{lang}.}
-
 \item{...}{
-  Arguments passed on to \code{\link[=mc_render_email]{mc_render_email}}, \code{\link[blastula:render_email]{blastula::render_email}}, \code{\link[=mc_compose_email]{mc_compose_email}}, \code{\link[blastula:smtp_send]{blastula::smtp_send}}
+  Arguments passed on to \code{\link[=mc_render_email]{mc_render_email}}, \code{\link[blastula:render_email]{blastula::render_email}}, \code{\link[blastula:smtp_send]{blastula::smtp_send}}
   \describe{
     \item{\code{input}}{The input file to be rendered. This should be an R Markdown
 document (.Rmd) with the output specified as \code{output: blastula::blastula_email}.}
@@ -96,13 +83,13 @@ these by using the \code{\link[blastula:md]{md()}} text helper function. Alterna
 supply a set of \verb{block_*()} calls enclosed within the \code{\link[blastula:blocks]{blocks()}} function
 to take advantage of precomposed HTML blocks.}
 
+\item{email}{The email message object, as created by the \code{\link[blastula:compose_email]{compose_email()}}
+function. The object's class is \code{email_message}.}
+
 \item{to}{A vector of email addresses serving as primary recipients for the
 message. For secondary recipients, use the \code{cc} and \code{bcc} arguments. A
 named character vector can be used to specify the recipient names along
 with the their email address (e.g., \code{c("Jane Doe" = "jane_doe@example.com")}).}
-
-\item{email}{The email message object, as created by the \code{\link[blastula:compose_email]{compose_email()}}
-function. The object's class is \code{email_message}.}
 
 \item{from}{The email address of the sender. Often this needs to be the same
 email address that is associated with the account actually sending the
@@ -133,12 +120,6 @@ Send metacheck results as an parametrised email
 }
 \itemize{
 \item \code{mc_render_email}: Render email body (inner content)
-}
-\itemize{
-\item \code{render_and_send}: Render and send
-}
-\itemize{
-\item \code{render_and_send_async}: Render and send asynchronously
 }
 \itemize{
 \item \code{smtp_send_mc}: Send

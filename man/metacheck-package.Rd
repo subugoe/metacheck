@@ -18,11 +18,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Najko Jahn \email{najko.jahn@gmail.com} (\href{https://orcid.org/0000-0001-5105-1463}{ORCID})
+\strong{Maintainer}: Maximilian Held \email{info@maxheld.de} (\href{https://orcid.org/0000-0002-4703-5388}{ORCID})
 
 Authors:
 \itemize{
-  \item Maximilian Held \email{info@maxheld.de} (\href{https://orcid.org/0000-0002-4703-5388}{ORCID})
+  \item Najko Jahn \email{najko.jahn@gmail.com} (\href{https://orcid.org/0000-0001-5105-1463}{ORCID})
   \item Henrieke Walter \email{henrieke.walter@sub.uni-goettingen.de} (\href{https://orcid.org/0000-0003-3313-7364}{ORCID})
 }
 

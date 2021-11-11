@@ -332,15 +332,27 @@ emailReportServer <- function(id,
       })
       shiny::observeEvent(input$send, {
         if (iv$is_valid()) {
-          email_async(
+          toggle_email_input_elements()
+          promise_list <- email_async(
             to = input$recipient,
             dois = dois(),
             translator = translWithLang()
+          )
+          promises::then(
+            promise_list$done,
+            onFulfilled = function(value) toggle_email_input_elements()
           )
         }
       })
     }
   )
+}
+
+#' @describeIn emailreport Dis/enable all input elements in the module
+toggle_email_input_elements <- function() {
+  shinyjs::toggleState("recipient")
+  shinyjs::toggleState("gdpr_consent")
+  shinyjs::toggleState("send")
 }
 
 #' @describeIn emailReport Promise of a rendered and send email

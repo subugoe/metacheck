@@ -85,7 +85,8 @@ Imports:
     bslib,
     curl,
     crlite,
-    lobstr
+    lobstr,
+    downloadthis
 Suggests:
     testthat,
     subugoetheme,

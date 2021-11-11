@@ -43,4 +43,21 @@ This is an example report using the `metacheck::doi_examples` data, shipped with
 </div>
 </div>
 
+## Individual Results
+
+`r metacheck::mc_long_docs_string("table.md", lang = "en")`
+
+```{r, echo = FALSE}
+downloadthis::download_file(
+  path = system.file("mc_individual_results.xlsx", package = "metacheck"),
+  output_name = "Individual Results as an Excel Spreadsheet",
+  button_label = "Individual Results as an Excel Spreadsheet",
+  button_type = "danger",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+
+
 ## References

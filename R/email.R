@@ -407,16 +407,25 @@ md_data_attachment <- function(dois,
                                  dois[is_metacheckable(dois)]
                               )),
                               path = fs::file_temp(ext = "xlsx")) {
+  df <- md_data_attachment_df(dois, df)
+  writexl::write_xlsx(
+    x = df,
+    path = path
+  )
+}
+
+#' @describeIn md_data_attachment Generate DF
+md_data_attachment_df <- function(dois,
+                               df = cr_compliance_overview(get_cr_md(
+                                 dois[is_metacheckable(dois)]
+                              ))) {
   is_compliance_overview_list(df)
   df[["pretest"]] <- tibble::tibble(
     # writexl does not know vctrs records
     doi = as.character(biblids::as_doi(dois)),
     tabulate_metacheckable(dois)
   )
-  writexl::write_xlsx(
-    x = df,
-    path = path
-  )
+  df
 }
 
 #' Data is available

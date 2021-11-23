@@ -10,7 +10,7 @@ test_that("shiny app works", {
   app$setInputs(`test-send-gdpr_consent` = TRUE)
   app$click("test-send-send")
   # sending email is done async, so we need to wait
-  Sys.sleep(100)
+  Sys.sleep(150)
   expect_equal(
     app$findElement(".shiny-notification-content-text")$getText(),
     "Your report is in your email inbox. Remember to check your SPAM folder."

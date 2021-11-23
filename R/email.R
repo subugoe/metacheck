@@ -182,7 +182,7 @@ smtp_send_mc <- function(email = blastula::prepare_test_message(),
     credentials = credentials,
     ...
   )
-  invisible(email) # best practice
+  invisible(email) # best practice for funs called for side effects
 }
 
 #' Get credentials for smtp

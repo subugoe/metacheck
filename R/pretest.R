@@ -114,15 +114,15 @@ assert_metacheckable <- function(x, ...) {
 #' @export
 report_metacheckable <- function(x, lang = mc_langs, ...) {
   lang <- rlang::arg_match(lang)
-    purrr::pmap_chr(
-      .l = list(
-        x = tabulate_metacheckable(x, ...),
-        name = pretests()$name,
-        desc = pretests()$desc
-      ),
-      .f = report_metacheckable1,
-      lang = lang
-    ) %>%
+  purrr::pmap_chr(
+    .l = list(
+      x = tabulate_metacheckable(x, ...),
+      name = pretests()$name,
+      desc = pretests()$desc
+    ),
+    .f = report_metacheckable1,
+    lang = lang
+  ) %>%
     glue::glue_collapse(sep = "\n")
 }
 

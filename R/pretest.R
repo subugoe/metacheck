@@ -78,7 +78,13 @@ tabulate_metacheckable <- function(x, ...) {
   # create empty res object
   res <- tibble::tibble(doi = x)
   prev <- rep_len(TRUE, length(x))
+  pb <- progressr::progressor(
+    along = lazyfuns,
+    message = "Running pretests ...",
+    label = "pretests"
+  )
   for (i in 1:length(lazyfuns)) {
+    pb()
     curr <- lazyfuns[[i]](x, prev)
     res <- tibble::add_column(res, curr, .name_repair = "minimal")
     prev <- curr

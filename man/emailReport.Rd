@@ -4,6 +4,7 @@
 \alias{emailReport}
 \alias{emailReportUI}
 \alias{emailReportServer}
+\alias{toggle_email_input_elements}
 \alias{email_async}
 \title{Email Report through a Shiny Module}
 \usage{
@@ -17,6 +18,8 @@ emailReportServer(
   translator = mc_translator(),
   lang = shiny::reactive("en")
 )
+
+toggle_email_input_elements()
 
 email_async(to, translator = mc_translator(), ...)
 }
@@ -68,6 +71,9 @@ Email Report through a Shiny Module
 }
 \itemize{
 \item \code{emailReportServer}: Module server
+}
+\itemize{
+\item \code{toggle_email_input_elements}: Dis/enable all input elements in the module
 }
 \itemize{
 \item \code{email_async}: Promise of a rendered and send email

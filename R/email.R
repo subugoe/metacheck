@@ -348,7 +348,7 @@ emailReportServer <- function(id,
   )
 }
 
-#' @describeIn emailreport Dis/enable all input elements in the module
+#' @describeIn emailReport Dis/enable all input elements in the module
 toggle_email_input_elements <- function() {
   shinyjs::toggleState("recipient")
   shinyjs::toggleState("gdpr_consent")

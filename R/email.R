@@ -142,20 +142,15 @@ block_text_centered_vec <- function(...) {
 mc_render_email <- function(dois = doi_examples$good[1:10],
                             translator = mc_translator(),
                             ...) {
-  # suppression is dangerous hack-fix for
-  # https://github.com/subugoe/metacheck/issues/138
-  # otherwise, tests are illegibly noisy
-  suppressWarnings(
-    blastula::render_email(
-      input = path_report_rmd(lang = translator$get_translation_language()),
-      render_options = list(
-        params = list(
-          dois = dois,
-          translator = translator
-        )
-      ),
-      ...
-    )
+  blastula::render_email(
+    input = path_report_rmd(lang = translator$get_translation_language()),
+    render_options = list(
+      params = list(
+        dois = dois,
+        translator = translator
+      )
+    ),
+    ...
   )
 }
 

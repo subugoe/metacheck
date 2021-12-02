@@ -137,10 +137,12 @@ block_text_centered_vec <- function(...) {
 
 #' @describeIn email Render email body (inner content)
 #' @inheritParams report
+#' @inheritParams blastula::render_email
 #' @inheritDotParams blastula::render_email
 #' @export
 mc_render_email <- function(dois = doi_examples$good[1:10],
                             translator = mc_translator(),
+                            quiet = !interactive(),
                             ...) {
   blastula::render_email(
     input = path_report_rmd(lang = translator$get_translation_language()),
@@ -150,7 +152,7 @@ mc_render_email <- function(dois = doi_examples$good[1:10],
         translator = translator
       )
     ),
-    quiet = !interactive(),
+    quiet = quiet,
     ...
   )
 }

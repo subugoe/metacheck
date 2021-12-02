@@ -15,6 +15,7 @@ mc_compose_email_outer(body = "Lorem", translator = mc_translator())
 mc_render_email(
   dois = doi_examples$good[1:10],
   translator = mc_translator(),
+  quiet = !interactive(),
   ...
 )
 
@@ -44,8 +45,6 @@ To update the language reactively \emph{during} a shiny session, see \code{lang}
 document (.Rmd) with the output specified as \code{output: blastula::blastula_email}.}
     \item{\code{envir}}{The environment in which the code chunks are to be evaluated
 during knitting.}
-    \item{\code{quiet}}{An option to suppress printing of the command line output from
-Pandoc during rendering. By default, this is set to \code{TRUE}.}
     \item{\code{output_options}}{Lists of options can be used to augment
 the rendering of the email message. The \code{output_options} list will be
 passed as the \code{output_options} argument of \code{rmarkdown::render()}. The
@@ -89,6 +88,9 @@ the user's system.}
 these by using the \code{\link[blastula:md]{md()}} text helper function. Alternatively, we can
 supply a set of \verb{block_*()} calls enclosed within the \code{\link[blastula:blocks]{blocks()}} function
 to take advantage of precomposed HTML blocks.}
+
+\item{quiet}{An option to suppress printing of the command line output from
+Pandoc during rendering. By default, this is set to \code{TRUE}.}
 
 \item{email}{The email message object, as created by the \code{\link[blastula:compose_email]{compose_email()}}
 function. The object's class is \code{email_message}.}

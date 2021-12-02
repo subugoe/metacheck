@@ -1,3 +1,10 @@
+test_that("complete email can be composed", {
+  # pretty bad test
+  expect_s3_class(
+    mc_compose_email(), "blastula_message"
+  )
+})
+
 test_that("outer email can be composed", {
   # pretty bad test
   expect_s3_class(mc_compose_email_outer(), "blastula_message")
@@ -6,13 +13,6 @@ test_that("outer email can be composed", {
 test_that("email can be rendered", {
   # pretty bad test
   expect_s3_class(mc_render_email(), "blastula_message")
-})
-
-test_that("complete email can be composed", {
-  # pretty bad test
-  expect_s3_class(
-    mc_compose_email(dois = doi_examples$good), "blastula_message"
-  )
 })
 
 test_that("email is smaller than 102KB to meet google limit", {

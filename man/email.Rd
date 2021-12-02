@@ -8,7 +8,11 @@
 \alias{smtp_send_mc}
 \title{Send metacheck results as an parametrised email}
 \usage{
-mc_compose_email(dois, translator = mc_translator(), ...)
+mc_compose_email(
+  dois = doi_examples$good[1:10],
+  translator = mc_translator(),
+  ...
+)
 
 mc_compose_email_outer(body = "Lorem", translator = mc_translator())
 

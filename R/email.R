@@ -7,7 +7,7 @@ NULL
 #' @inheritDotParams mc_render_email
 #' @inheritParams biblids::doiEntryUI
 #' @export
-mc_compose_email <- function(dois,
+mc_compose_email <- function(dois = doi_examples$good[1:10],
                              translator = mc_translator(),
                              ...) {
   mc_body_block(dois = dois, translator = translator, ...) %>%

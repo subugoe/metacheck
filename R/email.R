@@ -150,6 +150,7 @@ mc_render_email <- function(dois = doi_examples$good[1:10],
         translator = translator
       )
     ),
+    quiet = !interactive(),
     ...
   )
 }

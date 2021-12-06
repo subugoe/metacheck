@@ -57,7 +57,10 @@ auth_mailjet <- function() {
       username = mailjet_username
     ),
     error = function(x) {
-      warning("Could not find Mailjet SMTPs credentials; you may not be send out email.")
+      warning(
+        "Could not find Mailjet SMTPs credentials;
+        you may not be able to send out email."
+      )
       return(character(1))
     }
   )

@@ -111,4 +111,5 @@ Remotes:
     r-lib/downlit@47e30dbe7650bac683c979e73608180813ce660c
 Config/testthat/edition: 3
 Config/testthat/parallel: true
+Config/testthat/start-first: communicate, email, import
 Config/wama/defaultShinyApp: mcApp()

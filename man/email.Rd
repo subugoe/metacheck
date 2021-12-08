@@ -143,8 +143,8 @@ Other communicate:
 \code{\link{emailReport}()},
 \code{\link{mcApp}()},
 \code{\link{mcControls}},
-\code{\link{md_data_attachment}()},
 \code{\link{report}},
-\code{\link{runMetacheck}()}
+\code{\link{runMetacheck}()},
+\code{\link{spreadsheet}}
 }
 \concept{communicate}

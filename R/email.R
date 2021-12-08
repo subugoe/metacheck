@@ -12,10 +12,7 @@ mc_compose_email <- function(dois = doi_examples$good[1:10],
                              ...) {
   mc_body_block(dois = dois, translator = translator, ...) %>%
     mc_compose_email_outer(translator = translator) %>%
-    blastula::add_attachment(
-      md_data_attachment(dois = dois),
-      filename = translator$translate("mc_individual_results.xlsx")
-    )
+    create_and_attach_ss(email = ., dois = dois, translator = translator)
 }
 
 mc_body_block <- function(dois, translator = mc_translator(), ...) {
@@ -430,44 +427,4 @@ email_async <- function(to, translator = mc_translator(), ...) {
   )
   # both are needed upstream
   list(done = promise_done, id_notifi = id_notifi_done)
-}
-
-# excel attachment ====
-
-#' Make Spreadsheet attachment
-#' Creates an excel spreadsheet with individual-level results.
-#' 
-#' @details `r metacheck::mc_long_docs_string("spreadsheet.md")`
-#' 
-#' @param dois character, *all* submitted dois
-#' @param df compliance data from [cr_compliance_overview()]
-#' @inheritParams writexl::write_xlsx
-#' 
-#' @return path to the created file
-#'
-#' @export
-#' @family communicate
-md_data_attachment <- function(dois,
-                               df = cr_compliance_overview(get_cr_md(
-                                 dois[is_metacheckable(dois)]
-                              )),
-                              path = fs::file_temp(ext = "xlsx")) {
-  is_compliance_overview_list(df)
-  df[["pretest"]] <- tibble::tibble(
-    # writexl does not know vctrs records
-    doi = as.character(biblids::as_doi(dois)),
-    tabulate_metacheckable(dois)
-  )
-  writexl::write_xlsx(
-    x = df,
-    path = path
-  )
-}
-
-#' Data is available
-#' @noRd
-is_compliance_overview_list <- function(x) {
-  assertthat::assert_that(x %has_name% c("cr_overview", "cc_license_check"),
-                          msg = "No Compliance Data to attach, compliance data from [cr_compliance_overview()]"
-  )
 }

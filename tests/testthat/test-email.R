@@ -30,9 +30,3 @@ test_that("email can be send", {
     smtp_send_mc()
   })
 })
-
-test_that("attachment spreadsheet can be written out", {
-  checkmate::expect_file_exists(md_data_attachment(
-    dois = c(doi_examples$weird, doi_examples$good)
-  ))
-})

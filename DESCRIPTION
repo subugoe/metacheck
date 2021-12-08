@@ -86,7 +86,8 @@ Imports:
     curl,
     crlite,
     lobstr,
-    progressr (>= 0.9.0)
+    progressr,
+    ellipsis
 Suggests:
     testthat,
     subugoetheme,

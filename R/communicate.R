@@ -8,7 +8,6 @@ runMetacheck <- function(...) shiny::runApp(appDir = mcApp(), ...)
 #' @family communicate
 #' @export
 mcApp <- function() {
-  future::plan(future::multicore, workers = 20L)
   shiny::shinyApp(
     ui = mcAppUI(),
     server = mcAppServer

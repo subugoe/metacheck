@@ -1,5 +1,9 @@
 # shiny app ====
 
+# multisession futures need locally installed metacheck
+# but not inside R cmd check where pkg is already installed
+if (!is_rcmd_check()) local_mc()
+
 test_that("shiny app works", {
   app <- shinytest::ShinyDriver$new(mcControlsApp())
   app$click("test-dois-fill_ex")

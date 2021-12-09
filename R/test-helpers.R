@@ -16,6 +16,11 @@ local_mc <- function(env = parent.frame()) {
   )
 }
 
+#' Test if being run inside of R CMD check
+#' Inlined from https://rdrr.io/github/r-lib/cli/src/R/progress-utils.R
+#' @noRd
+is_rcmd_check <- function() Sys.getenv("_R_CHECK_PACKAGE_NAME_", "") != ""
+
 #' Temporarily set future plan
 #' @inheritParams future::strategy
 #' @noRd

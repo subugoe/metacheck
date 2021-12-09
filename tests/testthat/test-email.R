@@ -21,6 +21,10 @@ test_that("email is smaller than 102KB to meet google limit", {
   expect_true(lobstr::obj_size(email_source) / 1000 < 102)
 })
 
+# multisession futures need locally installed metacheck
+# but not inside R cmd check where pkg is already installed
+if (!is_rcmd_check()) local_mc()
+
 test_that("email can be send", {
   skip_if_not_smtp_auth()
   skip_if_offline()

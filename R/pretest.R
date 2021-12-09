@@ -140,21 +140,22 @@ report_metacheckable <- function(x, lang = mc_langs, ...) {
 #' @noRd
 report_metacheckable1 <- function(x, name, desc, lang = mc_langs) {
   lang <- rlang::arg_match(lang)
-  transl <- mc_translator()
+  transl <- metacheck::mc_translator()
   transl$set_translation_language(lang)
   stopifnot(rlang::is_logical(x))
   stopifnot(rlang::is_scalar_character(desc))
+  desc_translated <- transl$translate(desc)
   # doing this via i18n would be too cumbersome with glue
   switch(
     lang,
     "en" = glue::glue(
       "- {n_good(x)} ({round(percent_good(x))}%) thereof fulfill the ",
-      "criterion `{name}`: *{transl$translate(desc)}* ",
+      "criterion `{name}`: *{desc_translated}* ",
        "(**{n_bad(x)}** dropped.)"
     ),
     "de" = glue::glue(
       "- Davon erf\U00FCllen {n_good(x)} ({round(percent_good(x))}%) ",
-      "das Kriterium `{name}`: *{transl$translate(desc)}* ",
+      "das Kriterium `{name}`: *{desc_translated}* ",
       "(**{n_bad(x)}** ausgeschlossen.)"
     )
   )

@@ -30,8 +30,9 @@ funder_metrics <- function(funder_info = NULL) {
     mutate(name = ifelse(is.na(.data$name), "No funding info", .data$name)) %>%
     mutate(name = forcats::fct_lump_prop(.data$name, prop = 0.03, other_level = "Other funders")) %>%
     mutate(name = forcats::fct_infreq(.data$name)) %>%
-    mutate(name = forcats::fct_relevel(.data$name, "Other funders", after = Inf)) %>%
-    mutate(name = forcats::fct_relevel(.data$name, "No funding info", after = Inf))
+    # TODO hack fix to avoid spurious warnings https://github.com/subugoe/metacheck/issues/344
+    suppressWarnings(mutate(name = forcats::fct_relevel(.data$name, "Other funders", after = Inf))) %>%
+    suppressWarnings(mutate(name = forcats::fct_relevel(.data$name, "No funding info", after = Inf)))
   } else {
     out <-funder_info %>%
       mutate(name = ifelse(is.na(.data$name), "No funding info", .data$name)) %>%

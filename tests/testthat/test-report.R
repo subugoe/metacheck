@@ -14,7 +14,14 @@ test_that("draft can be created from template", {
 })
 
 test_that("parametrised report can be rendered", {
-  expect_invisible(
-    render_report(output_file = withr::local_tempfile(), quiet = TRUE)
+  purrr::walk(
+    .x = mc_langs,
+    .f = function(x) {
+      translator <- mc_translator()
+      translator$set_translation_language(x)
+      expect_invisible(
+        render_report(output_file = withr::local_tempfile(), quiet = TRUE)
+      )
+    }
   )
 })

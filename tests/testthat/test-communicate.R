@@ -1,5 +1,9 @@
 # shiny app ====
 
+# multisession futures need locally installed metacheck
+# but not inside R cmd check where pkg is already installed
+if (!is_rcmd_check()) local_mc()
+
 test_that("shiny app works", {
   app <- shinytest::ShinyDriver$new(mcControlsApp())
   app$click("test-dois-fill_ex")
@@ -10,9 +14,9 @@ test_that("shiny app works", {
   app$setInputs(`test-send-gdpr_consent` = TRUE)
   app$click("test-send-send")
   # sending email is done async, so we need to wait
-  Sys.sleep(5)
+  Sys.sleep(150)
   expect_equal(
-    app$findElement(".modal-title")$getText(),
-    "You have successfully sent your DOIs"
+    app$findElement(".shiny-notification-content-text")$getText(),
+    "Your report is in your email inbox. Remember to check your SPAM folder."
   )
 })

@@ -5,24 +5,23 @@
 \alias{mc_compose_email}
 \alias{mc_compose_email_outer}
 \alias{mc_render_email}
-\alias{render_and_send}
-\alias{render_and_send_async}
 \alias{smtp_send_mc}
 \title{Send metacheck results as an parametrised email}
 \usage{
-mc_compose_email(dois, translator = mc_translator(), ...)
+mc_compose_email(
+  dois = doi_examples$good[1:10],
+  translator = mc_translator(),
+  ...
+)
 
 mc_compose_email_outer(body = "Lorem", translator = mc_translator())
 
 mc_render_email(
   dois = doi_examples$good[1:10],
   translator = mc_translator(),
+  quiet = !interactive(),
   ...
 )
-
-render_and_send(to, translator = mc_translator(), ...)
-
-render_and_send_async(...)
 
 smtp_send_mc(
   email = blastula::prepare_test_message(),
@@ -44,14 +43,12 @@ This must not be a reactive, it is only set at shiny startup.
 To update the language reactively \emph{during} a shiny session, see \code{lang}.}
 
 \item{...}{
-  Arguments passed on to \code{\link[=mc_render_email]{mc_render_email}}, \code{\link[blastula:render_email]{blastula::render_email}}, \code{\link[=mc_compose_email]{mc_compose_email}}, \code{\link[blastula:smtp_send]{blastula::smtp_send}}
+  Arguments passed on to \code{\link[=mc_render_email]{mc_render_email}}, \code{\link[blastula:render_email]{blastula::render_email}}, \code{\link[blastula:smtp_send]{blastula::smtp_send}}
   \describe{
     \item{\code{input}}{The input file to be rendered. This should be an R Markdown
 document (.Rmd) with the output specified as \code{output: blastula::blastula_email}.}
     \item{\code{envir}}{The environment in which the code chunks are to be evaluated
 during knitting.}
-    \item{\code{quiet}}{An option to suppress printing of the command line output from
-Pandoc during rendering. By default, this is set to \code{TRUE}.}
     \item{\code{output_options}}{Lists of options can be used to augment
 the rendering of the email message. The \code{output_options} list will be
 passed as the \code{output_options} argument of \code{rmarkdown::render()}. The
@@ -96,13 +93,16 @@ these by using the \code{\link[blastula:md]{md()}} text helper function. Alterna
 supply a set of \verb{block_*()} calls enclosed within the \code{\link[blastula:blocks]{blocks()}} function
 to take advantage of precomposed HTML blocks.}
 
+\item{quiet}{An option to suppress printing of the command line output from
+Pandoc during rendering. By default, this is set to \code{TRUE}.}
+
+\item{email}{The email message object, as created by the \code{\link[blastula:compose_email]{compose_email()}}
+function. The object's class is \code{email_message}.}
+
 \item{to}{A vector of email addresses serving as primary recipients for the
 message. For secondary recipients, use the \code{cc} and \code{bcc} arguments. A
 named character vector can be used to specify the recipient names along
 with the their email address (e.g., \code{c("Jane Doe" = "jane_doe@example.com")}).}
-
-\item{email}{The email message object, as created by the \code{\link[blastula:compose_email]{compose_email()}}
-function. The object's class is \code{email_message}.}
 
 \item{from}{The email address of the sender. Often this needs to be the same
 email address that is associated with the account actually sending the
@@ -135,12 +135,6 @@ Send metacheck results as an parametrised email
 \item \code{mc_render_email}: Render email body (inner content)
 }
 \itemize{
-\item \code{render_and_send}: Render and send
-}
-\itemize{
-\item \code{render_and_send_async}: Render and send asynchronously
-}
-\itemize{
 \item \code{smtp_send_mc}: Send
 }}}
 
@@ -149,8 +143,8 @@ Other communicate:
 \code{\link{emailReport}()},
 \code{\link{mcApp}()},
 \code{\link{mcControls}},
-\code{\link{md_data_attachment}()},
 \code{\link{report}},
-\code{\link{runMetacheck}()}
+\code{\link{runMetacheck}()},
+\code{\link{spreadsheet}}
 }
 \concept{communicate}

@@ -5,16 +5,14 @@ NULL
 
 #' @describeIn email Compose complete mail
 #' @inheritDotParams mc_render_email
+#' @inheritParams biblids::doiEntryUI
 #' @export
-mc_compose_email <- function(dois,
+mc_compose_email <- function(dois = doi_examples$good[1:10],
                              translator = mc_translator(),
                              ...) {
   mc_body_block(dois = dois, translator = translator, ...) %>%
     mc_compose_email_outer(translator = translator) %>%
-    blastula::add_attachment(
-      md_data_attachment(dois = dois),
-      filename = translator$translate("mc_individual_results.xlsx")
-    )
+    create_and_attach_ss(email = ., dois = dois, translator = translator)
 }
 
 mc_body_block <- function(dois, translator = mc_translator(), ...) {
@@ -136,56 +134,21 @@ block_text_centered_vec <- function(...) {
 
 #' @describeIn email Render email body (inner content)
 #' @inheritParams report
+#' @inheritParams blastula::render_email
 #' @inheritDotParams blastula::render_email
 #' @export
 mc_render_email <- function(dois = doi_examples$good[1:10],
                             translator = mc_translator(),
+                            quiet = !interactive(),
                             ...) {
-  # suppression is dangerous hack-fix for
-  # https://github.com/subugoe/metacheck/issues/138
-  # otherwise, tests are illegibly noisy
-  suppressWarnings(
-    blastula::render_email(
-      input = path_report_rmd(lang = translator$get_translation_language()),
-      render_options = list(
-        params = list(
-          dois = dois,
-          translator = translator
-        )
-      ),
-      ...
-    )
-  )
-}
-
-#' @describeIn email Render and send
-#' @inheritDotParams mc_compose_email
-#' @inheritParams smtp_send_mc
-#' @export
-render_and_send <- function(to, translator = mc_translator(), ...) {
-  email <- mc_compose_email(
-    translator = translator,
+  blastula::render_email(
+    input = path_report_rmd(lang = translator$get_translation_language()),
+    render_options = list(
+      params = list(dois = dois)
+    ),
+    quiet = quiet,
     ...
   )
-  smtp_send_mc(to = to, email = email, translator = translator)
-}
-
-#' @describeIn email Render and send asynchronously
-#' @export
-render_and_send_async <- function(...) {
-  # this is a workaround to enable async when developing on macOS
-  # macOS forked processes apparently cannot read keychain (makes sense)
-  # so we have to pass in the password manually
-  auth_mailjet()
-  mj_pw <- Sys.getenv("MAILJET_SMTP_PASSWORD")
-  promises::future_promise(
-    expr = {
-      Sys.setenv("MAILJET_SMTP_PASSWORD" = mj_pw)
-      render_and_send(...)
-    },
-    seed = TRUE
-  )
-  NULL
 }
 
 # sending ====
@@ -211,7 +174,7 @@ smtp_send_mc <- function(email = blastula::prepare_test_message(),
     credentials = credentials,
     ...
   )
-  invisible(email) # best practice
+  invisible(email) # best practice for funs called for side effects
 }
 
 #' Get credentials for smtp
@@ -361,25 +324,15 @@ emailReportServer <- function(id,
       })
       shiny::observeEvent(input$send, {
         if (iv$is_valid()) {
-          shiny::showModal(modalDialog(
-            title = translWithLang()$translate(
-              "You have successfully sent your DOIs"
-            ),
-            glue::glue(
-              translWithLang()$translate(
-                "You will receive an email with your report within the next 45 minutes. "
-              ),
-              translWithLang()$translate(
-                "Please check your SPAM folder. "
-              )
-            ),
-            easyClose = TRUE,
-            footer = NULL
-          ))
-          render_and_send_async(
+          toggle_email_input_elements()
+          promise_list <- email_async(
             to = input$recipient,
             dois = dois(),
             translator = translWithLang()
+          )
+          promises::then(
+            promise_list$done,
+            onFulfilled = function(value) toggle_email_input_elements()
           )
         }
       })
@@ -387,42 +340,91 @@ emailReportServer <- function(id,
   )
 }
 
-# excel attachment ====
-
-#' Make Spreadsheet attachment
-#' Creates an excel spreadsheet with individual-level results.
-#' 
-#' @details `r metacheck::mc_long_docs_string("spreadsheet.md")`
-#' 
-#' @param dois character, *all* submitted dois
-#' @param df compliance data from [cr_compliance_overview()]
-#' @inheritParams writexl::write_xlsx
-#' 
-#' @return path to the created file
-#'
-#' @export
-#' @family communicate
-md_data_attachment <- function(dois,
-                               df = cr_compliance_overview(get_cr_md(
-                                 dois[is_metacheckable(dois)]
-                              )),
-                              path = fs::file_temp(ext = "xlsx")) {
-  is_compliance_overview_list(df)
-  df[["pretest"]] <- tibble::tibble(
-    # writexl does not know vctrs records
-    doi = as.character(biblids::as_doi(dois)),
-    tabulate_metacheckable(dois)
-  )
-  writexl::write_xlsx(
-    x = df,
-    path = path
-  )
+#' @describeIn emailReport Dis/enable all input elements in the module
+toggle_email_input_elements <- function() {
+  shinyjs::toggleState("recipient")
+  shinyjs::toggleState("gdpr_consent")
+  shinyjs::toggleState("send")
 }
 
-#' Data is available
-#' @noRd
-is_compliance_overview_list <- function(x) {
-  assertthat::assert_that(x %has_name% c("cr_overview", "cc_license_check"),
-                          msg = "No Compliance Data to attach, compliance data from [cr_compliance_overview()]"
+#' @describeIn emailReport Promise of a rendered and send email
+#' Emits notifications and progress bar updates.
+#' @inheritParams mc_compose_email
+#' @inheritDotParams mc_compose_email
+#' @inheritParams smtp_send_mc
+#' @export
+email_async <- function(to, translator = mc_translator(), ...) {
+  shiny::showNotification(
+    ui = glue::glue(
+      translator$translate("Your email report is being prepared."),
+      translator$translate(
+        "You can close this window or wait for completion. "
+      ),
+      translator$translate("Remember to check your SPAM folder.")
+    ),
+    duration = NULL,
+    id = "notifi_start",
+    type = "message"
   )
+  pb <- shiny::Progress$new()
+  pb$set(value = 0, message = translator$translate("Starting ..."))
+  # this is strictly out of order and is only needed later
+  # but run here, b/c it actually need not be async,
+  # so placing this here is cleaner to read
+  pb$set(
+    value = 1/4,
+    message = translator$translate("Authenticating email relay ...")
+  )
+  # this is a workaround to enable async when developing on macOS
+  # macOS forked processes apparently cannot read keychain (makes sense)
+  # so we have to pass in the password manually
+  auth_mailjet()
+  mj_pw <- Sys.getenv("MAILJET_SMTP_PASSWORD")
+  promise_email <- promises::future_promise(
+    expr = mc_compose_email(translator = translator, ...),
+    seed = TRUE
+  )
+  pb$set(
+    value = 2/4,
+    message = translator$translate("Composing email ..."),
+    detail = translator$translate("This can take several minutes.")
+  )
+  promise_sent <- promises::then(
+    promise_email,
+    onFulfilled = function(value) {
+      pb$set(
+        value = 3/4,
+        message = translator$translate("Sending email ...")
+      )
+      promises::future_promise(
+        expr = {
+          Sys.setenv("MAILJET_SMTP_PASSWORD" = mj_pw)
+          smtp_send_mc(to = to, email = value, translator = translator)
+        },
+        seed = TRUE
+      )
+    }
+  )
+  id_notifi_done <- "notifi_done"
+  promise_done <- promises::then(
+    promise_sent,
+    onFulfilled = function(value) {
+      pb$set(value = 4/4, message = translator$translate("Done."))
+      pb$close()
+      shiny::removeNotification("notifi_start")
+      shiny::showNotification(
+        ui = glue::glue(
+          translator$translate("Your report is in your email inbox. "),
+          translator$translate("Remember to check your SPAM folder. ")
+        ),
+        duration = NULL,
+        closeButton = TRUE,
+        id = id_notifi_done,
+        type = "message"
+      )
+      value
+    }
+  )
+  # both are needed upstream
+  list(done = promise_done, id_notifi = id_notifi_done)
 }

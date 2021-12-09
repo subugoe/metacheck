@@ -1,2 +1,6 @@
-# used often b/c plain json doesn't cover complex objects
-expect_snapshot_value2 <- purrr::partial(expect_snapshot_value, style = "json2")
+# better/stricter debugging of future, but slower
+# see https://future.futureverse.org/articles/future-4-non-exportable-objects.html
+withr::local_options(
+  list(future.globals.onReference = "error"),
+  .local_envir = testthat::teardown_env()
+)

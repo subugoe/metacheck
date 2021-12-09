@@ -58,10 +58,14 @@ looped_possibly_cr_works_field <- function(x, field, ...) {
   x <- biblids::as_doi(x)
   # remove this hackfix https://github.com/subugoe/metacheck/issues/182
   x <- as.character(x)
+  pb <- progressr::progressor(
+    along = x,
+    message = "Querying Crossref API (works endpoint) ...",
+    label = "memoised_possibly_cr_works_field"
+  )
   res <- purrr::map_chr(
     x,
-    memoised_possibly_cr_works_field,
-    field = field,
+    function(x) {pb(); memoised_possibly_cr_works_field(x, field = field, ...)},
     ...
   )
   res

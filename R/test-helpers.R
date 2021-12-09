@@ -38,6 +38,7 @@ strategies <- list(
 )
 
 #' Skipping unsupported strategies
+#' @noRd
 skip_if_strategy_unsupported <- function(strategy_name = names(strategies)) {
   strategy_name <- rlang::arg_match(strategy_name)
   if (strategy_name == "multicore" && !future::supportsMulticore()) {

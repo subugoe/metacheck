@@ -85,7 +85,7 @@ Imports:
     bslib,
     curl,
     crlite,
-    lobstr
+    lobstr,
 Suggests:
     testthat,
     subugoetheme,
@@ -95,7 +95,8 @@ Suggests:
     htmltools,
     knitr,
     pkgdown,
-    downlit
+    downlit,
+    rsconnect
 URL: https://subugoe.github.io/metacheck, https://github.com/subugoe/metacheck
 BugReports: https://github.com/subugoe/metacheck/issues
 Remotes: 

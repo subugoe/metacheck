@@ -116,9 +116,9 @@ insistently_cr_works <- purrr::insistently(
 #' Helpful for testing, vignettes, etc.
 #' @noRd
 cache_api <- function() {
-  # TODO this should be removed when using BigQuery 
+  # TODO this should be removed when using BigQuery
   # https://github.com/subugoe/metacheck/issues/236
-  if (fs::dir_exists("~")) {
+  if (FALSE) {
     # this should only work on unix compliant systems
     cachem::cache_disk(
       dir = "~/.metacheck-cache",

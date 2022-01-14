@@ -51,8 +51,8 @@ render_report <- function(dois = doi_examples$good,
   dois <- biblids::as_doi(dois)
   rmarkdown::render(
     input = path_report_rmd(lang = translator$get_translation_language()),
+    output_dir = fs::path_temp(),
     params = list(dois = dois, translator = translator),
-    intermediates_dir = fs::path_temp(),
     ...
   )
 }

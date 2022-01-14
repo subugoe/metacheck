@@ -10,11 +10,11 @@ mc_compose_email <- function(dois,
                              translator = mc_translator(),
                              ...) {
   mc_body_block(dois = dois, translator = translator, ...) %>%
-    mc_compose_email_outer(translator = translator)
-    # blastula::add_attachment(
-    #   file = md_data_attachment(dois = dois),
-    #   filename = translator$translate("mc_individual_results.xlsx")
-    # )
+    mc_compose_email_outer(translator = translator) %>%
+    blastula::add_attachment(
+      file = md_data_attachment(dois = dois),
+      filename = translator$translate("mc_individual_results.xlsx")
+    )
 }
 
 mc_body_block <- function(dois, translator = mc_translator(), ...) {

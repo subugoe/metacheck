@@ -12,7 +12,7 @@ mc_compose_email <- function(dois,
   mc_body_block(dois = dois, translator = translator, ...) %>%
     mc_compose_email_outer(translator = translator) %>%
     blastula::add_attachment(
-      md_data_attachment(dois = dois),
+      file = md_data_attachment(dois = dois),
       filename = translator$translate("mc_individual_results.xlsx")
     )
 }
@@ -353,7 +353,7 @@ emailReportServer <- function(id,
           }
         )
       })
-      
+
       # wait until email is typed before complaining
       shiny::observeEvent(input$recipient, iv$enable(), ignoreInit = TRUE)
       shiny::observe({

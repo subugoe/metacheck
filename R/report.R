@@ -25,6 +25,17 @@ path_report_rmd <- function(...) {
   fs::path(path_report_template(...), "skeleton", "skeleton.Rmd")
 }
 
+#' @describeIn report 
+#' Path to rmd in temp folder.
+#' Has a side effect: copies the template to the temp folder.
+#' Safer to render because some runtimes (shinyapps.io) cannot write to folders in `R_HOME`.
+path_copied_report_rmd <- function(...) {
+  fs::file_copy(
+    path = path_report_rmd(...),
+    new_path = fs::file_temp(ext = ".Rmd")
+  )
+}
+
 #' @describeIn report
 #' Create a draft report from the template.
 #' Useful for manual edits; equivalent to opening a new template in RStudio.
@@ -51,13 +62,10 @@ render_report <- function(dois = doi_examples$good,
   dois <- biblids::as_doi(dois)
   # some runtimes (shinyapps.io) can't write to folders R_HOME
   # which render would otherwise do
-  temp_template <- fs::file_copy(
-    path = path_report_rmd(lang = translator$get_translation_language()),
-    new_path = fs::file_temp(ext = ".Rmd"),
-    overwrite = TRUE
-  )
   rmarkdown::render(
-    input = temp_template,
+    input = path_copied_report_rmd(
+      lang = translator$get_translation_language()
+    ),
     params = list(dois = dois, translator = translator),
     ...
   )
@@ -71,7 +79,7 @@ knit_child_report <- function(...) {
   # knit_child does not know params, so these have to be in env
   params <<- list(dois = doi_examples$good)
   res <- knitr::knit_child(
-    path_report_rmd(...),
+    path_copied_report_rmd(...),
     quiet = TRUE
   )
   cat(res, sep = "\n")

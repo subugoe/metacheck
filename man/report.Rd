@@ -2,18 +2,18 @@
 % Please edit documentation in R/report.R
 \name{report}
 \alias{report}
+\alias{path_copied_report_rmd}
 \alias{draft_report}
 \alias{render_report}
 \title{Report Metadata Compliance}
 \usage{
+path_copied_report_rmd(...)
+
 draft_report(lang = mc_langs, ...)
 
 render_report(dois = doi_examples$good, translator = mc_translator(), ...)
 }
 \arguments{
-\item{lang}{Character scalar giving the anguage of the report.
-\emph{Not} reactive as in \code{\link[=mcControlsServer]{mcControlsServer()}}.}
-
 \item{...}{
   Arguments passed on to \code{\link[rmarkdown:draft]{rmarkdown::draft}}, \code{\link[rmarkdown:render]{rmarkdown::render}}
   \describe{
@@ -98,6 +98,9 @@ pandoc command line and others. To only suppress printing of the last
     \item{\code{encoding}}{Ignored. The encoding is always assumed to be UTF-8.}
   }}
 
+\item{lang}{Character scalar giving the anguage of the report.
+\emph{Not} reactive as in \code{\link[=mcControlsServer]{mcControlsServer()}}.}
+
 \item{dois}{Vector of DOIs, as created by, or coerceable to \code{\link[biblids:doi]{biblids::doi()}}.}
 
 \item{translator}{A \link[shiny.i18n:Translator]{shiny.i18n::Translator} object or \code{NULL} for english-only defaults.
@@ -112,6 +115,11 @@ Helper functions to generate a metacheck report.
 }
 \section{Related Functions and Methods}{
 \subsection{Functions}{
+\itemize{
+\item \code{path_copied_report_rmd}: Path to rmd in temp folder.
+Has a side effect: copies the template to the temp folder.
+Safer to render because some runtimes (shinyapps.io) cannot write to folders in \code{R_HOME}.
+}
 \itemize{
 \item \code{draft_report}: Create a draft report from the template.
 Useful for manual edits; equivalent to opening a new template in RStudio.

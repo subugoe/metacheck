@@ -8,5 +8,6 @@ shiny::shinyApp(
     source("env_secrets.R")
     print(Sys.getenv())
     future::plan(future::sequential)
+    metacheck::mc_render_email()
   }
 )

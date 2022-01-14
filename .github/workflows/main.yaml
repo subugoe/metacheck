@@ -71,12 +71,16 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
       - name: Deploy to Shinyapps.io
         if: ${{ github.event_name == 'push' }} && ${{ github.ref_name == 'deploy-2-shinyappsio' }}
+        env:
+          MAILJET_SMTP_PASSWORD: ${{ secrets.MAILJET_SMTP_PASSWORD}}
         run: |
           # need to install again to get packrat magic to work
           remotes::install_github(
             "subugoe/metacheck", 
             ref = "${{ github.ref_name }}"
           )
+          # pass on secrets to saio
+          
           # auth from gha secrets
           rsconnect::setAccountInfo(
             name = "${{ secrets.SAIO_USER }}",

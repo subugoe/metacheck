@@ -14,4 +14,10 @@ Wraps \link[rsconnect:deployApp]{rsconnect::deployApp}
 \note{
 This will only work if metacheck and all its dependencies have been installed with \code{remotes::install_github()}
 }
-\concept{}
+\seealso{
+Other helpers: 
+\code{\link{accumulate_pred_trans}()},
+\code{\link{auth_cr}()},
+\code{\link{auth_mailjet}()}
+}
+\concept{helpers}

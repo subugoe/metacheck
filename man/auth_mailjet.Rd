@@ -13,6 +13,7 @@ Otherwise throws warning.
 \seealso{
 Other helpers: 
 \code{\link{accumulate_pred_trans}()},
-\code{\link{auth_cr}()}
+\code{\link{auth_cr}()},
+\code{\link{deployAppSaio}()}
 }
 \concept{helpers}

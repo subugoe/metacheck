@@ -2,7 +2,7 @@
 #' Wraps [rsconnect::deployApp]
 #' @note
 #' This will only work if metacheck and all its dependencies have been installed with `remotes::install_github()`
-#' @family
+#' @family helpers
 #' @export
 deployAppSaio <- function() {
   rsconnect::deployApp(

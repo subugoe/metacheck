@@ -77,6 +77,7 @@ but default to \code{NA}.
 \seealso{
 Other helpers: 
 \code{\link{auth_cr}()},
-\code{\link{auth_mailjet}()}
+\code{\link{auth_mailjet}()},
+\code{\link{deployAppSaio}()}
 }
 \concept{helpers}

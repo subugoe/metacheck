@@ -14,6 +14,7 @@ Does nothing otherwise, returns \code{FALSE} invisibly.
 \seealso{
 Other helpers: 
 \code{\link{accumulate_pred_trans}()},
-\code{\link{auth_mailjet}()}
+\code{\link{auth_mailjet}()},
+\code{\link{deployAppSaio}()}
 }
 \concept{helpers}

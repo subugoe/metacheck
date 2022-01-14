@@ -8,7 +8,7 @@ deployAppSaio <- function() {
   rsconnect::deployApp(
     appDir = "inst/saio",
     appPrimaryDoc = "saio_launcher.R",
-    appName = "metacheck-test",
+    appName = "metacheck",
     forceUpdate = TRUE,
     logLevel = "verbose"
   )

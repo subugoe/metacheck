@@ -3,4 +3,5 @@
 subugoetheme::ejd_pal()
 # relative path
 source("env_secrets.R")
+Sys.getenv()
 shiny::shinyApp(ui = metacheck:::mcAppUI(), server = metacheck:::mcAppServer)

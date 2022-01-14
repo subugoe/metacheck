@@ -19,7 +19,7 @@ deployAppSaio <- function() {
 #' @noRd
 write_env_var <- function(name) {
   value <- Sys.getenv(name)
-  env_file <- fs::path(system_file2("saio"), "env_secrets.R")
+  env_file <- fs::path("env_secrets.R")
   if (!fs::file_exists(env_file)) {
     fs::file_create(env_file)
   }
@@ -27,7 +27,7 @@ write_env_var <- function(name) {
     x = glue::glue(
       "Sys.setenv('{name}' = '{value}')"
     ),
-    file = fs::path(system_file2("saio", "env_secrets.R")),
+    file = env_file,
     append = TRUE
   )
 }

@@ -69,47 +69,21 @@ jobs:
           tags: ${{ github.sha }}
           add_git_labels: true
           push: ${{ github.event_name != 'pull_request' }}
-      - name: Log in to Azure
-        uses: azure/login@v1.1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: Deploy to Azure Prod
-        if: ${{ github.event_name == 'push' }}
+      - name: Deploy to Shinyapps.io
+        if: ${{ github.event_name == 'push' }} && ${{ github.ref_name == 'deploy-2-shinyappsio' }}
         run: |
-          shinycaas::az_webapp(
-            plan = "hoad",
-            deployment_container_image_name = paste0(
-              "docker.pkg.github.com/subugoe/metacheck/metacheck-runtime", 
-              ":",
-              Sys.getenv("GITHUB_SHA")
-            ),
-            docker_registry_server_url = "https://docker.pkg.github.com",
-            docker_registry_server_user = "maxheld83",
-            docker_registry_server_password = Sys.getenv("GH_PAT_PKG"),
-            slot = stringr::str_replace_all(
-              stringr::str_remove(Sys.getenv("GITHUB_REF"), pattern = "refs/"),
-              "/|_",
-              "-"
-            )
+          # need to install again to get packrat magic to work
+          remotes::install_github(
+            "subugoe/metacheck", 
+            ref = ${{ github.ref_name }}
           )
-        env:
-          GH_PAT_PKG: ${{ secrets.GH_PAT_PKG }}
-      - name: Deploy to Azure Prod
-        if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
-        run: |
-          shinycaas::az_webapp(
-            plan = "hoad",
-            deployment_container_image_name = paste0(
-              "docker.pkg.github.com/subugoe/metacheck/metacheck-runtime", 
-              ":",
-              Sys.getenv("GITHUB_SHA")
-            ),
-            docker_registry_server_url = "https://docker.pkg.github.com",
-            docker_registry_server_user = "maxheld83",
-            docker_registry_server_password = Sys.getenv("GH_PAT_PKG")
+          # auth from gha secrets
+          rsconnect::setAccountInfo(
+            user = ${{ secrets.SAIO_USER }},
+            token = ${{ secrets.SAIO_TOKEN }},
+            secret = ${{ secrets.SAIO_SECRET }}
           )
-        env:
-          GH_PAT_PKG: ${{ secrets.GH_PAT_PKG }}
+          metacheck::deployAppSaio()
       - name: Deploy to GitHub Pages
         if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
         uses: maxheld83/ghpages@github-token

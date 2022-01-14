@@ -12,3 +12,14 @@ deployAppSaio <- function() {
     forceUpdate = TRUE
   )
 }
+
+#' Install metacheck dep again
+#' @noRd
+install_for_packrat <- function() {
+  remotes::install_github(
+    "subugoe/metacheck",
+    ref = "deploy-2-shinyappsio",
+    force = TRUE,
+    dependencies = TRUE
+  )
+}

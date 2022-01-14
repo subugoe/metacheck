@@ -8,6 +8,7 @@ shiny::shinyApp(
     source("env_secrets.R")
     print(Sys.getenv())
     future::plan(future::sequential)
-    print(metacheck:::path_report_rmd())
+    library(metacheck)
+    metacheck::mc_render_email()
   }
 )

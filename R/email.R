@@ -178,13 +178,8 @@ render_and_send_async <- function(...) {
   # so we have to pass in the password manually
   auth_mailjet()
   mj_pw <- Sys.getenv("MAILJET_SMTP_PASSWORD")
-  promises::future_promise(
-    expr = {
-      Sys.setenv("MAILJET_SMTP_PASSWORD" = mj_pw)
-      render_and_send(...)
-    },
-    seed = TRUE
-  )
+  Sys.setenv("MAILJET_SMTP_PASSWORD" = mj_pw)
+  render_and_send(...)
   NULL
 }
 

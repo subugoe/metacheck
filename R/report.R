@@ -49,11 +49,15 @@ render_report <- function(dois = doi_examples$good,
   stopifnot(!shiny::is.reactive(dois))
   checkmate::assert_vector(dois, min.len = 1, null.ok = FALSE)
   dois <- biblids::as_doi(dois)
+  # some runtimes (shinyapps.io) can't write to folders R_HOME
+  # which render would otherwise do
+  temp_template <- fs::file_copy(
+    path = path_report_rmd(lang = translator$get_translation_language()),
+    new_path = fs::file_temp(ext = ".Rmd"),
+    overwrite = TRUE
+  )
   rmarkdown::render(
-    input = path_report_rmd(lang = translator$get_translation_language()),
-    output_dir = fs::path_temp(),
-    knit_root_dir = fs::path_temp(),
-    output_options = list(intermediates_dir = fs::path_temp()),
+    input = temp_template,
     params = list(dois = dois, translator = translator),
     ...
   )

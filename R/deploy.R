@@ -6,7 +6,7 @@
 #' @export
 deployAppSaio <- function() {
   rsconnect::deployApp(
-    appDir = system_file2("saio"),
+    appDir = "inst/saio",
     appPrimaryDoc = "saio_launcher.R",
     appName = "metacheck-test",
     forceUpdate = TRUE,
@@ -20,7 +20,7 @@ deployAppSaio <- function() {
 #' @noRd
 write_env_var <- function(name) {
   value <- Sys.getenv(name)
-  env_file <- fs::path(system_file2("saio"), "env_secrets.R")
+  env_file <- fs::path("inst/saio/env_secrets.R")
   if (!fs::file_exists(env_file)) {
     fs::file_create(env_file)
   }

@@ -118,7 +118,8 @@ insistently_cr_works <- purrr::insistently(
 cache_api <- function() {
   # TODO this should be removed when using BigQuery
   # https://github.com/subugoe/metacheck/issues/236
-  if (fs::dir_exists("~")) {
+  # shinyapps.io cannot use disc storage
+  if (fs::dir_exists("~") & Sys.getenv("R_CONFIG_ACTIVE") != "shinyapps") {
     # this should only work on unix compliant systems
     cachem::cache_disk(
       dir = "~/.metacheck-cache",

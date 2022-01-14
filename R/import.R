@@ -119,7 +119,7 @@ cache_api <- function() {
   # TODO this should be removed when using BigQuery
   # https://github.com/subugoe/metacheck/issues/236
   # shinyapps.io cannot use disc storage
-  if (fs::dir_exists("~") & Sys.getenv("R_CONFIG_ACTIVE") != "shinyapps") {
+  if (fs::dir_exists("~") & (Sys.getenv("R_CONFIG_ACTIVE") != "shinyapps")) {
     # this should only work on unix compliant systems
     print("caching to disc")
     cachem::cache_disk(

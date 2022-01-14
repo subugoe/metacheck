@@ -7,5 +7,6 @@ shiny::shinyApp(
   onStart = function() {
     source("env_secrets.R")
     future::plan(future::sequential)
+    print(Sys.getenv("R_CONFIG_ACTIVE") != "shinyapps")
   }
 )

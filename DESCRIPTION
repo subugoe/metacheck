@@ -96,7 +96,8 @@ Suggests:
     knitr,
     pkgdown,
     downlit,
-    rsconnect
+    rsconnect,
+    remotes
 URL: https://subugoe.github.io/metacheck, https://github.com/subugoe/metacheck
 BugReports: https://github.com/subugoe/metacheck/issues
 Remotes: 

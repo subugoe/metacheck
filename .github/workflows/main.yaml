@@ -79,7 +79,7 @@ jobs:
           )
           # auth from gha secrets
           rsconnect::setAccountInfo(
-            user = "${{ secrets.SAIO_USER }}",
+            name = "${{ secrets.SAIO_USER }}",
             token = "${{ secrets.SAIO_TOKEN }}",
             secret = "${{ secrets.SAIO_SECRET }}"
           )

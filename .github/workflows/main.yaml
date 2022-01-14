@@ -75,13 +75,13 @@ jobs:
           # need to install again to get packrat magic to work
           remotes::install_github(
             "subugoe/metacheck", 
-            ref = ${{ github.ref_name }}
+            ref = "${{ github.ref_name }}"
           )
           # auth from gha secrets
           rsconnect::setAccountInfo(
-            user = ${{ secrets.SAIO_USER }},
-            token = ${{ secrets.SAIO_TOKEN }},
-            secret = ${{ secrets.SAIO_SECRET }}
+            user = "${{ secrets.SAIO_USER }}",
+            token = "${{ secrets.SAIO_TOKEN }}",
+            secret = "${{ secrets.SAIO_SECRET }}"
           )
           metacheck::deployAppSaio()
       - name: Deploy to GitHub Pages

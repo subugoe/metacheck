@@ -9,6 +9,6 @@ shiny::shinyApp(
     print(Sys.getenv())
     future::plan(future::sequential)
     library(metacheck)
-    is_metacheckable(x = doi_examples[[1]][1:10]) 
+    get_cr_md(x = doi_examples[[1]][1:10])
   }
 )

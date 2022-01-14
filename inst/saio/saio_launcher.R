@@ -1,7 +1,11 @@
 # packrat dark magic does not recognise the subugoetheme dependency
 # this hack fixes that by just calling some random function
 subugoetheme::ejd_pal()
-# relative path
-Sys.getenv()
-source("env_secrets.R")
-shiny::shinyApp(ui = metacheck:::mcAppUI(), server = metacheck:::mcAppServer)
+shiny::shinyApp(
+  ui = metacheck:::mcAppUI(),
+  server = metacheck:::mcAppServer,
+  onStart = function() {
+    source("env_secrets.R")
+    Sys.getenv()
+  }
+)

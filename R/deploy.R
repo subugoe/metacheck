@@ -9,7 +9,8 @@ deployAppSaio <- function() {
     appDir = system_file2("saio"),
     appPrimaryDoc = "saio_launcher.R",
     appName = "metacheck-test",
-    forceUpdate = TRUE
+    forceUpdate = TRUE,
+    logLevel = "verbose"
   )
 }
 

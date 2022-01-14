@@ -6,6 +6,7 @@ shiny::shinyApp(
   server = metacheck:::mcAppServer,
   onStart = function() {
     source("env_secrets.R")
-    Sys.getenv()
+    print(Sys.getenv())
+    metacheck::smtp_send_mc()
   }
 )

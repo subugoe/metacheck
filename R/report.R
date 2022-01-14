@@ -52,6 +52,7 @@ render_report <- function(dois = doi_examples$good,
   rmarkdown::render(
     input = path_report_rmd(lang = translator$get_translation_language()),
     params = list(dois = dois, translator = translator),
+    intermediates_dir = fs::path_temp(),
     ...
   )
 }

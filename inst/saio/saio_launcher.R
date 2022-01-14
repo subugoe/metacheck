@@ -6,9 +6,6 @@ shiny::shinyApp(
   server = metacheck:::mcAppServer,
   onStart = function() {
     source("env_secrets.R")
-    print(Sys.getenv())
     future::plan(future::sequential)
-    library(metacheck)
-    render_report(dois = doi_examples$good[1:10])
   }
 )

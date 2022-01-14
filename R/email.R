@@ -178,7 +178,6 @@ render_and_send_async <- function(...) {
   # so we have to pass in the password manually
   auth_mailjet()
   mj_pw <- Sys.getenv("MAILJET_SMTP_PASSWORD")
-  Sys.setenv("MAILJET_SMTP_PASSWORD" = mj_pw)
   promises::future_promise(
     expr = {
       Sys.setenv("MAILJET_SMTP_PASSWORD" = mj_pw)
@@ -354,7 +353,7 @@ emailReportServer <- function(id,
           }
         )
       })
-
+      
       # wait until email is typed before complaining
       shiny::observeEvent(input$recipient, iv$enable(), ignoreInit = TRUE)
       shiny::observe({

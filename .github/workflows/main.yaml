@@ -73,8 +73,7 @@ jobs:
         if: ${{ github.event_name == 'push' }} && ${{ github.ref_name == 'deploy-2-shinyappsio' }}
         run: |
           # need to install again to get packrat magic to work
-          remotes::install_github(
-            "subugoe/metacheck", 
+          metacheck:::install_for_packrat(
             ref = "${{ github.ref_name }}"
           )
           # auth from gha secrets

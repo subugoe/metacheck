@@ -34,10 +34,10 @@ write_env_var <- function(name) {
 
 #' Install metacheck dep again
 #' @noRd
-install_for_packrat <- function() {
+install_for_packrat <- function(ref = "deploy-2-shinyappsio") {
   remotes::install_github(
     "subugoe/metacheck",
-    ref = "deploy-2-shinyappsio",
+    ref = ref,
     force = TRUE,
     dependencies = TRUE
   )

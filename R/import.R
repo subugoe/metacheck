@@ -121,7 +121,6 @@ cache_api <- function() {
   # shinyapps.io cannot use disc storage
   if (fs::dir_exists("~") & (Sys.getenv("R_CONFIG_ACTIVE") != "shinyapps")) {
     # this should only work on unix compliant systems
-    print("caching to disc")
     cachem::cache_disk(
       dir = "~/.metacheck-cache",
       max_age = 60 * 60 * 24 * 31,

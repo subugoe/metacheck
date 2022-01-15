@@ -131,6 +131,15 @@ cache_api <- function() {
   }
 }
 
+# NOTE memoised functions are overwritten again by .onLoad.
+# they need to be updated `onLoad()`, otherwise the cache won't be set at runtime (such as an saio)
+# but then the examples all fail because of collation issues
+# so declaring them twice is a workaround
+
+#' Cache results
+ #' @noRd
+ memoised_cr_works <- memoise::memoise(insistently_cr_works, cache = cache_api())
+
 #' Retrieve some field
 #' This needs to call memoised version,
 #' because we want to always re-use the same entire result object.
@@ -148,6 +157,29 @@ possibly_cr_works_field <- purrr::possibly(
   cr_works_field,
   otherwise = NA,
   quiet = !interactive()
+)
+
+#' Cache results
+#' @details
+#' possibly_cr_works_field also needs to be cached
+#' so that `NA` results are cached.
+#' Above, lower level caching can only cache when there *is* a result
+#' Conditions cannot be cached.
+#' @noRd
+memoised_possibly_cr_works_field <- memoise::memoise(
+  possibly_cr_works_field,
+  cache = cache_api()
+)
+
+# also cache biblids calls to disc if possible
+# pretty bad hack, because this makes it double memoised
+memoised_is_doi_found <- memoise::memoise(
+  biblids::is_doi_found,
+  cache = cache_api()
+)
+memoised_is_doi_from_ra <- memoise::memoise(
+  biblids::is_doi_from_ra,
+  cache = cache_api()
 )
 
 #' Helper for use in predicates.

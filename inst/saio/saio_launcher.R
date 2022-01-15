@@ -6,7 +6,6 @@ shiny::shinyApp(
   server = metacheck:::mcAppServer,
   onStart = function() {
     source("env_secrets.R")
-    future::plan(future::sequential)
-    print(Sys.getenv("R_CONFIG_ACTIVE") != "shinyapps")
+    future::plan(future::multicore, workers = 5L)
   }
 )

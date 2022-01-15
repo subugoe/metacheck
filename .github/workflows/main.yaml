@@ -72,6 +72,7 @@ jobs:
       - name: Deploy to Shinyapps.io
         if: ${{ github.event_name == 'push' }} && ${{ github.ref_name == 'deploy-2-shinyappsio' }}
         run: |
+          remotes::install_local()
           # need to install again to get packrat magic to work
           metacheck:::install_for_packrat(
             ref = "${{ github.ref_name }}"

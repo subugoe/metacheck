@@ -70,7 +70,7 @@ jobs:
           add_git_labels: true
           push: ${{ github.event_name != 'pull_request' }}
       - name: Deploy to Shinyapps.io
-        if: ${{ github.event_name == 'push' }} && ${{ github.ref_name == 'deploy-2-shinyappsio' }}
+        if: ${{ github.event_name == 'push' }} && ${{ github.ref_name == 'main' }}
         run: |
           remotes::install_local()
           # need to install again to get packrat magic to work

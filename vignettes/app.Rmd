@@ -3,5 +3,5 @@ title: "App"
 ---
 
 ```{r echo=FALSE}
-shinycaas::include_app2("https://maxheld83.shinyapps.io/metacheck/")
+shinycaas::include_app2("https://subugoe.shinyapps.io/metacheck/")
 ```
